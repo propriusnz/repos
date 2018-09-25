@@ -1,0 +1,40 @@
+<div class="container">
+  <div class="row">
+    <div class="col col-md-8 flex-direction-column" style="margin-top: 25px;">
+        <div class="pannel pannel-default shadower shadow flex-direction-column">
+          <div class="card">
+            <div class="card-header m2">Ask a Question!</div>
+            <div class="card-body">
+            <form [formGroup]="createDiscussionFrom">
+              <div class="form-group">
+                <label class="s2bold" for="category">Category:</label>
+                <select type="text" id="category" class="form-control" formControlName="category" required>
+                  <option disabled value="">Please select a discussion category</option>
+                  <option *ngFor="let category of categories" [ngValue]="category">{{category}}</option>
+                </select>
+                <div *ngIf="createDiscussionFrom.controls.category.invalid && createDiscussionFrom.controls.category.touched" class="invalid_feedback">Please input category!</div>
+              </div>
+              <div class="form-group">
+                <label class="s2bold" for="title">Title:</label>
+                <input type="text" class="form-control" formControlName='title' placeholder="title">
+                <div *ngIf="createDiscussionFrom.controls.title.invalid && createDiscussionFrom.controls.title.touched" class="invalid_feedback">Please input title!</div>
+              </div>
+              <div class="form-group">
+                <label class="s2bold" for="body">Body:</label>
+                <textarea class="form-control" rows="5" name="body" formControlName='body' placeholder="Write something......"></textarea>
+                <div *ngIf="createDiscussionFrom.controls.body.invalid && createDiscussionFrom.controls.body.touched" class="invalid_feedback">Please input body!</div>                
+              </div>
+              <div class="form-group">
+                <label class="s2bold" for="tags">Tags:</label>
+                <input type="text" class="form-control" formControlName='tags' name="tags">
+              </div>
+              <!-- <div *ngIf="errorFlag" class="error-feedback">{{errorInfo}}</div> -->
+              <button type="button" class="btn btn-primary" (click)="cancelBack()" style="float:left; margin-top:10px;width: 85px;">Cancel</button>
+              <button type="button" class="btn btn-primary" (click)="saveData()" style="float:right; margin-top:10px;width: 85px;">Post </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

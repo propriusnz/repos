@@ -1,0 +1,27 @@
+<mat-dialog-content class="my-0 p-0">
+  <div class="card border-0">
+    <div class="card-header bg-white text-center m-0"><strong style="font-size: 20px">Report issue</strong><i class="fa fa-close float-right" (click)="close()"></i></div>
+    <div class="card-body m-0">
+    <form>
+        <div class="mb-2">Select one or more issues to report</div>
+        <form [formGroup]="reportForm">
+              <div *ngFor="let agIndex of agIndex" class="form-check">
+                <input class="form-check-input" type="checkbox" id="{{agIndex}}" name="{{agIndex}}" formControlName="{{agIndex}}">
+                <label class="form-check-label s2 ml-2" for="{{agIndex}}">{{agIndex}}</label>
+              </div>
+              <br>
+              <div>Issue comment</div>
+              <textarea type="text" class="form-control" placeholder="{{userComment}}" name="comment" rows="3" formControlName="comment"></textarea>
+              <div *ngIf="reportForm.controls.comment.invalid && reportForm.controls.comment.touched" class="indicator text-danger" >Two characters at least.</div>
+        </form>
+        <br>
+        <small>Or call us at:<span class="text-primary">&nbsp;021-0226-4770</span></small>
+        <hr>
+        <div class="clearfix">
+          <button type="button" class="btn btn-outline-primary float-left" (click)="close()">Close</button>&nbsp;&nbsp;
+          <button type="submit" class="btn btn-primary float-right" (click)="save()">Report</button>
+        </div>
+    </form>
+    </div>
+  </div>
+  </mat-dialog-content>

@@ -1,0 +1,42 @@
+<div *ngIf="userBasicInfo">
+  <div *ngIf="hasPaymentInfo">
+    Your Payment Credit Card
+    <div class="container">
+      <div class="row">
+        <div class="d-flex align-items-center col-12 my-2">
+          <table id="card-tb">
+            <tr id="card-tb-head">
+              <th>Card Type</th>
+              <th>Card Number</th>
+            </tr>
+            <tr id="card-tb-body">
+              <td *ngIf="userBasicInfo.card_brand == 'Visa'">
+                <i class="fab fa-cc-visa"></i>
+              </td>
+              <td *ngIf="userBasicInfo.card_brand == 'Master'">
+                <i class="fab fa-cc-mastercard"></i>
+              </td>
+              <td *ngIf="userBasicInfo.card_brand == 'Jcb'">
+                <i class="fab fa-cc-jcb"></i>
+              </td>
+              <td *ngIf="userBasicInfo.card_brand == 'Discover'">
+                <i class="fab fa-cc-discover"></i>
+              </td>
+              <td *ngIf="userBasicInfo.card_brand == 'Amex'">
+                <i class="fab fa-cc-amex"></i>
+              </td>
+              <td>****{{userBasicInfo.card_last_four}}</td>
+            </tr>
+          </table>
+        </div>
+        <div class="col-12 my-2">         
+          <button type="button" class="btn btn-primary btn-sm mr-2" (click)="modifyPaymentCard()">Change Card</button>
+          <button type="button" class="btn btn-danger btn-sm mx-2" (click)="deletePaymentCard()">Delete Card</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="!hasPaymentInfo">
+    <p>You haven't provide your payment information. Click <a id="show-a" (click)="modifyPaymentCard()">Here</a> to setup.</p>
+  </div>
+</div>

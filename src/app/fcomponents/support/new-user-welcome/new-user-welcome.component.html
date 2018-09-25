@@ -1,0 +1,379 @@
+<div class="container-fluid" id="ContentBody">
+
+  <div *ngIf="namePage" class="card text-center ">
+    <form [formGroup]="options">
+      <div class="card-body rounded offset-0.000005 offset-sm-3 col-12 col-sm-6">
+        <div class="m2">
+          Welcome to Learnspace
+        </div>
+        <div>
+          <small> For Learner </small>
+        </div>
+        <hr>
+
+        <div *ngIf="options.value.isLearner; else notLearner">
+          Please enter your name
+        </div>
+        <ng-template #notLearner>
+          <div>
+            Please enter a name for the {{afterNumber[learner_num]}} learner.
+          </div>
+        </ng-template>
+        <mat-form-field appearance="outline">
+          <mat-label>Name</mat-label>
+          <input matInput #input maxlength="20" [formControl]="nameFormControl">
+          <mat-error *ngIf="nameFormControl.invalid ">{{getErrorMessage('name')}}</mat-error>
+          <mat-hint align="end">{{input.value?.length || 0}}/20</mat-hint>
+        </mat-form-field>
+
+        <div *ngIf="isFirstLearner">
+          <mat-checkbox formControlName="isLearner">I am the learner</mat-checkbox>
+        </div>
+        <br>
+        <div>
+          <button class="btn btn-outline-primary" (click)="showYearLevel()" style="width:100px;">Next</button>
+        </div>
+      </div>
+    </form>
+  </div>
+
+
+  <ng-template [ngIf]="YearLevel">
+    <div class="card text-center ">
+      <div class="offset-0.000005 offset-sm-3 col-12 col-sm-6">
+        <div class="col-12 col-sm-6 offset-sm-3 m2"> Select your year level:</div>
+        <div class="card-body rounded" style="padding-bottom: 50px;">
+          <mat-form-field>
+            <mat-select placeholder="Year Level" [formControl]="yearLevelControl" [(value)]="selected1">
+              <mat-option value="7">Year 7</mat-option>
+              <mat-option value="8">Year 8</mat-option>
+              <mat-option value="9">Year 9</mat-option>
+              <mat-option value="10">Year 10</mat-option>
+              <mat-option value="11">Year 11</mat-option>
+              <mat-option value="12">Year 12</mat-option>
+              <mat-option value="13">Year 13</mat-option>
+            </mat-select>
+            <mat-error *ngIf="yearLevelControl.invalid">{{getErrorMessage('year')}}</mat-error>
+          </mat-form-field>
+          <br/>
+          <div>
+            <button class="s3Blue btn btn-outline-info btn-sm" style="float:left; width:100px;" (click)="showNamePage()">Previous</button>
+            <button class="btn btn-outline-success btn-sm" style="float: right; width:100px;" (click)="showCourse()">Next</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+
+
+  <ng-template [ngIf]="CoursePage">
+    <div class="card text-center" id="LookingCourse">
+      <div class="card-header col-12 m2">Which course are you looking for?</div>
+    </div>
+
+    <div class="card col-12">
+      <div class="card-body col-12 col-lg-7 col-xl-6 col-md-11  offset-xl-3 offset-lg-2 offset-md-1 offset-0.000000001">
+        <div class="btn-group" role="group" aria-label="Basic example">
+          <button type="button" class="btn btn-outline-primary col-12 col-md-12" (click)="showHighCourse()">High School Courses</button>
+        </div>
+
+        <ng-template [ngIf]="highCourse">
+          <!-- Content of high school courses -->
+          <div class="col-12 tableAni">
+            <a class="col-12 col-md-5 col-lg-6 col-xl-5 m-r-2 TabHover s2bold" (click)="this.courses[0].selected=!this.courses[0].selected">
+              <img src="assets/img/math.jpg" />
+              <div style="margin-left:60px;">Math
+                <img src="assets/img/selected.svg" class="selected" *ngIf=this.courses[0].selected/>
+                <span class="badge badge-success yearIcons">Y 7-13</span>
+              </div>
+            </a>
+
+            <a class="col-12 col-md-5 col-lg-6 col-xl-5 TabHover s2bold" (click)="this.courses[1].selected=!this.courses[1].selected">
+              <img src="assets/img/english.jpg" />
+              <div style="margin-left:60px;">English
+                <img src="assets/img/selected.svg" class="selected" *ngIf=this.courses[1].selected/>
+                <span class="badge badge-success yearIcons">Y 7-13</span>
+              </div>
+            </a>
+            <a class="col-12 col-md-5 col-lg-6 col-xl-5 TabHover s2bold" (click)="this.courses[16].selected=!this.courses[16].selected">
+              <img src="assets/img/english.jpg" />
+              <div style="margin-left:60px;">ESOL
+                <img src="assets/img/selected.svg" class="selected" *ngIf=this.courses[16].selected/>
+                <span class="badge badge-success yearIcons">Y 7-13</span>
+              </div>
+            </a>
+
+            <a class="col-12 col-md-5  col-lg-6 col-xl-5 TabHover s2bold" (click)="this.courses[2].selected=!this.courses[2].selected">
+              <img src="assets/img/science.jpg" />
+              <div style="margin-left:65px;">Science
+                <img src="assets/img/selected.svg" class="selected" *ngIf=this.courses[2].selected/>
+                <span class="badge badge-success yearIcons">Y 7-13</span>
+              </div>
+            </a>
+            <a *ngIf="selected1>11" class="col-12 col-md-5  col-lg-6 col-xl-5 TabHover s2bold" (click)="this.courses[3].selected=!this.courses[3].selected">
+              <img src="assets/img/calculus.png" />
+              <div style="margin-left:65px;">Calculus
+                <img src="assets/img/selected.svg" class="selected" *ngIf=this.courses[3].selected/>
+                <span class="badge badge-success yearIcons">Y 12-13</span>
+              </div>
+            </a>
+
+
+            <a *ngIf="selected1>9" class="col-12 col-md-5  col-lg-6 col-xl-5 TabHover s2bold" (click)="this.courses[4].selected=!this.courses[4].selected">
+              <img src="assets/img/chemistry.jpg" />
+              <div style="margin-left:65px;">Chemistry
+                <img src="assets/img/selected.svg" class="selected" *ngIf=this.courses[4].selected/>
+                <span class="badge badge-success yearIcons">Y 10-13</span>
+              </div>
+            </a>
+            <a *ngIf="selected1>9" class="col-12 col-md-5  col-lg-6 col-xl-5 TabHover s2bold" (click)="this.courses[5].selected=!this.courses[5].selected">
+              <img src="assets/img/physics2.jpg" />
+              <div style="margin-left:65px;">Physics
+                <img src="assets/img/selected.svg" class="selected" *ngIf=this.courses[5].selected/>
+                <span class="badge badge-success yearIcons">Y 10-13</span>
+              </div>
+            </a>
+
+
+            <a *ngIf="selected1>9" class="col-12 col-md-5  col-lg-6 col-xl-5 TabHover s2bold" (click)="this.courses[6].selected=!this.courses[6].selected">
+              <img src="assets/img/biology.jpg" />
+              <div style="margin-left:65px;">Biology
+                <img src="assets/img/selected.svg" class="selected" *ngIf=this.courses[6].selected/>
+                <span class="badge badge-success yearIcons">Y 10-13</span>
+              </div>
+            </a>
+            <a *ngIf="selected1>10" class="col-12 col-md-5  col-lg-6 col-xl-5 TabHover s2bold" (click)="this.courses[21].selected=!this.courses[21].selected">
+              <img src="assets/img/computerStudies.jpg" />
+              <div>ComputerStudies
+                <img src="assets/img/selected.svg" class="selected" *ngIf=this.courses[21].selected/>
+                <span class="badge badge-success yearIcons">Y 11-13</span>
+              </div>
+            </a>
+            <a *ngIf="selected1>8" class="col-12 col-md-5  col-lg-6 col-xl-5 TabHover s2bold" (click)="this.courses[20].selected=!this.courses[20].selected">
+              <img src="assets/img/ICT.jpg" />
+              <div style="margin-left:65px;">ICT
+                <img src="assets/img/selected.svg" class="selected" *ngIf=this.courses[20].selected/>
+                <span class="badge badge-success yearIcons">Y 9-13</span>
+              </div>
+            </a>
+            <a *ngIf="selected1>8" class="col-12 col-md-5  col-lg-6 col-xl-5 TabHover s2bold" (click)="this.courses[7].selected=!this.courses[7].selected">
+              <img src="assets/img/economy.jpg" />
+              <div style="margin-left:65px;">Economics
+                <img src="assets/img/selected.svg" class="selected" *ngIf=this.courses[7].selected/>
+                <span class="badge badge-success yearIcons">Y 9-13</span>
+              </div>
+            </a>
+
+
+            <a *ngIf="selected1>8" class="col-12 col-md-5  col-lg-6 col-xl-5 TabHover s2bold" (click)="this.courses[8].selected=!this.courses[8].selected">
+              <img src="assets/img/accounting.jpg" />
+              <div style="margin-left:65px;">Accounting
+                <img src="assets/img/selected.svg" class="selected" *ngIf=this.courses[8].selected/>
+                <span class="badge badge-success yearIcons">Y 9-13</span>
+              </div>
+            </a>
+            <a *ngIf="selected1>10" class="col-12 col-md-5  col-lg-6 col-xl-5 TabHover s2bold" (click)="this.courses[26].selected=!this.courses[26].selected">
+              <img src="assets/img/design.jpg" />
+              <div style="margin-left:65px;">Design
+                <img src="assets/img/selected.svg" class="selected" *ngIf=this.courses[26].selected/>
+                <span class="badge badge-success yearIcons">Y 11-13</span>
+              </div>
+            </a>
+            <a *ngIf="selected1>9" class="col-12 col-md-5  col-lg-6 col-xl-5 TabHover s2bold" (click)="this.courses[19].selected=!this.courses[19].selected">
+              <img src="assets/img/history.jpg" />
+              <div style="margin-left:65px;">History
+                <img src="assets/img/selected.svg" class="selected" *ngIf=this.courses[19].selected/>
+                <span class="badge badge-success yearIcons">Y 10-13</span>
+              </div>
+            </a>
+            <a *ngIf="selected1>8" class="col-12 col-md-5  col-lg-6 col-xl-5 TabHover s2bold" (click)="this.courses[18].selected=!this.courses[18].selected">
+              <img src="assets/img/geography.jpg" />
+              <div style="margin-left:65px;">Geography
+                <img src="assets/img/selected.svg" class="selected" *ngIf=this.courses[18].selected/>
+                <span class="badge badge-success yearIcons">Y 9-13</span>
+              </div>
+            </a>
+            <a class="col-12 col-md-5  col-lg-6 col-xl-5 TabHover s2bold" (click)="this.courses[17].selected=!this.courses[17].selected">
+              <img src="assets/img/socialStudies.jpg" />
+              <div style="margin-left:65px;">SocialStudies
+                <img src="assets/img/selected.svg" class="selected" *ngIf=this.courses[17].selected/>
+              </div>
+            </a>
+            <a class="col-12 col-md-5  col-lg-6 col-xl-5 TabHover s2bold" (click)="this.courses[15].selected=!this.courses[15].selected">
+              <img src="assets/img/music.jpg" />
+              <div>Music
+                <img src="assets/img/selected.svg" class="selected" *ngIf=this.courses[15].selected/>
+              </div>
+            </a>
+            <a class="col-12 col-md-5  col-lg-6 col-xl-5 TabHover s2bold" (click)="this.courses[14].selected=!this.courses[14].selected">
+              <img src="assets/img/art.jpg" />
+              <div>Arts
+                <img src="assets/img/selected.svg" class="selected" *ngIf=this.courses[14].selected/>
+              </div>
+            </a>
+            <a *ngIf="selected1>8" class="col-12 col-md-5  col-lg-6 col-xl-5 TabHover s2bold" (click)="this.courses[24].selected=!this.courses[24].selected">
+              <img src="assets/img/graphics.jpg" />
+              <div style="margin-left:65px;">Graphics
+                <img src="assets/img/selected.svg" class="selected" *ngIf=this.courses[24].selected/>
+                <span class="badge badge-success yearIcons">Y 9-13</span>
+              </div>
+            </a>
+            <a *ngIf="selected1>8" class="col-12 col-md-5  col-lg-6 col-xl-5 TabHover s2bold" (click)="this.courses[25].selected=!this.courses[25].selected">
+              <img src="assets/img/drama.png" />
+              <div style="margin-left:65px;">Drama
+                <img src="assets/img/selected.svg" class="selected" *ngIf=this.courses[25].selected/>
+                <span class="badge badge-success yearIcons">Y 9-13</span>
+              </div>
+            </a>
+            <a *ngIf="selected1>11" class="col-12 col-md-5  col-lg-6 col-xl-5 TabHover s2bold" (click)="this.courses[22].selected=!this.courses[22].selected">
+              <img src="assets/img/mediaStudies.png" />
+              <div style="margin-left:65px;">Media
+                <img src="assets/img/selected.svg" class="selected" *ngIf=this.courses[22].selected/>
+                <span class="badge badge-success yearIcons">Y 12-13</span>
+              </div>
+            </a>
+
+            <a class="col-12 col-md-5  col-lg-6 col-xl-5 TabHover s2bold" (click)="this.courses[9].selected=!this.courses[9].selected">
+              <img src="assets/img/german.jpg" />
+              <div style="margin-left:65px;padding-right:45px">German
+                <img src="assets/img/selected.svg" class="selected" *ngIf=this.courses[9].selected/>
+              </div>
+            </a>
+
+
+            <a class="col-12 col-md-5  col-lg-6 col-xl-5 TabHover s2bold" (click)="this.courses[10].selected=!this.courses[10].selected">
+              <img src="assets/img/chinese.jpg" />
+              <div style="margin-left:65px;padding-right:45px">Chinese
+                <img src="assets/img/selected.svg" class="selected" *ngIf=this.courses[10].selected/>
+              </div>
+            </a>
+            <a class="col-12 col-md-5  col-lg-6 col-xl-5 TabHover s2bold" (click)="this.courses[11].selected=!this.courses[11].selected">
+              <img src="assets/img/maori.png" />
+              <div style="margin-left:65px;padding-right:45px">Maori
+                <img src="assets/img/selected.svg" class="selected" *ngIf=this.courses[11].selected/>
+              </div>
+            </a>
+
+
+            <a class="col-12 col-md-5  col-lg-6 col-xl-5 TabHover s2bold" (click)="this.courses[12].selected=!this.courses[12].selected">
+              <img src="assets/img/spanish.jpg" />
+              <div style="margin-left:65px;padding-right:45px">Spanish
+                <img src="assets/img/selected.svg" class="selected" *ngIf=this.courses[12].selected/>
+              </div>
+            </a>
+            <a class="col-12 col-md-5  col-lg-6 col-xl-5 TabHover s2bold" (click)="this.courses[13].selected=!this.courses[13].selected">
+              <img src="assets/img/french.jpg" />
+              <div style="margin-left:65px;padding-right:45px">French
+                <img src="assets/img/selected.svg" class="selected" *ngIf=this.courses[13].selected/>
+              </div>
+            </a>
+            <a class="col-12 col-md-5  col-lg-6 col-xl-5 TabHover s2bold" (click)="this.courses[26].selected=!this.courses[26].selected">
+              <img src="assets/img/japanese.png" />
+              <div style="margin-left:65px;padding-right:45px">Japanese
+                <img src="assets/img/selected.svg" class="selected" *ngIf=this.courses[26].selected/>
+              </div>
+            </a>
+            <br/>
+            <br/>
+            <button class="s3Blue btn btn-outline-info" style="float:left" (click)="showYearLevel()">Previous</button>
+            <button class="btn btn-outline-success" style="float: right;" (click)="addCourse()">Submit</button>
+          </div>
+        </ng-template>
+
+        <!-- <ng-template [ngIf]="uniCourse">
+						<!-- content of university courses -->
+        <!-- <div  class="col-12 tableAni">
+							<div class="row justify-content-around">
+								<div class="col-12 col-md-4  col-lg-6 col-xl-4 TabHover"><img src="assets/img/accounting.png"/><a routerLink="/app/find-tutor/Accounting">Accounting</a></div>
+								<div class="col-12 col-md-4  col-lg-6 col-xl-4 TabHover"><img src="assets/img/biology.png"/><a routerLink="/app/find-tutor/Bio">Biology</a></div>
+						</div>
+							<div class="row justify-content-around">
+								<div class="col-12 col-md-4  col-lg-6 col-xl-4 TabHover"><img src="assets/img/chemistry.jpg"/><a routerLink="/app/find-tutor/Chemistry">Chemistry</a></div>
+								<div class="col-12 col-md-4  col-lg-6 col-xl-4 TabHover"><img src="assets/img/cs.png"/><a routerLink="/app/find-tutor">Computer</a></div>
+						</div>
+							<div class="row justify-content-around">
+							<div class="col-12 col-md-4  col-lg-6 col-xl-4 TabHover"><img src="assets/img/economy.png"/><a routerLink="/app/find-tutor/Economics">Economics</a></div>
+							<div class="col-12 col-md-4  col-lg-6 col-xl-4 TabHover"><img src="assets/img/engineering.svg"/><a routerLink="/app/find-tutor">Engineering</a></div>
+						</div>
+							<div class="row justify-content-around">
+								<div class="col-12 col-md-4  col-lg-6 col-xl-4 TabHover"><img src="assets/img/english.png"/><a routerLink="/app/find-tutor">English</a></div>
+								<div class="col-12 col-md-4  col-lg-6 col-xl-4 TabHover"><img src="assets/img/finance.png"/><a routerLink="/app/find-tutor">Finance</a></div>
+						</div>
+						<div class="row justify-content-around">
+							<div class="col-12 col-md-4  col-lg-6 col-xl-4 TabHover"><img src="assets/img/german.png"/><a routerLink="/app/find-tutor">German</a></div>
+							<div class="col-12 col-md-4  col-lg-6 col-xl-4 TabHover"><img src="assets/img/history.png"/><a routerLink="/app/find-tutor">History</a></div>
+						</div>
+							<div class="row justify-content-around">
+								<div class="col-12 col-md-4  col-lg-6 col-xl-4 TabHover"> <img src="assets/img/marketing.png"/><a routerLink="/app/find-tutor">Marketing</a></div>
+								<div class="col-12 col-md-4  col-lg-6 col-xl-4 TabHover"><img src="assets/img/math.png"/><a routerLink="/app/find-tutor/Maths">Math</a></div>
+							</div>
+							<div class="row justify-content-around">
+								<div class="col-12 col-md-4  col-lg-6 col-xl-4 TabHover"> <img src="assets/img/medicine.png"/><a routerLink="/app/find-tutor">MedicalTech</a></div>
+								<div class="col-12 col-md-4  col-lg-6 col-xl-4 TabHover"><img src="assets/img/physics2.png"/><a routerLink="/app/find-tutor/Physics">Physics</a></div>
+						</div>
+							<div class="row justify-content-around">
+								<div class="col-12 col-md-4  col-lg-6 col-xl-4 TabHover"><img src="assets/img/psychology.png"/><a routerLink="/app/find-tutor">Psychology</a></div>
+								<div class="col-12 col-md-4  col-lg-6 col-xl-4 TabHover"><img src="assets/img/spanish.png"/><a routerLink="/app/find-tutor">Spanish</a></div>
+						</div>
+					</div>
+				</ng-template> -->
+      </div>
+
+    </div>
+  </ng-template>
+
+  <div *ngIf="addLearner" class="card text-center">
+    <div class="card-body rounded offset-0.000005 offset-sm-3 col-12 col-sm-6">
+      <div class="m2">
+        The Learner {{nameFormControl.value}} has been created
+      </div>
+      <hr>
+      <div>
+        Add Another Learner?
+      </div>
+      <br>
+      <div>
+        <button class="btn btn-outline-success" (click)="addAnotherLearner()">
+          <i class="material-icons">add_box</i>Add Learner
+        </button>
+      </div>
+      <hr>
+      <div>
+        <button class="btn btn-outline-info" style="width:100px;" (click)="finished()">Finish</button>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="maxLearner" class="card text-center">
+    <div class="card-body rounded offset-0.000005 offset-sm-3 col-12 col-sm-6">
+      <div class="m2">
+        You Can Only Crate 4 Learners.
+      </div>
+      <hr>
+      <div>
+        <button class="btn btn-outline-info" style="width:100px;" (click)="finished()">Finish</button>
+      </div>
+    </div>
+  </div>
+
+  <br/>
+  <div class="row">
+    <div class="col-2 mx-auto">
+      <button class="btn btn-outline-secondary btn-sm" routerLink="/app/dashboard/learner/profile" style="color:white">Skip</button>
+    </div>
+  </div>
+  <br/>
+  <br/>
+  <div class="row">
+    <div class="col-2  mx-auto">
+      <button class="btn btn-outline-dark btn-sm" style="color:white">Apply to teach</button>
+    </div>
+  </div>
+  <br/>
+  <br/>
+  <br/>
+  <br/>
+  <br/>
+  <br/>
+
+</div>

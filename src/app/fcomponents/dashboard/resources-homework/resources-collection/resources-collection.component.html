@@ -1,0 +1,27 @@
+<div>
+  <div *ngIf="resourceType != 'undefined'">
+    <div *ngIf="resourceType == 'article'">
+      <div *ngIf="mode == 'add'">
+        <div class="s2bold">Write your article here!</div>
+        <app-article-parent [mode]="'add'"></app-article-parent>
+      </div>
+      <div *ngIf="resourcesData">
+        <div *ngIf="mode == 'edit'">
+          <app-article-parent [mode]="'edit'" [data]="resourcesData"></app-article-parent>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="resourceType == 'question'">
+      <div *ngIf="mode == 'add'">
+        <div class="s2bold">Add Question</div>
+        <app-question-parent [mode]="'add'" [userType]="userType"></app-question-parent>
+      </div>
+      <div *ngIf="mode == 'edit'">
+        <app-question-parent [mode]="'edit'" [userType]="userType" [questionData]="resourcesData"></app-question-parent>
+      </div>
+      <div *ngIf="mode == 'view'">
+        <app-question-parent [mode]="mode" [userType]="userType" [questionData]="resourcesData" ></app-question-parent>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,14 @@
+<div>
+  <div *ngIf="resourceData">
+    <div *ngIf="resourceType == 0">
+      <app-resources-article-show [data]="resourceData"></app-resources-article-show>
+    </div>
+    <div *ngIf="resourceType == 2">
+      <app-resources-question-show [data]="resourceData" [viewerType]="viewerType"></app-resources-question-show>
+    </div>
+    <div *ngIf="isFromDashboard">
+      <button *ngIf="isOwner" type="button" class="btn btn-mdb-color btn_blue btn-rounded" (click)="editResource()" style="margin-left: 15px;">Edit</button>&nbsp;&nbsp;
+      <button type="button" class="btn btn-mdb-color btn_blue btn-rounded" (click)="goBack()">Back</button>
+    </div>
+  </div>
+</div>

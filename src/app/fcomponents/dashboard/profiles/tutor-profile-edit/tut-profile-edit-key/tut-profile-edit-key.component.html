@@ -1,0 +1,124 @@
+<!--Profile Img-->
+<div class="card" style="margin-top: 25px;" (mouseenter)="mouseEnter('Profile image')">
+    <div class="card-header m2">Profile image</div>
+    <div class="card-body">
+      <div class="row">
+        <div *ngIf="tutor" class="col-xl-3 col-lg-3 col-md-3 col-sm-12 col-12 text-center">
+          <img (click)="imageEditorDia()" class="clickable" src={{profile_photo}}>
+          <div class="s3Blue clickable" (click)="imageEditorDia()">Click image to Edit</div>
+          <div *ngIf="errorMessage2" class="error-feedback">{{errorMessage2}}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Profile Video -->
+  <div class="card" style="margin-top: 25px;" (mouseenter)="mouseEnter('Profile video')">
+    <div class="card-header m2">Profile video</div>
+    <div class="card-body">
+      <iframe *ngIf="linkValid" class="my-3" id="video" [src]="videoLink" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+      <button class="btn btn-primary" (click)="videoLinkInput = !videoLinkInput" style="display: block;">Embed Video</button>
+      <div *ngIf="videoLinkInput" class="my-3">
+        <form class="row" *ngIf="videoLinkForm" [formGroup]="videoLinkForm" style="padding-top: 10px;">
+          <input type="text" class="form-control" placeholder="Enter your profile video link here" id="videoLink" formControlName="link">
+          <button class="btn btn-sm btn-primary ml-3" type="submit" (click)="addVideoLink()">Submit</button>
+          <div *ngIf="videoLinkForm.controls.link.errors?.required && videoLinkForm.controls.link.touched" class="indicator" >Link address is required.</div>
+          <div *ngIf="videoLinkForm.controls.link.invalid && videoLinkForm.controls.link.touched" class="indicator" >Need to have at least 15 character.</div>
+        </form>
+      </div>
+    </div>
+  </div>
+  
+  <!--location form-->
+  <div class="card" style="margin-top: 25px;" (mouseenter)="mouseEnter('Teaching locations')">
+    <div class="card-header m2">Teaching locations</div>
+    <div class="card-body pb-0" *ngIf="tutor">
+      <div *ngIf="addNewLink"><a id="a-btn" (click)="locationStatus[0]=true; addNewLink=!addNewLink">Add an address where you can teach</a></div>
+        <ul *ngFor="let location of tutor.teaching_locations; let i=index" id="locationList">
+          <li class="row" *ngIf="location.city!==''">
+            <span class="col-12 col-sm-8 col-md-8 col-lg-8 col-xl-8 s2">
+              <i class="fa fa-map-marker" aria-hidden="true"></i> {{location.number}}, {{location.street}}, {{location.suburb}}&nbsp;——&nbsp;{{location.city}}</span>
+            <span class="col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+              <a id="a-btn" *ngIf="location.city && !locationStatus[i]" (click)="locationStatus[i]=true; prefillForm(i)">Edit</a>&nbsp;&nbsp;
+              <a id="a-btn" *ngIf="location.city && !locationStatus[i]" (click)="DeleteForm(i)">Delete</a>
+            </span>
+          </li>
+          <form class="row s2" *ngIf="locationStatus[i]" [formGroup]="locationForms[i]">
+            <span class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12 my-2">
+              <label for="number">Street or level number</label>
+              <input type="text" class="form-control" id="number" formControlName="number">
+              <div *ngIf="locationForms[i].controls.number.invalid && locationForms[i].controls.number.touched" class="indicator" >Need to have at least 1 character.</div>
+            </span>
+            <span class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12 my-2">
+                <label for="street">Street or landmark name</label>
+              <input type="text" class="form-control" id="street" formControlName="street">
+              <div *ngIf="locationForms[i].controls.street.invalid && locationForms[i].controls.street.touched" class="indicator" >Need to have at least 2 characters.</div>
+            </span>
+            <span class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12 my-2">
+                <label for="suburb">Suburb details</label>
+              <input type="text" class="form-control" id="suburb" formControlName="suburb">
+              <div *ngIf="locationForms[i].controls.suburb.invalid && locationForms[i].controls.suburb.touched" class="indicator" >Need to have at least 2 characters.</div>
+            </span>
+            <span class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12 my-2">
+                <label for="city">City or region name</label>
+              <input type="text" class="form-control" id="city" formControlName="city">
+              <div *ngIf="locationForms[i].controls.city.invalid && locationForms[i].controls.city.touched" class="indicator" >Need to have at least 3 characters.</div>
+            </span>
+            <span class="col-12 m-2">
+              <button type="submit" id="f-btn" class="btn btn-primary" (click)="loFeedback=null;locationStatus[i]=false; cancelClick(i)" >Cancel</button>
+              <button type="submit" id="f-btn-right" class="btn btn-primary mr-4"  (click)="submitLocations({name: locationForms[i], index: i})">Done</button>
+            </span>
+          </form>
+        </ul>
+      <div class="row col-12 my-3" *ngIf="addAnotherLink" style="margin-left: 0; padding-left: 0;">
+        <a id="a-btn" (click)="loStatus(); addAnotherLink=!addAnotherLink">Add another</a>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Introduction statement form -->
+  <div class="card" style="margin-top: 25px;" (mouseenter)="mouseEnter('Introduction statement')">
+    <div class="card-header m2">Introduction statement</div>
+    <div *ngIf="tutor" class="card-body">
+      <div class="row">
+        <div class="col-12 col-sm-8 col-md-8 col-lg-8 col-xl-8">
+          <pre *ngIf="tutor.intro_statement">{{tutor.intro_statement}}</pre>
+          <div *ngIf="!tutor.intro_statement && !stStatus">
+            <a id="a-btn" (click)="stStatus=true">Add your introduction statement</a>
+          </div>
+        </div>
+        <div class="col-12 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+          <a id="a-btn" *ngIf="tutor.intro_statement && !stStatus" (click)="stStatus=true; prefillIntroForm()">Edit</a>&nbsp;&nbsp;
+          <a id="a-btn" *ngIf="tutor.intro_statement && !stStatus" (click)="DeleteIntroForm()">Delete</a>
+        </div>
+        <div class="col-12 lImage" *ngIf="stStatus">
+          <form [formGroup]="stateForm">
+            <!-- <div class="indicator">{{errorMessage3}}</div> -->
+            <textarea type="text" class="form-control" placeholder="Please input [20-3000] characters to introduce yourself." name="statement" rows="12" formControlName="state"></textarea>
+            <div class="indicator" *ngIf="stateForm.controls.state.errors?.minlength">Your statement must be at least 20 characters.</div>
+            <div class="indicator" *ngIf="stateForm.controls.state.errors?.maxlength">Your statement can not be more than 3000 characters.</div>
+            <br>
+            <button type="submit" id="f-btn" class="btn btn-primary" (click)="errorMessage3='';stStatus=false">Cancel</button>
+            <button type="submit" id="f-btn-right" class="btn btn-primary" (click)="defState()">Post</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Button group -->
+  <div class="row">
+    <div class="col-lg-7">
+      <button class="btn btn-primary" style="margin:15px;" (click)="submitInfo()">Save All Changes</button>
+      <button class="btn btn-danger" style="margin:15px;" (click)="cancelInfo()">Reset All Changes</button>
+    </div>
+    <div class="col-lg-5 text-right">
+      <label id="publishLabel">Publish profile: </label>
+      <label class="switch mt-3">
+        <input type="checkbox" (click)="publishProfile()">
+        <span class="round"></span>
+      </label>
+    </div>
+  </div>
+  
+  <app-toastr></app-toastr>

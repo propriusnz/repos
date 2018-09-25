@@ -1,0 +1,18 @@
+﻿/*
+ Copyright (c) 2003-2018, CKSource - Frederico Knabben. All rights reserved.
+ For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
+*/
+elements: [
+    {
+        type: 'text',
+        id: 'myCustomField',
+        label: 'My Custom Field',
+        'default': 'Default custom field value.'
+    },
+    {
+        type: 'checkbox',
+        id: 'myCheckbox',
+        label: 'This checkbox is selected by default.',
+        'default': true
+    }
+]

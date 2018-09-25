@@ -1,0 +1,153 @@
+#title {
+    font-size: 40px;
+    font-weight: 700;
+    font-family: Arial Black;
+    color: black;
+  }
+  
+  #subtitle {
+    font-size: 18px;
+    font-family: Arial;
+  }
+  
+  .studentName {
+    font-weight: bold;
+    font-size: 16px;
+  }
+  
+  .studentName2 {
+    font-weight: bold;
+    font-size: 16px;
+  }
+  
+  #paragraph {
+    font-size: 14px;
+  }
+  
+  .card {
+    margin-top: 10px;
+    border-width: 0px;
+    box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.1), 0 2px 2px 0 rgba(0, 0, 0, 0.1);
+    background-color: white;
+    padding: 10px 0px 15px 0px;
+    -webkit-filter: brightness(100%);          /* Chrome, Safari, Opera */
+    filter: brightness(100%);
+    transition: 0.3s;
+    
+    
+  }
+  .card-body{
+    
+    padding: 0px 10px 0px 10px;
+  }
+  
+  .card:hover {
+    transform: scale(1.02);
+    filter: brightness(100%);
+  }
+
+
+  .report{
+    padding-left: 10px;
+    padding-bottom: 10px;
+  }
+
+  .scrollList{
+    overflow-y: scroll;
+    height: 300px;
+  }
+
+  .header {
+    display: table;
+    width: 100%;
+  }
+  
+  .img {
+    display: table-cell;
+    vertical-align: middle;
+    position: absolute;
+    left: 0;
+    
+  }
+  img{
+    border-radius:50%; 
+}
+
+  button{
+    margin-right: 5px;
+  } 
+  .sessionInfo{
+    border-top-color: gray;
+    border-top-style: solid;
+    border-top: 2px;
+  }
+
+  
+  .studentName {
+    display: table-cell;
+    vertical-align: middle;
+  }
+  
+  .box {
+    background: #E9F3F9;
+    margin-top: 5px;
+    margin-bottom: 0px;
+    border-radius: 6px;
+    padding: 5px 10px 10px 10px;
+  }
+  
+  @media (max-width: 768px) {
+    .img {
+      position: static;
+    }
+    .box1_768 {
+      position: relative;
+      left: -5px;
+      top: auto;
+    }
+    .box2_768 {
+      position: relative;
+      left: -5px;
+      top: auto;
+  
+    }
+    .box3_768 {
+      position: relative;
+      left: -5px;
+      top: auto;
+    }
+    .studentName2 {
+      display: none;
+    }
+    button{
+
+      margin-top: 5px;
+    } 
+  }
+  
+  @media (max-width: 1366px) and (min-width:768px) {
+    .studentName{
+      display: none;
+    }
+    .box_padding{
+      border-left: 5px solid white;
+      border-radius: 6px;
+    }
+  }
+
+  .popover-body{
+    color: red;
+    background-color: bisque;
+  }
+
+
+  .mat-option{
+    position:relative; 
+    z-index:99999;
+    
+  }
+
+.md-select-menu-container, 
+.md-open-menu-container {
+    z-index:999999;
+}

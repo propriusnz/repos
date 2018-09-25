@@ -1,0 +1,171 @@
+img{
+  border-radius: 100%;
+  width: 180px;
+  cursor: pointer;
+  border:1px solid 
+  #dddddd;
+}
+small{
+  position: relative;
+  left:30px;
+}
+.file {
+  position: relative;
+  display: inline-block;
+  background: #0099FF;
+  border-radius: 4px;
+  padding: 4px 12px;
+  overflow: hidden;
+  color: white;
+  text-decoration: none;
+  text-indent: 0;
+  line-height: 30px;
+  margin-top: 10px;
+}
+
+.file input {
+  position: absolute;
+  font-size: 100px;
+  right: 0;
+  top: 0;
+  opacity: 0;
+}
+
+.lImage {
+  padding:20px;
+  background-color: rgb(250, 250, 250);
+  border-radius: 10px;
+}
+
+pre{
+  font-family: Helvetica;
+  font-size:15px;
+  color:#424242;  
+  white-space: pre-wrap;
+}
+.indicator{
+  color: rgb(192, 7, 7); 
+  font-size: 15px;
+}
+#a-btn{
+  color:rgb(0, 132, 255);
+  cursor: pointer;
+}
+#f-btn{
+  width:75px; 
+}
+#f-btn-right {
+  width:75px; 
+  float: right; 
+}
+form {
+  padding:20px;
+  background-color: rgb(250, 250, 250);
+  border-radius: 10px;
+}
+#locationList{
+  padding-left: 0;
+}
+#video{
+  width: 80%;
+  height: 360px
+}
+#videoLink{
+  display: inline; 
+  width: 80%;
+  height: 35px;
+}
+label{
+  margin-bottom: -0.9rem;
+}
+#publishLabel{
+  font-size: 20px;
+  font-weight: 600;
+  padding-right: 1rem;
+}
+
+/* Switch button */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 90px;
+  height: 40px;
+}
+.switch input {display:none;}
+/* Rounded sliders */
+.round {
+  border-radius: 34px;
+}
+.round:before {
+  border-radius: 50%;
+}
+
+/* when tutorProfile is private */
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 35px;
+  width: 35px;
+  left: 3px;
+  bottom: 3px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+.slider.changed:before {
+  -webkit-transform: translateX(50px);
+  -ms-transform: translateX(50px);
+  transform: translateX(50px);
+}
+
+/* When tutorProfile is public */
+.slider2 {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #2196F3;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+.slider2:before {
+  position: absolute;
+  content: "";
+  height: 35px;
+  width: 35px;
+  left: 52px;
+  bottom: 3px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+.slider2.changed:before {
+  -webkit-transform: translateX(-50px);
+  -ms-transform: translateX(-50px);
+  transform: translateX(-50px);
+}
+
+
+@media(max-width:768px){
+  .lImage{
+    padding-top: 16px;
+    border-top: 1px solid #e6e6e6; 
+  }
+  #video{
+    width: 100%;
+    height: 260px
+  }
+}

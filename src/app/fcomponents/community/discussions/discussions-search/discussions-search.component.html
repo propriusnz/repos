@@ -1,0 +1,90 @@
+
+<div class="container" >
+  <div class="col-md-8 col-12" style="margin-top: 25px;">
+  <!-- There are three parts in total (SortWays + DiscussionListCard + Pagination) -->
+  
+    <!-- SortWays part -->
+    <div class="Discussion__list" style="margin-bottom: 25px;">
+      <div class="row">
+        <div class="col-sm-4 col-12">
+          <div class="form-group" style="margin-bottom: 0;">
+            <select  class="form-control" [ngModel]="data" (ngModelChange)='data=$event; changeSelect(this)'>
+              <option *ngFor="let type of discussionTypes; let i = index"  [value]='type.text' (select)='changeSelect(type.id,type.text)'>{{type.text}}</option>
+            </select>
+          </div>
+        </div>
+        <!-- <div class="col-sm-3 col-12">
+          <div *ngIf="isLogin" class="form-group"  style="margin-bottom: 0;">
+            <select class=" form-control" (change)='sortByCreator($event)'>
+              <option value="All">All</option>
+              <option value="Mine">Mine</option>
+            </select>
+          </div>
+        </div> -->
+        
+        <!-- search button -->
+        <!-- <div class="col-sm-5 col-12" >
+          <div class="row">
+            <div class="col-sm-8 col-12" style="padding-right: 0;">
+              <input #search type="text" class="form-control"> <span class="fa fa-search searchspan"></span>
+            </div>
+            <div class="col-sm-4 col-12" style="padding-left: 5px;">
+              <button class="btn btn-primary searchBtn" type="submit" (click)="goToSearch(search.value)">Search</button>
+            </div>
+          </div>
+        </div> -->
+        <!-- <div class="col-sm-4 col-12">
+          <div class="form-group">
+            <select class=" form-control" [(ngModel)]="orderSelector" (ngModelChange)='data=$event; changeSelect(this)' name="sort_by_id">
+              <option value>Select...</option>
+              <option value="sort_by_id">Sort by Id</option>
+              <option value="new">Sort by New</option>
+            </select>
+          </div>
+        </div> -->
+      </div>
+    </div>
+    
+    <div class="card">
+    <!-- DiscussionListCard part -->
+    <div class="Discussion__list card-body">
+      <div *ngFor="let discussion of displayDiscussions" class="DiscussionItem__wrapper">
+        <div class="DiscussionItem flex flex-direction-row flex-justify-content-space-between">
+          <div class="flex flex-align-center">
+            <img [src]= "commonSupport.findUserImg(discussion.user_id)" (error)="onError($event)" class="verb-profile-pic round standard rounded-circle" alt="img">
+          </div>
+          <div class="flex flex-column-direction DiscussionItem__content-body flex-1">
+            <div class="flex flex-direction-row flex-align-center"><a [routerLink]="['/app/community/discussions/', discussion.id]" class="m2">{{discussion.discussion_title}}</a></div>
+            <div class="info flex-1">
+              <span><img [src]= "commonSupport.findUserImg(discussion.user_id)" class="verb-profile-pic round nano rounded-circle" (error)="onError($event)" alt="i" style="display: inline-block; margin-right: 4px;"></span>
+              <div id="creator">{{discussion.discussion_creator}}</div>
+              <span style="margin: 0px 2px;">•</span>
+              <span data-var="flex flex-align-center">
+                <img src="../../../../../assets/discussionIcons/{{discussion.discussion_categories}}.png" (error)="subjectIcon($event)" alt="subjectIcon" id="subjectIcon">
+                <span>{{discussion.discussion_categories}}</span> 
+              </span>
+              <span style="margin: 0px 2px;">•</span>
+              <span style="margin: 0px 2px;">{{discussion.created_at | date}}</span>
+              <span style="margin: 0px 2px;">{{discussion.created_at | date:'shortTime'}}</span>
+            </div>
+            <div class="info flex-1" style="font-size: 13px; color: grey;">
+              <span class="">Comments: &nbsp;{{discussion.commentsCount}}<var data-var="num-comments">{{discussion.comments}}</var></span>
+            </div>
+            <div class="DiscussionTags">
+              <div class="DiscussionTag" *ngFor="let tag of discussion.discussion_tags">
+                <div class="DiscussionTag--Text">{{tag}}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pagination part -->
+    <!-- <div class="Discussion__list card-footer">
+      <pagination-controls class="pagination" (pageChange)="getPage($event)" id="server"></pagination-controls>
+    </div> -->
+
+  </div>
+  </div>
+</div>

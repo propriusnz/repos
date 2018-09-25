@@ -1,0 +1,123 @@
+<div>
+  <h2 mat-dialog-title class="d-flex dia-title">
+    <a class="mr-auto" style="font-size: 1.0rem;">Please enter your credit card information:</a>
+    <div class="close" (click)="close()">
+      <i class="fas fa-times-circle"></i>
+    </div>
+  </h2>
+  <mat-dialog-content style="text-align:center">
+    <div *ngIf="!hasPaymentInfo">
+      <div>
+        <div id="pay-form" class="pay-form">
+          <form id="payment-form" [formGroup]="paymentFormGroup">
+            <div class="d-flex flex-column">
+              <label>CARD HOLDER NAME
+                <input id="card-holder" class="form-control" formControlName="cardHolder">
+              </label>
+              <label>CARD NUMBER
+                <div id="payment-cardnumber"></div>
+              </label>
+              <div class="d-flex">
+                <div class="mr-auto">
+                  <label>CARD EXPIRY DATE
+                    <div id="payment-cardexp"></div>
+                  </label>
+                </div>
+                <div>
+                  <label>CVV CODE
+                    <div id="payment-cardcvc"></div>
+                  </label>
+                </div>
+              </div>
+            </div>
+          </form>
+          <div id="card-errors" role="alert"></div>
+        </div>
+        <div class="form-btn">
+          <button type="submit" form="payment-form" class="btn btn-primary" [disabled]=false>
+            <a *ngIf="!isSending">Save Card</a>
+            <a *ngIf="isSending">Saving...</a>
+          </button>
+        </div>
+      </div>
+    </div>
+    <!-- <div *ngIf="!hasPaymentInfo">
+        <div *ngIf="!totalCost">
+          <div id="pay-form" class="pay-form">
+            <form id="payment-form" [formGroup]="paymentFormGroup">
+              <div class="d-flex flex-column">
+                <label>CARD HOLDER NAME
+                  <input id="card-holder" class="form-control" formControlName="cardHolder">
+                </label>
+                <label>CARD NUMBER
+                  <div id="payment-cardnumber"></div>
+                </label>
+                <div class="d-flex">
+                  <div class="mr-auto">
+                    <label>CARD EXPIRY DATE
+                      <div id="payment-cardexp"></div>
+                    </label>
+                  </div>
+                  <div>
+                    <label>CVV CODE
+                      <div id="payment-cardcvc"></div>
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </form>
+            <div id="card-errors" role="alert"></div>
+          </div>
+          <div class="form-btn">
+            <button type="submit" form="payment-form" class="btn btn-primary" [disabled]=false>
+              <a *ngIf="!isSending">Save Card</a>
+              <a *ngIf="isSending">Saving...</a>
+            </button>
+          </div>
+        </div>
+      </div> -->
+    <!-- <div *ngIf="!isSuccess">
+      <div class="pay-form">
+        <form id="payment-form" [formGroup]="paymentFormGroup">
+          <div class="d-flex flex-column">
+            <label>CARD HOLDER NAME
+              <input id="card-holder" class="form-control" formControlName="cardHolder">
+            </label>
+            <label>CARD NUMBER
+              <div id="payment-cardnumber"></div>
+            </label>
+            <div class="d-flex">
+              <div class="mr-auto">
+                <label>CARD EXPIRY DATE
+                  <div id="payment-cardexp"></div>
+                </label>
+              </div>
+              <div>
+                <label>CVV CODE
+                  <div id="payment-cardcvc"></div>
+                </label>
+              </div>
+            </div>
+          </div>
+        </form>
+        <div id="card-errors" role="alert"></div>
+      </div>
+      <div class="form-btn">
+        <button type="submit" form="payment-form" class="btn btn-primary" [disabled]=false>
+          <a *ngIf="!isSending">Save Card</a>
+          <a *ngIf="isSending">Saving...</a>
+        </button>
+      </div>
+    </div>
+    <div *ngIf="!isSending && isSuccess">
+      <div class="row success">
+        <div class="col-12 success-content">
+          <h2>Success</h2>
+        </div>
+        <div class="col-12 success-icon">
+          <i class="fas fa-check"></i>
+        </div>
+      </div>
+    </div> -->
+  </mat-dialog-content>
+</div>

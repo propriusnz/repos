@@ -1,0 +1,45 @@
+<div class="container" *ngIf="data">
+  <div class="l2">{{data.post_title}}</div>
+  <div class="m2">{{data.post_subTitle}}</div>
+  <br>
+  <div class="profile">
+    <div class="row">
+      <img [src]="commonSupport.findUserImg(data.user_id)" alt="img" (error)="defaultUserImg($event)" id="userProfileImg"
+        class="rounded-circle">
+      <div class="col-sm-7 col-lg-7">
+        <a href="#">{{data.post_author}}</a><br>
+        <span>{{data.updated_at | date:'fullDate'}}</span>
+      </div>
+      <div class="col-sm-4 col-lg-4 float-right s3" id="colSpace3">
+        <span class="s2bold">
+          <div>Question</div>
+        </span> <br>
+        <img src="../../../../../../../assets/discussionIcons/{{data.post_subject}}.png" (error)="subjectIcon($event)"
+          alt="subjectIcon" id="subjectIcon">
+        <span id="subjectFont"> {{data.post_subject}} • <small>{{data.post_grade}}</small> </span> <br>
+      </div>
+    </div>
+    <div *ngIf="!editButton" style="margin-bottom: 20px;"></div>
+    <div id="tag"><i>{{data.post_tags}}</i></div>
+    <div class="s2">{{data.post_des}}</div>
+    <br>
+
+    <div class="card">
+      <div class="container-body">
+        <img src="../../../../../../../assets/postImgs/{{data.post_subject}}.png" (error)="subjectImg($event)" alt="subjectImg"
+          id="subjectImg">
+      </div>
+
+
+      <div class="row">
+        <div class="col-lg-2"></div>
+        <div class="col-md-12 col-lg-8">
+          <div class="card-body" innerHTML="{{questionObj}}"></div>
+          <app-resources-collection [userType]="viewerType" [resourceType]="'question'" [resourcesData]="questionCollection"
+            [mode]="'view'"></app-resources-collection>
+        </div>
+        <div class="col-lg-2"></div>
+      </div>
+    </div>
+
+  </div>

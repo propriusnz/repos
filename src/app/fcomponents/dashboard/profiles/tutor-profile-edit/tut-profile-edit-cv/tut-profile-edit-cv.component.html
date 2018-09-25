@@ -1,0 +1,206 @@
+<!--education form-->
+<div class="card" style="margin-top: 25px;" (mouseenter)="mouseEnter('Education background')">
+  <div class="card-header m2">Education background</div>
+  <div *ngIf="tProfile" class="card-body">
+    <div *ngIf="addNewEdu"><a id="a-btn" (click)="eduAddStatus[0]=true; addNewEdu=!addNewEdu">Add an educational field</a></div>
+    <ul *ngFor="let edu of tutorCV.eduBackground; let i=index" style="padding-left: 0;">
+      <div class="row" *ngIf="edu.edu && edu.edu_detail && edu.edu_date || eduAddStatus[i]" >
+        <div class="col-xl-2 col-lg-3 col-md-3 col-sm-3 col-12">
+          <p><i *ngIf="edu.edu_date" class="fa fa-calendar" aria-hidden="true"></i> {{edu.edu_date}}</p>
+          <div class="example" *ngIf="!edu.edu && eduAddStatus[0]"><span class="s2Blue">Example</span><br><span class="s4Blue">Start - End</span><br><span class="s3">2001—2004</span></div>
+        </div>
+        <div class="col-xl-4 col-lg-3 col-md-3 col-sm-7 col-12">
+          <p><i *ngIf="edu.edu" class="fa fa-university" aria-hidden="true"></i> {{edu.edu}}</p>
+          <div class="example" *ngIf="!edu.edu && eduAddStatus[0]"><br><span class="s4Blue">Name of institute</span><br><span class="s3">Auckland University</span></div>
+          <p><i *ngIf="edu.edu_detail" class="fa fa-graduation-cap" aria-hidden="true"></i> {{edu.edu_detail}}</p>
+          <div class="example" *ngIf="!edu.edu && eduAddStatus[0]"><span class="s4Blue">Qualifications gained</span><br><span class="s3">Bachelor of Science Majoring in Astrophysics (Honors)</span></div>
+        </div>
+        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
+          <a id="a-btn" *ngIf="edu.edu && !eduAddStatus[i]" (click)="eduAddStatus[i]=true; prefillForm(i)">Edit</a>
+          <br *ngIf="!eduAddStatus[i]">
+          <a id="a-btn" *ngIf="edu.edu && !eduAddStatus[i]" (click)="dlEdu(i)">Delete</a>
+          <form *ngIf="eduAddStatus[i]" [formGroup]="eduForms[i]">
+            <div class="row">
+              <div class="col-5 form-group">
+                <div class="s2">Start year</div>
+                <input type="text" class="form-control" placeholder="Start year" name="sYear" formControlName="sYear">
+                <div *ngIf="eduForms[i].controls.sYear.invalid && eduForms[i].controls.sYear.touched" class="indicator" >[1950-2018] only.</div>
+              </div>
+              <div class="col-2"><br> &mdash; </div>
+              <div class="col-5 form-group">
+                <div class="s2">End year</div>
+                <input type="text" class="form-control" placeholder="End year" name="eYear" formControlName="eYear">
+                <div *ngIf="eduForms[i].controls.eYear.invalid && eduForms[i].controls.eYear.touched" class="indicator" >[1950-2020] only.</div>
+              </div>
+              <div class="col-12 form-group">
+                <div class="s2">Name of institute</div>
+                <input type="text" class="form-control" placeholder="Name of school" name="edu" formControlName="edu">
+                <div *ngIf="eduForms[i].controls.edu.invalid && eduForms[i].controls.edu.touched" class="indicator" >Content is invalid.</div>
+              </div>
+              <div class="col-12 form-group">
+                <div class="s2">Qualifications gained</div>
+                <textarea type="text" class="form-control" placeholder="Details of qualifications gained" row="2" name="eDetail" formControlName="eDetail"></textarea>
+                <div *ngIf="eduForms[i].controls.eDetail.invalid && eduForms[i].controls.eDetail.touched" class="indicator" >Content is invalid.</div>
+              </div>
+              <div class="col-12 form-group">
+                <button type="submit" id="f-btn" class="btn btn-primary" (click)="eduAddStatus[i]=false; cancelClick(i)" >Cancel</button>
+                <button type="submit" id="f-btn-right" class="btn btn-primary"  (click)="doneClick({name: eduForms[i], index: i})">Done</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+      <hr *ngIf="edu.edu">
+    </ul>
+    <div *ngIf="addAnotherEdu"><a id="a-btn" (click)="eduFormStatus(); addAnotherEdu=!addAnotherEdu">Add another</a></div>
+  </div>
+</div>
+
+<!--work form-->
+<div class="card" style="margin-top: 25px;" (mouseenter)="mouseEnter('Work experience')">
+  <div class="card-header m2">Work experience</div>
+  <div *ngIf="tProfile" class="card-body">
+    <div *ngIf="addNewWork"><a id="a-btn" (click)="workAddStatus[0]=true; addNewWork=!addNewWork">Add a work field</a></div>
+    <ul *ngFor="let work of tutorCV.workExp; let i=index" style="padding-left: 0;">
+      <div class="row" *ngIf="work.work && work.work_date && work.work_detail || workAddStatus[i]">
+        <div class="col-xl-2 col-lg-3 col-md-3 col-sm-3 col-12">
+          <p><i *ngIf="work.work_date"  class="fa fa-calendar" aria-hidden="true"></i> {{work.work_date}}</p>
+          <div class="example" *ngIf="!work.work && workAddStatus[0]"><span class="s2Blue">Example</span><br><span class="s4Blue">Start - End</span><br><span class="s3">2005—2009</span></div>
+        </div>
+        <div class="col-xl-4 col-lg-3 col-md-3 col-sm-7 col-12">
+          <p><i *ngIf="work.work" class="fa fa-building" aria-hidden="true"></i> {{work.work}}</p>
+          <div class="example" *ngIf="!work.work && workAddStatus[0]"><br><span class="s4Blue">Name of organization</span><br><span class="s3">Auckland Grammar School</span></div>
+          <p><i *ngIf="work.work_detail" class="fa fa-briefcase" aria-hidden="true"></i> {{work.work_detail}}</p>
+          <div class="example" *ngIf="!work.work && workAddStatus[0]"><span class="s4Blue">Work experience</span><br><span class="s3">Anniversary best IB Maths teacher（in 2007）</span></div>
+        </div>
+        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
+          <a id="a-btn" *ngIf="work.work && !workAddStatus[i]" (click)="workAddStatus[i]=true; prefillWorkForm(i)">Edit</a>
+          <br *ngIf="!workAddStatus[i]">
+          <a id="a-btn" *ngIf="work.work && !workAddStatus[i]" (click)="dlWorkExpe(i)">Delete</a>
+          <form *ngIf="workAddStatus[i]" [formGroup]="workForms[i]">
+            <div class="row">
+              <div class="col-5 form-group">
+                <div class="s2">Start year</div>
+                <input type="text" class="form-control" placeholder="Start year" name="sYear" formControlName="sYear">
+                <div *ngIf="workForms[i].controls.sYear.invalid && workForms[i].controls.sYear.touched" class="indicator" >[1950-2018] only.</div>
+              </div>
+              <div class="col-2"><br> &mdash; </div>
+              <div class="col-5 form-group">
+                <div class="s2">End year</div>
+                <input type="text" class="form-control" placeholder="End year" name="eYear" formControlName="eYear">
+                <div *ngIf="workForms[i].controls.eYear.invalid && workForms[i].controls.eYear.touched" class="indicator" >[1950-2020] only.</div>
+              </div>
+              <div class="col-12 form-group">
+                <div class="s2">Name of organization</div>
+                <input type="text" class="form-control" placeholder="Name of company" name="work" formControlName="work">
+                <div *ngIf="workForms[i].controls.work.invalid && workForms[i].controls.work.touched" class="indicator" >Content is invalid.</div>
+              </div>
+              <div class="col-12 form-group">
+                <div class="s2">Work experience</div>
+                <textarea type="text" class="form-control" placeholder="Details of Work experience" row="2" name="wDetail" formControlName="wDetail"></textarea>
+                <div *ngIf="workForms[i].controls.wDetail.invalid && workForms[i].controls.wDetail.touched" class="indicator" >Content is invalid.</div>
+              </div>
+              <div class="col-12 form-group">
+                <button type="submit" id="f-btn" class="btn btn-primary" (click)="workAddStatus[i]=false; cancelWorkClick(i)" >Cancel</button>
+                <button type="submit" id="f-btn-right" class="btn btn-primary"  (click)="doneWorkClick({name: workForms[i], index: i})">Done</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+      <hr *ngIf="work.work">
+    </ul>
+    <div *ngIf="addAnotherWork"><a id="a-btn" (click)="workFormStatus(); addAnotherWork=!addAnotherWork">Add another</a></div>
+  </div>
+</div>
+
+<!--hobby form-->
+<div class="card" style="margin-top: 25px;" (mouseenter)="mouseEnter('Hobbies and Interests')">
+  <div class="card-header m2">Hobbies and Interests</div>
+  <div *ngIf="tProfile" class="card-body">
+    <div *ngIf="addNewHobby"><a id="a-btn" (click)="hobbyAddStatus[0]=true; addNewHobby=!addNewHobby">Add a hobby and interest</a></div>
+    <ul *ngFor="let hobby of tutorCV.hobbyInt; let i=index" style="padding-left: 0;">
+      <div class="row" *ngIf="hobby.hobby && hobby.hobby_detail || hobbyAddStatus[i]">
+        <div class="col-xl-2 col-lg-3 col-md-3 col-sm-3 col-12">
+          <p><i *ngIf="hobby.hobby" class="fa fa-heart" aria-hidden="true"></i> {{hobby.hobby}}</p>
+          <div class="example" *ngIf="!hobby.hobby && hobbyAddStatus[0]"><span class="s2Blue">Example</span><br><span class="s4Blue">Interest</span><br><span class="s3">Chess</span></div>
+        </div>
+        <div class="col-xl-4 col-lg-3 col-md-3 col-sm-7 col-12">
+          <p><i *ngIf="hobby.hobby_detail" class="fa fa-info-circle" aria-hidden="true"></i> {{hobby.hobby_detail}}</p>
+          <div class="example" *ngIf="!hobby.hobby && hobbyAddStatus[0]"><br><span class="s4Blue">Interest specification</span><br><span class="s3">I enjoy playing chess, and I started a chess club for the elderly in my community.</span></div>
+        </div>
+        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
+          <a id="a-btn" *ngIf="hobby.hobby && !hobbyAddStatus[i]" (click)="hobbyAddStatus[i]=true; prefillHobbyForm(i)">Edit</a>
+          <br *ngIf="!hobbyAddStatus[i]">
+          <a id="a-btn" *ngIf="hobby.hobby && !hobbyAddStatus[i]" (click)="dlHobbyInt(i)">Delete</a>
+          <form *ngIf="hobbyAddStatus[i]" [formGroup]="hobbyForms[i]">
+            <div class="row">
+              <div class="col-12 form-group">
+                <div class="s2">Interest</div>
+                <input type="text" class="form-control" placeholder="Title of interest" name="hobby" formControlName="hobby">
+                <div *ngIf="hobbyForms[i].controls.hobby.invalid && hobbyForms[i].controls.hobby.touched" class="indicator" >Content is invalid.</div>
+              </div>
+              <div class="col-12 form-group">
+                <div class="s2">Interest specification</div>
+                <textarea type="text" class="form-control" placeholder="Details of interest" row="2" name="hDetail" formControlName="hDetail"></textarea>
+                <div *ngIf="hobbyForms[i].controls.hDetail.invalid && hobbyForms[i].controls.hDetail.touched" class="indicator" >Content is invalid.</div>
+              </div>
+              <div class="col-12 form-group">
+                <button type="submit" id="f-btn" class="btn btn-primary" (click)="hobbyAddStatus[i]=false; cancelHobbyClick(i)" >Cancel</button>
+                <button type="submit" id="f-btn-right" class="btn btn-primary"  (click)="doneHobbyClick({name: hobbyForms[i], index: i})">Done</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+      <hr *ngIf="hobby.hobby">
+    </ul>
+    <div *ngIf="addAnotherHobby"><a id="a-btn" (click)="hobbyAddStatus[1]=true; addAnotherHobby=!addAnotherHobby">Add another</a></div>
+  </div>
+</div>
+
+<!--quote form-->
+<div class="card" style="margin-top: 25px;" (mouseenter)="mouseEnter('Favorite quote')">
+  <div class="card-header m2">Favorite quote</div>
+  <div *ngIf="tProfile" class="card-body">
+      <div class="row" *ngIf="tProfile.quote && tProfile.quote_author || qStatus">
+        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
+          <p><i *ngIf="tProfile.quote" class="fa fa-quote-left" aria-hidden="true"></i> {{tProfile.quote}} <i *ngIf="tProfile.quote" class="fa fa-quote-right" aria-hidden="true"></i></p>
+          <p *ngIf = "tProfile.quote"class="float-right"> &nbsp;&mdash;&mdash;&nbsp;{{tProfile.quote_author}}</p>
+          <div class="example" *ngIf="!tProfile.quote && qStatus">
+            <span class="s2Blue">Example</span><br><br><span class="s4Blue">Quote</span><br><span class="s3">Education is the most powerful weapon which you can use to change the world. </span>
+            <br><span class="s4Blue">Quote author</span><br><span class="s3">——Nelson Mandela</span>
+          </div>
+        </div>
+        <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12">
+          <a id="a-btn" *ngIf="tProfile.quote && !qStatus" (click)="qStatus=true; prefillQuoteForm()">Edit</a>
+          <br *ngIf="!qStatus">
+          <a id="a-btn" *ngIf="tProfile.quote && !qStatus" (click)="dlFavQuote({title:'quote', des:'quote_author'})">Delete</a>
+          <form *ngIf="qStatus" [formGroup]="quoteForm">
+            <div class="row">
+              <div class="col-12 form-group">
+                <div class="s2">Quote</div>
+                <textarea type="text" class="form-control" placeholder="Detail of quote" row="2" name="quote" formControlName="quote"></textarea>
+                <div *ngIf="quoteForm.controls.quote.invalid && quoteForm.controls.quote.touched" class="indicator" >Content is invalid.</div>
+              </div>
+              <div class="col-12 form-group">
+                <div class="s2">Quote author</div>
+                <input type="text" class="form-control" placeholder="Name of quote author" name="qAuthor" formControlName="qAuthor">
+                <div *ngIf="quoteForm.controls.qAuthor.invalid && quoteForm.controls.qAuthor.touched" class="indicator" >Content is invalid.</div>
+              </div>
+              <div class="col-12 form-group">
+                <button type="submit" id="f-btn" class="btn btn-primary" (click)="qStatus=false" >Cancel</button>
+                <button type="submit" id="f-btn-right" class="btn btn-primary"  (click)="favoriteQuoteData({status:'qStatus',form:'quoteForm',title:'quote', des:'quote_author'})">Done</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div *ngIf="!tProfile.quote && !qStatus"><a id="a-btn" (click)="qStatus=true">Add an favourite quote of yours</a></div>
+  </div>
+</div>
+
+<button class="btn btn-primary" style="margin:15px;" (click)="submitInfo()">Save All Changes</button>
+<button class="btn btn-danger" style="margin:15px;" (click)="cancelInfo()">Reset All Changes</button>
+
+<app-toastr></app-toastr>

@@ -1,0 +1,26 @@
+[
+  {
+    "pathname": "/app/dashboard/tutor/editprofile/cv",
+    "cardContent":
+    [{
+      "initHelperMatch": "Profile CV",
+      "initHelperText": "Here is some brief <b>introduction about CV</b> of yourself, which contains Education background, Hobbies and Interests, and Favorite quote."
+    },
+    {
+      "helperMatch": "Education background",
+      "helperText": "You can add, edit or delete your <b>education background</b> details here. And you can have <b>at most 3</b> education background details <b>in total</b>."
+    },
+    {
+      "helperMatch": "Work experience",
+      "helperText": "You can add, edit or delete your <b>work experience</b> details here. And you can have <b>at most 3</b> work experience details <b>in total</b>."
+    },
+    {
+      "helperMatch": "Hobbies and Interests",
+      "helperText": "You can add, edit or delete your <b>hobbies and interests</b> details here. And you can have <b>at most 2</b> hobbies and interests details <b>in total</b>."
+    },
+    {
+      "helperMatch": "Favorite quote",
+      "helperText": "You can add, edit or delete your <b>favorite quote</b> details here. And you can have <b>at most 1</b> favorite quote details <b>in total</b>."
+    }]
+  }
+]

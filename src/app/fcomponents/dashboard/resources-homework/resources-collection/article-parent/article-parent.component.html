@@ -1,0 +1,13 @@
+
+<div>
+  <!-- <app-resources-article></app-resources-article> -->
+  <div *ngIf="mode == 'view'">
+    <app-resources-article-show [data]="data"></app-resources-article-show>
+  </div>
+  <div *ngIf="mode == 'add'">
+    <app-article-modify [mode]="'add'" (collectEditorContent)='handleEditorContent($event)'></app-article-modify>
+  </div>
+  <div *ngIf="mode == 'edit'">
+    <app-article-modify [mode]="'edit'" (collectEditorContent)='handleEditorContent($event)' [content]="editorContent"></app-article-modify>
+  </div>
+</div>

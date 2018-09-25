@@ -1,0 +1,221 @@
+<div *ngIf="isEdit;then Edit; else Show"></div>
+
+<ng-template #Show>
+  <div class="container">
+    <div class="row">
+      <div class="col-12 col-lg-8">
+        <div class="form-check card">
+          <div class="card-body ">
+              <div *ngIf='!multiProfile' class="col-9 col-lg-6">
+                <label class="form-check-label">
+                  <mat-checkbox [(ngModel)]="isParent" (click)="isParentClick()">Checked,if you are a parent!</mat-checkbox>
+                </label>
+              </div>
+            <div *ngIf='isParent||multiProfile' class="centred">
+              <button type="button" class="btn btn-outline-info" (click)="addLearner()">Add a learner's profile</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <hr>
+      <hr>
+    </div>
+    <div class="row">
+      <div class="col-12  col-lg-8">
+        <div *ngFor="let profile of profiles">
+          <div class="card">
+            <div class="card-header">
+              <div class='row'>
+                <div class="col-8 ">
+                  <div class='l2'>Profile:{{profile.learner_first_name}}</div>
+                </div>
+                <div class="col-4 ">
+                  <button type="button" class="btn btn-outline-info" (click)="editProfile(profile.learner_id)">Edit</button>
+                </div>
+              </div>
+            </div>
+            <div class="card-body">
+
+              <div class="row">
+                <div class="col-3 col-xs-6">
+                  <label class='label-text' for="firstname">First Name:</label>
+                </div>
+                <div class="col-3 col-xs-6">
+                  {{profile.learner_first_name}}
+                </div>
+                <div class="col-3 col-xs-6">
+                  <label class='label-text' for="lastname">Last Name:</label>
+                </div>
+                <div class="col-3 col-xs-6">
+                  {{profile.learner_last_name}}
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-3 col-xs-6">
+                  <label class='label-text' for="DOB">Date of Birth:</label>
+                </div>
+                <div class="col-3 col-xs-6">
+
+                  {{profile.learner_DOB}}
+                </div>
+                <div class="col-3 col-xs-6">
+                  <label class='label-text' for="YearLevel">Year Level:</label>
+                </div>
+                <div class="col-3 col-xs-6">
+
+                  {{profile.grade}}
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-3">
+                  <label class='label-text' for="Subjects">Subjects:</label>
+                </div>
+                <div class="col-9">
+                  <span *ngFor="let subject of profile.subject">
+                    <span class="badge badge-pill badge-info">
+                      {{subject}}
+                    </span>
+                  </span>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-3 ">
+                  <label class='label-text' for="curriculum">Curriculum:</label>
+                </div>
+                <div class="col-9 ">
+                  <span class='tag' *ngFor="let curriculum of profile.curriculum">
+                    {{curriculum}}
+                  </span>
+                </div>
+              </div>
+              <div class="row">
+                  <div class="col-3">
+                    <label class='label-text' for="DOB">Aspirations:</label>
+                  </div>
+                  <div class="col-9">
+  
+                    {{profile.aspiration}}
+                  </div>
+              </div>                  
+              <div class="row">                  
+                  <div class="col-3">
+                    <label class='label-text' for="YearLevel">Special Request:</label>
+                  </div>
+                  <div class="col-9">
+                    {{profile.sp_need}}
+                  </div>
+                </div>              
+            </div>
+          </div>
+          <hr>
+        </div>
+      </div>
+    </div>
+    <!-- <div class="d-none d-sm-none d-md-none d-lg-block col-lg-4">
+      <app-side-helper></app-side-helper>
+    </div> -->
+
+  </div>
+  <!-- container -->
+</ng-template>
+
+
+<ng-template #Edit>
+  <div class="container">
+    <div class="row">
+
+      <div class="col-12 col-lg-8">
+        <div class="card">
+          <div class="card-header">
+            <p class="l2">Learner profile</p>
+          </div>
+          <div class="card-body">
+            <div class="register-form">
+              <form [formGroup]="learnersForm" (ngSubmit)="onSubmit()">
+                <div class="input_group">
+                  <div class="form_input">
+                    <mat-form-field class="field-width" color="primary">
+                      <input matInput id="first_name" #firstName maxlength="20" formControlName="learner_first_name" name="first_name" type="text"
+                        placeholder="Student first name">
+                      <mat-hint align="end">{{firstName.value?.length || 0}}/20</mat-hint>
+                      <mat-error *ngIf="learnersForm.controls.learner_first_name.invalid && (learnersForm.controls.learner_first_name.dirty || learnersForm.controls.learner_first_name.touched)">
+                        Please enter valid name.
+                      </mat-error>
+                    </mat-form-field>
+                  </div>
+
+                  <div class="form_input">
+                    <mat-form-field class="field-width">
+                      <input matInput id="last_name" #lastName maxlength="20" formControlName="learner_last_name" name="last_name" type="text"
+                        placeholder="Student last name">
+                      <mat-hint align="end">{{lastName.value?.length || 0}}/20</mat-hint>
+                      <mat-error *ngIf="learnersForm.controls.learner_last_name.invalid && (learnersForm.controls.learner_last_name.dirty || learnersForm.controls.learner_last_name.touched)">
+                        Please enter valid name.
+                      </mat-error>
+                    </mat-form-field>
+                  </div>
+
+                  <div class="form_input">
+                    <mat-form-field class="field-width">
+                      <input matInput [min]="minDOB" [max]="maxDOB" [matDatepicker]="picker" formControlName="learner_DOB" placeholder="My Date of Birth (DD/MM/YYYY)">
+                      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                      <mat-datepicker #picker></mat-datepicker>
+                    </mat-form-field>
+
+                  </div>
+                  <div class="form_input">
+                    <mat-form-field class="field-width">
+                      <mat-select multiple placeholder="My Subjects" [formControl]="learnersForm.controls['subject']">
+                        <mat-option *ngFor="let subjects of subject_list" [value]="subjects"> {{ subjects }}</mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                  </div>
+                  <div class="form_input">
+                    <mat-form-field class="field-width">
+                      <mat-select placeholder="My year level" [formControl]="learnersForm.controls['grade']">
+                        <mat-option *ngFor="let grade of grade_list" [value]="grade"> {{ grade }}</mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                  </div>
+                  <div class="form_input">
+                    <mat-form-field class="field-width">
+                      <mat-select multiple placeholder="My Curriculums" [formControl]="learnersForm.controls['curriculum']">
+                        <mat-option *ngFor="let curriculum of curriculum_list" [value]="curriculum">{{curriculum}}
+                        </mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                  </div>
+                  <div class="form_input">
+                    <mat-form-field class="field-width">
+                      <textarea matInput #aspirations formControlName="aspiration" placeholder="My aspirations"></textarea>
+                      <mat-hint align="end">{{aspirations.value?.length || 0}}/50</mat-hint>
+                    </mat-form-field>
+                  </div>
+                  <div class="form_input">
+                    <mat-form-field class="field-width">
+                      <textarea matInput #input formControlName="sp_need" placeholder="Any special Request"></textarea>
+                      <mat-hint align="end">{{input.value?.length || 0}}/50</mat-hint>
+                    </mat-form-field>
+                  </div>
+                  <div class="submit_success" [hidden]="!submitted">
+                    <p>Submitted Successfully.</p>
+                  </div>
+                  <button type="submit" class="btn btn_blue_large">Submit</button>
+                  <button type="button" class="btn btn_blue_large float-right" (click)="cencel()">Back</button>
+
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- <div class="d-none d-sm-none d-md-none d-lg-block col-lg-4">
+        <app-side-helper></app-side-helper>
+      </div> -->
+    </div>
+  </div>
+  <!-- container -->
+</ng-template>

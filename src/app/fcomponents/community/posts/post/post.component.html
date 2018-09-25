@@ -1,0 +1,39 @@
+<div class="container" *ngIf="post">
+  <div class="l2">{{post.post_title}}</div>
+  <div class="m2">{{post.post_subTitle}}</div>
+  <br>
+  <div class="profile">
+    <div class="row">
+        <!-- <div class="col-sm-2 col-md-2 col-lg-1" id="colSpace1"> -->
+            <img [src]="commonSupport.findUserImg(post.user_id)" alt="img" (error)="defaultUserImg($event)" id="userProfileImg" class="rounded-circle">
+        <!-- </div> -->
+        <div class="col-sm-7 col-lg-7">
+            <a href="#">{{post.post_author}}</a><br>
+            <span>{{post.updated_at | date:'fullDate'}}</span>
+        </div>
+        <div class="col-sm-4 col-lg-4 float-right s3" id="colSpace3">
+          <span class="s2bold">{{post.post_type}}</span> <br>
+          <img src="../../../../../assets/discussionIcons/{{post.post_subject}}.png" (error)="subjectIcon($event)" alt="subjectIcon" id="subjectIcon">
+          <span id="subjectFont"> {{post.post_subject}} • <small>{{post.post_grade}}</small> </span> <br>
+          <button *ngIf = "editButton" class="btn btn-sm" id="editBtn" routerLink="/app/community/newpost" href="http://learnspace.co.nz/api/public/api/app/community/newpost">Edit Article</button>
+        </div>   
+    </div>
+    <div *ngIf="!editButton" style="margin-bottom: 20px;"></div>
+    <div id="tag"><i>{{post.post_tags}}</i></div>
+    <div class="s2">{{post.post_des}}</div>
+    <br>
+
+    <div class="card">
+      <div class="container-body">
+        <img src="../../../../../assets/postImgs/{{post.post_subject}}.png" (error)="subjectImg($event)" alt="subjectImg" id="subjectImg">
+      </div>
+      <div class="row">
+        <div class="col-lg-2"></div>
+        <div class="col-md-12 col-lg-8">
+          <div class="card-body" innerHTML="{{post.post_body}}"></div>
+        </div>
+        <div class="col-lg-2"></div>
+      </div>
+    </div>
+
+  </div>

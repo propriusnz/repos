@@ -1,0 +1,110 @@
+<div class="container">
+  <!-- There are 4 parts in total (navTab + SearchBar + PostListCard + Pagination) -->
+
+  <!-- navTab part -->
+  <ul class="nav nav-tabs" style="margin-top: 15px;">
+    <li class="nav-item">
+      <a class="nav-link s2bold pointer" (click)="getAllPost()" [ngClass]="{'active': articleShow && resourceShow && questionShow}">All</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link s2bold pointer" (click)="getArticle()" [ngClass]="{'active': articleShow && !resourceShow && !questionShow}">Articles</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link s2bold pointer" (click)="getResource()" [ngClass]="{'active': !articleShow && resourceShow && !questionShow}">Resources</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link s2bold pointer" (click)="getQuestion()" [ngClass]="{'active': !articleShow && !resourceShow && questionShow}">Questions</a>
+    </li>
+  </ul>
+
+  <!-- SearchBar part -->
+  <div class="row" style="margin-top: 25px;">
+    <div class="col-sm-3 col-lg-3 col-12">
+      <div class="form-group" style="margin-bottom: 0;">
+        <select class="form-control" [ngModel]="postSubject" (ngModelChange)='data=$event; subjectSelectChange(this)'>
+          <option *ngFor="let subject of subjects"  [value]='subject' (select)='subjectSelectChange(subject)'>{{subject}}</option>
+        </select>
+      </div>
+    </div>
+    <div class="col-sm-3 col-lg-3 col-12">
+      <div class="form-group" style="margin-bottom: 0;">
+        <select class="form-control" [ngModel]="postGrade" (ngModelChange)='data=$event; gradeSelectChange(this)'>
+          <option *ngFor="let grade of grades"  [value]='grade' (select)='gradeSelectChange(grade)'>{{grade}}</option>
+        </select>
+      </div>
+    </div>
+    <div class="col-sm-3 col-lg-3 col-12">
+      <div class="form-group" style="margin-bottom: 0;">
+        <select class="form-control" [ngModel]="postDate" (ngModelChange)='data=$event; dateSelectChange(this)'>
+          <option *ngFor="let date of dates"  [value]='date' (select)='dateSelectChange(date)'>{{date}}</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <!-- PostListCard part consists of 4 parts (All + Articles + Resources + Questions) -->
+  <div class="col-lg-8 col-12">
+
+    <!-- Articles part -->
+    <div *ngFor="let post of posts"  class="card my-4">
+      <a [href]="['http://learnspace.co.nz/app/community/posts/'+ post.post_id]" [routerLink]="['/app/community/posts/'+ post.post_id]" class="article-effect" style="text-decoration: none">
+        <div class="card-header">
+          <div class="row">
+            <img [src]= "commonSupport.findUserImg(post.user_id)" alt="img" (error)="defaultUserImg($event)" id="userProfileImg" class="rounded-circle">
+            <div>
+              <span class="text-primary float-left ml-2 s4" style="color:#0099FF;">{{post.post_author}}</span> <br>
+              <span class="text-muted float-left ml-2 s4 span-gap">{{post.updated_at | date}}</span>
+              <span class="text-muted float-left ml-2 s4 span-gap">{{post.updated_at | date:'shortTime'}}</span>
+            </div>
+          </div>
+        </div>
+        <div class="container-body">
+          <img src="../../../../../assets/postImgs/{{post.post_subject}}.png" (error)="subjectImg($event)"  alt="subjectImg" id="subjectImg">
+        </div>
+        <div class="card-body">
+          <div class="row s2">
+            <span class="col-lg-8">
+              <span class="s2bold">{{post.post_type}}</span>
+              <img src="../../../../../assets/discussionIcons/{{post.post_subject}}.png" (error)="subjectIcon($event)" alt="subjectIcon" id="subjectIcon">
+              <span>{{post.post_subject}} • <small>{{post.post_grade}}</small></span>
+            </span>
+            <span class="col-lg-4 float-right"><i>{{post.post_tags | slice: 0:40}}</i></span>
+          </div>
+          <div class="card-title m2">{{post.post_title}}</div>
+          <p class="card-text text-dark">{{post.post_des | slice: 0:200}}...</p>
+        </div>
+      </a>            
+    </div>
+    <div *ngIf="postTip">
+      There is no this kind of articles published yet.
+    </div>
+
+    <!-- Pagination part -->
+    <div *ngIf="display.innerWidth <= 576">
+      <mat-paginator class="col-12" [length]="totalPosts" [pageSize]="perPage" [showFirstLastButtons]=true [hidePageSize]=true (page)="changed($event)"></mat-paginator>
+    </div>
+    <div *ngIf="display.innerWidth > 576">
+      <!-- <div class="text-center">
+        <span *ngFor="let page of pages; let i = index">
+          <button type="submit" class="btn btn-default btn-sm" id="pageBtn" (click)="getPage(i+1)">{{page}}</button>
+        </span>
+      </div> -->
+
+      <div class="col-12 text-center" style="margin-bottom: 7px">
+        <button type="button" class="btn btn-link" (click)="goPrevious()" id="prevBtn" [attr.disabled]="prevBtnDisable?'true':null">
+          <i class="fa fa-angle-double-left"></i>
+        </button>
+        <div class="btn-group" *ngFor="let page of pages; let i = index">
+          <button class="btn text-primary rounded" id="pageBtn" (click)="getPage(i+1)" [ngStyle]="pageActive[i+1] ? ({background: '#a3daff'}) : ({background: 'white'})">{{page}}</button>
+        </div>
+        <!-- <div *ngIf="tailBtnArray.length > 0; then hide"></div> -->
+        <button type="button" class="btn btn-link" (click)="goNext()" id="nextBtn" [attr.disabled]="nextBtnDisable?'true':null">
+          <i class="fa fa-angle-double-right"></i>
+        </button>
+      </div>
+
+    </div>
+
+    
+  </div>
+</div>

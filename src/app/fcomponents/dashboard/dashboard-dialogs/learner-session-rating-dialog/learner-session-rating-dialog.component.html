@@ -1,0 +1,39 @@
+<h2 mat-dialog-title class="text-center">Rate your sessions</h2>
+
+
+<mat-dialog-content>
+  <div class="card-body">
+    <div class="row">
+      <div class="col-2">
+        <img class="rounded-circle" src="{{tutors.img}}" width="90%">
+      </div>
+      <div class="row col-2">
+        <div class="col-12">
+          {{tutors.name}}
+        </div>
+      </div>
+      <div class="col-8">
+        <div>
+          <small>{{tutors.session_time}} - {{tutors.session_date}}</small>
+        </div>
+        <div>
+          <small>
+            {{tutors.session_location}}
+          </small>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="card-body">
+    <div>
+      <star-rating [showHalfStars]="true" size="large" (starClickChange)="onstarClick($event)"></star-rating>
+    </div>
+    <br>
+    <div class="text-center">
+      <button type="button" class="btn btn-outline-info btn-sm" (click)="onSubmit()" style="margin-bottom: 5px">
+        submit
+      </button>
+
+    </div>
+  </div>
+</mat-dialog-content>

@@ -1,0 +1,18 @@
+<div class="s3Blue">
+  <a routerLink="/app/help/home">Support</a>
+  <span> / </span>
+  <a (click)="previous()" routerLink="">{{currentarticletype}}</a>
+  <span> / </span>{{articleTitle}}
+</div>
+
+<div class="row">
+  <div class=" col-md-9">
+    <div class="bg">
+      <div class="m2">{{articleTitle}}</div>
+
+      <div class="s2" [innerHTML]="articleText"></div>
+    </div>
+  </div>
+
+  <br>
+  <br>

@@ -1,0 +1,340 @@
+<!-- <div class="myStepper col-12 col-xl-8 col-lg-8">
+  <div class="container">
+    <ul class="ac">
+      <li class="ac-item on">
+        <div class="ac-item-hd">
+          <i class="fa fa-info-circle" aria-hidden="true"></i>
+          <span> information</span>
+        </div>
+        <div class="ac-item-bd" id="ac-item-bd-1">
+          <div class="bd-content">
+            <div class="content">
+              <form class="col-12" [formGroup]="basicPostInfoForm">
+                <div class="row" style="justify-content: space-between;">
+
+                  <div class="col-12 input-div">
+                    <label for="title">Title</label>
+                    <input formControlName="title" class="input-box" type="text" id="title" name="title" placeholder="Enter title.">
+                  </div>
+
+                  <div class="col-12 input-div">
+                    <label for="sub-title">Sub Title</label>
+                    <input formControlName="subTitle" class="input-box" type="text" id="sub_title" name="sub_title"
+                      placeholder="Enter sub tite.">
+                  </div>
+
+                  <div class="col-5 input-div">
+                    <label for="subject">Subject</label>
+                    <select id="subject" name="subject" formControlName="subject" class="input-select">
+                      <option value="">select</option>
+                      <option *ngFor="let subject of resourceSubjects" [value]="subject.name">{{ subject.name }}</option>
+                    </select>
+
+                  </div>
+                  <div class="col-5 input-div">
+                    <label for="grade">Grade</label>
+                    <select id="grade" name="grade" formControlName="grade" class="input-select">
+                      <option value="">select</option>
+                      <option *ngFor="let grade of resourceGrade" [value]="grade.name">{{ grade.name }}</option>
+                    </select>
+                  </div>
+
+                  <div class="col-12 input-div" *ngIf="windowWidth > 541">
+                    <label for="grade" class="" style="width: 100%">Privacy</label>
+                    <div class="radio-group">
+                      <mat-radio-group class="privacy-radio-group col-6" formControlName="privacy">
+                        <mat-radio-button value=2>Public</mat-radio-button>
+                        <mat-radio-button value=0>Private</mat-radio-button>
+                      </mat-radio-group>
+                      <div class="col-6">
+                        <div *ngIf="basicPostInfoForm.value.privacy == 'public'">
+                          <p class="tips">This is public post. Everyone can see your posts.</p>
+                        </div>
+                        <div *ngIf="basicPostInfoForm.value.privacy  == 'private'" class="tips">
+                          <p>This is private post. It is only seen by you or your lovely students.</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-12 input-div" *ngIf="windowWidth <= 541">
+                    <label for="privacy" class="" style="width: 100%">Privacy</label>
+                    <mat-button-toggle-group formControlName="privacy" class="privacy">
+                      <mat-button-toggle id="public" value="public">Public</mat-button-toggle>
+                      <div id="public-panel">This is public post. Everyone can see your posts.</div>
+
+                      <mat-button-toggle id="private" value="private">Private</mat-button-toggle>
+                      <div id="private-panel">This is private post. It is only seen by you or your lovely students.</div>
+
+                    </mat-button-toggle-group>
+                  </div>
+
+                  <div class="col-12 input-div">
+                    <label for="description">Description</label>
+                    <textarea class="input-textarea" formControlName="description" placeholder="Description"></textarea>
+                  </div>
+
+                  <div class="col-12 input-div">
+                    <label for="tags">Tags</label>
+                    <tag-input formControlName="tags" [theme]="'bootstrap'" [modelAsStrings]="true" [maxItems]="5"
+                      [ripple]="false" class="tags">
+                    </tag-input>
+                  </div>
+                </div>
+              </form>
+            </div>
+            <button type="button" class="btn btn-secondary nextBtn first-next-button" (click)="gotoStepTwoPanel()">Next</button>
+
+          </div>
+        </div>
+      </li>
+
+      <li class="ac-item">
+        <div class="ac-item-hd">
+          <i class="fa fa-cloud-upload" aria-hidden="true"></i>
+          Upload
+        </div>
+        <div class="ac-item-bd" id="ac-item-bd-2">
+          <div class="bd-content">
+            <div class="content">
+              <app-resources-collection [userType]="userType" [mode]="mode" [resourceType]="resType"></app-resources-collection>
+            </div>
+            <div class="row justify-content-around">
+              <button type="button" class="btn btn-secondary btn-sm prevBtn">Privious</button>
+              <button type="button" class="btn btn-secondary btn-sm nextBtn" (click)="gotoStepThreePanel()">Next</button>
+            </div>
+          </div>
+
+        </div>
+      </li>
+
+      <li class="ac-item">
+        <div class="ac-item-hd">
+          <i class="fa fa-check-circle" aria-hidden="true"></i>
+          Check
+        </div>
+        <div class="ac-item-bd" id="ac-item-bd-3">
+          <div class="bd-content">
+            <div class="content">
+              Ad necessitatibus velit, accusantium expedita debitisimpedit rerum totam id. Lorem ipsum dolor sit amet,
+              consectetur adipisicing
+              elit. Natus quibusdam recusandae illum, nesciunt, architecto, saepe facere, voluptas eum incidunt dolores
+              magni
+              itaque autem neque velit in. At quia quaerat asperiores.
+            </div>
+            <div class="row justify-content-around">
+              <button type="button" class="btn btn-secondary btn-sm prevBtn">Privious</button>
+              <button type="button" class="btn btn-secondary btn-sm" id="btnSave" (click)="savePost()">Save</button>
+            </div>
+          </div>
+
+        </div>
+      </li>
+    </ul>
+  </div>
+</div> -->
+
+
+<!-- <h2 class="text-center font-bold pt-4 pb-5 mb-5">
+  <strong>Create Your Own Project</strong>
+</h2> -->
+
+<div class="col-lg-10 col-12 container">
+  <div class="l2 text-center pt-4 pb-5" *ngIf="resType == 'article'">
+    Create Your Own Article
+  </div>
+  <div class="l2 text-center pt-4 pb-5" *ngIf="resType =='question'">
+    Create Your Own Question
+  </div>
+  <div class="l2 text-center pt-4 pb-5" *ngIf="resType =='reference'">
+    Create Your Own Reference
+  </div>
+
+  <!-- Stepper -->
+  <div class="steps-form-2">
+    <div class="steps-row-2 setup-panel-2 d-flex justify-content-between">
+      <div class="steps-step-2">
+        <a href="#step-1" type="button" class="btn btn-amber btn-circle-2 waves-effect ml-0 active" data-toggle="tooltip"
+          data-placement="top" title="Start your Project" id="stepper-1">
+          <i class="fa fa-folder-open-o" aria-hidden="true"></i>
+        </a>
+      </div>
+      <div class="steps-step-2">
+        <!-- add 'disabled' them before click next button -->
+        <a *ngIf="resType == 'article'" href="#step-2" type="button" class="btn btn-blue-grey btn-circle-2 waves-effect "
+          data-toggle="tooltip" data-placement="top" title="Write Article" id="stepper-2">
+          <i class="fa fa-pencil" aria-hidden="true"></i>
+        </a>
+        <a *ngIf="resType == 'question'" href="#step-2" type="button" class="btn btn-blue-grey btn-circle-2 waves-effect "
+          data-toggle="tooltip" data-placement="top" title="Create Questions" id="stepper-2">
+          <i class="fa fa-pencil" aria-hidden="true"></i>
+        </a>
+        <a *ngIf="resType == 'reference'" href="#step-2" type="button" class="btn btn-blue-grey btn-circle-2 waves-effect "
+          data-toggle="tooltip" data-placement="top" title="Upload Study Resources" id="stepper-2">
+          <i class="fa fa-pencil" aria-hidden="true"></i>
+        </a>
+      </div>
+      <div class="steps-step-2">
+        <a href="#step-3" type="button" class="btn btn-blue-grey btn-circle-2 waves-effect mr-0 " data-toggle="tooltip"
+          data-placement="top" title="Finish" id="stepper-3">
+          <i class="fa fa-check" aria-hidden="true"></i>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- First Step -->
+  <form role="form" style="margin-top: 16px;">
+    <div class="row setup-content-2" id="step-1">
+      <div class="col-md-12">
+        <div class="col-12 s2bold">Please fill all required fields.
+          <span class="red-star">*</span>
+        </div>
+        <form class="col-12" [formGroup]="basicPostInfoForm">
+          <div class="row" style="justify-content: space-between;">
+            <div class="col-12 input-div">
+              <label for="title">Title
+                <span class="red-star">*</span>
+              </label>
+              <input formControlName="title" class="input-box" type="text" id="title" name="title" placeholder="Enter title.">
+              <div *ngIf="basicPostInfoForm.controls.title.invalid && (basicPostInfoForm.controls.title.dirty || basicPostInfoForm.controls.title.touched)"
+                class="invalid_feedback">
+                Please enter valid title.
+              </div>
+            </div>
+            <div class="col-12 input-div">
+              <label for="sub-title">Sub Title
+                <span class="red-star">*</span>
+              </label>
+              <input formControlName="subTitle" class="input-box" type="text" id="sub_title" name="sub_title"
+                placeholder="Enter sub title.">
+              <div *ngIf="basicPostInfoForm.controls.subTitle.invalid && (basicPostInfoForm.controls.subTitle.dirty || basicPostInfoForm.controls.subTitle.touched)"
+                class="invalid_feedback">
+                Please enter valid subtitle.
+              </div>
+            </div>
+
+            <div class="col-6 col-lg-5 input-div">
+              <label for="subject">Subject
+                <span class="red-star">*</span>
+              </label>
+              <select class="input-select" id="input-select" formControlName="subject">
+                <option value="">
+                  <--Select-->
+                </option>
+                <option *ngFor="let subject of resourceSubjects" [value]="subject.name">{{ subject.name }}</option>
+              </select>
+            </div>
+
+            <div class="col-6 col-lg-5 input-div">
+              <label for="grade">Grade
+                <span class="red-star">*</span>
+              </label>
+              <select id="grade" name="grade" formControlName="grade" class="input-select">
+                <option value="">
+                  <--Select-->
+                </option>
+                <option *ngFor="let grade of resourceGrade" [value]="grade.name">{{ grade.name }}</option>
+              </select>
+            </div>
+
+            <!-- big screen -->
+            <div class="col-12 input-div" *ngIf="windowWidth > 541">
+              <label for="grade" style="width: 100%">Privacy
+                <span class="red-star">*</span>
+              </label>
+              <div class="radio-group">
+                <mat-radio-group class="privacy-radio-group col-6" formControlName="privacy">
+                  <mat-radio-button id="public-btn" value=2>Publish</mat-radio-button>
+                  <mat-radio-button id="private-btn" value=0>Not Publish</mat-radio-button>
+                </mat-radio-group>
+                <div class="col-6">
+                  <div *ngIf="basicPostInfoForm.value.privacy == 2">
+                    <p class="tips">Everyone can see your posts.</p>
+                  </div>
+                  <div *ngIf="basicPostInfoForm.value.privacy  == 0" class="tips">
+                    <p>Only you or people who you assign to can see the posts.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- small screen -->
+            <div class="col-12 input-div" *ngIf="windowWidth <= 541">
+              <label for="privacy" class="" style="width: 100%">Privacy
+                <span class="red-star">*</span>
+              </label>
+              <mat-button-toggle-group formControlName="privacy" class="privacy">
+                <mat-button-toggle id="public" value=2>Publish</mat-button-toggle>
+                <div id="public-panel">Everyone can see your posts.</div>
+                <mat-button-toggle id="private" value=0>Not Publish</mat-button-toggle>
+                <div id="private-panel">Only you or people who you assign to can see the posts.</div>
+              </mat-button-toggle-group>
+            </div>
+
+            <div class="col-12 input-div wrap">
+              <label for="description">Description
+                <span class="red-star">*</span>
+                <span style="font-size: 11px; color: grey;"> (No less than 2 characters and No more than 120
+                  characters)</span>
+              </label>
+              <textarea class="input-textarea" id="textareaChars" formControlName="description" placeholder="Enter your description"
+                maxlength="120"></textarea>
+              <span id="chars" class="counter">120</span>
+              <div *ngIf="basicPostInfoForm.controls.description.invalid && (basicPostInfoForm.controls.description.dirty || basicPostInfoForm.controls.description.touched)"
+                class="invalid_feedback">
+                Description should be at least 2 characters.
+                <div *ngIf="basicPostInfoForm.controls.description.errors?.maxlength" class="invalid_feedback">
+                  Description should be no more than 120 characters.
+                </div>
+              </div>
+
+            </div>
+
+            <div class="col-12 input-div">
+              <label for="tags_input">Tags
+                <span style="font-size: 11px; color: grey;"> (Press 'Enter' or 'Tab' to confrim your tags, maximum is 5
+                  tags)</span>
+              </label>
+              <tag-input formControlName="tags" [theme]="'bootstrap'" [modelAsStrings]="true" [maxItems]="5" [ripple]="false"
+                [separatorKeyCodes]="[9]" [secondaryPlaceholder]="'  Enter your tags ...'" class="tags_input">
+              </tag-input>
+            </div>
+          </div>
+          <button class="btn btn-mdb-color btn_blue btn-rounded nextBtn-2 float-right" type="button" style="margin-top: 10px;"
+            (click)="gotoStepTwoPanel()" [disabled]="basicPostInfoForm.invalid">Next</button>
+        </form>
+
+      </div>
+    </div>
+
+    <!-- Second Step -->
+    <div class="row setup-content-2" id="step-2">
+      <div class="col-12 content">
+        <div *ngIf="mode == 'add'">
+          <app-resources-collection [userType]="userType" [mode]="'add'" [resourceType]="resType"></app-resources-collection>
+        </div>
+        <div *ngIf="mode == 'edit'">
+          <app-resources-collection [userType]="userType" [mode]="'edit'" [resourceType]="resType" [resourcesData]="resourcesPostBody"></app-resources-collection>
+        </div>
+        <button class="btn btn-mdb-color btn_blue btn-rounded prevBtn-2 float-left" type="button">Previous</button>
+        <button class="btn btn-mdb-color btn_blue btn-rounded nextBtn-2 float-right" type="button" (click)="gotoStepThreePanel()">Next</button>
+      </div>
+    </div>
+
+    <!-- Third Step -->
+    <div class="row setup-content-2" id="step-3">
+      <div class="col-md-12">
+        <div class="content">
+          <div *ngIf="fullPostInfo">
+            <app-resource-summary [basicFormData]="basicPostInfoForm.value" [resourceType]="resType"></app-resource-summary>
+          </div>
+        </div>
+        <!-- <h2 class="text-center font-weight-bold my-4">Registration completed!</h2> -->
+        <button class="btn btn-mdb-color btn-rounded prevBtn-2 float-left" type="button">Previous</button>
+        <button class="btn btn-success btn-rounded float-right" (click)="savePost()">Submit</button>
+      </div>
+    </div>
+  </form>
+
+</div>

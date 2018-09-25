@@ -1,0 +1,219 @@
+<div class="container">
+  <div *ngIf="viewerType == 'tutor' && accessType == 'add'">
+    <div *ngIf="questionStatus == 'init'; then formStyle; else savedStyle"></div>
+  </div>
+  <div *ngIf="viewerType == 'tutor' && accessType == 'edit'">
+    <div *ngIf="questionStatus == 'init'; then formStyle; else savedStyle"></div>
+  </div>
+  <div *ngIf="viewerType == 'tutor' && accessType == 'view'; then overview"></div>
+  <div *ngIf="viewerType == 'learner' && accessType == 'view'; then quizStyle"></div>
+</div>
+
+
+
+<ng-template #formStyle>
+  <!-- Page header -->
+
+  <!-- Page content -->
+
+  <mat-card>
+    <form [formGroup]="questionForm" novalidate>
+
+      <div>
+
+        <mat-form-field style="width:100%;">
+          <input matInput placeholder="Question Title (Option)" formControlName="questionTitle">
+        </mat-form-field>
+      </div>
+
+      <div>
+        <textarea class="form-control autoExpand" style="width:100%; height:200px;" id="questionText" required placeholder="Question Text" formControlName="questionText"></textarea>
+      </div>
+
+      <!--<mat-divider></mat-divider>-->
+
+      <div formArrayName="ansArray">
+        <div *ngFor="let unit of questionForm.controls.ansArray.controls; let i=index">
+
+          <!-- row divider show for every nex row exclude if first row -->
+          <mat-divider *ngIf="questionForm.controls.ansArray.controls.length > 1 && i > 0"></mat-divider><br>
+
+          <!-- group name in this case row index -->
+          <div [formGroupName]="i">
+            <div fxLayout="row" fxLayout.xs="column" fxLayoutWrap fxLayoutGap="3.5%" fxLayoutAlign="center">
+
+              <mat-form-field>
+                <input matInput placeholder="Blank{{i+1}} Answer" formControlName="ans" required>
+                <!-- input field error -->
+                <mat-error *ngIf="unit.controls.ans.invalid">
+                  Answer is required.
+                </mat-error>
+              </mat-form-field>
+              <button mat-mini-fab color="warn" (click)="removeUnit(i)">
+                      <i class="material-icons">
+                      clear
+                      </i>
+                                 </button>
+            </div>
+          </div>
+
+        </div>
+        <div *ngIf="questionForm.controls.ansArray.controls.length ==0">
+          <br>
+        </div>
+
+        <mat-divider></mat-divider>
+        <mat-card-actions>
+
+        </mat-card-actions>
+      </div>
+
+      <div class="form-btn-div">
+        <button mat-raised-button style="float:left;" (click)="addUnit()">
+              Add blank
+              </button>
+        <button type="button" mat-button color="warn" class="styled-btn" (click)="discardQuestion()"><i class="material-icons">
+                  delete_sweep</i>Discard
+                </button>
+        <button type="button" mat-button color="primary" class="styled-btn" (click)="collectAnswer1()" [disabled]="questionForm.invalid">
+                  <i class="material-icons">save_alt</i>Save
+                </button>
+      </div>
+      <!-- loop throught ansArray -->
+    </form>
+  </mat-card>
+  <!-- End form ansArray array -->
+
+  <!-- Page form end -->
+  <br>
+
+
+  <!--  {{questionForm.value |json}}-->
+</ng-template>
+
+
+
+<ng-template #savedStyle>
+  <div *ngIf="questionInfo.questionSaveStatus == 'saved'; else formStyle">
+    <mat-card>
+      <div class="pos-btn">
+        <button type="button" class="btn btn-outline-secondary" (click)="moveQuestionUp()">Up</button>
+        <button type="button" class="btn btn-outline-secondary" (click)="moveQuestionDown()">Down</button>
+      </div>
+      <mat-card-content>
+        <div class="saved-quiz col ">
+          <div class="saved-quiz-title">
+            <p>
+              <b>{{questionInfo.questionContent.questionTitle}}</b>
+            </p>
+          </div>
+          <div class="saved-quiz-text">
+            <div class="row" style="">
+              <div class="question-col col-col-sm-md-lg-auto">
+                <h5>{{questionInfo.questionId}}.</h5>
+              </div>
+              <div class="question-col col-10">
+                <h5 class="question"><p [innerHTML]="questionText"></p></h5>
+              </div>
+            </div>
+          </div>
+        </div>
+      </mat-card-content>
+      <mat-card-actions class="float-right">
+        <div class="row">
+          <button type="button" color="primary" mat-button (click)="editQuestion()">
+          <i class="material-icons">
+           create
+          </i>Edit</button>
+          <button type="button" color="warn" mat-button (click)="deleteQuestion()">
+          <i class="material-icons">
+           delete
+          </i>Delete</button>
+        </div>
+      </mat-card-actions>
+      <br>
+    </mat-card>
+    <br>
+  </div>
+</ng-template>
+
+<ng-template #quizStyle>
+  <div class="container quiz">
+    <div class="row">
+      <div class="col">
+        <div>
+          <form [formGroup]="quizForm">
+            <mat-accordion>
+
+              <mat-card>
+                <mat-card-header>
+                  <mat-card-subtitle>
+                    <h5>{{questionInfo.questionContent.questionTitle}}</h5>
+                  </mat-card-subtitle>
+                  <!--
+                      <div *ngIf="questionNotAns.length!=0">
+                        <div *ngFor="let number of questionNotAns">
+                          <div *ngIf="number == i">
+                            <mat-card-subtitle style="padding-right:10px; color:red;">* required</mat-card-subtitle>
+                          </div>
+                        </div>
+                      </div>-->
+
+                </mat-card-header>
+                <mat-card-content>
+                  <h5 id="questionText-{{questionInfo.questionId}}">{{questionInfo.questionId}}. {{questionInfo.questionContent.questionText}}</h5>
+
+                  <div *ngIf="displayAnswer">
+
+                    <div id=ans-{{questionInfo.questionId}}>
+                      <p style="font-size:20px">Ans: {{questionInfo.questionContent.questionText}}</p>
+                    </div>
+                  </div>
+                </mat-card-content>
+                <br>
+
+                <mat-action-row>
+                </mat-action-row>
+              </mat-card>
+              <br>
+
+            </mat-accordion>
+          </form>
+        </div>
+<!--
+        <div class="bottomButton" style="text-align: center;">
+          <div *ngIf="showAnss==false">
+            <button mat-raised-button color="primary" (click)="collectAnswer();showAns();">Show Answer</button>
+          </div>
+          <div *ngIf="showAnss==true">
+            <button mat-raised-button color="primary" (click)="hideAns()">Hide Answer</button>
+          </div>
+        </div>-->
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+
+
+
+<ng-template #overview>
+  <mat-card>
+    <div class="saved-quiz-title">
+      <p>
+        <b>{{questionInfo.questionContent.questionTitle}}</b>
+      </p>
+    </div>
+    <div class="saved-quiz-text">
+      <div class="row" style="">
+        <div class="question-col col-col-sm-md-lg-auto">
+          <h5>{{questionInfo.questionId}}.</h5>
+        </div>
+        <div class="question-col col-10">
+          <h5 id="text-{{questionInfo.questionId}}" class="question">{{questionInfo.questionContent.questionText}}</h5>
+        </div>
+      </div>
+    </div>
+  </mat-card>
+  <br>
+</ng-template>

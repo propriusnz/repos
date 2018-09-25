@@ -1,0 +1,91 @@
+
+<div class="col-12 col-lg-10 container">
+  
+  <div *ngFor="let resource of currentViewResource" class="component-items">
+
+    <div class="row component">
+      <div class="col-xl-9 col-lg-9 col-md-12 col-sm-12 col-12 component-body">
+        <div class="title_group">
+          <div *ngIf="resource.post_type == 1">
+            <i class="material-icons" matTooltip="Reference" matTooltipPosition="above" style="padding-top: 2px;">
+              library_books
+            </i>
+          </div>
+          <div *ngIf="resource.post_type == 0">
+            <i class="material-icons" matTooltip="Article" matTooltipPosition="above">
+              menu
+            </i>
+          </div>
+          <div *ngIf="resource.post_type == 2">
+            <i class="material-icons" matTooltip="Questions" matTooltipPosition="above">
+              question_answer
+            </i>
+          </div>
+
+          <div class="s2blue post_title">
+            <a href="#" [routerLink]="['/app/dashboard/tutor/resources/view/', resource.post_id]">{{resource.post_title}}</a>
+          </div>
+        </div>
+
+        <div class="s3 meta">
+          <span style="color:green">Type: </span>
+          <span *ngIf="resource.post_type == 1">Reference</span>
+          <span *ngIf="resource.post_type == 0">Article</span>
+          <span *ngIf="resource.post_type == 2">Question</span>
+          <span style="padding-left: 10px; color: green">Grade: </span>
+          <span class="">{{resource.post_grade}}</span>
+          <span style="padding-left: 10px; color: green">Subject: </span>
+          <span>{{resource.post_subject}}</span>
+          <span style="padding-left: 10px; color: green">Author: </span>
+          <span>{{resource.post_author}}</span>
+        </div>
+        <p class="text">{{resource.post_des}}</p>
+
+        <div class="tags-group">
+          <div *ngFor="let tag of resource.post_tags" class="tags">
+            <li>{{tag}}</li>
+          </div>
+        </div>
+        <hr>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- button bar -->
+<div *ngIf="display.innerWidth <= 576">
+  <br>
+  <mat-paginator class="col-12" [length]="totalResNum" [pageSize]="pageSize" [showFirstLastButtons]=true [hidePageSize]=true
+    [pageIndex]="currentViewIndex - 1" (page)="changed($event)">
+  </mat-paginator>
+</div>
+<div *ngIf="display.innerWidth > 576">
+  <br>
+  <div class="row footer-div" style="margin-right: 15%;">
+    <div class="d-flex justify-content-center col-12 footer" style="margin-bottom: 7px">
+      <button type="button" class="btn btn-link switch-btn mr-2" (click)="goPrevious()">
+        <i class="fa fa-angle-double-left"></i>
+      </button>
+      <div class="btn-group" *ngFor="let pindex of headBtnArray">
+        <!-- <button class="btn btn-outline-light text-primary rounded" [ngStyle]="(highlightArray[pindex - 1]) ? ({background: '#a3daff'}) : ({background: 'white'})"
+              (click)="goPage(pindex)"> -->
+        <button class="btn btn-outline-light text-primary rounded" [ngStyle]="(highlightArray[pindex - 1]) ? ({background: '#a3daff'}) : ({background: 'white'})"
+          (click)="goPage(pindex)">
+          {{pindex}}
+        </button>
+      </div>
+      <div *ngIf="tailBtnArray.length > 0; then hide"></div>
+      <button type="button" class="btn btn-link switch-btn ml-2" (click)="goNext()">
+        <i class="fa fa-angle-double-right"></i>
+      </button>
+    </div>
+    <div class="d-flex justify-content-center col-12 footer">
+      <div class="search" style="display: inline-block;line-height: 30px;">Totally
+        <span class="text-primary">{{totalPage}}</span> page,</div>
+      <div class="search">&nbsp;&nbsp;to page
+        <input id="index-search" type="number" class="search-input" min="1" max="{{totalPage}}" />
+      </div>
+      <button style="position: relative; top:3px; right:6px;" class="btn btn-link rounded" (click)="getIndexInput('index-search')">Go</button>
+    </div>
+  </div>
+</div>

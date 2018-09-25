@@ -1,0 +1,49 @@
+
+/* table th td {
+  border: 1px solid black;
+  border-collapse: collapse;
+} */
+
+#card-tb th {
+  font-size: 18px;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  border: 1px solid #ddd;
+  border-collapse: collapse;
+}
+
+#card-tb tr {
+  text-align: center;
+  font-size: 15px;
+  border: 1px solid #ddd;
+  border-collapse: collapse;
+}
+
+#card-tb td {
+  border: 1px solid #ddd;
+  border-collapse: collapse;
+}
+
+#card-tb i {
+  font-size: 35px;
+  color: #1E90FF;
+}
+
+#card-tb-body {
+  background-color: white;
+}
+
+.btn-div {
+  margin-left: 1rem;
+}
+
+#show-a {
+  color: #1E90FF;
+  /* font-size: 25px; */
+  font-weight: bold;
+  cursor: pointer;
+}
+
+#show-a:hover {
+  text-decoration: underline;
+}

@@ -1,0 +1,199 @@
+/* ngClass content */
+.backgColor1{background-color: white;}
+.backgColor2{background-color: transparent;}
+.borderColor1{border: 1px solid #cccccc;}
+.borderColor2{border: 0;}
+.fontColor1{color: #0099FF;}
+.fontColor2{color: white;}
+.fontColor3{color: #424242;}
+
+/* navbar content */
+
+#navContent{
+  display: flex;
+}
+.navbar.home{
+  z-index:1 ;
+  position: fixed;
+  width: 100%;
+}
+
+.navbar.dashboard{
+  background-color: white;
+  border: 1px solid #cccccc;
+}
+
+.navbar.home .logo.home{
+  font-size:21px;
+  padding: 0px;
+  font-family: Arial;
+
+}
+.navbar.dashboard .logo.dashboard{
+  color: #0099FF;
+  font-size:21px;
+  padding: 0px;
+  padding-right: 0.8rem;
+  font-family: Arial;
+}
+
+
+.navbar-nav.home .nav-item.home .navLink.home{
+  font-size: 16px;
+}
+.community {
+  font-size: 16px !important;
+}
+.navbar-nav.home .nav-item.home .navRight.home{
+margin-left: 5px;
+}
+
+.navbar-nav.dashboard .nav-item.dashboard .navLink.dashboard{
+  color:#0099FF;
+  font-size: 16px;
+}
+.navbar-nav.dashboard .nav-item.dashboard .navLink.dashboard:hover{
+  color:#0099FF;
+}
+.navbar-nav.dashboard .nav-item.dashboard .navRight.dashboard{
+margin-left: 5px;
+}
+
+.float-right{
+  margin-right: 7rem;
+}
+
+.scrollable-menu{
+  width:360px;
+  height: auto;
+  max-height: 200px;
+  overflow-x: hidden;
+}
+
+/* dropdown content */
+.dropdown-toggle.home span{
+  padding-right:160px;
+}
+.dropdown-toggle.home{
+  background-color: white;
+}
+.dropdown-item{
+  font-size:15px;
+  font-weight:bold;
+}
+.dropdown-item:hover{
+  background-color: lightgrey;
+}
+
+
+/* styles about cursor.  */
+.pointer.home {
+  cursor: pointer;
+}
+
+
+/* icons content */
+.homeIcon{
+background-image: url("/../../assets/icons/homeIcon.png");
+background-position: left center;
+background-size: 25px;
+background-repeat: no-repeat;
+}
+.settingIcon{
+background-image: url("/../../assets/icons/settingIcon.png");
+background-position: left center;
+background-size: 25px;
+background-repeat: no-repeat;
+}
+.transactionIcon{
+background-image: url("/../../assets/icons/transactionIcon.png");
+background-position: left center;
+background-size: 25px;
+background-repeat: no-repeat;
+}
+.passdIcon{
+background-image: url("/../../assets/icons/passdIcon.png");
+background-position: left center;
+background-size: 25px;
+background-repeat: no-repeat;
+}
+.logoutIcon{
+background-image: url("/../../assets/icons/logout.png");
+background-position: left center;
+background-size: 25px;
+background-repeat: no-repeat;
+}
+.teachingIcon{
+background-image: url("/../../assets/icons/teachingIcon.png");
+background-position: left center;
+background-size: 25px;
+background-repeat: no-repeat;
+}
+.articleIcon{
+background-image: url("/../../assets/icons/articleIcon.png");
+background-position: left center;
+background-size: 25px;
+background-repeat: no-repeat;
+}
+.discussionIcon{
+background-image: url("/../../assets/icons/discussionIcon.png");
+background-position: left center;
+background-size: 25px;
+background-repeat: no-repeat;
+}
+.editIcon{
+background-image: url("/../../assets/icons/edit.png");
+background-position: left center;
+background-size: 25px;
+background-repeat: no-repeat;
+}
+.paymentIcon{
+background-image: url("/../../assets/icons/paymentIcon.png");
+background-position: left center;
+background-size: 25px;
+background-repeat: no-repeat;
+}
+.transactionIcon{
+  background-image: url("/../../assets/icons/transactionIcon.png");
+  background-position: 5px center;
+  background-size: 17px;
+  background-repeat: no-repeat;
+  }
+
+
+
+@media (max-width: 576px) {
+
+  .dropdown-toggle.home span{
+      font-size: 17px;
+      padding-right:1%;
+  }
+
+}
+
+/* header section ends */
+
+
+@media (max-width: 767px) {
+
+  .navbar-nav.dashboard .nav-item.dashboard .navRight.dashboard{
+    margin-left: 20px;
+  }
+  .dropdown-menu.home{
+    max-width: 98%;
+    border:1px solid white;
+    outline:0px;
+  }
+  .dropdown-menu.dashboard{
+    max-width: 98%;
+    border:0px;
+    outline:0px;
+  }
+  .dpitem{
+    margin-top: -10px;
+  }
+  .dropdown-item.home:hover{
+      background-color: #A1A2A4;
+  }
+}
+

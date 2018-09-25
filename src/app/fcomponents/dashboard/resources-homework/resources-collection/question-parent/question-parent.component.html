@@ -1,0 +1,189 @@
+<!-- view mode -->
+<div *ngIf="mode == 'view'">
+  <div *ngFor="let quiz of questionData">
+    <div *ngIf="quiz.questionObjType=='multi'">
+      <app-multiple-choice [viewerType]="userType" [accessType]="mode" [questionInfo]="quiz"></app-multiple-choice>
+    </div>
+    <div *ngIf="quiz.questionObjType=='short'">
+      <app-short-answers [viewerType]="userType" [accessType]="mode" [questionInfo]="quiz"></app-short-answers>
+    </div>
+    <div *ngIf="quiz.questionObjType=='blank'">
+      <app-fill-blank [viewerType]="userType" [accessType]="mode" [questionInfo]="quiz"></app-fill-blank>
+    </div>
+  </div>
+  <div class="text-center" *ngIf="userType=='learner'">
+    <button type="button" class="btn btn-primary" (click)="showAns()">Show answer</button>
+  </div>
+</div>
+
+
+
+<!-- add mode -->
+<div *ngIf="mode == 'add'">
+  <div *ngFor="let quiz of questionArray">
+    <!-- question status: saved -->
+    <div *ngIf="quiz.questionSaveStatus == 'saved'">
+      <div *ngIf="quiz.questionObjType=='short'">
+        <app-short-answers [viewerType]="userType" [accessType]="mode" [questionStatus]="'saved'" [questionInfo]="quiz"
+          (collectFormValue)='handleSaveQuestion($event)' (editQuiz)='handleEditQuestion($event)' (deleteQuiz)='handleDeleteQuestion($event)'
+          (discardQuiz)='handleDiscardQuestion($event)' (upQuestion)='handleQuestionChangePosUp($event)' (downQuestion)='handleQuestionChangePosDown($event)'></app-short-answers>
+      </div>
+      <div *ngIf="quiz.questionObjType=='multi'">
+        <app-multiple-choice [viewerType]="userType" [accessType]="mode" [questionStatus]="'saved'" [questionInfo]="quiz"
+          (collectFormValue)='handleSaveQuestion($event)' (editQuiz)='handleEditQuestion($event)' (deleteQuiz)='handleDeleteQuestion($event)'
+          (discardQuiz)='handleDiscardQuestion($event)' (upQuestion)='handleQuestionChangePosUp($event)' (downQuestion)='handleQuestionChangePosDown($event)'></app-multiple-choice>
+      </div>
+      <div *ngIf="quiz.questionObjType=='blank'">
+        <app-fill-blank [viewerType]="userType" [accessType]="mode" [questionStatus]="'saved'" [questionInfo]="quiz"
+          (collectFormValue)='handleSaveQuestion($event)' (editQuiz)='handleEditQuestion($event)' (deleteQuiz)='handleDeleteQuestion($event)'
+          (discardQuiz)='handleDiscardQuestion($event)' (upQuestion)='handleQuestionChangePosUp($event)' (downQuestion)='handleQuestionChangePosDown($event)'></app-fill-blank>
+      </div>
+    </div>
+
+    <!-- question status: init -->
+    <div *ngIf="quiz.questionSaveStatus == 'init'">
+      <div *ngIf="quiz.questionObjType=='multi'">
+        <app-multiple-choice [viewerType]="userType" [accessType]="mode" [questionStatus]="'init'" [questionId]="questionArray.length"
+          [createQuizObj]="getQuestionObj" (collectFormValue)='handleSaveQuestion($event)' (discardQuiz)='handleDiscardQuestion($event)'></app-multiple-choice>
+      </div>
+      <div *ngIf="quiz.questionObjType=='short'">
+        <app-short-answers [viewerType]="userType" [accessType]="mode" [questionStatus]="'init'" [questionId]="questionArray.length"
+          [createQuizObj]="getQuestionObj" (collectFormValue)='handleSaveQuestion($event)' (discardQuiz)='handleDiscardQuestion($event)'></app-short-answers>
+      </div>
+      <div *ngIf="quiz.questionObjType=='blank'">
+        <app-fill-blank [viewerType]="userType" [accessType]="mode" [questionStatus]="'init'" [questionId]="questionArray.length"
+          [createQuizObj]="getQuestionObj" (collectFormValue)='handleSaveQuestion($event)' (discardQuiz)='handleDiscardQuestion($event)'></app-fill-blank>
+      </div>
+
+    </div>
+
+    <!-- question status: unsvaed -->
+    <div *ngIf="quiz.questionSaveStatus == 'unSaved'">
+      <div *ngIf="quiz.questionObjType=='multi'">
+        <app-multiple-choice [viewerType]="userType" [accessType]="mode" [questionStatus]="'saved'" [questionInfo]="quiz"
+          [createQuizObj]="getQuestionObj" (collectFormValue)='handleSaveQuestion($event)' (discardQuiz)='handleDiscardQuestion($event)'></app-multiple-choice>
+      </div>
+      <div *ngIf="quiz.questionObjType=='short'">
+        <app-short-answers [viewerType]="userType" [accessType]="mode" [questionStatus]="'saved'" [questionInfo]="quiz"
+          [createQuizObj]="getQuestionObj" (collectFormValue)='handleSaveQuestion($event)' (discardQuiz)='handleDiscardQuestion($event)'></app-short-answers>
+      </div>
+      <div *ngIf="quiz.questionObjType=='blank'">
+        <app-fill-blank [viewerType]="userType" [accessType]="mode" [questionStatus]="'saved'" [questionInfo]="quiz"
+          [createQuizObj]="getQuestionObj" (collectFormValue)='handleSaveQuestion($event)' (discardQuiz)='handleDiscardQuestion($event)'></app-fill-blank>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- init when question array's length is 0 -->
+  <div *ngIf="questionArray.length == 0">
+    <div *ngIf="selectQuestionType=='short'">
+      <app-short-answers [viewerType]="userType" [accessType]="mode" [questionStatus]="'init'" [questionId]="1"
+        [createQuizObj]="getQuestionObj" (collectFormValue)='handleSaveQuestion($event)' (discardQuiz)='handleDiscardQuestion($event)'></app-short-answers>
+    </div>
+    <div *ngIf="selectQuestionType=='multi'">
+      <app-multiple-choice [viewerType]="userType" [accessType]="mode" [questionStatus]="'init'" [questionId]="1"
+        [createQuizObj]="getQuestionObj" (collectFormValue)='handleSaveQuestion($event)' (discardQuiz)='handleDiscardQuestion($event)'></app-multiple-choice>
+    </div>
+    <div *ngIf="selectQuestionType=='blank'">
+      <app-fill-blank [viewerType]="userType" [accessType]="mode" [questionStatus]="'init'" [questionId]="1"
+        [createQuizObj]="getQuestionObj" (collectFormValue)='handleSaveQuestion($event)' (discardQuiz)='handleDiscardQuestion($event)'></app-fill-blank>
+    </div>
+  </div>
+  <br>
+
+  <!-- add question button -->
+  <div class="text-center">
+    <button mat-button [matMenuTriggerFor]="type" style="background-color: #007bff; color:gold">Add Question</button>
+  </div>
+  <mat-menu #type="matMenu">
+    <button mat-menu-item (click)="addQuestion('short')">Short Answer</button>
+    <button mat-menu-item (click)="addQuestion('multi')">Multiple Choice</button>
+    <button mat-menu-item (click)="addQuestion('blank')">Fill in the blank</button>
+  </mat-menu>
+</div>
+
+
+<div *ngIf="mode == 'edit'">
+  <div *ngFor="let quiz of questionArray">
+    <!-- question status: saved -->
+    <div *ngIf="quiz.questionSaveStatus == 'saved'">
+      <div *ngIf="quiz.questionObjType=='short'">
+        <app-short-answers [viewerType]="userType" [accessType]="mode" [questionStatus]="'saved'" [questionInfo]="quiz"
+          (collectFormValue)='handleSaveQuestion($event)' (editQuiz)='handleEditQuestion($event)' (deleteQuiz)='handleDeleteQuestion($event)'
+          (discardQuiz)='handleDiscardQuestion($event)' (upQuestion)='handleQuestionChangePosUp($event)' (downQuestion)='handleQuestionChangePosDown($event)'></app-short-answers>
+      </div>
+      <div *ngIf="quiz.questionObjType=='multi'">
+        <app-multiple-choice [viewerType]="userType" [accessType]="mode" [questionStatus]="'saved'" [questionInfo]="quiz"
+          (collectFormValue)='handleSaveQuestion($event)' (editQuiz)='handleEditQuestion($event)' (deleteQuiz)='handleDeleteQuestion($event)'
+          (discardQuiz)='handleDiscardQuestion($event)' (upQuestion)='handleQuestionChangePosUp($event)' (downQuestion)='handleQuestionChangePosDown($event)'></app-multiple-choice>
+      </div>
+      <div *ngIf="quiz.questionObjType=='blank'">
+        <app-fill-blank [viewerType]="userType" [accessType]="mode" [questionStatus]="'saved'" [questionInfo]="quiz"
+          (collectFormValue)='handleSaveQuestion($event)' (editQuiz)='handleEditQuestion($event)' (deleteQuiz)='handleDeleteQuestion($event)'
+          (discardQuiz)='handleDiscardQuestion($event)' (upQuestion)='handleQuestionChangePosUp($event)' (downQuestion)='handleQuestionChangePosDown($event)'></app-fill-blank>
+      </div>
+    </div>
+
+    <!-- question status: init -->
+    <div *ngIf="quiz.questionSaveStatus == 'init'">
+      <div *ngIf="quiz.questionObjType=='multi'">
+        <app-multiple-choice [viewerType]="userType" [accessType]="mode" [questionStatus]="'init'" [questionId]="questionArray.length"
+          [createQuizObj]="getQuestionObj" (collectFormValue)='handleSaveQuestion($event)' (discardQuiz)='handleDiscardQuestion($event)'></app-multiple-choice>
+      </div>
+      <div *ngIf="quiz.questionObjType=='short'">
+        <app-short-answers [viewerType]="userType" [accessType]="mode" [questionStatus]="'init'" [questionId]="questionArray.length"
+          [createQuizObj]="getQuestionObj" (collectFormValue)='handleSaveQuestion($event)' (discardQuiz)='handleDiscardQuestion($event)'></app-short-answers>
+      </div>
+      <div *ngIf="quiz.questionObjType=='blank'">
+        <app-fill-blank [viewerType]="userType" [accessType]="mode" [questionStatus]="'init'" [questionId]="questionArray.length"
+          [createQuizObj]="getQuestionObj" (collectFormValue)='handleSaveQuestion($event)' (discardQuiz)='handleDiscardQuestion($event)'></app-fill-blank>
+      </div>
+
+    </div>
+
+    <!-- question status: unsvaed -->
+    <div *ngIf="quiz.questionSaveStatus == 'unSaved'">
+      <div *ngIf="quiz.questionObjType=='multi'">
+        <app-multiple-choice [viewerType]="userType" [accessType]="mode" [questionStatus]="'saved'" [questionInfo]="quiz"
+          [createQuizObj]="getQuestionObj" (collectFormValue)='handleSaveQuestion($event)' (discardQuiz)='handleDiscardQuestion($event)'></app-multiple-choice>
+      </div>
+      <div *ngIf="quiz.questionObjType=='short'">
+        <app-short-answers [viewerType]="userType" [accessType]="mode" [questionStatus]="'saved'" [questionInfo]="quiz"
+          [createQuizObj]="getQuestionObj" (collectFormValue)='handleSaveQuestion($event)' (discardQuiz)='handleDiscardQuestion($event)'></app-short-answers>
+      </div>
+      <div *ngIf="quiz.questionObjType=='blank'">
+        <app-fill-blank [viewerType]="userType" [accessType]="mode" [questionStatus]="'saved'" [questionInfo]="quiz"
+          [createQuizObj]="getQuestionObj" (collectFormValue)='handleSaveQuestion($event)' (discardQuiz)='handleDiscardQuestion($event)'></app-fill-blank>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- init when question array's length is 0 -->
+  <div *ngIf="questionArray.length == 0">
+    <div *ngIf="selectQuestionType=='short'">
+      <app-short-answers [viewerType]="userType" [accessType]="mode" [questionStatus]="'init'" [questionId]="1"
+        [createQuizObj]="getQuestionObj" (collectFormValue)='handleSaveQuestion($event)' (discardQuiz)='handleDiscardQuestion($event)'></app-short-answers>
+    </div>
+    <div *ngIf="selectQuestionType=='multi'">
+      <app-multiple-choice [viewerType]="userType" [accessType]="mode" [questionStatus]="'init'" [questionId]="1"
+        [createQuizObj]="getQuestionObj" (collectFormValue)='handleSaveQuestion($event)' (discardQuiz)='handleDiscardQuestion($event)'></app-multiple-choice>
+    </div>
+    <div *ngIf="selectQuestionType=='blank'">
+      <app-fill-blank [viewerType]="userType" [accessType]="mode" [questionStatus]="'init'" [questionId]="1"
+        [createQuizObj]="getQuestionObj" (collectFormValue)='handleSaveQuestion($event)' (discardQuiz)='handleDiscardQuestion($event)'></app-fill-blank>
+    </div>
+  </div>
+  <br>
+
+  <!-- add question button -->
+  <div class="text-center">
+    <button mat-button [matMenuTriggerFor]="type" style="background-color: #007bff; color:gold">Add Question</button>
+  </div>
+  <mat-menu #type="matMenu">
+    <button mat-menu-item (click)="addQuestion('short')">Short Answer</button>
+    <button mat-menu-item (click)="addQuestion('multi')">Multiple Choice</button>
+    <button mat-menu-item (click)="addQuestion('blank')">Fill in the blank</button>
+  </mat-menu>
+</div>

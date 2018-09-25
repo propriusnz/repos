@@ -1,0 +1,26 @@
+[
+  {
+    "pathname": "/app/dashboard/tutor/editprofile/key",
+    "cardContent":
+    [{
+      "initHelperMatch": "Profile",
+      "initHelperText": "Here is your <b>profile information</b>, which contains your teaching locations and introduction statement."
+    },
+    {
+      "helperMatch": "Profile image",
+      "helperText": "You can edit your <b>profile image</b> by uploading it here."
+    },
+    {
+      "helperMatch": "Profile video",
+      "helperText": "Please enter your profile video. <br>Please make sure that you're entering the link only! e.g. <b>'&lt;iframe width=\"560\"; height=\"315\"; src=\"https://www.youtube.com/embed/PlDN8yB16bY\"; frameborder=\"0\"; allow=\"autoplay; encrypted-media\" allowfullscreen&gt;&lt;/iframe&gt;'</b> <br><br> You can get your link on <b>YouTube</b> by steps: <ol><li>Go to the <b>video page</b></li> <li>Click \"<b>share</b>\"(normally below the video). This should take you to a pop-up</li> <li>In the pop-up, click \"<b>embed</b>\". This will take you to another pop-up</li> <li>In the embed video pop-up, <b>copy the text</b> right below the embed video title</li> </ol>"
+    },
+    {
+      "helperMatch": "Teaching locations",
+      "helperText": "You can add, edit or delete your <b>teaching location</b> details here. And you can have <b>at most 4</b> location details <b>in total</b>."
+    },
+    {
+      "helperMatch": "Introduction statement",
+      "helperText": "You can edit <b>introduction statement</b> about yourself here."
+    }]
+  }
+]

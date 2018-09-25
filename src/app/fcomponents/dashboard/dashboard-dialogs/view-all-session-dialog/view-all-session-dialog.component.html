@@ -1,0 +1,105 @@
+<div class="row">
+  <div class="row col-4">
+    <div class="col-12">
+      <h2 mat-dialog-title>{{name}}</h2>
+    </div>
+  </div>
+  <!-- filter -->
+  <div class="row col-8">
+    <!--<mat-form-field class="col-6">
+     <input matInput [matDatepicker]="picker" placeholder="Select your start date" [formControl]="startDate" [min]='startDate'>
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+
+    <mat-form-field class="col-6">
+      <input matInput [matDatepicker]="picker1" placeholder="Select your end date" [formControl]="endDate" [min]='endDate'>
+      <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+      <mat-datepicker #picker1></mat-datepicker>
+    </mat-form-field>-->
+    <mat-form-field class="col-12">
+      <mat-select placeholder="State" [(value)]="status">
+        <mat-option value="all">
+          Show All
+        </mat-option>
+        <mat-option value="confirmed">
+          Comfirmed
+        </mat-option>
+        <mat-option value="planned">
+          Planned
+        </mat-option>
+        <mat-option value="completed">
+          Completed
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <!-- filter end-->
+</div>
+
+<mat-dialog-content>
+  <div class="scrollList">
+    <div *ngFor="let session of sessions; let j = index">
+      <div *ngIf="session.session_status == status || status == 'all';else nothing">
+        <div class="card border rounded" style="width: 95%; margin: 10px;padding-bottom: 2px;">
+          <div class="card-body">
+            <div class="row">
+              <div class="col-4">
+                <div class="row">
+                  <div class="col-12">
+                    <h5>{{session.session_status}}</h5>
+                  </div>
+                  <div class="col-12">
+                    <small>
+                      <b>{{session.session_startTime}} - {{session.session_endTime}}</b>
+                    </small>
+                  </div>
+                  <div class="col-12">
+                    <small>{{session.session_date}}</small>
+                  </div>
+                </div>
+              </div>
+              <div class="col-5">
+                <div class="row">
+                  <div class="col-12" style="padding-right: 0px;">
+                    <small>{{session.session_location}}</small>
+                  </div>
+                  <div class="col-12">
+                    <small>{{session.session_requirement}}</small>
+                  </div>
+                  <div class="col-12">
+                    <small>{{session.session_subject}}</small>
+                  </div>
+                </div>
+              </div>
+              <div class="col-3">
+                <div *ngIf="session.session_status == 'completed'">
+                  <p>
+                    <a class="btn btn-outline-secondary btn-sm" data-toggle="collapse" href="#collapse-{{index}}-{{j}}" role="button" aria-expanded="false"
+                      aria-controls="collapse"> View Report </a>
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div class="collapse" id="collapse-{{index}}-{{j}}">
+              <div *ngIf="session.session_report=='no report';else showreport">
+                <form>
+                  <div class="form-group">
+                    <label for="reportArea">Tutor Report</label>
+                    <textarea class="form-control" name="reportArea" rows="3" [(ngModel)]='reportContent'></textarea>
+                  </div>
+                  <button type="submit" class="btn btn-primary btn-sm">Save</button>
+                </form>
+              </div>
+              <ng-template #showreport>
+                <div class="report">
+                  {{session.session_report}}
+                </div>
+              </ng-template>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</mat-dialog-content>

@@ -1,0 +1,131 @@
+
+
+[
+
+{
+    "articleID": "1",
+
+    "articleTitle":  "I am a new student. How do I get started?",
+
+	"articleText": 	""
+},
+{
+    "articleID": "2",
+
+    "articleTitle":  "How do I purchase lessons?",
+
+	"articleText": 	""
+},
+{
+    "articleID": "3",
+
+    "articleTitle":  "How do I schedule a lesson?",
+
+	"articleText": 	" "
+},
+{
+    "articleID": "4",
+
+    "articleTitle":  "How do I reschedule my lesson? (Student)",
+
+	"articleText": 	" "
+},
+{
+    "articleID": "5",
+
+    "articleTitle":  "How long do I have to schedule my lessons? Do lessons ever expire?",
+
+	"articleText": 	" "
+},
+{
+    "articleID": "6",
+
+    "articleTitle":  "How do I rate a completed lesson?",
+
+	"articleText": 	"<p> To rate a completed lesson, please do the following:<br><ol> <li> Click on your completed lesson from your Dashboard.</li><li>On the session page, click 'Rate Lesson' and complete the form.</li><li>Add any comments about your experience with your teacher. Your comments will also be visible on your teacher’s profile page.</li><li>Click “Submit”.</li></ol></p>"
+},
+{
+    "articleID": "7",
+
+    "articleTitle":  "What should I do if I missed my lesson?",
+
+	"articleText": 	"<p> From time to time, situations may arise that prevent you from attending your lesson. If you know in advance of your lesson that you are unable to attend, reschedule or unschedule your lesson (if your lesson is 12+ hours away) or cancel your lesson (if your lesson is fewer than 12 hours away). <br><br>Teachers are paid for lessons you miss without notice. In some exceptional cases, depending on the circumstances, teachers may provide a partial or complete refund for your missed lesson, or reschedule the missed lesson for a future date. All actions are up to the teacher's discretion.<br><br>To appeal to your teacher regarding your missed lesson, please do the following:<br><ol> <li>Go to your Dashboard.</li><li>In the list of lessons shown on your Dashboard, click on the lesson you missed. </li><li>Click 'Report Issue'.</li><li>In the pop-up screen, check the check box next to 'Student was absent' and, if applicable, report that you experienced technical difficulties that prevented you from attending the lesson.</li><li>You may also include comments about what happened to prevent you from attending your lesson. These comments will be communicated to your teacher.</li><li>Click 'Report'.</li></ol><br></p>"
+},
+{
+    "articleID": "8",
+
+    "articleTitle":  "What do I do if my teacher missed the lesson?",
+
+	"articleText": 	"<p> On rare occasions, teachers may have personal or technical issues that prevent them from making your lesson. <br><br>To resolve the situation where your teacher missed your lesson, please do the following one or more hours after your lesson was supposed to begin: <br><ol> <li> Go to your Dashboard.</li><li>Locate the lesson your teacher missed. Your lesson may be on the first page of your Dashboard; if not, search for your lesson by clicking on the 'All' dropdown and selecting the 'Incomplete' filter.</li><li>Click on the incomplete lesson.</li><li> Click 'Report Issue'</li><li> In the pop-up screen, check the check box next to 'Teacher was absent'. </li><li>Optionally, include comments about the situation. These comments will be communicated to your teache <li>Click 'Report'.</li></ol> <br><b>NOTE:</b> <br><br><ol> <li> If you report an issue with your lesson, but do not file a support request, then the Learnspace Support team will be unaware of any issue that happened until a support request is filed. <b>Our team is never notified of issue reports until a teacher or student reaches out to our team directly.</b></li><li> If you report an issue with your Learnspace lesson and your teacher does not resolve it within 2 business days, please reach out to our team so we are able to resolve your issue report for you!</li></ol> <br></p>"
+},
+{
+    "articleID": "9",
+
+    "articleTitle":  "How do I contact Learnspace support?",
+
+	"articleText": 	"<p> Contact Learnspace support by submitting a support request here or e-mailing our Learnspace Support team at support@Learnspace.com <br><br>A human team member will be happy to look into your request and will be happy to help!</p>"
+},
+{
+    "articleID": "10",
+
+    "articleTitle":  "I forgot my password. How do I reset it in order to log in?",
+
+	"articleText": 	"<p> You can reset your password from the login screen by following the blue 'Forgot Password?' link at the botton of your Log In screen. <br><br><img src='../../../assets/article-img/resetpassword.png' alt='resetpassword'></p>"
+},
+{
+    "articleID": "11",
+
+    "articleTitle":  "What currency will my Learnspace purchases be completed in?",
+
+	"articleText": 	"<p>All Learnspace purchases are completed in NewZealand dollars (NZD). Please check with your individual bank for any fees that may apply.</p>"
+},
+{
+    "articleID": "12",
+
+    "articleTitle":  "Can I download an invoice of my Learnspace purchases?",
+
+	"articleText": 	"<p> Yes! To download a PDF invoice of your Learnspace purchases for reimbursement by your company, school, etc., please do the following:<br><br><ol> <li>Add your first name, last name, company (if applicable), and location on your Settings Page. This information will be included on your invoice.</li><li>Go to your Receipts Page.</li><li>Next to the applicable purchases, click 'Download PDF'.</li><li> A PDF will download to your desktop. That PDF will include the following information:<br><ul> <li>Learnspace's name and address</li><li>Any identifying information you provided (your first and last name, company, location)</li><li>Details of your purchase</li><li>The date of your purchase/invoice date</li><li>The invoice number</li><li>The purchase price</li><li>The amount paid</li><li>The amount of credits used</li><li>The balance due to Learnspace ($0)</li></ul> </li></ol></p>"
+},
+{
+    "articleID": "13",
+
+    "articleTitle":  "What form of payment is accepted to purchase Learnspace lessons?",
+
+	"articleText": 	"<p> Learnspace accepts all major credit and debit cards and PayPal as valid forms of payment for all Learnspace purchases at this time. All available forms of payment will show on the confirmation and check-out page at the time of your purchase. </p>"
+},
+{
+    "articleID": "14",
+
+    "articleTitle":  "Where can I view the charges to my credit card or PayPal account?",
+
+	"articleText": 	"<p>You can view your receipts on your receipts page.</p>"
+},
+{
+    "articleID": "15",
+
+    "articleTitle":  "Is it safe to pay on Learnspace?",
+
+	"articleText": 	"<p> Yes. We take payment safety very seriously. <br><br>No Learnspace employee can ever see your credit card number. <br><br>Additionally, we accept payments through PayPal, trusted by 135 million people around the world for secure financial transactions. When you use PayPal, PayPal confirms that your browser is running Secure Socket Layer 3.0 (SSL) or higher, which secures the communication from your browser to paypal.com. All of your information is protected by SSL, which ensures that your information is encrypted so no one can steal it when it is sent across the internet. Your personal information is stored on PayPal's servers and heavily guarded, both physically and electronically.  href='https://www.paypal.com/us/webapps/mpp/security/security-protections'>Read more about PayPal's security practices and policies</a>. <br><br></p>"
+},
+{
+    "articleID": "16",
+
+    "articleTitle":  "What should I do if my purchase fails?",
+
+	"articleText": 	"<p> <b>NOTE:</b>You can re-try a card at any point on any Learnspace checkout page. <br><br>Occasionally, your Learnspace purchase may fail. Here are steps to ensure that we can accept your card or form of payment:<br><h5><b>1. If you're using a non-US bank or PayPal account, allow foreign transactions</b></h5><br>If you're using a non-US bank, your bank may have declined the attempt because it's a foreign transaction. The solution is to enable foreign transactions on your card. Some banks allow you to do this online. Other banks require that you contact the bank, for example by phone.<br><br><h5><b>2. Allow online transactions</b></h5><br>If online purchases aren't enabled for your card, your bank will decline the transaction. As above, you must enable your card for internet transactions, either through your online banking or by contacting your bank's customer service center.<br><br><h5><b>3. Add sufficient funds</b></h5><br>You may have insufficient funds in your account. Please ensure that you have a sufficient balance on your account before you try to use the card again.<br><br><h5><b>4. Double-check your CVC</b></h5><br>Your CVC check might have failed. 'CVC' stands for card verification code. MasterCard, Visa, Diners Club, Discover, and JCB credit and debit cards have a three-digit card security code. The code is the final group of numbers printed on the back signature panel of the card. New North American MasterCard and Visa cards feature the code in a separate panel to the right of the signature strip. American Express cards have a four-digit code printed on the front side of the card above the number. Please make sure that you enter the CVC correctly on the checkout page.<br><br><h5><b>5. Allow transactions from Learnspace</b></h5><br>If the above steps don't help, contact your bank directly and ask them to allow transactions from the merchant known as 'Learnspace.'<br><br></p>"
+},
+{
+    "articleID": "17",
+
+    "articleTitle":  "????????????",
+
+	"articleText": 	""
+}
+]
+
+
+
+
+
+
+

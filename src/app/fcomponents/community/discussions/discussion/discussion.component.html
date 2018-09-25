@@ -1,0 +1,86 @@
+<div class="container">
+  <div class="col col-md-8 flex-direction-column" style="margin-top: 25px;">
+    <div *ngIf="discussionDetail">
+      <!-- there are three parts in total (DiscussionTopic + Comments + UserPostComment) -->
+
+      <!-- DiscussionTopic Part -->
+      <a [routerLink]="['/app/community/discussions/']">{{discussionDetail.discussion_categories}}</a>
+      <span>\{{discussionDetail.discussion_title}}</span>
+      <div class="card shadow flex-direction-column">
+        <div class="Discussion__title flex">
+          <div> <img src= "{{imgSrc}}" (error)="onError($event)" class="verb-profile-pic round standard" alt="Profile Picture R"> </div>
+          <div class="flex-direction-column">
+            <div style="font-size: 19px;font:bold">{{discussionDetail.discussion_title}}</div>
+            <div class="HoverCardWrapper s2"><a href="#">{{discussionDetail.discussion_creator}}</a></div>
+            <div style="font-size: 12px"> {{discussionDetail.created_at | date}}</div>
+            <div style="font-size: 12px"> {{discussionDetail.created_at | date:'shortTime'}}</div>
+          </div>
+        </div>
+        <div class="Discussion__content">
+          <div class="project-subtitle" style="margin-bottom: 0px;margin-left: 0px">
+            <span>{{discussionDetail.discussion_main}}</span>
+          </div>
+          <br>
+          <div class="DiscussionTags">
+            <!-- <div class="DiscussionTag" *ngFor="let tag of discussionDetail.discussion_tags"> -->
+            <div class="DiscussionTag--Text">{{discussionDetail.discussion_tags}}</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Comments Part -->
+      <div *ngIf="discussionDetail.discussion_comments">
+        <div *ngIf="discussionDetail.discussion_comments.length>0">
+          <div class="card" style="margin-top: 25px;">
+            <div class="card-header">Comments</div>
+            <div class="card-body">
+              <div *ngFor="let comment of discussionDetail.discussion_comments" class="DiscussionItem__wrapper">
+                <div class="row" style="border-bottom: 1px solid #d4d4d4">
+                  <div class="col-md-1" >
+                    <img [src]= "commonSupport.findUserImg(comment.user_id)" (error)="onError($event)" class="verb-profile-pic rounded-circle" width="50" height="50" style="margin-top: 10px;" alt="Profile Picture">
+                  </div>
+                  <div class="col-md-11">
+                    <div class="info flex-1" style="padding:15px">
+                      <span><a href="#">{{comment.first_name}}</a></span>
+                      <span><a href="#"></a></span>
+                      <div>{{comment.comments}}</div>
+                      <span style="margin: 0px 2px;">{{comment.created_at | date}}</span>
+                      <span style="margin: 0px 2px;">{{comment.created_at | date:'shortTime'}}</span>
+                    </div>
+                  </div>
+                </div>   <!-- close tag of row -->
+              </div>     <!-- close tag of *ngFor comments -->
+            </div>      <!-- close tag of card-body -->
+          </div>      <!-- close tag of card -->
+        </div>        <!-- close tag of *ngIf comments.length -->
+      </div>        <!-- close tag of *ngIf comments -->
+
+      <!-- UserPostComment Part -->
+      <div class="card" id="postCommCard">
+        <div *ngIf="isLogin" >
+          <form name="commentForm">
+            <div class="form-group">
+              <img [src]= "commonSupport.prepareUserImgUrl()" (error)="onError($event)" class="verb-profile-pic rounded-circle" width="50" height="50" style="margin-top: 10px;" alt="Profile Picture">      
+              <label for="comment">{{userName}}</label>
+              <textarea class="form-control" rows="5" [(ngModel)]="comment" name="commentContent" ng-minlength="10" required></textarea>
+              <!-- <div *ngIf="errorFlag" class="invalid_feedback">{{errorInfo}}</div>                     -->
+              <button type="submit" class="btn btn-primary" (click)="saveComment()" style="float:right; margin-top:10px">Post</button>
+            </div>
+          </form>
+        </div>
+        <div *ngIf="!isLogin">
+          <div>Do you want to post a comment?Please Login!</div>
+          <button type="submit" class="btn btn-primary" (click)="loginUser($event)" style="float:right; margin-top:10px">Login</button>
+        </div>
+      </div>
+      
+      <!-- back Button -->
+      <div style="margin-top: 25px;">
+        <button class="btn btn-primary" routerLink="/app/community/discussions">Back</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- <app-toastr></app-toastr> -->

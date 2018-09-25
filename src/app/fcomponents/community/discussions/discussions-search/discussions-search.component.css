@@ -1,0 +1,104 @@
+/* styles about .Discussion__list */
+.card-body {
+  border-bottom: 1px solid #d8d8d8;
+  padding-top: 0;
+  padding-bottom: 0;
+  margin-left: 0;
+  margin-right: 0;
+}
+.Discussion__list .DiscussionItem__wrapper {
+  border-bottom: 1px solid #d8d8d8;
+  padding: 15px 0;
+  margin: 0 15px;
+  transition: all .3s ease;
+}
+.Discussion__list .DiscussionItem__wrapper:hover {
+  transform: scale(1.08);
+}
+.DiscussionItem .DiscussionItem__content-body {
+  padding: 0 15px;
+}
+
+
+/* styles about flex display */
+.flex-1 {
+  flex: 1;
+}
+.flex-direction-row {
+  flex-direction: row;
+}
+.flex {
+  display: flex;
+}
+.flex-column-direction {
+  flex-direction: column;
+}
+.flex-justify-content-space-between {
+  justify-content: space-between;
+}
+.flex-align-center {
+  align-items: center;
+}
+
+
+/* styles about search button */
+.searchspan{
+  display: -webkit-box;
+  z-index: 2;
+  margin-top: -15%;
+  margin-left: 88%;
+}
+.searchBtn{
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+
+/* styles about img and Name*/
+#creator {
+  position: relative;
+  display: inline-block;
+  color: #0699cd;
+}
+.verb-profile-pic.standard {
+  height: 60px;
+  width: 60px;
+}
+.verb-profile-pic.nano {
+  height: 18px;
+  width: 18px;
+}
+#subjectIcon{
+  height: 18px;
+  width: 18px;
+}
+
+
+/* styles about tag */
+.DiscussionTags {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap
+}
+.DiscussionTags {
+  margin-right: 4px;
+  margin-bottom: 5px
+}
+.DiscussionTag {
+  display: flex;
+  flex-direction: row;
+  background: #fff;
+  border: 1px solid #e6e6e6;
+  border-radius: 3px;
+  padding: 6px 8px;
+  font-size: 11.4px;
+  color: #838789;
+  letter-spacing: -.55px;
+  font-weight: 700
+}
+
+
+/* styles about .pagination */
+.pagination {
+  padding-top: 10px;
+}

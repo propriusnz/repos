@@ -1,0 +1,271 @@
+<!-- Student side looking for tutor -->
+<div *ngIf="rolePosition ==2||rolePosition == 1">
+  <div class="col-xl-9 col-xs-12 col-sm-12 col-md-9 col-lg-9">
+    <div class="l2">My Tutor</div>
+    <p class="m2">See all your tutors</p>
+  </div>
+  <hr>
+
+  <div class="container">
+    <div class="row">
+      <div *ngFor="let tutor of tutors; let i = index" class="card col-12 col-sm-12 col-md-12 col-lg-10 col-xl-10" style="width:100%">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-12 col-sm-12 col-md-7 col-lg-7 col-xl-8">
+              <div class="row">
+                <div class="col-4 col-sm-4 col-md-4 col-lg-3 col-xl-2">
+                  <img src={{tutor.img}} width="90%">
+                </div>
+                <div class="col-6 col-sm-7 col-md-7 col-lg-9 col-xl-10" style="padding-left: 0px">
+                  <div>
+                    {{tutor.first_name}}
+                  </div>
+                  <div>
+                    <small>{{tutor.subjects}}</small>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-12 col-sm-12 col-md-5 col-lg-5 col-xl-4">
+              <div *ngIf="display.innerWidth<992; else TbigButton">
+                <div class="row float-right">
+                  <div class="col-12 col-sm-6 col-md-12">
+                    <button type="button" class="btn btn-outline-info btn-sm" style="width: 100%">
+                      message
+                    </button>
+                  </div>
+                  <div class="col-12 col-sm-6 col-md-12">
+                    <button type="button" class="btn btn-outline-success btn-sm" style="width: 100%" (click)="viewAllSession(tutor.user_id, tutor.first_name)">
+                      view all sessions
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <ng-template #TbigButton>
+                <div class="float-right">
+                  <button type="button" class="btn btn-outline-info btn-sm">
+                    message
+                  </button>
+                  <button type="button" class="btn btn-outline-success btn-sm" (click)="viewAllSession(tutor.user_id, tutor.first_name)">
+                    view all sessions
+                  </button>
+                </div>
+              </ng-template>
+            </div>
+          </div>
+        </div>
+        <div class="card-body border-top">
+          <div class="row">
+            <div class="col-lg-6 col-xl-6">
+
+              <div *ngIf="display.innerWidth>=1200; else SsmallScreen1">
+                Last Session:
+                <small> {{tutor.last_session_starttime}} - {{tutor.last_session_endtime}} </small>
+                <small>{{tutor.last_session_date}}</small>
+              </div>
+
+              <ng-template #SsmallScreen1>
+                <div class="row">
+                  <div class="col-12">
+                    Last Session:
+                  </div>
+                  <div class="col-12">
+                    <small> {{tutor.last_session_starttime}} - {{tutor.last_session_endtime}} </small>
+                    <small>{{tutor.last_session_date}}</small>
+                  </div>
+                </div>
+              </ng-template>
+
+              <div *ngIf="tutor.last_session_date != ''">
+                <div>
+                  <button type="button" class="btn btn-outline-secondary btn-sm" data-toggle="popover" data-placement="bottom" title="Report"
+                    data-trigger="hover" [attr.data-content]=tutor.last_session_report (click)="reportClick(tutor.last_session_report,tutor.last_session_id)">
+                    Report
+                  </button>
+                  <!-- <button type="button" class="btn btn-outline-secondary btn-sm" data-toggle="popover" data-placement="bottom" title="Requirement"
+                    data-trigger="hover" [attr.data-content]=tutor.last_session_requirement (click)="requirementClick(tutor.last_session_requirement)">
+                    Requirement
+                  </button> -->
+                  <button type="button" class="btn btn-outline-secondary btn-sm" data-toggle="popover" data-placement="bottom" title="Location"
+                    data-trigger="hover" [attr.data-content]=tutor.last_session_location>
+                    Location
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6 col-xl-6">
+
+              <div *ngIf="display.innerWidth>=1200; else SsmallScreen2">
+                Next Session:
+                <small> {{tutor.next_session_starttime}} - {{tutor.next_session_endtime}} </small>
+                <small>{{tutor.next_session_date}}</small>
+              </div>
+              <ng-template #SsmallScreen2>
+                <div class="row">
+                  <div class="col-12">
+                    Next Session:
+                  </div>
+                  <div class="col-12">
+                    <small> {{tutor.next_session_starttime}} - {{tutor.next_session_endtime}} </small>
+                    <small>{{tutor.next_session_date}}</small>
+                  </div>
+                </div>
+              </ng-template>
+
+              <div *ngIf="tutor.next_session_date != ''">
+                <div>
+                  <!-- <button type="button" class="btn btn-outline-secondary btn-sm" data-toggle="popover" data-placement="bottom" title="Requirement"
+                    data-trigger="hover" [attr.data-content]=tutor.next_session_requirement (click)="requirementClick(tutor.next_session_requirement)">
+                    Requirement
+                  </button> -->
+                  <button type="button" class="btn btn-outline-secondary btn-sm" data-toggle="popover" data-placement="bottom" title="Location"
+                    data-trigger="hover" [attr.data-content]=tutor.next_session_location>
+                    Location
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Tutor side looking for student -->
+<!-- <div *ngIf="rolePosition == 3">
+
+  <div class="col-xl-9 col-xs-12 col-sm-12 col-md-9 col-lg-9">
+    <div class="l2">My Students</div>
+    <p class="m2">See all your students</p>
+  </div>
+  <hr>
+
+  <div class="container">
+    <div class="row">
+      <div *ngFor="let student of students; let i = index" class="card col-12 col-sm-12 col-md-12 col-lg-10 col-xl-10" style="width:100%">
+        <div class="card-body">
+          <div class="row">
+            <div class="col-12 col-sm-12 col-md-7 col-lg-7 col-xl-8">
+              <div class="row">
+                <div class="col-4 col-sm-4 col-md-4 col-lg-3 col-xl-2">
+                  <img src={{student.img}} width="90%">
+                </div>
+                <div class="col-6 col-sm-7 col-md-7 col-lg-9 col-xl-10" style="padding-left: 0px">
+                  <div>
+                    {{student.first_name}} {{student.last_name}}
+                  </div>
+                  <div>
+                    <small>{{student.subjects}}</small>
+                  </div>
+                  <div>
+                    <small>Level: {{student.level}}</small>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-12 col-sm-12 col-md-5 col-lg-5 col-xl-4">
+              <div *ngIf="display.innerWidth<992; else bigButton">
+                <div class="row float-right">
+                  <div class="col-12 col-sm-6 col-md-12">
+                    <button type="button" class="btn btn-outline-info btn-sm" style="width: 100%">
+                      message
+                    </button>
+                  </div>
+                  <div class="col-12 col-sm-6 col-md-12">
+                    <button type="button" class="btn btn-outline-success btn-sm" style="width: 100%" (click)="viewAllSession(student.user_id, student.first_name)">
+                      view all sessions
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <ng-template #bigButton>
+                <div class="float-right">
+                  <button type="button" class="btn btn-outline-info btn-sm">
+                    message
+                  </button>
+                  <button type="button" class="btn btn-outline-success btn-sm" (click)="viewAllSession(student.user_id, student.first_name)">
+                    view all sessions
+                  </button>
+                </div>
+              </ng-template>
+            </div>
+          </div>
+        </div>
+
+        <div class="card-body border-top">
+          <div class="row">
+            <div class="col-lg-6 col-xl-6">
+
+              <div *ngIf="display.innerWidth>=1200; else smallScreen1">
+                Last Session:
+                <small> {{student.last_session_starttime}} - {{student.last_session_endtime}} </small>
+                <small>{{student.last_session_date}}</small>
+              </div>
+
+              <ng-template #smallScreen1>
+                <div class="row">
+                  <div class="col-12">
+                    Last Session:
+                  </div>
+                  <div class="col-12">
+                    <small> {{student.last_session_starttime}} - {{student.last_session_endtime}} </small>
+                    <small>{{student.last_session_date}}</small>
+                  </div>
+                </div>
+              </ng-template>
+
+              <div *ngIf="student.last_session_date != ''">
+                <div>
+                  <button type="button" class="btn btn-outline-secondary btn-sm" data-toggle="popover" data-placement="bottom" title="Report"
+                    data-trigger="hover" [attr.data-content]=student.last_session_report (click)="reportClick(student.last_session_report,student.last_session_id)">
+                    Report
+                  </button>
+                  <button type="button" class="btn btn-outline-secondary btn-sm" data-toggle="popover" data-placement="bottom" title="Requirement"
+                    data-trigger="hover" [attr.data-content]=student.last_session_requirement (click)="requirementClick(student.last_session_requirement)">
+                    Requirement
+                  </button>
+                  <button type="button" class="btn btn-outline-secondary btn-sm" data-toggle="popover" data-placement="bottom" title="Location"
+                    data-trigger="hover" [attr.data-content]=student.last_session_location>
+                    Location
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-6 col-xl-6">
+
+              <div *ngIf="display.innerWidth>=1200; else smallScreen2">
+                Next Session:
+                <small> {{student.next_session_starttime}} - {{student.next_session_endtime}} </small>
+                <small>{{student.next_session_date}}</small>
+              </div>
+              <ng-template #smallScreen2>
+                <div class="row">
+                  <div class="col-12">
+                    Next Session:
+                  </div>
+                  <div class="col-12">
+                    <small> {{student.next_session_starttime}} - {{student.next_session_endtime}} </small>
+                    <small>{{student.next_session_date}}</small>
+                  </div>
+                </div>
+              </ng-template>
+
+              <div *ngIf="student.next_session_date != ''">
+                <div>
+                  <button type="button" class="btn btn-outline-secondary btn-sm" data-toggle="popover" data-placement="bottom" title="Requirement"
+                    data-trigger="hover" [attr.data-content]=student.next_session_requirement (click)="requirementClick(student.next_session_requirement)">
+                    Requirement
+                  </button>
+                  <button type="button" class="btn btn-outline-secondary btn-sm" data-toggle="popover" data-placement="bottom" title="Location"
+                    data-trigger="hover" [attr.data-content]=student.next_session_location>
+                    Location
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div> -->

@@ -1,0 +1,139 @@
+
+.dia-title {
+  text-align: center;
+}
+
+.dia-title a {
+  /* display: inline-block; */
+  font-size: 23px;
+}
+
+.dia-title i {
+  cursor: pointer;
+  font-size: 25px;
+}
+
+.close {
+  /* display: inline-block;
+  float: right; */
+  padding: 2px;
+  /* border: 1px solid #ddd;
+  border-radius: 5px;
+  max-height: 35px; */
+}
+
+.pay-div {
+  position: relative;
+  /* overflow: hidden; */
+  text-align: center;
+  margin-left: -10px;
+  margin-right: -10px;
+  padding: 5px;
+}
+
+#pay-head {
+  height: 95px;
+  margin-bottom: 0.8rem;
+}
+
+#pay-head > h5 {
+
+}
+
+#pay-logo {
+  height: 75%;
+}
+
+#pay-logo > img {
+  height: 100%;
+}
+
+#card-holder, #payment-cardnumber, #payment-cardexp, #payment-cardcvc {
+  border: 1px solid #ddd;
+}
+
+#card-errors {
+  color: red;
+}
+
+.pay-form {
+  margin-top: 10px;
+  margin-left: 10px;
+  margin-right: 10px;
+  margin-bottom: 5px;
+}
+
+#payment-form {
+  text-align: left;
+}
+
+#payment-form label {
+  font-weight: bold;
+}
+
+.payment-info {
+  width: 100%;
+  background-color: lightgray;
+  border-radius: 5px;
+  padding: 4px;
+}
+
+
+.form-btn {
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.form-btn button {
+  width: 100%;
+  font-size: 18px;
+  font-weight: 400;
+}
+
+.success {
+  /* margin-top: */
+}
+
+.success-icon, .success-content {
+  text-align: center;
+}
+
+.success-icon i {
+  font-size: 40px;
+  font-weight: bold;
+  color: #7FFF00;
+}
+
+.s-div {
+  width: 15%;
+  padding: 5px;
+  border: 5px solid #7FFF00;
+  border-radius: 50%;
+}
+
+.StripeElement {
+  background-color: white;
+  height: 40px;
+  padding: 10px 12px;
+  border-radius: 4px;
+  border: 1px solid transparent;
+  box-shadow: 0 1px 3px 0 #e6ebf1;
+  -webkit-transition: box-shadow 150ms ease;
+  transition: box-shadow 150ms ease;
+}
+
+.StripeElement--focus {
+  box-shadow: 0 1px 3px 0 #cfd7df;
+}
+
+.StripeElement--invalid {
+  border-color: #fa755a;
+}
+
+.StripeElement--webkit-autofill {
+  background-color: #fefde5 !important;
+}
+label {
+  font-size: 0.8rem;
+  color:"#212121";
+}

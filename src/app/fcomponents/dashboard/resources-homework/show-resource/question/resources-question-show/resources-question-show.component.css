@@ -1,0 +1,60 @@
+.pre{
+    font-family: Arial;
+    white-space:pre-wrap;
+}
+
+.card-header{
+    padding:0px;
+    max-height: 320px;
+
+}
+.float-right{
+    text-align: right;
+}
+
+#userProfileImg{
+    height: 50px;
+    width: 50px;
+    margin-left: 10px;
+    margin-right: 5px;
+  }
+  /* the box contains subjectImg */
+  .container-body{
+    height: 20rem;
+  }
+  #subjectImg{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  #subjectIcon{
+    height: 23px;
+    width: 23px;
+    margin-top: -0.2rem;
+    margin-left: 0.5rem;
+  }
+  #subjectFont{
+    font-size: 15px;
+  }
+  #tag{
+      color: #0099ff;
+  }
+
+  #colSpace1{
+      padding-left: 0;
+      padding-right: 0;
+  }
+  #colSpace2{
+    padding-left: 0;
+  }
+  #colSpace3{
+    padding-right: 0;
+  }
+
+  #editBtn{
+    margin-top: 5px;
+    font-weight: 600;
+    font-size: 14px;
+    color: white;
+    background-color: #0099ff;
+  }

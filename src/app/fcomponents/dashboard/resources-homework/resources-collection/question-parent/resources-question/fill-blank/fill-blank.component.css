@@ -1,0 +1,64 @@
+
+
+.form-group {margin-bottom:1px;}
+
+
+.saved-quiz-text{
+  margin: 12px;
+  border-radius: 5px;
+}
+
+.saved-quiz-title{
+  color:grey;
+}
+
+.saved-question{
+  padding: 10px;
+}
+
+
+.pos-btn {
+  padding: 3px;
+  text-align: right;
+}
+
+.pos-btn button {
+  margin-right: 5px;
+}
+
+.container{
+  padding:0;
+}
+
+.col{
+  padding:0;
+}
+
+
+
+.question-col{
+  margin-left:5px;
+  margin-right:5px;
+  padding:0;
+}
+
+
+.form-btn-div {
+  padding: 2px;
+  text-align: right;
+}
+
+.form-btn-div button {
+  margin-left: 0.5rem;
+}
+
+.row{
+  margin:0;
+}
+
+.bottomButton{
+  position: absolute;
+  margin-left: auto;
+margin-right: auto;
+left: 40%;
+}

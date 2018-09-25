@@ -1,0 +1,50 @@
+.student {
+    margin-bottom: 60px;
+    position: relative;
+  }
+  
+  .applicant {
+    margin-bottom: 60px;
+    position: relative;
+  }
+  
+  .teacher {
+    margin-bottom: 60px;
+    position: relative;
+  }
+  
+  #studentImg {
+    filter: brightness(60%);
+    height: 230px;
+    width: 90%;
+    border-radius: 20px 20px 20px 20px;
+  }
+  
+  #applicantImg {
+    filter: brightness(60%);
+    height: 230px;
+    width: 90%;
+    border-radius: 20px 20px 20px 20px;
+  }
+  
+  #teacherImg {
+    filter: brightness(60%);
+    height: 230px;
+    width: 90%;
+    border-radius: 20px 20px 20px 20px;
+  }
+  
+  .frontCenter {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  
+  .link {
+    font-size: 27px;
+    font-weight: bold;
+    color: white;
+    cursor: pointer;
+  }
+  
