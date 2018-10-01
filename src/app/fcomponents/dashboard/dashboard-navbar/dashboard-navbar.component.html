@@ -36,7 +36,7 @@
         </li>
 
         <!-- rolePosition == 2 -->
-        <a *ngIf="rolePosition == 2" (click)="onClick2({name:'Tutor Application'})" class="nav-link s2bold teachingIcon" id="tutorApplication" style="padding-left:30px;" href="#" routerLink="/app/apply/manager">Tutor Application <span class="sr-only">(current)</span></a>
+        <a *ngIf="rolePosition == 2" (click)="onClick2({name:'Tutor Application'})" class="nav-link s2bold teachingIcon" id="tutorApplication" style="padding-left:30px;" href="#" routerLink="/app/dashboard/apply/manager">Tutor Application <span class="sr-only">(current)</span></a>
 
         <!-- rolePosition == 1&2 -->
         <a  *ngIf="rolePosition == 2||rolePosition == 1" (click)="onClick2({name:'My Teachers'})" id="myTeachers" class="nav-link s2bold personIcon" style="padding-left:30px;" href="#" routerLink="/app/dashboard/mytutors">My Tutor<span class="sr-only">(current)</span></a>
