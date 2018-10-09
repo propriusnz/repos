@@ -55,7 +55,7 @@
             <label for="date_birth">Date of birth</label>
             <div style="margin-top:-18px;">
               <mat-form-field class="example-full-width">
-                <input matInput [min]="minDOB" [max]="maxDOB" [matDatepickerFilter]="DatePopUp" [matDatepicker]="picker" formControlName="DOB" >
+                <input matInput [min]="minDOB" [max]="maxDOB"  [matDatepicker]="picker" formControlName="DOB" >
                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                 <mat-datepicker #picker ></mat-datepicker>
                 <mat-error *ngIf="appForm.controls.DOB.errors?.required">Date of birth is required</mat-error>

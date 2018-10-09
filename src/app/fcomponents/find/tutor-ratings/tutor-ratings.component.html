@@ -1,0 +1,34 @@
+<div class="card">
+    <h4 class="card-header m2">Ratings</h4>
+    <div class="card-body">
+      <div class="p-2 badges d-flex flex-direction-row flex-wrap justify-content-center">
+        <div *ngFor="let bage of bages">
+        <div *ngIf="bage.capacity !== 0" class="flex flex-direction-column flex-align-center m-3">
+          <div ngClass="{{bage.color}}" class="badge Badge" matBadge="{{bage.capacity}}"><img src="{{bage.src}}"></div>
+          <div>{{bage.name}}</div>
+        </div>
+        </div>
+      </div>
+      <div >
+      <star-rating [readOnly]="true" [rating]="rate" [showHalfStars]="true" size="large"></star-rating>
+        <div >
+          <h3 class="m2 mb-0">{{rate.toFixed(1)}} Average</h3>
+          <div class="s4 font-weight-bold text-grey">300 ratings, 300 students</div>
+        </div>
+      </div>
+      <div class="rating-comment">
+        <div class="comment-person d-flex">
+          <img src="././assets/tutorpics/front1.jpg" class="align-self-center mr-2">
+          <div class="small">
+            <a class="font-weight-bold" href="#">Yuzhou Wang</a>
+            <div class="s4">Lesson: 4</div>
+          </div>
+        </div>
+        <div class="comment-detail">
+          <div class="s4 text-grey mt-1">February 24, 2017</div>
+          <pre id="comment" class="overRead">Florence is a very nice and friendly teacher, I enjoy talking with her a lot. She is very thoughtful to take notes on my grammar mistakes and share the notes to me after the class, and she will point out in the notes about the vocabulary that I used well and the vocabulary that I used improperly. I feel grateful for her efforts into every class and I can feel my growth every time after I talked with her.</pre>
+          <a class="s3Blue" href="javascript:void(0)" id="read-more" (click)="readMore()">Read More</a>
+        </div>
+      </div>
+    </div>
+</div>

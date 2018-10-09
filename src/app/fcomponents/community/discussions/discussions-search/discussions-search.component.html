@@ -1,12 +1,12 @@
 
 <div class="container" >
-  <div class="col-md-8 col-12" style="margin-top: 25px;">
+  <div class="col-lg-8 col-12" style="margin-top: 25px;">
   <!-- There are three parts in total (SortWays + DiscussionListCard + Pagination) -->
   
     <!-- SortWays part -->
     <div class="Discussion__list" style="margin-bottom: 25px;">
       <div class="row">
-        <div class="col-sm-4 col-12">
+        <div class="col-12">
           <div class="form-group" style="margin-bottom: 0;">
             <select  class="form-control" [ngModel]="data" (ngModelChange)='data=$event; changeSelect(this)'>
               <option *ngFor="let type of discussionTypes; let i = index"  [value]='type.text' (select)='changeSelect(type.id,type.text)'>{{type.text}}</option>
@@ -84,6 +84,13 @@
     <!-- <div class="Discussion__list card-footer">
       <pagination-controls class="pagination" (pageChange)="getPage($event)" id="server"></pagination-controls>
     </div> -->
+
+    <app-pagination [currentPage] = "currentPage" 
+                    [pageNumber]="pageNumber" 
+                    [pages]="pages" 
+                    [totalPosts]="totalPosts"
+                    [perPage]="perPage"
+                    (getthePage)="getPage($event)"></app-pagination>
 
   </div>
   </div>

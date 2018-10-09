@@ -83,33 +83,33 @@ export class TutProfileEditCvComponent implements OnInit {
     this.edu1Form = this.builder.group({
       edu :['',[Validators.required,Validators.minLength(2)]], 
       eDetail :['',[Validators.required,Validators.minLength(3)]],
-      sYear :['',[Validators.required,Validators.min(1950),Validators.max(2018)]], 
-      eYear :['',[Validators.required,Validators.min(1950),Validators.max(2020)]],});
+      sYear :['',[Validators.required,Validators.pattern("^[0-9]*$"),Validators.min(1950),Validators.max(2018)]], 
+      eYear :['',[Validators.required,Validators.pattern("^[0-9]*$"),Validators.min(1950),Validators.max(2020)]],});
     this.edu2Form=this.builder.group({
       edu :['',[Validators.required,Validators.minLength(2)]],
       eDetail :['',[Validators.required,Validators.minLength(3)]],
-      sYear :['',[Validators.required,Validators.min(1950),Validators.max(2018)]],
-      eYear :['',[Validators.required,Validators.min(1950),Validators.max(2020)]],});
+      sYear :['',[Validators.required,Validators.pattern("^[0-9]*$"),Validators.min(1950),Validators.max(2018)]],
+      eYear :['',[Validators.required,Validators.pattern("^[0-9]*$"),Validators.min(1950),Validators.max(2020)]],});
     this.edu3Form=this.builder.group({
       edu :['',[Validators.required,Validators.minLength(2)]],
       eDetail :['',[Validators.required,Validators.minLength(3)]],
-      sYear :['',[Validators.required,Validators.min(1950),Validators.max(2018)]],
-      eYear :['',[Validators.required,Validators.min(1950),Validators.max(2020)]],});
+      sYear :['',[Validators.required,Validators.pattern("^[0-9]*$"),Validators.min(1950),Validators.max(2018)]],
+      eYear :['',[Validators.required,Validators.pattern("^[0-9]*$"),Validators.min(1950),Validators.max(2020)]],});
     this.work1Form= this.builder.group({
       work :['',[Validators.required,Validators.minLength(2)]], 
       wDetail :['',[Validators.required,Validators.minLength(3)]],
-      sYear :['',[Validators.required,Validators.min(1950),Validators.max(2018)]],
-      eYear :['',[Validators.required,Validators.min(1950),Validators.max(2020)]],});
+      sYear :['',[Validators.required,Validators.pattern("^[0-9]*$"),Validators.min(1950),Validators.max(2018)]],
+      eYear :['',[Validators.required,Validators.pattern("^[0-9]*$"),Validators.min(1950),Validators.max(2020)]],});
     this.work2Form= this.builder.group({
       work :['',[Validators.required,Validators.minLength(2)]],
       wDetail :['',[Validators.required,Validators.minLength(3)]],
-      sYear :['',[Validators.required,Validators.min(1950),Validators.max(2018)]],
-      eYear :['',[Validators.required,Validators.min(1950),Validators.max(2020)]],});
+      sYear :['',[Validators.required,Validators.pattern("^[0-9]*$"),Validators.min(1950),Validators.max(2018)]],
+      eYear :['',[Validators.required,Validators.pattern("^[0-9]*$"),Validators.min(1950),Validators.max(2020)]],});
     this.work3Form= this.builder.group({
       work :['',[Validators.required,Validators.minLength(2)]],
       wDetail :['',[Validators.required,Validators.minLength(3)]],
-      sYear :['',[Validators.required,Validators.min(1950),Validators.max(2018)]],
-      eYear :['',[Validators.required,Validators.min(1950),Validators.max(2020)]],});
+      sYear :['',[Validators.required,Validators.pattern("^[0-9]*$"),Validators.min(1950),Validators.max(2018)]],
+      eYear :['',[Validators.required,Validators.pattern("^[0-9]*$"),Validators.min(1950),Validators.max(2020)]],});
     this.hobby1Form= this.builder.group({
       hobby :['',[Validators.required,Validators.minLength(2)]],
       hDetail :['',[Validators.required,Validators.minLength(3)]],});
@@ -121,8 +121,8 @@ export class TutProfileEditCvComponent implements OnInit {
       qAuthor :['',[Validators.required,Validators.minLength(3)]],});
     // combine 9 forms into 4 categories form arrays.
     this.eduForms.push(this.edu1Form,this.edu2Form,this.edu3Form);
-    this.workForms.push(this.work1Form,this.work1Form,this.work1Form);
-    this.hobbyForms.push(this.hobby1Form,this.hobby1Form);
+    this.workForms.push(this.work1Form,this.work2Form,this.work3Form);
+    this.hobbyForms.push(this.hobby1Form,this.hobby2Form);
     console.log(this.eduForms);
     console.log(this.workForms);
     console.log(this.hobbyForms);
@@ -194,7 +194,7 @@ export class TutProfileEditCvComponent implements OnInit {
     }
   }
 
-  // change the education forms' status when click 'add another' link
+  // change the education forms status when click 'add another' link
   eduFormStatus(){
   let education= this.educationInfo;
   console.log(education);
@@ -212,11 +212,21 @@ export class TutProfileEditCvComponent implements OnInit {
     let index = $event;
     let eduValue = this.tutorCV.eduBackground[index];
     console.log(this.tutorCV.eduBackground);
-    let yearRange = eduValue.edu_date.split('-');
-    this.eduForms[index].controls['sYear'].setValue(yearRange[0].toString());
-    this.eduForms[index].controls['eYear'].setValue(yearRange[1].toString());
-    this.eduForms[index].controls['edu'].setValue(eduValue.edu);
-    this.eduForms[index].controls['eDetail'].setValue(eduValue.edu_detail);
+    try {//if no '-' then set to '';
+      let yearRange = eduValue.edu_date.split('-');
+      this.eduForms[index].controls['sYear'].setValue(yearRange[0].toString());
+      this.eduForms[index].controls['eYear'].setValue(yearRange[1].toString());  
+      this.eduForms[index].controls['edu'].setValue(eduValue.edu);
+      this.eduForms[index].controls['eDetail'].setValue(eduValue.edu_detail);          
+    }
+    catch{
+      this.eduForms[index].controls['sYear'].setValue('');
+      this.eduForms[index].controls['eYear'].setValue(''); 
+      this.eduForms[index].controls['edu'].setValue('');
+      this.eduForms[index].controls['eDetail'].setValue('');      
+    }
+
+
     this.eduForms[index].updateValueAndValidity();
   }
 
@@ -230,38 +240,36 @@ export class TutProfileEditCvComponent implements OnInit {
     }
   }  
 
-  // set education data when user edit or add information
+// set education data when user edit or add information
   doneClick(y){
     this.feedbackMessage = '';
     if(y.name.valid){
-      this.feedbackMessage="Your education background has been edited."
-      this.ariseAlert(this.feedbackMessage, 'INFO', 'toast-top-right', 1500);
       this.setData(y.index);
-      this.eduAddStatus[y.index]=false;
-      if (y.index <2){
-        this.addAnotherEdu = true;
-      }
+      this.submitInfo(process=>this.doneClickCallback(y));
     } else{
       this.feedbackMessage="Sorry, you need to fill all fields."
       this.ariseAlert(this.feedbackMessage, 'ERROR', 'toast-top-right', 1500);
     }
   }
-
+  //after service submit successed, this will be called 
+  doneClickCallback(y){
+    this.eduAddStatus[y.index]=false;
+    if (y.index <2){
+      this.addAnotherEdu = true;
+    }
+  }
+  
   // set the education form data (display data in Web page & save data sent to server)
   setData(index){
     let eduInput={edu:'',edu_date:'',edu_detail:''};            // save education iuput value
-    let eduInputArr = [];
-    for(let eduForm of this.eduForms){
-      console.log('before: ', eduInputArr);
-      if(eduForm.value.edu!=''){
-        eduInput.edu = eduForm.value.edu;
-        eduInput.edu_date = eduForm.value.sYear +' - '+ eduForm.value.eYear;
-        eduInput.edu_detail = eduForm.value.eDetail;
-        eduInputArr.push(eduInput);
-        console.log(eduInput);
-        console.log('after: ', eduInputArr);
-      }
-    }
+    console.log('before: ', this.eduForms);    
+
+
+    eduInput.edu = this.eduForms[index].value.edu;
+    eduInput.edu_date = this.eduForms[index].value.sYear +'-'+ this.eduForms[index].value.eYear;
+    eduInput.edu_detail = this.eduForms[index].value.eDetail;
+
+    console.log('after: ', eduInput);
     // save education input value into 'tutor' object to display value in web page
     this.tutorCV.eduBackground[index] = eduInput;
     console.log(this.tutorCV.eduBackground);
@@ -291,32 +299,62 @@ export class TutProfileEditCvComponent implements OnInit {
   }
 
   // delete education data when user delete it
-  dlEdu(x) {
-    // delete education info of web page display
-    this.tutorCV.eduBackground[x].edu = null;
-    this.tutorCV.eduBackground[x].edu_date = null;
-    this.tutorCV.eduBackground[x].edu_detail = null;
-    // delete education info of data sent to server
-    console.log('Before: ', this.tProfile);
-    let title = 'edu_' + (x+1);
-    let detail = 'edu_' + (x+1) + '_detail';
-    let year = 'edu_' + (x+1) + '_date';
-    let eduObjKey = Object.keys(this.tProfile);
-    let eduObjVal = Object.values(this.tProfile);
-    for (let i=0; i<eduObjKey.length; i++){
-      if (eduObjKey[i] === title || eduObjKey[i] === detail ||eduObjKey[i] === year){
-        this.tProfile[eduObjKey[i]] = '';
-        this.educationInfo[eduObjKey[i]] = null;
-      }
-    }
-    console.log('After: ', this.tProfile);
-    // when delete any education form, check education add links show
-    this.eduLinks(Object.values(this.educationInfo));
-    this.feedbackMessage = '';
-    this.feedbackMessage = 'Your education background details has been deleted but not save yet.';
-    this.ariseAlert(this.feedbackMessage, 'INFO', 'toast-top-right', 1500);
-  }
 
+  dlEdu(x) {
+      let title , detail , year;
+      let eduBackground = this.tutorCV.eduBackground.slice();
+      console.log(eduBackground);      
+      eduBackground = this.delEduBackgroundArr(eduBackground,x);
+      console.log(eduBackground);
+      console.log('before: ', this.tProfile);
+      //change the data in educationInfo and tProfile
+      for (let i  = 0 ;i<eduBackground.length;i++){
+        title = 'edu_' + (i+1);
+        detail = 'edu_' + (i+1) + '_detail';
+        year = 'edu_' + (i+1) + '_date';   
+        this.educationInfo[title]=eduBackground[i].edu;
+        this.educationInfo[detail]=eduBackground[i].edu_detail;
+        this.educationInfo[year]=eduBackground[i].edu_date;        
+
+        if (eduBackground[i].edu ===null){
+          this.tProfile[title]='';
+          this.tProfile[detail]='';
+          this.tProfile[year]='';        
+        }else{
+          this.tProfile[title]=eduBackground[i].edu;
+          this.tProfile[detail]=eduBackground[i].edu_detail;
+          this.tProfile[year]=eduBackground[i].edu_date;        
+        }
+      }
+      console.log('After: ', this.tProfile);
+
+    this.submitInfo(process=>this.dlEduCallback(x));
+  }
+  delEduBackgroundArr(eduArr,index){
+    console.log(index);
+    console.log(eduArr[index].edu);    
+    eduArr=eduArr.
+    filter(e=>e!=eduArr[index]||
+      e.edu_date!=eduArr[index].edu_date||
+      e.edu_detail!=eduArr[index].edu_detail).
+    filter(e=>e.edu!=null&&e.edu_date!=null&&e.edu_detail!=null);
+      
+    console.log(eduArr);
+    //because of deleted a row and add a null row
+    for (let i=0;i<3;i++)
+      eduArr.push({edu:null, edu_date:null, edu_detail:null});
+    return eduArr.slice(0 ,3);
+  }
+  dlEduCallback(index){
+   // delete education info of web page display
+  //if delete a row in the middle,need reform the row of this.tutorCV.eduBackground
+   //remove the row been delete
+   this.tutorCV.eduBackground = this.delEduBackgroundArr(this.tutorCV.eduBackground,index);
+   this.tutorCV.eduBackground.forEach((item,ind)=>{this.prefillForm(ind)});
+    // when delete any education form, check education add links show
+   this.eduLinks(Object.values(this.educationInfo));
+
+  }
   // ----------------------------------------------- Work experience -----------------------------------------------------
   // get all Work experience data from tutorProfile when Initiating to decrease repeat value
   combineWorkData(){
@@ -382,13 +420,22 @@ export class TutProfileEditCvComponent implements OnInit {
   prefillWorkForm($event){
     let index = $event;
     let workValue = this.tutorCV.workExp[index];
-    console.log(this.tutorCV.workExp);
-    let yearRange = workValue.work_date.split('-');
-    this.workForms[index].controls['sYear'].setValue(yearRange[0].toString());
-    this.workForms[index].controls['eYear'].setValue(yearRange[1].toString());
-    this.workForms[index].controls['work'].setValue(workValue.work);
-    this.workForms[index].controls['wDetail'].setValue(workValue.work_detail);
-    this.workForms[index].updateValueAndValidity();
+
+    try {//if no '-' then set to '';
+      let yearRange = workValue.work_date.split('-');
+      this.workForms[index].controls['sYear'].setValue(yearRange[0].toString());
+      this.workForms[index].controls['eYear'].setValue(yearRange[1].toString());
+      this.workForms[index].controls['work'].setValue(workValue.work);
+      this.workForms[index].controls['wDetail'].setValue(workValue.work_detail);
+      this.workForms[index].updateValueAndValidity();      
+    }
+    catch{
+      this.workForms[index].controls['sYear'].setValue('');
+      this.workForms[index].controls['eYear'].setValue('');
+      this.workForms[index].controls['work'].setValue('');
+      this.workForms[index].controls['wDetail'].setValue('');
+    }
+    console.log('workForms',this.workForms);    
   }
 
   // when cancel button of Add form click, only show one link of 'add new' or 'add another'.
@@ -405,31 +452,30 @@ export class TutProfileEditCvComponent implements OnInit {
   doneWorkClick(y){
     this.feedbackMessage = '';
     if(y.name.valid){
-      this.feedbackMessage="Your work experience has been edited."
-      this.ariseAlert(this.feedbackMessage, 'INFO', 'toast-top-right', 1500);
       this.setWorkData(y.index);
-      this.workAddStatus[y.index]=false;
-      if (y.index <2){
-        this.addAnotherWork = true;
-      }
+      this.submitInfo(process=>this.doneWorkClickCallback(y));
     } else{
       this.feedbackMessage="Sorry, you need to fill all fields."
       this.ariseAlert(this.feedbackMessage, 'ERROR', 'toast-top-right', 1500);
     }
   }
 
+  //after service submit successed, this will be called 
+  doneWorkClickCallback(y){
+    this.workAddStatus[y.index]=false;
+    if (y.index <2){
+      this.addAnotherWork = true;
+    }
+  }
+
   // set the work form data (display data in Web page & save data sent to server)
   setWorkData(index){
     let workInput={work:'',work_date:'',work_detail:''};            // save work iuput value
-    for(let workForm of this.workForms){
-      if(workForm.value.work!=''){
-        workInput.work = workForm.value.work;
-        workInput.work_date = workForm.value.sYear +' - '+ workForm.value.eYear;
-        workInput.work_detail = workForm.value.wDetail;
-        console.log(workInput);
-      }
-    }
-    // save work input value into 'tutor' object to display value in web page
+    workInput.work = this.workForms[index].value.work;
+    workInput.work_date = this.workForms[index].value.sYear +'-'+ this.workForms[index].value.eYear;
+    workInput.work_detail = this.workForms[index].value.wDetail;
+
+     // save work input value into 'tutor' object to display value in web page
     this.tutorCV.workExp[index] = workInput;
     console.log(this.tutorCV.workExp);
     this.workAddStatus[index] = false;
@@ -459,30 +505,54 @@ export class TutProfileEditCvComponent implements OnInit {
 
   // delete work data when user delete it
   dlWorkExpe(x) {
-    // delete work info of web page display
-    this.tutorCV.workExp[x].work = null;
-    this.tutorCV.workExp[x].work_date = null;
-    this.tutorCV.workExp[x].work_detail = null;
-    // delete work info of data sent to server
-    console.log('Before: ', this.tProfile);
-    let title = 'work_' + (x+1);
-    let detail = 'work_' + (x+1) + '_detail';
-    let year = 'work_' + (x+1) + '_date';
-    let workObjKey = Object.keys(this.tProfile);
-    for (let i=0; i<workObjKey.length; i++){
-      if (workObjKey[i] === title || workObjKey[i] === detail ||workObjKey[i] === year){
-        this.tProfile[workObjKey[i]] = '';
-        this.workInfo[workObjKey[i]] = null;
+    let title , detail , year;
+    let workExp = this.tutorCV.workExp.slice();
+    workExp = this.delWorkExpeArr(workExp,x);
+    console.log('workExp: ', workExp);    
+    console.log('before: ', this.tProfile);
+    //change the data in educationInfo and tProfile
+    for (let i  = 0 ;i<workExp.length;i++){
+      title = 'work_' + (i+1);
+      detail = 'work_' + (i+1) + '_detail';
+      year = 'work_' + (i+1) + '_date';   
+      this.workInfo[title]=workExp[i].work;
+      this.workInfo[detail]=workExp[i].work_detail;
+      this.workInfo[year]=workExp[i].work_date;        
+
+      if (workExp[i].work ===null){
+        this.tProfile[title]='';
+        this.tProfile[detail]='';
+        this.tProfile[year]='';        
+      }else{
+        this.tProfile[title]=workExp[i].work;
+        this.tProfile[detail]=workExp[i].work_detail;
+        this.tProfile[year]=workExp[i].work_date;        
       }
     }
     console.log('After: ', this.tProfile);
+    this.submitInfo(process=>this.dlWorkExpeCallback(x));
+  }
+  delWorkExpeArr(arr,index){
+    console.log(index);
+    console.log(arr[index].edu);    
+    arr=arr.
+    filter(e=>e.work!=arr[index].work||
+      e.work_date!=arr[index].work_date||
+      e.work_detail!=arr[index].work_detail).
+    filter(e=>e.work!=null&&e.work_date!=null&&e.work_detail!=null);
+      
+    console.log(arr);
+    //because of deleted a row and add a null row
+    for (let i=0;i<3;i++)
+        arr.push({work:null, work_date:null, work_detail:null});
+    return arr.slice(0 ,3);
+  }
+  dlWorkExpeCallback(x){
+    this.tutorCV.workExp =  this.delWorkExpeArr(this.tutorCV.workExp,x);
+    this.tutorCV.workExp.forEach((item,ind)=>{this.prefillWorkForm(ind)});    
     // when delete any work form, check work add links show
     this.workLinks(Object.values(this.workInfo));
-    this.feedbackMessage = '';
-    this.feedbackMessage = 'Your work experience details has been deleted but not save yet.';
-    this.ariseAlert(this.feedbackMessage, 'INFO', 'toast-top-right', 1500);
   }
-
 
   // ----------------------------------------------- Hobbies and Interests -----------------------------------------------------
   // get all Hobbies and Interests data from tutorProfile when Initiating to decrease repeat value
@@ -527,9 +597,15 @@ export class TutProfileEditCvComponent implements OnInit {
     let index = $event;
     let hobbyValue = this.tutorCV.hobbyInt[index];
     console.log(this.tutorCV.hobbyInt);
-    this.hobbyForms[index].controls['hobby'].setValue(hobbyValue.hobby);
-    this.hobbyForms[index].controls['hDetail'].setValue(hobbyValue.hobby_detail);
-    this.hobbyForms[index].updateValueAndValidity();
+    if (hobbyValue.hobby!=null){
+      this.hobbyForms[index].controls['hobby'].setValue(hobbyValue.hobby);
+      this.hobbyForms[index].controls['hDetail'].setValue(hobbyValue.hobby_detail);
+      this.hobbyForms[index].updateValueAndValidity();
+    }else{
+      this.hobbyForms[index].controls['hobby'].setValue('');
+      this.hobbyForms[index].controls['hDetail'].setValue('');
+    }
+
   }
 
   // when cancel button of Add form click, only show one link of 'add new' or 'add another'.
@@ -546,29 +622,29 @@ export class TutProfileEditCvComponent implements OnInit {
   doneHobbyClick(y){
     this.feedbackMessage = '';
     if(y.name.valid){
-      this.feedbackMessage="Your hobby and interest have been edited."
-      this.ariseAlert(this.feedbackMessage, 'INFO', 'toast-top-right', 1500);
-      this.setHobbyData(y.index);
-      this.hobbyAddStatus[y.index]=false;
-      if (y.index <2){
-        this.addAnotherHobby = true;
-      }
+      // this.feedbackMessage="Your hobby and interest have been edited."
+      // this.ariseAlert(this.feedbackMessage, 'INFO', 'toast-top-right', 1500);
+      this.setHobbyData(y.index);      
+      this.submitInfo(process=>this.doneHobbyClickCallback(y));      
     } else{
       this.feedbackMessage="Sorry, you need to fill all fields."
       this.ariseAlert(this.feedbackMessage, 'ERROR', 'toast-top-right', 1500);
     }
   }
+  //after service submit successed, this will be called 
+  doneHobbyClickCallback(y){
+    this.hobbyAddStatus[y.index]=false;
+    if (y.index <2){
+      this.addAnotherHobby = true;
+    }
+}
 
   // set the hobby form data (display data in Web page & save data sent to server)
   setHobbyData(index){
     let hobbyInput={hobby:'',hobby_detail:''};            // save hobby iuput value
-    for(let hobbyForm of this.hobbyForms){
-      if(hobbyForm.value.hobby!=''){
-        hobbyInput.hobby = hobbyForm.value.hobby;
-        hobbyInput.hobby_detail = hobbyForm.value.hDetail;
-        console.log(hobbyInput);
-      }
-    }
+    hobbyInput.hobby = this.hobbyForms[index].value.hobby;
+    hobbyInput.hobby_detail = this.hobbyForms[index].value.hDetail;
+
     // save hobby input value into 'tutor' object to display value in web page
     this.tutorCV.hobbyInt[index] = hobbyInput;
     console.log(this.tutorCV.hobbyInt);
@@ -594,28 +670,50 @@ export class TutProfileEditCvComponent implements OnInit {
 
   // delete hobby data when user delete it
   dlHobbyInt(x) {
+    // this.feedbackMessage = '';
+    // this.feedbackMessage = 'Your hobby and interest details has been deleted but not save yet.';
+    // this.ariseAlert(this.feedbackMessage, 'INFO', 'toast-top-right', 1500);
     // delete hobby info of web page display
-    this.tutorCV.hobbyInt[x].hobby = null;
-    this.tutorCV.hobbyInt[x].hobby_detail = null;
-    // delete hobby info of data sent to server
-    console.log('Before: ', this.tProfile);
-    let title = 'hobby_' + (x+1);
-    let detail = 'hobby_' + (x+1) + '_detail';
-    let hobbyObjKey = Object.keys(this.tProfile);
-    for (let i=0; i<hobbyObjKey.length; i++){
-      if (hobbyObjKey[i] === title || hobbyObjKey[i] === detail){
-        this.tProfile[hobbyObjKey[i]] = '';
-        this.hobbyInfo[hobbyObjKey[i]] = null;
+    let title , detail ;
+    let hobbyInt = this.tutorCV.hobbyInt.slice();
+    hobbyInt = this.dlHobbyIntArr(hobbyInt,x);
+    //
+    for (let i  = 0 ;i<hobbyInt.length;i++){
+      title = 'hobby_' + (i+1);
+      detail = 'hobby_' + (i+1) + '_detail';
+
+      this.hobbyInfo[title]=hobbyInt[i].hobby;
+      this.hobbyInfo[detail]=hobbyInt[i].hobby_detail;
+
+      if (hobbyInt[i].hobby ===null){
+        this.tProfile[title]='';
+        this.tProfile[detail]='';
+      }else{
+        this.tProfile[title]=hobbyInt[i].hobby;
+        this.tProfile[detail]=hobbyInt[i].hobby_detail;
       }
     }
-    console.log('After: ', this.tProfile);
-    // when delete any hobby form, check hobby add links show
-    this.hobbyLinks(Object.values(this.hobbyInfo));
-    this.feedbackMessage = '';
-    this.feedbackMessage = 'Your hobby and interest details has been deleted but not save yet.';
-    this.ariseAlert(this.feedbackMessage, 'INFO', 'toast-top-right', 1500);
-  }  
-
+    console.log('After: ', this.tProfile);    
+    this.submitInfo(process=>this.dlHobbyIntCallback(x));
+  } 
+  dlHobbyIntArr(arr,index){
+    console.log(index);
+    console.log(arr[index].edu);    
+    arr=arr.
+    filter(e=>e.hobby!=arr[index].hobby||
+      e.hobby_detail!=arr[index].hobby_detail).
+    filter(e=>e.hobby!=null&&e.hobby_detail!=null);
+      
+    console.log(arr);
+    //because of deleted a row and add a null row
+    for (let i=0;i<2;i++)
+        arr.push({hobby:null, hobby_detail:null});
+    return arr.slice(0 ,2);
+  } 
+  dlHobbyIntCallback(x){
+    this.tutorCV.hobbyInt =  this.dlHobbyIntArr(this.tutorCV.hobbyInt,x);
+    this.tutorCV.hobbyInt.forEach((item,ind)=>{this.prefillHobbyForm(ind)});  
+  }
 
   // ----------------------------------------------- Favorite quote -----------------------------------------------------
   // set favoriteQuote data when user edit or add information
@@ -631,15 +729,21 @@ export class TutProfileEditCvComponent implements OnInit {
       console.log('valid',this.Profile);
       console.log(this.tProfile.quote);
       console.log(this.tProfile.quote_author);
-      this.feedbackMessage = 'Your favorite quote details have been changed but not save yet.';
-      this.ariseAlert(this.feedbackMessage, 'INFO', 'toast-top-right', 1500);
-      return this[x.status]=false;
+      //this.feedbackMessage = 'Your favorite quote details have been changed but not save yet.';
+      //this.ariseAlert(this.feedbackMessage, 'INFO', 'toast-top-right', 1500);
+      //return this[x.status]=false;
+      this.submitInfo(this[x.status]);      
     }else{
       console.log('not valid', this.Profile);
       this.feedbackMessage = 'Sorry, something went wrong.';
       this.ariseAlert(this.feedbackMessage, 'ERROR', 'toast-top-right', 1500);
     }
   }
+  //after service submit successed, this will be called ?
+  favoriteQuoteDataCallback(status){
+    status=false;
+}
+
 
   // Prefill quote values in form inputs
   prefillQuoteForm(){
@@ -650,19 +754,23 @@ export class TutProfileEditCvComponent implements OnInit {
 
   // delete favoriteQuote data when user delete it
   dlFavQuote(x) {
+
+    // this.feedbackMessage = '';
+    // this.feedbackMessage = 'Your favorite quote details has been deleted but not save yet.';
+    // this.ariseAlert(this.feedbackMessage, 'INFO', 'toast-top-right', 1500);
+    this.submitInfo(process=>this.dlFavQuoteCallback(x));
+  }
+
+  dlFavQuoteCallback(x){
     this.Profile[x.des]=' ';
     this.Profile[x.title]=' ';
     this.tProfile[x.title]='';
     this.tProfile[x.des]='';
     console.log('half',this.Profile);
-    this.feedbackMessage = '';
-    this.feedbackMessage = 'Your favorite quote details has been deleted but not save yet.';
-    this.ariseAlert(this.feedbackMessage, 'INFO', 'toast-top-right', 1500);
   }
 
-
   // ----------------------------------------------- Button group -----------------------------------------------------
-  submitInfo(){
+  submitInfo(callback){
     this.feedbackMessage = '';
     // If any form changes, then save the updated one. If no changes happened, then save the previous value again.
     let profileKey = Object.keys(this.Profile);
@@ -689,6 +797,7 @@ export class TutProfileEditCvComponent implements OnInit {
     this.tutorService.updateTutorProfile(this.Profile).subscribe(
       (res)=>{
         console.log(res);
+        if (callback!=null) callback();
         this.feedbackMessage = 'Your changes have been saved.';
         this.ariseAlert(this.feedbackMessage, 'SUCCESS', 'toast-top-right', 1500);
       },
@@ -699,7 +808,7 @@ export class TutProfileEditCvComponent implements OnInit {
       }
     )
   }
-
+//has been canceled
   cancelInfo(){
     // this.window.location.reload();
     this.feedbackMessage = '';

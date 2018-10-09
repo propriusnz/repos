@@ -1,0 +1,124 @@
+.card{
+  margin-top:12px;
+}
+pre{
+  font-family: Helvetica;
+  font-size:15px;
+  color:#424242;
+  white-space: pre-wrap;
+  margin-bottom: 0;
+}
+.text-grey{
+  color: #838789;
+}
+.badges{
+  background-color: #f8f8f8;
+  margin-bottom: 15px;
+  margin-left: 0;
+  margin-right: 0;
+  text-align: center;
+}
+.Badge{
+  border-style: solid;
+  border-width: 3px;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+}
+.badge-yellow{
+  border-color: #ffb300;
+  background-color: #fff7e6;
+}
+::ng-deep .badge-yellow .mat-badge-content{
+  background: #ffb300;
+}
+.badge-orange{
+  border-color: #f9a825;
+  background-color: #fef6e9;
+}
+::ng-deep .badge-orange .mat-badge-content{
+  background: #f9a825;
+}
+.badge-blue{
+  border-color: #2196f3;
+  background-color: #e9f4fd;
+}
+::ng-deep .badge-orange .mat-badge-content{
+  background: #2196f3;
+}
+.badge-dark-blue{
+  border-color: #1565c0;
+  background-color: #e8eff8;
+}
+::ng-deep .badge-dark-blue .mat-badge-content{
+  background: #1565c0;
+}
+.badge-purple{
+  border-color: #5c6bc0;
+  background-color: #eff0f8;
+}
+::ng-deep .badge-purple .mat-badge-content{
+  background: #5c6bc0;
+}
+.badge-brown{
+  border-color: #e65100;
+  background-color: #fcede6;
+}
+::ng-deep .badge-brown .mat-badge-content{
+  background: #e65100;
+}
+.badge-light-red{
+  border-color: #ff3d00;
+  background-color: #ffebe6;
+}
+::ng-deep .badge-light-red .mat-badge-content{
+  background: #ff3d00;
+}
+.badge-dark-green{
+  border-color: #388e3c;
+  background-color: #ebf3eb;
+}
+::ng-deep .badge-dark-green .mat-badge-content{
+  background: #388e3c;
+}
+.badge-pink{
+  border-color: #e91e63;
+  background-color: #fce8ef
+}
+::ng-deep .badge-pink .mat-badge-content{
+  background: #e91e63;
+}
+.badge-light-green{
+  border-color: #4caf50;
+  background-color: #edf7ed;
+}
+::ng-deep .badge-light-green .mat-badge-content{
+  background: #4caf50;
+}
+/*::ng-deep .rating.medium .star{*/
+  /*width: 40px;*/
+  /*height: 40px;*/
+/*}*/
+::ng-deep .rating{
+  justify-content: start;
+  margin-bottom: 8px;
+}
+.rating-comment{
+  margin-top: 20px;
+}
+.comment-person img{
+  height: 25px;
+  width: 25px;
+  border-radius: 50%;
+}
+#read-more{
+  text-decoration: none;
+}
+.overRead{
+  max-height: 90px;
+  overflow: hidden;
+}
+::ng-deep .mat-badge-content{
+  top: -7px!important;
+  right: -8px!important;
+}
