@@ -13,7 +13,7 @@
                 <label class="form-check-label s2 ml-4" for="{{agIndex}}">{{agIndex}}</label>
               </div>
               <div class="col-6 form-group"><button type="submit" id="f-btn" class="btn btn-primary" (click)="agStatus=false" >Cancel</button></div>
-              <div class="col-6 form-group"><button type="submit" id="f-btn-right" class="btn btn-primary"  (click)="defCheck({name:'agForm',status:'agStatus',type:'age',index:'agIndex'})">Done</button></div>  
+              <div class="col-6 form-group"><button type="submit" id="f-btn-right" class="btn btn-primary"  (click)="defCheck({name:'agForm',status:'agStatus',type:'age',index:'agIndex'},'ag')">Save</button></div>  
             </div>
           </form>
         </div>   
@@ -40,7 +40,7 @@
               <div *ngIf="leForm.value.var9==null" class="col-12">&nbsp;&nbsp;<a id="a-btn" (click)="inputStatus(this.leForm)">Add another</a></div>
               <div class="col-12">
                 <button type="submit" id="f-btn" class="btn btn-primary" (click)="leStatus=false" >Cancel</button>
-                <button type="submit" id="f-btn-right" class="btn btn-primary"  (click)="defineV({name:'leForm',status:'leStatus',index:'lesson'})">Done</button>
+                <button type="submit" id="f-btn-right" class="btn btn-primary"  (click)="defineV({name:'leForm',status:'leStatus',index:'lesson'},'le')">Save</button>
               </div>
             </div>
           </form>
@@ -68,7 +68,7 @@
               <div *ngIf="coForm.value.var9==null" class="col-12">&nbsp;&nbsp;<a id="a-btn" (click)="inputStatus(this.coForm)">Add another</a></div>
               <div class="col-12">
                 <button type="submit" id="f-btn" class="btn btn-primary" (click)="coStatus=false" >Cancel</button>
-                <button type="submit" id="f-btn-right" class="btn btn-primary"  (click)="defineV({name:'coForm',status:'coStatus',index:'course'})">Done</button>
+                <button type="submit" id="f-btn-right" class="btn btn-primary"  (click)="defineV({name:'coForm',status:'coStatus',index:'course'},'co')">Save</button>
               </div>
             </div>
           </form>
@@ -91,15 +91,12 @@
                 <label class="form-check-label s2 ml-4" for="{{testIndex}}">{{testIndex}}</label>
               </div>
               <div class="col-6 form-group"><button type="submit" id="f-btn" class="btn btn-primary" (click)="testStatus=false" >Cancel</button></div>
-              <div class="col-6 form-group"><button type="submit" id="f-btn-right" class="btn btn-primary"  (click)="defCheck({name:'testForm',status:'testStatus',type:'test',index:'testIndex'})">Done</button></div>  
+              <div class="col-6 form-group"><button type="submit" id="f-btn-right" class="btn btn-primary"  (click)="defCheck({name:'testForm',status:'testStatus',type:'test',index:'testIndex'},'tst')">Save</button></div>  
             </div>
           </form>
         </div>   
       </div> 
   </div>
 </div>
-<!--submit button-->
-<button class="btn btn-primary" style="margin:15px;" (click)="submitInfo()">Save All Changes</button>
-<button class="btn btn-danger" style="margin:15px;" (click)="cancelInfo()">Cancel All Changes</button>
 
 

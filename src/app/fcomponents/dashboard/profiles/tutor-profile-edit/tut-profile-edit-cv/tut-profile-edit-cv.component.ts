@@ -179,16 +179,20 @@ export class TutProfileEditCvComponent implements OnInit {
 
   // check education form's links ('Add the first address' or 'Add another')
   eduLinks(eduValue){
-    let valueCounter = 0;
+    let valueCounter = 0,neweduValue = [];
     console.log('eduValue length: ', eduValue.length);
-    for (let i=0; i<eduValue.length; i++){
-      if (eduValue[i] != null){ valueCounter += 1; }
-    }
+
+    while(eduValue.length)  //1D to 2D 
+    neweduValue.push(eduValue.splice(0,3));
+    //get number of the array
+    valueCounter=neweduValue.filter(element=>element[0]!=null||
+        element[1]!=null||element[2]!=null).length;
+
     console.log('eduValCounter: ', valueCounter);
-    if (valueCounter > 0&&valueCounter <=3){
+    if (valueCounter > 0&&valueCounter <3){
       this.addNewEdu = false;
       this.addAnotherEdu = true;
-    } else if (valueCounter >3){
+    } else if (valueCounter >=3){
       this.addNewEdu = false;
       this.addAnotherEdu = false;
     }else {
@@ -393,15 +397,23 @@ export class TutProfileEditCvComponent implements OnInit {
   // check work form's links ('Add the first address' or 'Add another')
   workLinks(workValue){
     let valueCounter = 0;
+    let newWorkValue = [];
     console.log('workValue: ', workValue);
-    for (let i=0; i<workValue.length; i++){
-      if (workValue[i] != null){ valueCounter += 1; }
-    }
+    // for (let i=0; i<workValue.length; i++){
+    //   if (workValue[i] != null){ valueCounter += 1; }
+    // }
+    while(workValue.length)  //1D to 2D 
+      newWorkValue.push(workValue.splice(0,3));
+    //get number of the array
+    valueCounter=newWorkValue.
+          filter(element=>element[0]!=null||
+            element[1]!=null||element[2]!=null).length;
+
     console.log('workValCounter: ', valueCounter);
-    if (valueCounter > 0&&valueCounter <= 3){
+    if (valueCounter > 0&&valueCounter < 3){
       this.addNewWork = false;
       this.addAnotherWork = true;
-    } else if (valueCounter > 3){
+    } else if (valueCounter >= 3){
       this.addNewWork = false;
       this.addAnotherWork = false;
     } else {
@@ -585,17 +597,21 @@ export class TutProfileEditCvComponent implements OnInit {
 
   // check hobby form's links ('Add the first address' or 'Add another')
   hobbyLinks(hobbyValue){
-    let valueCounter = 0;
+    let valueCounter = 0,newHobbyValue = [];
+    while(hobbyValue.length)  //1D to 2D 
+    newHobbyValue.push(hobbyValue.splice(0,2));
+    //get number of the array
+    valueCounter=newHobbyValue.filter(
+        element=>element[0]!=null||element[1]!=null).length;
+
     console.log('hobbyValue length: ', hobbyValue.length);
-    for (let i=0; i<hobbyValue.length; i++){
-      if (hobbyValue[i] != null){ valueCounter += 1; }
-    }
+  
     console.log('hobbyValCounter: ', valueCounter);
-    if (valueCounter > 0 &&valueCounter <=2){
+    if (valueCounter > 0 &&valueCounter <2){
       this.addNewHobby = false;
       this.addAnotherHobby = true;
     }
-    else if(valueCounter > 2){
+    else if(valueCounter >=2){
       this.addNewHobby = false;
       this.addAnotherHobby = false;
     }
@@ -747,7 +763,7 @@ export class TutProfileEditCvComponent implements OnInit {
       //this.feedbackMessage = 'Your favorite quote details have been changed but not save yet.';
       //this.ariseAlert(this.feedbackMessage, 'INFO', 'toast-top-right', 1500);
       //return this[x.status]=false;
-      this.submitInfo(this[x.status]);      
+      this.submitInfo(process=>this.favoriteQuoteDataCallback(this));      
     }else{
       console.log('not valid', this.Profile);
       this.feedbackMessage = 'Sorry, something went wrong.';
@@ -755,11 +771,10 @@ export class TutProfileEditCvComponent implements OnInit {
     }
   }
   //after service submit successed, this will be called ?
-  favoriteQuoteDataCallback(status){
-    status=false;
+  favoriteQuoteDataCallback(x){
+    this[x.status]=false;
+    this.qStatus=false
 }
-
-
   // Prefill quote values in form inputs
   prefillQuoteForm(){
     this.quoteForm.controls['quote'].setValue(this.tProfile.quote);
@@ -773,15 +788,16 @@ export class TutProfileEditCvComponent implements OnInit {
     // this.feedbackMessage = '';
     // this.feedbackMessage = 'Your favorite quote details has been deleted but not save yet.';
     // this.ariseAlert(this.feedbackMessage, 'INFO', 'toast-top-right', 1500);
-    this.submitInfo(process=>this.dlFavQuoteCallback(x));
-  }
-
-  dlFavQuoteCallback(x){
     this.Profile[x.des]=' ';
     this.Profile[x.title]=' ';
     this.tProfile[x.title]='';
     this.tProfile[x.des]='';
-    console.log('half',this.Profile);
+    console.log('half',this.Profile);    
+    this.submitInfo(process=>this.dlFavQuoteCallback(x));
+  }
+
+  dlFavQuoteCallback(x){
+    
   }
 
   // ----------------------------------------------- Button group -----------------------------------------------------
