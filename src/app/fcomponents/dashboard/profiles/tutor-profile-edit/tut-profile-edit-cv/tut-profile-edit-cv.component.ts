@@ -185,10 +185,13 @@ export class TutProfileEditCvComponent implements OnInit {
       if (eduValue[i] != null){ valueCounter += 1; }
     }
     console.log('eduValCounter: ', valueCounter);
-    if (valueCounter > 0){
+    if (valueCounter > 0&&valueCounter <=3){
       this.addNewEdu = false;
       this.addAnotherEdu = true;
-    } else {
+    } else if (valueCounter >3){
+      this.addNewEdu = false;
+      this.addAnotherEdu = false;
+    }else {
       this.addNewEdu = true;
       this.addAnotherEdu = false;
     }
@@ -257,6 +260,7 @@ export class TutProfileEditCvComponent implements OnInit {
     if (y.index <2){
       this.addAnotherEdu = true;
     }
+    this.eduLinks(Object.values(this.educationInfo));    
   }
   
   // set the education form data (display data in Web page & save data sent to server)
@@ -389,14 +393,17 @@ export class TutProfileEditCvComponent implements OnInit {
   // check work form's links ('Add the first address' or 'Add another')
   workLinks(workValue){
     let valueCounter = 0;
-    console.log('workValue length: ', workValue.length);
+    console.log('workValue: ', workValue);
     for (let i=0; i<workValue.length; i++){
       if (workValue[i] != null){ valueCounter += 1; }
     }
     console.log('workValCounter: ', valueCounter);
-    if (valueCounter > 0){
+    if (valueCounter > 0&&valueCounter <= 3){
       this.addNewWork = false;
       this.addAnotherWork = true;
+    } else if (valueCounter > 3){
+      this.addNewWork = false;
+      this.addAnotherWork = false;
     } else {
       this.addNewWork = true;
       this.addAnotherWork = false;
@@ -466,6 +473,7 @@ export class TutProfileEditCvComponent implements OnInit {
     if (y.index <2){
       this.addAnotherWork = true;
     }
+    this.workLinks(Object.values(this.workInfo));    
   }
 
   // set the work form data (display data in Web page & save data sent to server)
@@ -583,10 +591,15 @@ export class TutProfileEditCvComponent implements OnInit {
       if (hobbyValue[i] != null){ valueCounter += 1; }
     }
     console.log('hobbyValCounter: ', valueCounter);
-    if (valueCounter > 0){
+    if (valueCounter > 0 &&valueCounter <=2){
       this.addNewHobby = false;
       this.addAnotherHobby = true;
-    } else {
+    }
+    else if(valueCounter > 2){
+      this.addNewHobby = false;
+      this.addAnotherHobby = false;
+    }
+    else {
       this.addNewHobby = true;
       this.addAnotherHobby = false;
     }
@@ -637,6 +650,7 @@ export class TutProfileEditCvComponent implements OnInit {
     if (y.index <2){
       this.addAnotherHobby = true;
     }
+    this.hobbyLinks(Object.values(this.hobbyInfo));    
 }
 
   // set the hobby form data (display data in Web page & save data sent to server)
@@ -712,7 +726,8 @@ export class TutProfileEditCvComponent implements OnInit {
   } 
   dlHobbyIntCallback(x){
     this.tutorCV.hobbyInt =  this.dlHobbyIntArr(this.tutorCV.hobbyInt,x);
-    this.tutorCV.hobbyInt.forEach((item,ind)=>{this.prefillHobbyForm(ind)});  
+    this.tutorCV.hobbyInt.forEach((item,ind)=>{this.prefillHobbyForm(ind)}); 
+    this.hobbyLinks(Object.values(this.hobbyInfo));     
   }
 
   // ----------------------------------------------- Favorite quote -----------------------------------------------------

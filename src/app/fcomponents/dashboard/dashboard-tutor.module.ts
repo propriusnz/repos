@@ -49,6 +49,9 @@ import {TagInputModule} from 'ngx-chips';
     TutProfileEditSpecialComponent,
     //FillBlankComponent
     
-  ]
+  ],
+  entryComponents: [
+
+  ],   
 })
 export class DashboardTutorModule { }

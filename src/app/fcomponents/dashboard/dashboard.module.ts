@@ -13,7 +13,7 @@ import { DashboardHomeSessionsComponent } from './dashboard-home/dashboard-home-
 import { TutorReportDialogComponent } from './dashboard-dialogs/tutor-report-dialog/tutor-report-dialog.component'; //all
 import { SessionEditDialogComponent } from './dashboard-dialogs/session-edit-dialog/session-edit-dialog.component'; //all
 import { SchedulesListComponent } from './schedules-lessons/schedules-list/schedules-list.component'; //all
-import { LearnerSessionRatingDialogComponent } from './dashboard-dialogs/learner-session-rating-dialog/learner-session-rating-dialog.component';//all
+
 import { ResourceEditComponent } from './resources-homework/resource-edit/resource-edit.component';
 import { DashboardPanelComponent } from './dashboard-panel/dashboard-panel.component';	//all
 
@@ -84,7 +84,13 @@ import {TagInputModule} from 'ngx-chips';
     ArticleModifyComponent,
     FillBlankComponent,
     ShortAnswersComponent,
-    MultipleChoiceComponent
-  ]
+    MultipleChoiceComponent,
+  ],
+  entryComponents: [
+    CancelSessionDialogComponent,
+    TutorReportDialogComponent,
+    SessionEditDialogComponent,
+    ReportSessionIssueDialogComponent,
+  ],  
 })
 export class DashboardModule { }
