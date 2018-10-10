@@ -14,19 +14,21 @@ import { TutProfileEditPanelComponent } from './profiles/tutor-profile-edit/tut-
 import { TutProfileEditKeyComponent } from './profiles/tutor-profile-edit/tut-profile-edit-key/tut-profile-edit-key.component';//tutor
 import { TutProfileEditCvComponent } from './profiles/tutor-profile-edit/tut-profile-edit-cv/tut-profile-edit-cv.component';//tutor
 import { TutProfileEditSpecialComponent } from './profiles/tutor-profile-edit/tut-profile-edit-special/tut-profile-edit-special.component';//tutor
-
+import { VideoUploadHelpComponentComponent } from './profiles/tutor-profile-edit/tut-profile-edit-key/video-upload-help-component/video-upload-help-component.component';
 
 const routes: Routes = [
     { path: 'learner/homework/view/hw', redirectTo: 'app/community/showresource', pathMatch: 'full' },
     { path: 'schedules/edit', component: TutorSchedulesEditComponent },   
     { path: 'resources/view:id', redirectTo: 'community/posts/:id', canActivate: [RestrictGuard, AccessTutorGuard] },   
+    { path: 'videouploadhelp', component: VideoUploadHelpComponentComponent },
     {
       path: 'editprofile', component: TutProfileEditPanelComponent, canActivate: [RestrictGuard, AccessTutorGuard],
       children: [
         //{ path: '', component: TutProfileEditKeyComponent, canActivate: [RestrictGuard, AccessTutorGuard] },
         { path: 'key', component: TutProfileEditKeyComponent, canActivate: [RestrictGuard, AccessTutorGuard] },
         { path: 'cv', component: TutProfileEditCvComponent, canActivate: [RestrictGuard, AccessTutorGuard] },
-        { path: 'speciality', component: TutProfileEditSpecialComponent }
+        { path: 'speciality', component: TutProfileEditSpecialComponent },
+       
       ]
     }    
     ];

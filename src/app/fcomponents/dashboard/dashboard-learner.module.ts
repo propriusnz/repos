@@ -6,6 +6,7 @@ import { DashboardLearnerRoutingModule } from './dashboard-learner-routing.modul
 import { SharedModule } from '../../shared/shared.module';
 import { DashboardModule } from './dashboard.module';
 import { MatStepperModule } from '@angular/material/stepper';
+import { StarRatingModule } from 'angular-star-rating';
 
 import { LearnerProfileEditComponent } from './profiles/learner-profile-edit/learner-profile-edit.component'; //learner
 import { LearnerTutorsPanelComponent } from './learner-tutors/learner-tutors-panel/learner-tutors-panel.component'; //learner
@@ -25,6 +26,7 @@ import {TagInputModule} from 'ngx-chips';
     ReactiveFormsModule,
     DashboardLearnerRoutingModule,
     TagInputModule,
+    StarRatingModule,
     MatDialogModule,
     MatCardModule,
     MatDatepickerModule,

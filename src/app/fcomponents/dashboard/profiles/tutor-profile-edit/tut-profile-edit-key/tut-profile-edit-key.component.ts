@@ -314,51 +314,55 @@ export class TutProfileEditKeyComponent implements OnInit {
   }
   // set the location form data (display data in Web page & save data sent to server)
   setData(index){
-
     this.tutor.teaching_locations[index]=this.locationForms[index].value;
     this.locationDataSent.teaching_locations=this.tutor.teaching_locations
             .filter(x=>x.city!='')
             .map(x=>x.number+','+x.street+','+x.suburb+','+x.city);
+
+    this.tutorData.tutorProfile.teaching_locations=this.locationDataSent.teaching_locations;
+
     console.log(this.tutor.teaching_locations);
     console.log(this.locationDataSent.teaching_locations);
-    
   }
 
   submitLocations(y){
     console.log(y.name);
     if(y.name.valid){
-      //this.loFeedback="Your Teaching locations has been edited."
-      //this.ariseAlert(this.loFeedback, 'INFO', 'toast-top-right', 1500);
-      this.addNewLink = false;
-      this.addAnotherLink = true;
       this.setData(y.index);
-      this.locationStatus[y.index]=false;
-      this.submitInfo();
+      this.submitInfo(process=>this.callbackloc(y));
     } else{
       this.loFeedback="Sorry, you need to fill all fields."
       this.ariseAlert(this.loFeedback, 'ERROR', 'toast-top-right', 1500);
     }
   }
-
+  callbackloc(y){
+    this.addNewLink = false;
+    this.addAnotherLink = true;
+    this.locationStatus[y.index]=false;
+  }
   // delete Location details 
   DeleteForm(index){
     console.log(this.locationForms[index].value);
-    // delete location form of web page display
-    this.tutor.teaching_locations[index].city = '';
-    this.tutor.teaching_locations[index].suburb = '';
-    this.tutor.teaching_locations[index].street = '';
-    this.tutor.teaching_locations[index].number = '';
     // delete location info of data sent to server
-    console.log(this.tutorData.tutorProfile.teaching_locations[index]);
-    this.tutorData.tutorProfile.teaching_locations[index] = null;
+    console.log(this.tutorData.tutorProfile.teaching_locations);
+    this.tutorData.tutorProfile.teaching_locations.splice(index,1);
+    //this.tutorData.tutorProfile.teaching_locations.push(null);
+    console.log(this.tutorData.tutorProfile.teaching_locations);
+    this.submitInfo(process=>this.callbackDel(index));
+
+  }
+  callbackDel(index){
+    // delete location form of web page display
+    //console.log(this.tutor.teaching_locations);
+    this.tutor.teaching_locations.splice(index,1);
+    //this.tutor.teaching_locations.push({city:'',suburb:'',street:'',number:''});
+    this.tutor.teaching_locations.filter(x=>x.city!=null||x.suburb!=null||x.street!=null||x.number!=null);
+    console.log(this.tutor.teaching_locations);    
+    //keep the form data same as the object varible 
+    this.tutor.teaching_locations.forEach((item,ind)=>{this.prefillForm(ind)});
     // when delete any location form, check location links show
     this.locationLinks(this.tutorData.tutorProfile.teaching_locations);
-    //this.feedbackMessage = '';
-    //this.feedbackMessage = 'Your teaching location detail has been deleted but not save yet.'
-    //this.ariseAlert(this.feedbackMessage, 'INFO', 'toast-top-right', 1500);
-    this.submitInfo();
   }
-
   // ----------------------------------------------- Introduction statement -----------------------------------------------------
   // check if introduction statement is valid
   defState() {
@@ -370,22 +374,29 @@ export class TutProfileEditKeyComponent implements OnInit {
       console.log(this.Profile);
       //this.feedbackMessage="Your introduction statement has been edited."
       //this.ariseAlert(this.feedbackMessage, 'INFO', 'toast-top-right', 1500);
-      this.submitInfo();
-      return this.stStatus=false;
+      this.submitInfo(this.defStateCallback());
     } else{
       this.feedbackMessage='Content is invalid';
       this.ariseAlert(this.feedbackMessage, 'ERROR', 'toast-top-right', 1500);
     }
   }
+  defStateCallback(){
+    this.stStatus=false;
+  }
   DeleteIntroForm(){
     this.Profile.intro_statement = '';
     this.tutor.intro_statement = '';
     this.tutorData.tutorInfo.intro_statement = '';
-    this.submitInfo();
+    this.submitInfo(this.delIntroCallBack());
+  }
+  delIntroCallBack(){
+    this.Profile.intro_statement = '';
+    this.tutor.intro_statement = '';
+    this.tutorData.tutorInfo.intro_statement = '';    
   }
   // ----------------------------------------------- Button group -----------------------------------------------------
   // Save all changes button
-  submitInfo(){
+  submitInfo(fun){
     console.log(this.tutorData.tutorProfile);
     // If any form changes, then save the updated one. If no changes happened, then save the previous value again.
     if (this.locationDataSent.teaching_locations.length !== 0){ this.Profile.teaching_locations = this.locationDataSent.teaching_locations; } 
@@ -398,13 +409,15 @@ export class TutProfileEditKeyComponent implements OnInit {
     this.tutorService.updateTutorProfile(this.Profile).subscribe(
       (res) => {
         console.log(res);
+        //callback function for changing display
+        if (fun!=null)  fun();
         this.feedbackMessage = 'Your all changes have been saved.';
         this.ariseAlert(this.feedbackMessage, 'SUCCESS', 'toast-top-right', 2000);
       },
       (err) => { 
         console.log(err);
         this.feedbackMessage = 'Sorry, something went wrong.';
-        this.ariseAlert(this.feedbackMessage, 'ERROR', 'toast-top-right', 2000);
+        this.ariseAlert(this.feedbackMessage, 'ERROR', 'toast-top-right', 5000);
       }
     )
   }

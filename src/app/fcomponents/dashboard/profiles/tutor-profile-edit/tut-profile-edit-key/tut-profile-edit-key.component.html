@@ -17,7 +17,7 @@
   <div class="card-header m2">Profile video</div>
   <div class="card-body">
     <div>
-      <a href="#">How to get Embed video link?</a>
+      <a routerLink="/app/dashboard//tutor/videouploadhelp">How to get an Embed video link?</a>
     </div>
     <iframe *ngIf="linkValid" class="my-3" id="video" [src]="videoLink" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
     <button class="btn btn-primary" (click)="videoLinkInput = !videoLinkInput" style="display: block;">Embed Video</button>
