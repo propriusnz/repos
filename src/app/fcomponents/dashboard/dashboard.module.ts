@@ -25,7 +25,7 @@ import { ArticleModifyComponent } from './resources-homework/resources-collectio
 import { FillBlankComponent } from './resources-homework/resources-collection/question-parent/resources-question/fill-blank/fill-blank.component';
 import { ShortAnswersComponent } from './resources-homework/resources-collection/question-parent/resources-question/short-answers/short-answers.component';
 import { MultipleChoiceComponent } from './resources-homework/resources-collection/question-parent/resources-question/multiple-choice/multiple-choice.component'
-
+import { FinishQuizComponent } from './resources-homework/resources-collection/question-parent/resources-question/multiple-choice/finish-quiz/finish-quiz.component';
 
 import { DashboardNavbarComponent } from './dashboard-navbar/dashboard-navbar.component'; //all
 import { CancelSessionDialogComponent } from './dashboard-dialogs/cancel-session-dialog/cancel-session-dialog.component'; //all
@@ -36,6 +36,9 @@ import { TutorScheduleShowComponent } from './schedules-lessons/tutor-schedules-
 import { MatDialogModule, MatCardModule, MatDatepickerModule, MatFormFieldModule, MatInputModule, MatCheckboxModule, MatAutocompleteModule, MatBadgeModule, MatBottomSheetModule, MatButtonModule, MatButtonToggleModule, MatChipsModule, MatDividerModule, MatExpansionModule, MatGridListModule, MatIconModule, MatListModule, MatMenuModule, MatProgressBarModule, MatProgressSpinnerModule, MatRadioModule, MatRippleModule, MatSelectModule, MatSidenavModule, MatSliderModule, MatSlideToggleModule, MatSnackBarModule, MatSortModule, MatTableModule, MatTabsModule, MatToolbarModule, MatTooltipModule, MatTreeModule, MatNativeDateModule, DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material';
 import { MatPaginatorModule, MatPaginatorIntl } from '@angular/material/paginator';
 import { ResourceSummaryComponent} from '../dashboard/resources-homework/resource-edit/resource-summary/resource-summary.component' //all
+
+import { ShowResourceComponent} from '../dashboard/resources-homework/show-resource/show-resource.component' //all
+import { ResourcesQuestionShowComponent} from '../dashboard/resources-homework/show-resource/question/resources-question-show/resources-question-show.component' //all
 
 import {TagInputModule} from 'ngx-chips';
 
@@ -85,12 +88,16 @@ import {TagInputModule} from 'ngx-chips';
     FillBlankComponent,
     ShortAnswersComponent,
     MultipleChoiceComponent,
+    FinishQuizComponent,
+    ShowResourceComponent,
+    ResourcesQuestionShowComponent
   ],
   entryComponents: [
     CancelSessionDialogComponent,
     TutorReportDialogComponent,
     SessionEditDialogComponent,
     ReportSessionIssueDialogComponent,
+    FinishQuizComponent
   ],  
 })
 export class DashboardModule { }
