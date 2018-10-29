@@ -10,7 +10,7 @@ import { PaginationComponent } from '../fcomponents/basic/Pagination/pagination.
 import { ToastrComponent } from '../fcomponents/basic/toastr/toastr.component';
 import { SideHelperComponent } from '../fcomponents/basic/side-helper/side-helper.component';
 import { ApplicantTutorComponent } from '../fcomponents/jobs/applicant-tutor-manager/applicant-tutor.component';
-
+import { UserPaymentInfoComponent } from '../fcomponents/user-details/user-payment-info/user-payment-info.component';
 
 
 
@@ -33,13 +33,15 @@ import { ApplicantTutorComponent } from '../fcomponents/jobs/applicant-tutor-man
         PaginationComponent,
         SideHelperComponent,
         ApplicantTutorComponent,
-        ToastrComponent
+        ToastrComponent,
+        UserPaymentInfoComponent
      ],
     exports: [
         PaginationComponent,
         SideHelperComponent,
         ApplicantTutorComponent,
-        ToastrComponent
+        ToastrComponent,
+        UserPaymentInfoComponent
       ],
     entryComponents: [ToastrComponent]
  })

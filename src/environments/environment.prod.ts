@@ -7,5 +7,7 @@ export const environment = {
   // baseSsrUrl: 'http://deansapi',
   // baseUrl: 'http://deansapi',
   baseImgUrl: 'https://proprius.co.nz/api/public',
-  baseUserImgUrl: 'https://storage.googleapis.com/learnspace/user_photo/'
+  baseUserImgUrl: 'https://storage.googleapis.com/learnspace/user_photo/',
+  messengerApiUrl: 'http://learnspace.co.nz:8040'
+  //messengerApiUrl: 'http://learnspace.co.nz:9090'  
 } ;

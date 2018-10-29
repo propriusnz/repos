@@ -16,6 +16,7 @@ button{
 }
 .s2bold {
   position: relative;
+  color: #0099FF;
 }
 
 
@@ -29,6 +30,7 @@ button{
 .nav-link:hover{
   background-color: lightgrey;
   border-radius: 5px 5px 5px 5px;
+  color: #007bff;
 }
 
 /* dropdown content */

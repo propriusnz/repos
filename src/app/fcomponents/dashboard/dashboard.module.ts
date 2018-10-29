@@ -40,6 +40,8 @@ import { ResourceSummaryComponent} from '../dashboard/resources-homework/resourc
 import { ShowResourceComponent} from '../dashboard/resources-homework/show-resource/show-resource.component' //all
 import { ResourcesQuestionShowComponent} from '../dashboard/resources-homework/show-resource/question/resources-question-show/resources-question-show.component' //all
 
+
+
 import {TagInputModule} from 'ngx-chips';
 
 @NgModule({
@@ -48,6 +50,7 @@ import {TagInputModule} from 'ngx-chips';
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
+
     DashboardRoutingModule,
     TagInputModule,
     MatDialogModule,
@@ -90,14 +93,19 @@ import {TagInputModule} from 'ngx-chips';
     MultipleChoiceComponent,
     FinishQuizComponent,
     ShowResourceComponent,
-    ResourcesQuestionShowComponent
+    ResourcesQuestionShowComponent,
+
   ],
   entryComponents: [
     CancelSessionDialogComponent,
     TutorReportDialogComponent,
     SessionEditDialogComponent,
     ReportSessionIssueDialogComponent,
-    FinishQuizComponent
-  ],  
+    FinishQuizComponent,
+
+  ],
+  providers: [
+  
+  ]
 })
 export class DashboardModule { }

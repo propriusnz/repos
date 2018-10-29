@@ -25,6 +25,9 @@ pre{
   width: 60px;
   height: 60px;
 }
+.bage_name{
+  margin-right: 11px;
+}
 .badge-yellow{
   border-color: #ffb300;
   background-color: #fff7e6;
@@ -111,8 +114,9 @@ pre{
   width: 25px;
   border-radius: 50%;
 }
-#read-more{
+.read-more{
   text-decoration: none;
+  display: none;
 }
 .overRead{
   max-height: 90px;

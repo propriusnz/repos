@@ -27,7 +27,7 @@
   <div *ngIf="tutors.length>0;else noTutors">
     <div *ngFor="let tutor of tutors" class="card template">
       <div *ngIf=""></div>
-      <a [routerLink] ="['/app/find-tutor/profile/'+tutor.tutor_id]">
+      <a [routerLink] ="['/app/find-tutor/profile/'+tutor.user_id]">
       <div class="row">
         
         <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-6 img">
@@ -37,7 +37,7 @@
         </div>
         <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 fake"></div>
         <!-- Below class for SSR purposes only -->
-        <h4 *ngIf="isBrowser==false" class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-6 m2 name"><a [href]="['https://www.learnspace.co.nz/app/find-tutor/profile/'+tutor.tutor_id]">{{tutor.first_name}}</a></h4>
+        <h4 *ngIf="isBrowser==false" class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-6 m2 name"><a [href]="['https://www.learnspace.co.nz/app/find-tutor/profile/'+tutor.user_id]">{{tutor.first_name}}</a></h4>
         
         <h4 class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-6 m2 name">{{tutor.first_name}}</h4>
         <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3"></div>
@@ -64,12 +64,12 @@
     </div>
   </div>
 
- <!--  <app-pagination [currentPage] = "currentPage" 
+   <app-pagination [currentPage] = "currentPage" 
                     [pageNumber]="pageNumber" 
                     [pages]="pages" 
                     [totalPosts]="totalPosts"
                     [perPage]="perPage"
-                    (getthePage)="searchTutor($event,0)"></app-pagination> -->
+                    (getthePage)="searchTutor($event,0)"></app-pagination> 
 
   <ng-template #noTutors>
     <h3 class="m2">{{searchInfo}} </h3>

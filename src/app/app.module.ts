@@ -84,7 +84,20 @@ import { UserTransactionsActionsDialogComponent} from './fcomponents/user-detail
 
 import { FormlabelhighlightDirective } from './fcomponents/dashboard/resources-homework/support/formlabelhighlight.directive';
 import { TutorRatingsComponent } from './fcomponents/find/tutor-ratings/tutor-ratings.component';
+import { TutorStatsComponent } from './fcomponents/find/tutor-stats/tutor-stats.component';
 
+import { NotificationComponent } from './fcomponents/notifications/notification/notification.component';
+import { NotificationDialogComponent } from './fcomponents/notifications/notification-dialog/notification-dialog.component';
+
+//chat 
+import { SocketService } from './services/servercalls/socket.service';
+import { ChatComponent } from './fcomponents/chat/chat.component';
+import { DrawboardComponent } from './fcomponents/chat/drawboard/drawboard.component';
+import { PreviewImgComponent } from './fcomponents/chat/preview-img/preview-img.component';
+import { DashboardComponent } from './fcomponents/chat/chat-dash/dashboard.component';
+import { ChatWindowComponent } from './fcomponents/chat/chat-window/chat-window.component';
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
+import { PickerModule } from '@ctrl/ngx-emoji-mart';
 
 // All Routes follow
 const appRoutes: Routes = [
@@ -100,7 +113,11 @@ const appRoutes: Routes = [
       {
         path: 'help',
         loadChildren:'./fcomponents/help/help.module#HelpModule',
-        },           
+        },
+      //Notifications
+      { 
+        path: 'notifications', component: NotificationComponent,
+      },                   
       // Load landing
       { path: 'external/:event', component: ExternalLoadComponent },
       { path: 'onboard/:first_name', component: NewUserWelcomeComponent },
@@ -191,10 +208,20 @@ export const MY_FORMATS = {
     UserTransactionsComponent,
     ImageEditorDialogComponent,
     StripePaymentComponent,
-    UserPaymentInfoComponent,
+    //UserPaymentInfoComponent,
     UserTransactionsActionsDialogComponent,
     FormlabelhighlightDirective,
-    TutorRatingsComponent
+    TutorRatingsComponent,
+    TutorStatsComponent,
+    NotificationComponent,
+    NotificationDialogComponent,
+    //for chat begin
+    DashboardComponent,
+    PreviewImgComponent,
+    DrawboardComponent,
+    ChatComponent,
+    ChatWindowComponent
+    //for chat end
   ],
 
   imports: [
@@ -223,7 +250,10 @@ export const MY_FORMATS = {
     MatStepperModule,
     ImageCropperModule,
     MatAutocompleteModule, MatBadgeModule, MatCheckboxModule, MatBottomSheetModule, MatButtonModule, MatButtonToggleModule, MatChipsModule, MatDividerModule, MatPaginatorModule,
-    MatExpansionModule, MatGridListModule, MatIconModule, MatListModule, MatMenuModule, MatProgressBarModule, MatProgressSpinnerModule, MatRadioModule, MatRippleModule, MatSelectModule, MatSidenavModule, MatSliderModule, MatSlideToggleModule, MatSnackBarModule, MatSortModule, MatTableModule, MatTabsModule, MatToolbarModule, MatTooltipModule, MatTreeModule
+    MatExpansionModule, MatGridListModule, MatIconModule, MatListModule, MatMenuModule, MatProgressBarModule, MatProgressSpinnerModule, MatRadioModule, MatRippleModule, MatSelectModule, MatSidenavModule, MatSliderModule, MatSlideToggleModule, MatSnackBarModule, MatSortModule, MatTableModule, MatTabsModule, MatToolbarModule, MatTooltipModule, MatTreeModule,
+    //for chat
+    PickerModule,
+    NgbModule,
     ],
 
   entryComponents: [
@@ -234,6 +264,7 @@ export const MY_FORMATS = {
     ImageEditorDialogComponent,
     StripePaymentComponent,
     UserTransactionsActionsDialogComponent,
+    NotificationDialogComponent
     //ToastrComponent
   ],
 
@@ -254,12 +285,15 @@ export const MY_FORMATS = {
     ResourceRepositoryService,
     AlertNotificationService,
     AppCustomPreloader,
+    SocketService,
     //{ provide: MatPaginatorIntl, useClass: MatPaginatorIntlCro },
     { provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE]},
     { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS},
   ],
-  bootstrap: [AppComponent
+  bootstrap: [AppComponent,
     //,ToastrComponent
+    PreviewImgComponent,
+    DrawboardComponent   
   ],
 })
 export class AppModule { }

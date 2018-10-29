@@ -1,0 +1,24 @@
+.notiTab{
+    font-size: 10px;
+}
+
+.notiTitle{
+    font-size: 12px;
+}
+
+.notiDate{
+    font-size: 8px;
+}
+
+.notiData{
+    font-size: 12px;
+}
+
+.notiAuthor{
+    font-size: 8px;
+}
+
+.card-body{
+    padding: 0.5rem;
+}
+

@@ -37,7 +37,6 @@
   font-family: Arial;
 }
 
-
 .navbar-nav.home .nav-item.home .navLink.home{
   font-size: 16px;
 }
@@ -51,6 +50,7 @@ margin-left: 5px;
 .navbar-nav.dashboard .nav-item.dashboard .navLink.dashboard{
   color:#0099FF;
   font-size: 16px;
+  font-weight: bold;  
 }
 .navbar-nav.dashboard .nav-item.dashboard .navLink.dashboard:hover{
   color:#0099FF;
@@ -159,7 +159,6 @@ background-repeat: no-repeat;
   background-size: 17px;
   background-repeat: no-repeat;
   }
-
 
 
 @media (max-width: 576px) {

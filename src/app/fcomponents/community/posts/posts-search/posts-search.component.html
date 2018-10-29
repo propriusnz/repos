@@ -26,6 +26,7 @@
         </select>
       </div>
     </div>
+
     <div class="col-sm-3 col-lg-3 col-12">
       <div class="form-group" style="margin-bottom: 0;">
         <select class="form-control" [ngModel]="postGrade" (ngModelChange)='data=$event; gradeSelectChange(this)'>
@@ -33,6 +34,7 @@
         </select>
       </div>
     </div>
+
     <div class="col-sm-3 col-lg-3 col-12">
       <div class="form-group" style="margin-bottom: 0;">
         <select class="form-control" [ngModel]="postDate" (ngModelChange)='data=$event; dateSelectChange(this)'>
@@ -43,7 +45,7 @@
   </div>
 
   <!-- PostListCard part consists of 4 parts (All + Articles + Resources + Questions) -->
-  <div class="col-lg-8 col-12">
+  <div class="col-lg-9 col-12">
 
     <!-- Articles part -->
     <div *ngFor="let post of posts" class="card my-4">

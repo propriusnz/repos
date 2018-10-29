@@ -12,7 +12,8 @@ import { AccessApplicantGuard } from '../../services/security/guards/access-appl
 import { LearnerProfileEditComponent } from './profiles/learner-profile-edit/learner-profile-edit.component'; //learner
 import { LearnerTutorsPanelComponent } from './learner-tutors/learner-tutors-panel/learner-tutors-panel.component'; //learner
 import { ViewAllSessionDialogComponent } from './dashboard-dialogs/view-all-session-dialog/view-all-session-dialog.component'; //learner
-
+import { OrderConfirmComponentComponent } from './order/order-confirm-component/order-confirm-component.component';//learner
+import { OrderListComponent } from './order/order-list/order-list.component';//learner
 
 const routes: Routes = [
     /*{ path: 'discussions/:id', component: DiscussionComponent },
@@ -21,6 +22,8 @@ const routes: Routes = [
     { path: 'mytutors', component: LearnerTutorsPanelComponent },
     { path: 'mylearners', component: LearnerTutorsPanelComponent },
     { path: 'profile', component: LearnerProfileEditComponent },
+    { path: 'myorders', component: OrderListComponent },     
+    { path: 'order/:id', component: OrderConfirmComponentComponent }, 
     ];
 
 @NgModule({

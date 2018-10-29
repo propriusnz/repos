@@ -21,6 +21,7 @@
     }
 }
 
+
  .navbar .logo{
      color:#0099FF;
      font-size:21px;
@@ -228,3 +229,9 @@ s4{
   /* .fc .fc-agendaWeek-view tr{
     border: 1px solid black;
   } */
+
+
+.popover{
+    max-width: none !important;
+    width: auto;
+  }

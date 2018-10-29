@@ -8,7 +8,8 @@ import { AuthService } from '../../../services/security/auth.service';
 import { CommonSupportService } from '../../../services/support/common-support.service';
 import { Location, isPlatformBrowser, isPlatformServer } from '@angular/common';
 import { environment } from '../../../../environments/environment.prod';
-import { GeneralRepositoryService} from '../../../services/repositories/general-repository.service';
+import { GeneralRepositoryService } from '../../../services/repositories/general-repository.service';
+import { NotificationDialogComponent } from '../../notifications/notification-dialog/notification-dialog.component';
 
 @Component({
   selector: 'app-navbar',
@@ -29,7 +30,9 @@ export class NavbarComponent implements OnInit {
   baseImgUrl = environment.baseUserImgUrl;
   showTrasBtn = false;
 
-  isBrowser=false
+  isBrowser = false;
+
+
 
   @Input() onwhichpage: string = "home";
 
@@ -76,27 +79,41 @@ export class NavbarComponent implements OnInit {
       console.log(this.generalRepoService.userImage);
       this.generalRepoService.userImage.next(img);
       this.generalRepoService.userImage.subscribe(res => {
-      this.userImg = res;
-      console.log(this.userImg);
+        this.userImg = res;
+        console.log(this.userImg);
       });
-      }
+    }
 
     else {
       this.loggedIn = false
     }
-    if(this.isBrowser){
+    if (this.isBrowser) {
       $(window).resize(() => {
         if ($(window).width() <= 768) { this.screenStatus = true }
         else { this.screenStatus = false }
       });
-  
+
       $(window).scroll(() => {
         if ($(window).scrollTop() >= 60) { this.navStatus = true }
         else { this.navStatus = false }
       }
-    );
+      );
+    }
+
+    // $(function () {
+    //   $('body').popover({
+    //     html: true,
+    //     placement: 'bottom',
+    //     selector: '[data-toggle=popover]',
+    //     trigger: "click",
+    //     container: 'body',
+    //     content: function () {
+    //       return $(this).next('.popper-content').html();
+    //     }
+    //   });
+    // })
   }
-  }
+
 
   collapseShow() {
     let navbar = this.elem.nativeElement.querySelector('#top-navbar');
@@ -126,4 +143,28 @@ export class NavbarComponent implements OnInit {
     this.authService.loggingOut();
     this.ngOnInit();
   }
+
+
+  // Notification Part
+
+  viewNotifications(e) {
+    console.log('view all session');
+    let dialogRef = this.dialog.open(NotificationDialogComponent,
+      {
+        panelClass: 'notification-dialog',
+        data: {
+          
+        },
+      });
+    dialogRef.afterClosed().subscribe(
+      (res) => {
+        console.log(res);
+        if (res) {
+          console.log('got something', res);
+        }
+      },
+      (err) => console.warn(err)
+    );
+  }
+
 }

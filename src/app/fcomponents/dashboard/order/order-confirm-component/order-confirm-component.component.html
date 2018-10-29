@@ -1,0 +1,151 @@
+<div class="container">
+  <div class="row">
+    <div class="col-12">
+      <h1>Order Confirm</h1>
+    </div>
+    <div class="col-xl-9 col-lg-9 col-md-9">
+      <div *ngIf="tutor" class="card">
+        <div class="card-header">
+          <h4 class="col-xl-6 col-md-6 m2">1. Tutor</h4>
+          <div class="s1">The tutor you have choosed.</div>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-xl-3 col-md-3">
+              <img src={{tutor.profile_photo}} class="round standard rounded-circle" width="100" height="100">
+            </div>
+            <div class="col-xl-9 col-lg-9 col-md-9">
+              <div class="col-xl-9 col-lg-9 col-md-9"></div>
+              <div class="row content lbox">
+                <h4 class="col-xl-6 col-md-6 m2">{{tutor.first_name}} </h4>
+                <div class="col-xl-6 col-lg-6 col-md-6"></div>
+                <div class="col-xl-4 col-lg-4 col-md-4">
+                  <div class="card a2 s2"><span class="s3bold">Teaches</span> {{tutor.discipline}}</div>
+                </div>
+                <div class="col-xl-4 col-lg-4 col-md-4">
+                  <div class="card a2 s2"><span class="s3bold">Location</span> {{tutor.location}}</div>
+                </div>
+                <div class="col-xl-4 col-lg-4 col-md-4">
+                  <div class="card a2 s2"><span class="s3bold">Curriculum</span>{{tutor.curriculum}}</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-xl-9 col-lg-9 col-md-9">
+      <div *ngIf="courses" class="card">
+        <div class="card-header">
+          <h4 class="col-xl-6 col-md-6 m2">2. Product</h4>
+          <div class="s1">How many lessons would you like to purchase?</div>
+        </div>
+        <div class="card-body">
+          <div>
+            <div class="col-12">
+              <div>
+                <table class="table table-bordered">
+                  <thead>
+                      <tr class='m2'>
+                        <th scope="col">Course</th>
+                        <th scope="col">Discount</th>
+                        <th scope="col">Price</th>
+                      </tr>
+                    </thead>
+                  <tbody class="s1" *ngFor="let course of courses;let idx=index">
+                    <tr>
+                      <td class='tb_card'>
+                          <mat-radio-button matLine class="course-radio-button" [value]="course" (change)="radioChange($event)">
+                          {{course.description}}
+                          </mat-radio-button>
+                      </td>
+                      <td class='s2blue tb_card'>
+                        <span>Save  </span>
+                        <span class='s3blue' >{{course.discount}}</span>
+                        <span>%</span>                        
+                      </td>
+                      <td class='tb_card'>
+                        <span class='m2'>{{course.price}}  </span>
+                        <span>$</span>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+  </div>
+
+  <div class='row'>
+    <div class="col-xl-9 col-lg-9 col-md-9">
+      <div class="card">
+        <div class="card-header">
+          <h4 class="col-xl-6 col-md-6 m2">3. Payment</h4>
+          <div class="s1">Confirm your payment card.</div>
+        </div>
+        <div class="card-body">
+          <app-user-payment-info></app-user-payment-info>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class='row'>
+    <div class="col-xl-9 col-lg-9 col-md-9">
+      <div *ngIf="order" class="card">
+        <div class="card-header">
+          <h4 class="col-xl-6 col-md-6 m2">4. Check Out</h4>
+          <div class="s1">Confirm and check out!</div>
+        </div>
+
+        <div class="card-body">
+          <table class="table table-bordered alignright">
+            <thead>
+              <tr class='m2'>
+                <th scope="col">No</th>
+                <th scope="col">Item</th>
+                <th scope="col">Price</th>
+              </tr>
+            </thead>
+            <tbody *ngFor="let order of order">
+              <tr class='s1'>
+                <td>{{order.sequence}}</td>
+                <td>{{order.item}}</td>
+                <td><span>{{order.price}}</span><span class='m2'>$</span></td>
+              </tr>
+            </tbody>
+          </table>
+          <button type="button" class="btn btn-primary btn-sm mr-2" data-toggle="modal" data-target="#confirmModal">Check
+            Out</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Comfirm payment</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Do you want to check out?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary  btn-sm mr-2" data-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-primary  btn-sm mr-2" (click)="callPayment()">Yes</button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -54,7 +54,8 @@ export class ProfileHelperService {
   }
 
   students(data){
-    if(data.learnerProfile.length===0){
+    console.log(data);
+    if(data===null||data===''||data.learnerProfile.length===0){
       this.gen=[{destination:"/app/dashboard/learner/profile", main:"You need complete your profile",icon:'<i class="fas fa-edit"></i>'}]
       } 
     }
