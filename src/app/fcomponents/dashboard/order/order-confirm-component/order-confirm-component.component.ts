@@ -33,6 +33,7 @@ export class OrderConfirmComponentComponent implements OnInit {
     this.id = this.route.snapshot.params['id'];
     this.getTutorData(this.id).subscribe(
       (res) => { 
+        console.log(res);        
         this.setTutorData(res);
         this.getCourseData(this.id);
         this.getFeeRate();
