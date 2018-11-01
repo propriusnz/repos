@@ -61,6 +61,13 @@ export class DiscussionsSearchComponent implements OnInit {
   creator: string;
   userName: string;
 
+  //Pagination needed
+  currentPage = 0;
+  pageNumber = 0;
+  pages=[];
+  totalPosts = 0;
+  perPage = 0;
+
   @Output('_selectChange') private _selectChange = new EventEmitter();
 
   constructor(
@@ -86,6 +93,23 @@ export class DiscussionsSearchComponent implements OnInit {
     this.userService.showDiscussions(this.selectedType, this.userFilter, page).subscribe(
       (res)=>{
         console.log(res);
+        if(this.currentPage == 0){
+          this.currentPage = res['current_page'];
+          this.totalPosts = res['total'];
+          this.perPage = res['per_page'];
+          this.pageNumber = Math.ceil(this.totalPosts/this.perPage);
+          if (this.pageNumber > 1){
+            for (let i=1; i<this.pageNumber+1; i++){
+              this.pages.push(i);
+            }
+            console.log(this.pages);
+          }else{
+            this.pages.push(1);
+          }
+        }else{
+          this.currentPage = res['current_page'];
+        }
+
         this.discussionList = res['data'];
         this.getData(this.discussionList);
         this.displayDiscussions.length = 0;
@@ -185,7 +209,7 @@ export class DiscussionsSearchComponent implements OnInit {
         } 
       }
     }
-  }
+  }  
 
 
 }

@@ -1,0 +1,61 @@
+<div class="card">
+  <h4 class="card-header m2">Teacher Stats</h4>
+  <div class="card-body">
+    <div class="p-1 row" align="center">
+      <div class="col-6 col-sm-6 col-md-4">
+        <div class="flex flex-column" style="height: 100%">
+          <div class="d-flex flex-column m-1">
+          <img src="././assets/images/clock.svg">
+          <span class="s4 font-weight-bold text-grey">Response Time</span>
+          <span class="s3">{{time_text}}</span>
+          </div>
+        </div>
+      </div>
+      <div class="col-6 col-sm-6 col-md-4">
+        <div class="d-flex flex-column" style="height: 100%">
+          <div class="d-flex flex-column m-1">
+            <img src="././assets/images/response.svg">
+            <span class="s4 font-weight-bold text-grey">Response Rate</span>
+            <span class="s3">{{response_rate}}%</span>
+          </div>
+        </div>
+      </div>
+      <div class="col-6 col-sm-6 col-md-4">
+        <div class="d-flex flex-column" style="height: 100%">
+          <div class="d-flex flex-column m-1">
+            <img src="././assets/images/attend.svg">
+            <span class="s4 font-weight-bold text-grey">Attendance Rate</span>
+            <span class="s3">{{attend_rate}}%</span>
+          </div>
+        </div>
+      </div>
+      <div class="col-6 col-sm-6 col-md-4">
+        <div class="d-flex flex-column" style="height: 100%">
+          <div class="d-flex flex-column m-1">
+            <img src="././assets/images/lessons.svg">
+            <span class="s4 font-weight-bold text-grey">Total Lessons</span>
+            <span class="s3">{{lessons.toLocaleString()}}</span>
+          </div>
+        </div>
+      </div>
+      <div class="col-6 col-sm-6 col-md-4">
+        <div class="d-flex flex-column" style="height: 100%">
+          <div class="d-flex flex-column m-1">
+            <img src="././assets/images/perLess.svg">
+            <span class="s4 font-weight-bold text-grey">Lessons per Student</span>
+            <span class="s3">{{average_lesson}}</span>
+          </div>
+        </div>
+      </div>
+      <div class="col-6 col-sm-6 col-md-4">
+        <div class="d-flex flex-column" style="height: 100%">
+          <div class="d-flex flex-column m-1">
+            <img src="././assets/images/stars.svg">
+            <span class="s4 font-weight-bold text-grey">Average Rating</span>
+            <span class="s3">{{stars.toFixed(1)}}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

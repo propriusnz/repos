@@ -29,9 +29,6 @@ export class TutProfileEditSpecialComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.agForm = this.builder.group({ 'Primary(5-10)':['',],  'Intermediate(10-13)':['',],  'High School(13-18)':['',],  'Adult(18-)':['',]})
-    this.testForm = this.builder.group({ 'NCEA (University Entrance)':['',], 'NCEA (Scholarship)':['',], 'Cambridge (CIE)':['',], 'IB':['',], 'IELTS':['',], 'SAT':['',], 'TOEFL':['',], 'LSAT':['',], 'GMAT':['',], 'GRE':['',]})
-    console.log(this.agForm);
     this.tutorService.showTutorProfile().subscribe(
       (res)=>{
         this.tutorprofile = res['dataCon'].tutorProfile
@@ -41,11 +38,32 @@ export class TutProfileEditSpecialComponent implements OnInit {
         let w=res['dataCon'].tutorProfile.sp_course_focus;    if(w){this.tutorprofile.course=w;}else{this.tutorprofile.course = []};
         console.log(res['dataCon'].tutorProfile);
         console.log(this.tutorprofile);
-        this.form();},
+        this.BuildForm();
+        this.form();
+      },
       (error)=>console.log(error))
   }//create test & agegroup  and  set tutorprofile value for display
   
-  
+  BuildForm(){
+    this.agForm = this.builder.group({ 
+    'Primary(5-10)':[this.tutorprofile.age.indexOf('Primary(5-10)')>=0,],  
+    'Intermediate(10-13)':[this.tutorprofile.age.indexOf('Intermediate(10-13)')>=0,], 
+    'High School(13-18)':[this.tutorprofile.age.indexOf('High School(13-18)')>=0,], 
+    'Adult(18-)':[this.tutorprofile.age.indexOf('Adult(18-)')>=0,]});
+
+  this.testForm = this.builder.group({ 
+    'NCEA (University Entrance)':[this.tutorprofile.test.indexOf('NCEA (University Entrance)')>=0,],
+     'NCEA (Scholarship)':[this.tutorprofile.test.indexOf('NCEA (Scholarship)')>=0,],
+     'Cambridge (CIE)':[this.tutorprofile.test.indexOf('Cambridge (CIE)')>=0,],
+     'IB':[this.tutorprofile.test.indexOf('IB')>=0,],
+     'IELTS':[this.tutorprofile.test.indexOf('IELTS')>=0,],
+     'SAT':[this.tutorprofile.test.indexOf('SAT')>=0,],
+     'TOEFL':[this.tutorprofile.test.indexOf('TOEFL')>=0,],
+     'LSAT':[this.tutorprofile.test.indexOf('LSAT')>=0,],
+     'GMAT':[this.tutorprofile.test.indexOf('GMAT')>=0,],
+     'GRE':[this.tutorprofile.test.indexOf('GRE')>=0,]})
+  console.log(this.agForm);
+  }
   form(){
     this.leForm = this.builder.group({
       var0:[this.tutorprofile.lesson[0],Validators.minLength(2)], var1:[this.tutorprofile.lesson[1],Validators.minLength(2)], var2:[this.tutorprofile.lesson[2],Validators.minLength(2)], var3:[this.tutorprofile.lesson[3],Validators.minLength(2)], var4:[this.tutorprofile.lesson[4],Validators.minLength(2)],
@@ -54,8 +72,17 @@ export class TutProfileEditSpecialComponent implements OnInit {
       var0:[this.tutorprofile.course[0],Validators.minLength(2)], var1:[this.tutorprofile.course[1],Validators.minLength(2)], var2:[this.tutorprofile.course[2],Validators.minLength(2)], var3:[this.tutorprofile.course[3],Validators.minLength(2)], var4:[this.tutorprofile.course[4],Validators.minLength(2)],
       var5:[this.tutorprofile.course[5],Validators.minLength(2)], var6:[this.tutorprofile.course[6],Validators.minLength(2)], var7:[this.tutorprofile.course[7],Validators.minLength(2)], var8:[this.tutorprofile.course[8],Validators.minLength(2)], var9:[this.tutorprofile.course[9],Validators.minLength(2)],});
   }//create lesson & course form after the subcribe finish
-
-  defCheck(y){
+  CheckCallback(type){
+    if (type==='tst')
+      this.testStatus=false;
+    else if(type==='ag')
+      this.agStatus=false;
+    else if(type==='le')
+      this.leStatus=false; 
+    else 
+      this.coStatus=false;
+  }
+  defCheck(y,type){
     let checkboxes = this.elem.nativeElement.querySelectorAll('input[type="checkbox"]');
     let checkedOne = Array.prototype.slice.call(checkboxes).some(x => x.checked);
     if(checkedOne && this[y.name].dirty){
@@ -64,9 +91,10 @@ export class TutProfileEditSpecialComponent implements OnInit {
         if(this[y.name].value[res]){ag.push(res)};})
       this.tutorprofile[y.type]=ag;
       console.log('yes',ag);
-      this.feedbackMessage = 'Your details has been edited.';
-      this.ariseAlert('INFO');
-      return this[y.status]=false;
+      //this.feedbackMessage = 'Your details has been edited.';
+      //this.ariseAlert('INFO');
+      this.submitInfo(process=>this.CheckCallback(type));     
+//      return this[y.status]=false;
     } else{ 
       console.log('no');
       this.feedbackMessage = 'Sorry, something went wrong.';
@@ -74,16 +102,17 @@ export class TutProfileEditSpecialComponent implements OnInit {
     }
   }//tempararily define the test & agegroup object in ts
 
-  defineV(y){
+  defineV(y,type){
     if(this[y.name].valid && this[y.name].dirty){
       for (var i=0;i<10;i++){ 
         let x=this[y.name].value[this.spIndex[i]];
         if(x||x==''){this.tutorprofile[y.index][i]=x};
       }
       console.log(this[y.name].value);
-      this.feedbackMessage = 'Your details has been edited.';
-      this.ariseAlert('INFO');
-      return this[y.status]=false;
+      // this.feedbackMessage = 'Your details has been edited.';
+      // this.ariseAlert('INFO');
+      this.submitInfo(process=>this.CheckCallback(type));     
+//      return this[y.status]=false;
     } else{
       console.log('no');
       this.feedbackMessage = 'Sorry, something went wrong.';
@@ -97,7 +126,7 @@ export class TutProfileEditSpecialComponent implements OnInit {
         x.controls[this.spIndex[i+1]].setValue('');break;}}
   }//make the "input" in form appear when user click "Add another" button
 
-  submitInfo(){  
+  submitInfo(callback){  
     let item=['',null,"",];
     item.forEach(x=>{
       for (var i=0;i<10;i++){ 
@@ -114,9 +143,10 @@ export class TutProfileEditSpecialComponent implements OnInit {
     this.tutorService.updateTutorProfile(this.tutor).subscribe(
       (res)=>{
         console.log(res); 
+        if (callback!=null) callback();
         this.feedbackMessage = 'Your changes have all been saved.';
         this.ariseAlert('SUCCESS');
-        this.window.location.reload();
+        //this.window.location.reload();
       },
       (error)=>{
         console.log(error);
@@ -125,7 +155,9 @@ export class TutProfileEditSpecialComponent implements OnInit {
       })
   }// after test,agegroup,lesson & course object send these objects to server
 
-  cancelInfo(){this.window.location.reload();}//reload the page to destroy the tempararily defined objcts
+  cancelInfo(){
+  //  this.window.location.reload();
+  }//reload the page to destroy the tempararily defined objcts
 
   ariseAlert(messageType) {
     let position = 'toast-top-right';

@@ -1,18 +1,31 @@
 <mat-dialog-content class="p-0 my-0">
-  <div class="card border-0">
+
+  
+    <div class="form-check ml-3">
+        <input type="checkbox" class="form-check-input" id="sessionck" checked (ngModelChange)="onFilterChange($event)" [ngModel]="filter">
+        <label class="form-check-label" for="sessionck">Session has completed</label>
+    </div>
+    <div *ngIf="!filter" class="p-3">
+        <p class="font-italic text-danger"> * Please state the reason why the session is not completed.</p>
+        <div>Reasons:</div>
+        <textarea type="text" class="form-control" placeholder="Reasons for the session" name="reason" rows="3" [formControl]="reason"></textarea>
+        <button type="submit" class="btn btn-primary ml-3 my-3" (click)="save_not_completed()">Submit</button>
+    </div>
+  
+  <div class="card border-0" *ngIf="filter">
     <div class="card-header bg-white text-center m-0"><strong style="font-size: 20px">Generate report</strong><i class="fa fa-close float-right" (click)="close()"></i></div>
     <div class="card-body m-0">
     <form>
         <div class="mb-2">My student was . . . </div>
         <form [formGroup]="reportForm">
-              <div *ngFor="let agIndex of agIndex" class="form-check">
-                <input class="form-check-input" type="checkbox" id="{{agIndex}}" name="{{agIndex}}" formControlName="{{agIndex}}">
-                <label class="form-check-label s2 ml-2" for="{{agIndex}}">{{agIndex}}</label>
-              </div>
-              <br>
-              <div>Your comment</div>
-              <textarea type="text" class="form-control" placeholder="Comments to your student" name="comment" rows="3" formControlName="comment"></textarea>
-              <div *ngIf="reportForm.controls.comment.invalid && reportForm.controls.comment.touched" class="indicator text-danger" >Two characters at least.</div>
+          <div *ngFor="let agIndex of agIndex" class="form-check">
+            <input class="form-check-input" type="checkbox" id="{{agIndex}}" name="{{agIndex}}" formControlName="{{agIndex}}">
+            <label class="form-check-label s2 ml-2" for="{{agIndex}}">{{agIndex}}</label>
+          </div>
+          <br>
+          <div>Your comment</div>
+          <textarea type="text" class="form-control" placeholder="Comments to your student" name="comment" rows="3" formControlName="comment"></textarea>
+          <div *ngIf="reportForm.controls.comment.invalid && reportForm.controls.comment.touched" class="indicator text-danger" >Two characters at least.</div>
         </form>
         <br>
         <hr>

@@ -1,0 +1,49 @@
+<div class="card">
+    <h4 class="card-header m2">Ratings</h4>
+    <div class="card-body">
+      <div class="p-2 badges d-flex flex-direction-row flex-wrap justify-content-center">
+        <div *ngFor="let bage of bages">
+        <div *ngIf="bage.capacity !== 0" class="flex flex-direction-column flex-align-center m-3">
+          <div ngClass="{{bage.color}}" class="badge Badge" matBadge="{{bage.capacity}}"><img src="{{bage.src}}"></div>
+          <div class="bage_name">{{bage.name}}</div>
+        </div>
+        </div>
+      </div>
+      <div class="star-rating">
+      <star-rating [readOnly]="true" [rating]="rate.rates/rate.ratings" [showHalfStars]="true" size="large"></star-rating>
+      <h3 class="m2 mb-0">{{(rate.rates/rate.ratings).toFixed(1)}} Average</h3>
+      <div class="s4 font-weight-bold text-grey">{{rate.ratings}} ratings, {{rate.students}} students</div>
+      </div>
+      <div *ngFor="let comment of page_comments;let i = index" class="rating-comment">
+        <div class="comment-person d-flex">
+          <img src="{{comment.img}}" class="align-self-center mr-2">
+          <div class="small">
+            <a class="font-weight-bold" href="#">{{comment.name}}</a>
+            <div class="s4">Lesson: {{comment.lessons}}</div>
+          </div>
+        </div>
+        <div class="comment-detail">
+          <div class="s4 text-grey mt-1">{{comment.comment_date | date: "MMMM dd, yyyy"}}</div>
+          <pre id="content" class="overRead">{{comment.content}}</pre>
+          <a class="s3Blue read-more" href="javascript:void(0)" id="more{{i}}" (click)="readMore($event)">Read More</a>
+        </div>
+      </div>
+      <!-- Pagination part -->
+      <div *ngIf="display.innerWidth <= 576">
+        <mat-paginator class="col-12" [length]="total" [pageSize]="perPage" [showFirstLastButtons]=true [hidePageSize]=true (page)="changed($event)"></mat-paginator>
+      </div>
+      <div *ngIf="display.innerWidth > 576">
+        <div class="col-12 text-center" style="margin-bottom: 7px">
+          <button type="button" class="btn btn-link" (click)="goPrevious()" id="prevBtn" [attr.disabled]="prevBtnDisable?'true':null">
+            <i class="fa fa-angle-double-left"></i>
+          </button>
+          <div class="btn-group" *ngFor="let page of pages; let i = index">
+            <button class="btn text-primary rounded" id="pageBtn" (click)="getPage(i+1)" [ngStyle]="pageActive[i+1] ? ({background: '#a3daff'}) : ({background: 'white'})">{{page}}</button>
+          </div>
+          <button type="button" class="btn btn-link" (click)="goNext()" id="nextBtn" [attr.disabled]="nextBtnDisable?'true':null">
+            <i class="fa fa-angle-double-right"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+</div>

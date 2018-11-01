@@ -76,5 +76,11 @@ export class UserService {
   showDiscussion(discussionId){
     return this.http.get(this.baseUrl+'/discussions/'+discussionId, {headers: this.headers1})
   }
+  getContacts() {
+    if (localStorage.lsaWho == "3") {
+      return this.http.get(this.baseUrl + '/tutors/' + this.userId + '/contacts', { headers: this.headers1 })
 
+    } else
+      return this.http.get(this.baseUrl + '/learners/' + this.userId + '/contacts', { headers: this.headers1 })
+  }
 }

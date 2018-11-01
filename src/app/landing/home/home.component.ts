@@ -41,11 +41,14 @@ export class HomeComponent implements OnInit {
     if (isPlatformBrowser(this.platformId)) {
       this.isBrowser = true
     }
+    /*
     this.meta.addTags([
       { name: 'keywords', content: 'Tutoring, tutoring jobs, Learnspace, tutors, NCEA tutors, Maths tutors, English tutors, best maths tutors, best tutors'},
       { name: 'description', content: 'Learnspace Home, find the best high school tutors in Wellington and Auckland' }
-    ])
-    this.titleService.setTitle('Learnspace | Home');
+    ])*/
+    this.meta.updateTag({ name: 'keywords', content: 'Tutoring, tutoring jobs, tuition, teacher, tutors,NCEA tutors, Maths tutors, English tutors, best maths tutors, best tutors'});
+    this.meta.updateTag({ name: 'description', content: 'Learnspace Home, find the best high school tutors in Wellington and Auckland' });    
+    this.titleService.setTitle('Private High School Tutors in Wellington, Auckland');
    }
 
   ngOnInit() {

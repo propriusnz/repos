@@ -9,7 +9,7 @@
         <a (click)="onClick2({name:'Dashboard'})"class="nav-link s2bold homeIcon" id="dashboardHome" style="padding-left:30px" href="#" routerLink="/app/dashboard/home">Dashboard <span class="sr-only">(current)</span></a>
 
         <!-- rolePosition == 3 -->
-        <!-- <a *ngIf="rolePosition == 3" (click)="onClick2({name:'My Students'})" class="nav-link s2bold personIcon" style="padding-left:30px;" href="#" routerLink="/app/dashboard/mylearners">My Students <span class="sr-only">(current)</span></a> -->
+        <!-- <a *ngIf="rolePosition == 3" (click)="onClick2({name:'My Students'})" class="nav-link s2bold personIcon" style="padding-left:30px;" href="#" routerLink="/app/dashboard/learner/mylearners">My Students <span class="sr-only">(current)</span></a> -->
         <li *ngIf="rolePosition == 3" (click)="onClick2({name:'My Schedules'})" class="dropdown">
           <a class="nav-link dropdown-toggle s2bold scheduleIcon" style="padding-left:30px;" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">My Schedules<span class="sr-only">(current)</span></a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -39,7 +39,7 @@
         <a *ngIf="rolePosition == 2" (click)="onClick2({name:'Tutor Application'})" class="nav-link s2bold teachingIcon" id="tutorApplication" style="padding-left:30px;" href="#" routerLink="/app/dashboard/apply/manager">Tutor Application <span class="sr-only">(current)</span></a>
 
         <!-- rolePosition == 1&2 -->
-        <a  *ngIf="rolePosition == 2||rolePosition == 1" (click)="onClick2({name:'My Teachers'})" id="myTeachers" class="nav-link s2bold personIcon" style="padding-left:30px;" href="#" routerLink="/app/dashboard/mytutors">My Tutor<span class="sr-only">(current)</span></a>
+        <a  *ngIf="rolePosition == 2||rolePosition == 1" (click)="onClick2({name:'My Teachers'})" id="myTeachers" class="nav-link s2bold personIcon" style="padding-left:30px;" href="#" routerLink="/app/dashboard/learner/mytutors">My Tutor<span class="sr-only">(current)</span></a>
 
         <a  *ngIf="rolePosition == 2||rolePosition == 1" (click)="onClick2({name:'My Lessons'})" id="myLessons" class="nav-link s2bold scheduleIcon" style="padding-left:30px;" href="#" routerLink="/app/dashboard/learner/lessons">My Lessons <span class="sr-only">(current)</span></a>
         <a  *ngIf="rolePosition == 2||rolePosition == 1" (click)="onClick2({name:'My Homework'})" id="myHomework" class="nav-link s2bold resourceIcon" style="padding-left:30px;" [queryParams]="{ page: 1}" href="#" routerLink="/app/dashboard/learner/homework/view">My Homework <span class="sr-only">(current)</span></a>

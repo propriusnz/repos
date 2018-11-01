@@ -54,7 +54,8 @@ export class ProfileHelperService {
   }
 
   students(data){
-    if(data.learnerProfile.length===0){
+    console.log(data);
+    if(data===null||data===''||data.learnerProfile.length===0){
       this.gen=[{destination:"/app/dashboard/learner/profile", main:"You need complete your profile",icon:'<i class="fas fa-edit"></i>'}]
       } 
     }
@@ -73,10 +74,10 @@ export class ProfileHelperService {
     this.helper.next(this.gen)      
   }
   applicants(data){
-    this.gen = [{ destination:"/app/apply/manager", main:"Thank you for applying to teach.", icon:"<i class='fas fa-smile-beam'></i>"}]
+    this.gen = [{ destination:"/app/dashboard/apply/manager", main:"Thank you for applying to teach.", icon:"<i class='fas fa-smile-beam'></i>"}]
     //data.condition='interview'
     if(data.condition=='update'){//update
-      this.gen.push({destination:"/app/apply/manager", main:"Your application needs an update:", icon:"<i class='fas fa-edit'></i>"})
+      this.gen.push({destination:"/app/dashboard/apply/manager", main:"Your application needs an update:", icon:"<i class='fas fa-edit'></i>"})
     }
     else {
     //if(data.condition=='approved'){

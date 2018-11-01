@@ -1,0 +1,31 @@
+.course-radio-group {
+  display: inline-flex;
+  flex-direction: column;
+}
+
+.course-radio-button {
+  margin: 5px;
+}
+
+.course-selected-value {
+  margin: 15px 0;
+}
+.alignleft {
+    text-align: left;
+}
+.alignright {
+    text-align: right;
+}
+.tr {
+  height: 60px;
+}
+.tb_card{
+  border-collapse: collapse;
+  height: 30px;
+}
+.mat-radio-button.mat-accent .mat-radio-inner-circle {
+  background-color: rgb(66, 134, 244);
+}
+table {
+  width: 100%;
+}

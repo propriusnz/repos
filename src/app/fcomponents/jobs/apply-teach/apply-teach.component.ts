@@ -108,7 +108,8 @@ export class ApplyTeachComponent implements OnInit {
 
   dateRange(AC: FormControl) {
     if (AC.value) {
-      let year = parseInt(moment(AC.value.toString()).format('YYYY'));
+      let year = AC.value.year();
+      //parseInt(moment(AC.value.toString()).format('YYYY'));
       if (year < 1930) return { mindob: {} }
       if (year > 2019) return { maxdob: {} }
       return null;

@@ -1,0 +1,17 @@
+.card {
+    margin-top: 10px;
+    border-width: 0px;
+    box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.1), 0 2px 2px 0 rgba(0, 0, 0, 0.1);
+    background-color: white;
+    padding: 10px 0px 15px 0px;
+    -webkit-filter: brightness(100%);          /* Chrome, Safari, Opera */
+    filter: brightness(100%);
+    transition: 0.3s;
+    
+    
+  }
+  .card-body{
+    
+    padding: 0px 10px 0px 10px;
+  }
+  

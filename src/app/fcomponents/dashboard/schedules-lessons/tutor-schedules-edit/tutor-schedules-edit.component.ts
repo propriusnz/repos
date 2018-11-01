@@ -54,7 +54,7 @@ export class TutorSchedulesEditComponent implements OnInit {
     ); }
 
   
-  // get end time start time should be like 1030
+/*   // get end time start time should be like 1030
   getEndtime(time: string): any {
     const hour = time.substr(0, 2);
     const minutes = time.substr(2);
@@ -71,14 +71,15 @@ export class TutorSchedulesEditComponent implements OnInit {
       end = end.toString();
     }
     return end;
-  }
+  } */
   // set time format time: 1030
-  setTimeFormat(day: string, time: string): string {
-    const hour = time.substr(0, 2);
-    const minutes = time.substr(2);
-    const timeFormat = day + 'T' + hour + ':' + minutes + ':00';
-    return timeFormat;
-  }
+  // setTimeFormat(day: string, time: string): string {
+  //   const hour = time.substr(0, 2);
+  //   const minutes = time.substr(2);
+  //   const timeFormat = day + 'T' + hour + ':' + minutes + ':00';
+  //   return timeFormat;
+  // }
+  
   // check if an array exists and not empty
   arrayExists(myArray: any[]) {
     if (typeof myArray !== 'undefined' && myArray.length > 0) {

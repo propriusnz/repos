@@ -81,18 +81,25 @@
     background-color: white;
   }
   #pageBtn{
-    color: #0099ff;
+    /*color: #0099ff;*/
     /* background-color: white; */
-    font-size: 1rem;
-    margin-left: 2px;
+    font-size: 13px;
+    margin: 2px;
   }
   #pageBtn:hover{
-    color: blue;
-    border-bottom: 1px solid blue;
+    /*color: blue;*/
+    border: 2px solid #007bff;
   }
   /* .btnBackground{
     background-color: #a3daff;
   } */
+
+  .material-icons {
+    font-size: 24px; 
+    display: inline-block;
+    vertical-align: middle;
+    transform: translateY(-.1em);
+}
 
   @media (max-width: 576px) {
     /* .card-img-top {

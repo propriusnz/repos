@@ -1,0 +1,41 @@
+#pageBtn{
+    /*color: #0099ff;*/
+    /* background-color: white; */
+    font-size: 13px;
+    margin: 2px;
+  }
+  #pageBtn:hover{
+    /*color: blue;*/
+    border: 2px solid #007bff;
+  }
+  /* .btnBackground{
+    background-color: #a3daff;
+  } */
+
+  .material-icons {
+    font-size: 24px; 
+    display: inline-block;
+    vertical-align: middle;
+    transform: translateY(-.1em);
+    font-feature-settings: 'liga';/* Support for IE */
+}
+
+@media (max-width: 768px) {
+    
+    .material-icons {
+        font-size: 18px; 
+        display: inline-block;
+        vertical-align: middle;
+        transform: translateY(-.1em);
+        font-feature-settings: 'liga';/* Support for IE */
+    }
+    #pageBtn{
+        font-size: 10px;
+        margin: 2px;
+      }
+  }
+
+.material-icons {
+  /* Support for IE */
+  font-feature-settings: 'liga';
+}

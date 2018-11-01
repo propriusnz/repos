@@ -98,11 +98,16 @@
     padding-right:0px;
     height:400px;
 }
-#right-content{
-    background-image: url("../../../assets/mainpics/index-mid-pic-1.jpg");
-    width: 100%;
-    height:100%;
-    background-size: cover;
+#right-content-container{
+    margin-bottom:20px;
+    padding-left:10px;
+    padding-right:0px;
+    height:400px;
+}
+.right-content-img{
+    /*background-image: url("../../../assets/mainpics/index-mid-pic-1.jpg");*/
+    width:100%;
+    height:400px;
 }
 .mid1Title{
     font-size: 34px;

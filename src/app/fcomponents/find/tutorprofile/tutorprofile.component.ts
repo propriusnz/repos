@@ -28,19 +28,21 @@ export class TutorprofileComponent implements OnInit {
   cleanVideo: any;
   errorMessage: string;
   tutor_photo: string;
+  productFlag=true; //for some element do not display when product run,because of no data.
   eventContainer = {
     session: [],
     free: [],
   };
+
   // baseImgUrl = environment.baseImgUrl + '/tutorimg/';
 
-  events: any = [];// session object
+  events: any = []; // session object
 
   constructor(
     @Inject(PLATFORM_ID)
     private platformId,
-    @Inject(WINDOW) 
-    private window: Window, 
+    @Inject(WINDOW)
+    private window: Window,
     private route: ActivatedRoute,
     public searchService: GeneralService,
     private sanitizer: DomSanitizer,
@@ -49,19 +51,18 @@ export class TutorprofileComponent implements OnInit {
     private router: Router,
     private meta: Meta,
     private titleService: Title,
-
     private commonSupport: CommonSupportService
   ) {
     // Meta Area
-    this.meta.addTags([
-      { name: 'keywords', content: 'tutors, Learnspace, tutoring, tutors, wellington tutors, auckland tutors'},
-      { name: 'description', content: 'Find the best high school tutors in Wellington and Auckland' },
-      ])
+    
+      this.meta.updateTag({ name: 'keywords', content: 'tutors, Learnspace, tutoring, tutors, wellington tutors, auckland tutors'});
+      this.meta.updateTag({ name: 'description', content: 'Find the best high school tutors in Wellington and Auckland' });
+
+      this.id = this.route.snapshot.params['id'];
+      this.getTutorData(this.id);      
   }
 
   ngOnInit() {
-    this.id = this.route.snapshot.params['id'];
-    this.getTutorData(this.id);
     this.popoverBook();
     this.stickySideBar();
   }
@@ -70,16 +71,16 @@ export class TutorprofileComponent implements OnInit {
     this.searchService.showTutor(id).subscribe(
       (res) => { this.setPageData(res) },
       (err) => { this.errorMessage = "Something went wrong, we cannot get any data at this time." }
-    )
+    );
   }
 
   setPageData(res) {
     console.log(res)
     this.tutor = res['data'].thisTutorInfo;
     // Meta area
-    this.meta.addTags([{name: 'keywords', content: this.tutor.discipline+' tutor, '+this.tutor.curriculum+' tutor'}])
-    this.titleService.setTitle('Learnspace | '+this.tutor.first_name);
-
+    // this.meta.addTags([{name: 'keywords', content: this.tutor.discipline+' tutor, '+this.tutor.curriculum+' tutor'}])
+    // this.titleService.setTitle(this.tutor.discipline+' '+this.tutor.curriculum+' tutor in '+this.tutor['location']);
+    this.setTagTitle();
     this.tutorprofile = res['data'].thisTutorProfile;
     this.tutorfeedback = res['data'].thisTutorFeedback;
     // this.tutor['profile_photo'] = this.baseImgUrl + this.tutor['profile_photo']
@@ -90,7 +91,11 @@ export class TutorprofileComponent implements OnInit {
     this.eventContainer = this.calendar.first(res['data'].thisTutorSchedule);
     if (this.eventContainer.free.length > 0) { this.tutorScheduleInit(this.eventContainer) }
   }
-
+  setTagTitle(){
+    this.titleService.setTitle(this.tutor.discipline+' '+this.tutor.curriculum+' tutor in '+this.tutor['location']);
+    this.meta.updateTag({name: 'keywords', content: this.tutor.discipline+' tutor, '+this.tutor.curriculum+' tutor,'
+      +this.tutor['location']+' tutor ,'+this.tutor.discipline+' tutoring ,'+this.tutor.discipline+' tuition'});    
+  }
   tutorScheduleInit(eventContainer) {
     // Client Only Codes
     if (isPlatformBrowser(this.platformId)) {
@@ -98,7 +103,7 @@ export class TutorprofileComponent implements OnInit {
       $('#calendar1').css({ 'display': 'block' });
       this.events = this.eventContainer.free;
       for (let i = 0; i < this.events.length; i++) {
-        //delete the free time that before current time
+        // delete the free time that before current time
         let eve = this.events[i];
         if (moment(eve.end).isBefore(moment())) {
           delete this.events[i];
@@ -110,18 +115,18 @@ export class TutorprofileComponent implements OnInit {
     }
   }
 
-  //book button
+  // book button
   bookNow($event) {
     if (this.eventContainer.free.length > 0) {//if tutor has free time
       this.router.navigate(['./app/find-tutor/profile/' + this.tutor.tutor_id + '/book']);
-    } else {//if tutor didn't edit hir free time
+    } else {// if tutor didn't edit hir free time
       let dialogRef = this.dialog.open(ContactDialogComponent, {
         width: '700px',
         data: this.tutor.first_name
       });
     }
   }
-  //routerlink to book sessions via popover
+  // routerlink to book sessions via popover
   popoverBook() {
     if (isPlatformBrowser(this.platformId)) {
       $(() => {
@@ -135,24 +140,25 @@ export class TutorprofileComponent implements OnInit {
       });
     }
   }
-  //make sidebar sticky on top
+  // make sidebar sticky on top
   stickySideBar() {
+    $(document).ready(function () {
+      $('#sideBar').addClass('fixed');
+    });
     // Client only code.
     if (isPlatformBrowser(this.platformId)) {
-      $(document).ready(function() {
-        $("#sideBar").addClass("fixed");
-        let div_top = $('#sideBar').offset().top;
-        $(this.window).scroll(function() {
+        $(this.window).scroll(function () {
           let scrollTop = $(this.window).scrollTop();
           let footer_top = $("app-footer").offset().top;
           let div_height = $("#sideBar").height();
-          if (scrollTop + div_height + 70 > footer_top) {
-            $("#sideBar").removeClass("fixed")
-          } else if (scrollTop - 70 >= div_top) {
-            $("#sideBar").addClass("fixed")
-          }
-        })
-      });
+            if (84 > footer_top - scrollTop - div_height && footer_top - scrollTop - div_height < 24) {
+              $('#sideBar').addClass('absolute');
+              $('#sideBar').removeClass('fixed');
+            } else {
+              $('#sideBar').addClass('fixed');
+              $('#sideBar').removeClass('absolute');
+            }
+        });
     }
   }
 

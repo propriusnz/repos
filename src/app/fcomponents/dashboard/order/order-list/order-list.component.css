@@ -1,0 +1,26 @@
+table {
+    width: 100%;
+}
+
+.mat-form-field {
+    font-size: 14px;
+    width: 100%;
+}
+
+td, th {
+    width: 25%;
+    font-size: 16px
+}
+table {
+    border: 1px solid grey
+}
+
+.input-table {
+    display: table;
+}
+.input-field {
+    display: table-cell;
+}
+.input-inner {
+    margin-left: 25px;
+}
