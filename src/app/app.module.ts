@@ -126,6 +126,11 @@ const appRoutes: Routes = [
       { path: 'find-tutor', component: FindPanelComponent },
       { path: 'find-tutor/profile/:id', component: TutorprofileComponent },
       { path: 'find-tutor/profile/:id/book', component: TutorBookingsComponent, canActivate: [RestrictGuard] },
+      { path: 'find-tutor-wellington/:', component: FindPanelComponent },
+      { path: 'find-tutor-wellington', component: FindPanelComponent },
+      { path: 'find-tutor-wellington/profile/:id', component: TutorprofileComponent },
+      { path: 'find-tutor-wellington/profile/:id/book', component: TutorBookingsComponent, canActivate: [RestrictGuard] },
+
       // Community routes
 
       {

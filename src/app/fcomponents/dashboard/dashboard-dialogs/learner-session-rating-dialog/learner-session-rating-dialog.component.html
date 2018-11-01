@@ -1,39 +1,53 @@
-<h2 mat-dialog-title class="text-center">Rate your sessions</h2>
-
-
 <mat-dialog-content>
-  <div class="card-body">
+  <!--session rate-->
+  <div class="card border-0">
+    <div class="card-header bg-white text-center m-0"><strong style="font-size: 20px">Rate your lesson</strong><i class="fa fa-close float-right" (click)="close()"></i></div>
+    <div class="card-body m-0">
+    <!--basic info-->
     <div class="row">
-      <div class="col-2">
-        <img class="rounded-circle" src="{{tutors.img}}" width="90%">
-      </div>
-      <div class="row col-2">
-        <div class="col-12">
-          {{tutors.name}}
+        <div class="col-2">
+          <img class="rounded-circle" src="{{tutors.img}}" width="90%">
         </div>
-      </div>
-      <div class="col-8">
-        <div>
-          <small>{{tutors.session_time}} - {{tutors.session_date}}</small>
+        <div class="row col-4">
+          <div class="col-12">
+            {{tutors.name}}
+          </div>
         </div>
-        <div>
-          <small>
-            {{tutors.session_location}}
-          </small>
+        <div class="col-6">
+          <div>
+            <small>{{tutors.session_time}} - {{tutors.session_date}}</small>
+          </div>
+          <div>
+            <small>
+              {{tutors.session_location}}
+            </small>
+          </div>
         </div>
-      </div>
     </div>
-  </div>
-  <div class="card-body">
-    <div>
-      <star-rating [showHalfStars]="true" size="large" (starClickChange)="onstarClick($event)"></star-rating>
+    <!--rate part-->
+    <div class="mt-2">
+        <star-rating [showHalfStars]="true" size="large" (starClickChange)="onstarClick($event)"></star-rating>
     </div>
-    <br>
-    <div class="text-center">
-      <button type="button" class="btn btn-outline-info btn-sm" (click)="onSubmit()" style="margin-bottom: 5px">
-        submit
-      </button>
-
+    <hr>
+    <!--rate options-->
+    <form>
+        <div class="mb-2">Select one or more options to rate</div>
+        <form [formGroup]="reportForm">
+              <div *ngFor="let agIndex of agIndex" class="form-check">
+                <input class="form-check-input" type="checkbox" id="{{agIndex}}" name="{{agIndex}}" formControlName="{{agIndex}}">
+                <label class="form-check-label s2 ml-2" for="{{agIndex}}">{{agIndex}}</label>
+              </div>
+              <br>
+              <div>Issue comment</div>
+              <textarea type="text" class="form-control" placeholder="The issue is ..." name="comment" rows="3" formControlName="comment"></textarea>
+              <div *ngIf="reportForm.controls.comment.invalid && reportForm.controls.comment.touched" class="indicator text-danger" >Two characters at least.</div>
+        </form>
+        <hr>
+        <div class="clearfix">
+          <button type="button" class="btn btn-outline-primary float-left" (click)="close()">Close</button>&nbsp;&nbsp;
+          <button type="submit" class="btn btn-primary float-right" (click)="save()">Submit</button>
+        </div>
+    </form>
     </div>
   </div>
 </mat-dialog-content>

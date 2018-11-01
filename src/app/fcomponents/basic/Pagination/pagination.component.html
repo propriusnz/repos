@@ -11,14 +11,17 @@
     <div class="container" style="background-color: white; padding-top: 0px;">
       <div class="col-12 text-center" style="margin-bottom: 7px">
         <button type="button" class="btn btn-link" (click)="goFirst()" id="prevBtn" [attr.disabled]="prevBtnDisable?'true':null">
-          <i class="material-icons">
+          <!-- <i class="material-icons">
             first_page
-          </i>
+          </i> -->
+          <i class="fas fa-fast-backward"></i>
+
         </button>
         <button type="button" class="btn btn-link" (click)="goPrevious()" id="prevBtn" [attr.disabled]="prevBtnDisable?'true':null">
-          <i class="material-icons ">
+          <!-- <i class="material-icons ">
             chevron_left
-          </i>
+          </i> -->
+          <i class="fas fa-step-backward"></i>
         </button>
         <div class="btn-group mr-2" *ngFor="let page of pages; let i = index">
           <button class="btn rounded-circle" id="pageBtn" (click)="getPage(i+1)" [ngStyle]="pageActive[i+1] ? ({'color': '#007bff'}) : ({'color': 'gray'})">
@@ -27,14 +30,14 @@
         </div>
         <!-- <div *ngIf="tailBtnArray.length > 0; then hide"></div> -->
         <button type="button" class="btn btn-link" (click)="goNext()" id="nextBtn" [attr.disabled]="nextBtnDisable?'true':null">
-          <i class="material-icons ">
+          <!-- <i class="material-icons ">
             chevron_right
-          </i>
+          </i> -->
+          <i class="fas fa-step-forward"></i>
         </button>
         <button type="button" class="btn btn-link" (click)="goEnd()" id="nextBtn" [attr.disabled]="nextBtnDisable?'true':null">
-          <i class="material-icons">
-            last_page
-          </i>
+          <!-- <i class="material-icons">last_page</i> -->
+          <i class="fas fa-fast-forward"></i>
         </button>
       </div>
     </div>

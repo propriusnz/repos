@@ -28,10 +28,12 @@ export class TutorprofileComponent implements OnInit {
   cleanVideo: any;
   errorMessage: string;
   tutor_photo: string;
+  productFlag=true; //for some element do not display when product run,because of no data.
   eventContainer = {
     session: [],
     free: [],
   };
+
   // baseImgUrl = environment.baseImgUrl + '/tutorimg/';
 
   events: any = []; // session object
@@ -49,19 +51,18 @@ export class TutorprofileComponent implements OnInit {
     private router: Router,
     private meta: Meta,
     private titleService: Title,
-
     private commonSupport: CommonSupportService
   ) {
     // Meta Area
-    this.meta.addTags([
-      { name: 'keywords', content: 'tutors, Learnspace, tutoring, tutors, wellington tutors, auckland tutors'},
-      { name: 'description', content: 'Find the best high school tutors in Wellington and Auckland' },
-      ]);
+    
+      this.meta.updateTag({ name: 'keywords', content: 'tutors, Learnspace, tutoring, tutors, wellington tutors, auckland tutors'});
+      this.meta.updateTag({ name: 'description', content: 'Find the best high school tutors in Wellington and Auckland' });
+
+      this.id = this.route.snapshot.params['id'];
+      this.getTutorData(this.id);      
   }
 
   ngOnInit() {
-    this.id = this.route.snapshot.params['id'];
-    this.getTutorData(this.id);
     this.popoverBook();
     this.stickySideBar();
   }
@@ -77,9 +78,9 @@ export class TutorprofileComponent implements OnInit {
     console.log(res)
     this.tutor = res['data'].thisTutorInfo;
     // Meta area
-    this.meta.addTags([{name: 'keywords', content: this.tutor.discipline+' tutor, '+this.tutor.curriculum+' tutor'}])
-    this.titleService.setTitle('Learnspace | '+this.tutor.first_name);
-
+    // this.meta.addTags([{name: 'keywords', content: this.tutor.discipline+' tutor, '+this.tutor.curriculum+' tutor'}])
+    // this.titleService.setTitle(this.tutor.discipline+' '+this.tutor.curriculum+' tutor in '+this.tutor['location']);
+    this.setTagTitle();
     this.tutorprofile = res['data'].thisTutorProfile;
     this.tutorfeedback = res['data'].thisTutorFeedback;
     // this.tutor['profile_photo'] = this.baseImgUrl + this.tutor['profile_photo']
@@ -90,7 +91,11 @@ export class TutorprofileComponent implements OnInit {
     this.eventContainer = this.calendar.first(res['data'].thisTutorSchedule);
     if (this.eventContainer.free.length > 0) { this.tutorScheduleInit(this.eventContainer) }
   }
-
+  setTagTitle(){
+    this.titleService.setTitle(this.tutor.discipline+' '+this.tutor.curriculum+' tutor in '+this.tutor['location']);
+    this.meta.updateTag({name: 'keywords', content: this.tutor.discipline+' tutor, '+this.tutor.curriculum+' tutor,'
+      +this.tutor['location']+' tutor ,'+this.tutor.discipline+' tutoring ,'+this.tutor.discipline+' tuition'});    
+  }
   tutorScheduleInit(eventContainer) {
     // Client Only Codes
     if (isPlatformBrowser(this.platformId)) {

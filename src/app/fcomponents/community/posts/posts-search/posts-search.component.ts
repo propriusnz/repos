@@ -72,10 +72,10 @@ export class PostsSearchComponent implements OnInit {
     private router: Router,
   ) {
     this.display = window;
-    this.meta.addTags([
-      { name: 'keywords', content: 'community, Learnspace, tutoring, articles, posts, resources'},
-      { name: 'description', content: 'Learnspace posts' },
-    ])
+
+    this.meta.updateTag({ name: 'keywords', content: 'community, Learnspace, tutoring, articles, posts, resources'});
+    this.meta.updateTag({ name: 'description', content: 'Learnspace posts'});
+      
     this.titleService.setTitle('Learnspace | Posts');
    }
 

@@ -110,3 +110,8 @@ img{
         left:4px;
     }
 }
+#h1{
+    font-weight:700;
+    color:#4f5457;
+    font-size:3rem;    
+}

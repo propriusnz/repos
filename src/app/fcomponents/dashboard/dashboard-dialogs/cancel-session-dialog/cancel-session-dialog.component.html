@@ -1,6 +1,6 @@
 <mat-dialog-content>
-  <div class="card">
-    <div class="car-header px-3 py-2 border-bottom">
+  <div class="card" *ngIf="showDialog">
+    <div class="card-header px-3 py-2 border-bottom">
       <i class="fa fa-times float-right" aria-hidden="true" (click)="close()"></i>
       <label class="m2">Cancel Lesson</label><br>
       <label class="s2">Are you sure to cancel this lesson?</label>
@@ -13,7 +13,7 @@
             <p class="s2 mt-2" *ngIf='!withTwelveHours'>This cancelling <b>cannot be undone</b>.</p>
             <p class="s2 mt-2" *ngIf='withTwelveHours'>Cancelling this lesson will result in a late cancellation charge of <b>40%</b>. A cancellation <b>cannot be undone</b></p>
           </div>
-          <button type="submit" class="btn btn-danger" (click)="save()">Cancel Lesson</button>
+          <button type="submit" class="btn btn-danger" (click)="commentDialog()">Cancel Lesson</button>
         </div>
         <div class="col-lg-6 col-sm-6 border-top gapTop">
           <div class="card-block">
@@ -25,5 +25,31 @@
       </div>
     </div>
   </div>
-
+  <div class="card" *ngIf="showComment">
+    <div class="card-header">
+      <i class="fa fa-times float-right" aria-hidden="true" (click)="close()"></i>
+      <label class="m2">Cancel Lesson</label><br>
+      <label class="s2">Please leave a comment</label>
+    </div>
+    <div class="card-body">
+        <div class="form-group">
+          <div class="custom-control custom-checkbox">
+            <input type="checkbox" class="custom-control-input" id="customCheck1" name="tick_comment" value="Teacher no good">
+            <label class="custom-control-label" for="customCheck1">Teacher no good</label>
+          </div>
+          <div class="custom-control custom-checkbox">
+            <input type="checkbox" class="custom-control-input" id="customCheck2" name="tick_comment" value="Tutor too ugly">
+            <label class="custom-control-label" for="customCheck2">Tutor too ugly</label>
+          </div>
+          <div class="custom-control custom-checkbox">
+            <input type="checkbox" class="custom-control-input" id="customCheck3" name="tick_comment" value="Too expensive">
+            <label class="custom-control-label" for="customCheck3">Too expensive</label>
+          </div>
+          <label for="comment">Comment:</label>
+          <textarea class="form-control" id="comment" rows="3" [formControl]="comment"></textarea>
+          <p class="text-danger"><em>{{warningMes}}</em></p>
+          <button type="submit" class="btn btn-danger mt-4" (click)="save()">Cancel Lesson</button>
+        </div>
+    </div>
+  </div>
 </mat-dialog-content>

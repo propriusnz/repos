@@ -13,13 +13,13 @@ import { AlertNotificationService } from '../../../../services/support/alert-not
 
 
 export class OrderConfirmComponentComponent implements OnInit {
-  private tutor:any;
-  private courses:any;
-  private order=[];
-  private id:string;
-  private errorMessage:string;
-  private feerate:number;
-  private wallet:number;
+  tutor:any;
+  courses:any;
+  order=[];
+  id:string;
+  errorMessage:string;
+  feerate:number;
+  wallet:number;
 
 
   constructor(

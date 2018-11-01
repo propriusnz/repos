@@ -113,6 +113,7 @@
                   (click)='confirmSession($event)'>CONFIRM</button>
                 <button type="button" class="btn btn-sm btn-primary w-100" id="act{{session.session_id}}" *ngIf="(session.session_update === 0 || session.session_update === null) || session.hasOwnProperty('updated')">ACTIONS</button>
                 <button type="button" class="btn btn-sm btn-primary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown"></button>
+                <button type="button" class="btn btn-sm btn-primary w-100" id="mes{{session.session_id}}" (click)='triggerMessenger($event)' >Messenger</button>
                 <div class="dropdown-menu dropdown-menu-right">
                   <a class="dropdown-item pointer" (click)="showFullcalender($event)" id="btn{{session.session_id}}">Reschedule</a>
                   <a class="dropdown-item pointer" (click)='cancelSession($event)' id="can{{session.session_id}}">Cancel</a>

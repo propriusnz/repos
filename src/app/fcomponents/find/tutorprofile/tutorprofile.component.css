@@ -71,6 +71,9 @@
     #sideBar{
       width: 319.984px;
     }
+    #sideBar-old{
+      width: 30%;
+    }
     .fixed{
       position: fixed;
       top: 9%;

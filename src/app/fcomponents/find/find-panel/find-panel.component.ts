@@ -14,11 +14,12 @@ export class FindPanelComponent implements OnInit, AfterViewInit {
     private meta: Meta,
     private titleService: Title,
   ) {
+    /*
     this.meta.addTags([
       { name: 'keywords', content: 'find tutors, Learnspace, tutoring, tutors, maths help, maths tutor, english tutor, science tutor, physics tutor, chemistry tutor, bio tutor, accounting tutor, french tutor, economics tutor, calculus tutor, wellington tutor, auckland tutor'},
       { name: 'description', content: 'Find the best high school tutors in Wellington and Auckland' },
       ])
-    this.titleService.setTitle('Learnspace | Find tutors');
+    this.titleService.setTitle('Learnspace | Find tutors');*/
    }
 
   ngOnInit() {

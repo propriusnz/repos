@@ -4,7 +4,7 @@ import { GeneralService } from '../../../services/servercalls/general.service';
 import { SearchTutorModel } from '../../../models/SearchTutorModel';
 import { ActivatedRoute } from '@angular/router';
 import { environment } from '../../../../environments/environment.prod';
-
+import { DomSanitizer, Meta, Title } from '@angular/platform-browser';
 import { CommonSupportService } from '../../../services/support/common-support.service';
 
 @Component({
@@ -38,24 +38,64 @@ export class FindMainComponent implements OnInit {
     private platformId,
     public searchService: GeneralService,
     public route: ActivatedRoute,
-
+    private meta: Meta,
+    private titleService: Title,
     private commonSupport: CommonSupportService
   ) {
     if (isPlatformBrowser(this.platformId)) {
       this.isBrowser = true
     }
-  }
-
-  ngOnInit() {
     if (this.route.snapshot.url[1]) {
       this.default_discipline = this.route.snapshot.url[1].path;
       this.discipline = this.default_discipline
     } else {
       this.discipline = ''
     }
+    this.setTags();
+    this.setTitle();    
+  }
+
+  ngOnInit() {
     this.searchTutor(this.discipline, this.location);
   }
 
+  setTags(){
+    let keywordsCont,DescCont;
+      DescCont = 'Learnspace Home, find the best high school tutors in Wellington and Auckland';
+    if (this.discipline === '')
+      keywordsCont = 'high school tutor, NCEA tutors, best maths tutors, IB tutors,Cambridge tutors';
+    else if (this.discipline === 'Maths')
+      keywordsCont = 'Maths tutors,Math tutors,Maths tuition,Maths lesson,high school tutor, NCEA tutors, best maths tutors, IB tutors,Cambridge tutors';
+    else if (this.discipline === 'Physics')
+      keywordsCont = 'Physics tutors,Physics tutoring,Physics tuition, NCEA tutors, IB tutors,Cambridge tutors';
+    else 
+      keywordsCont = this.discipline+' tutors,'+ this.discipline+' tutoring,'+ this.discipline+ this.discipline+' lesson, NCEA tutors, IB tutors,Cambridge tutors';
+
+    //   this.meta.addTags([
+    //   { name: 'keywords', content: keywordsCont},
+    //   { name: 'description', content: DescCont }
+    //  ])   
+    this.meta.updateTag({ name: 'keywords', content: keywordsCont});   
+    this.meta.updateTag( { name: 'description', content: DescCont });       
+  }
+  setTitle(){
+    let title ;
+    if (this.location==='auckland'){
+      title='High School '+this.discipline+' Tutors in '+this.location;
+    }
+    else if (this.location==='wellington'){
+      title='High School '+this.discipline+' Tutors in '+this.location;
+    }
+    else {
+      title=this.discipline+' Tutors in Wellington, Auckland';
+    }
+    let temp;
+    temp=this.titleService.getTitle();
+    console.log(temp)
+    this.titleService.setTitle(title);
+    temp=this.titleService.getTitle();
+    console.log(temp)
+  }
   searchTutor(f, e) {
     console.log(this.discipline, this.location)
     this.searchService.indexTutors([this.discipline, this.location]).subscribe(

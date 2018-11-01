@@ -44,13 +44,15 @@
   font-size: 16px !important;
 }
 .navbar-nav.home .nav-item.home .navRight.home{
-margin-left: 5px;
+  margin-left: 5px;
 }
-
+/* .nav-item.dropdown{
+  color:#0099FF;  
+} */
 .navbar-nav.dashboard .nav-item.dashboard .navLink.dashboard{
-  color:#0099FF;
+  color:#007bff;
   font-size: 16px;
-  font-weight: bold;  
+  /*font-weight: bold;  */
 }
 .navbar-nav.dashboard .nav-item.dashboard .navLink.dashboard:hover{
   color:#0099FF;

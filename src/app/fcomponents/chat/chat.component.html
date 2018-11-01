@@ -155,69 +155,70 @@
 
 
           <div class="messages">
-            <ul class="chat" #scrollMe [scrollTop]="scrollMe.scrollHeight" *ngIf="messages.length > 0" [ngClass]="{'chat-with-upload': (selectedFile!=null || selectedImg!=null)}">
-              <div *ngFor="let message of messages">
-                <div *ngIf="(message.sender_id==currentUser.user_id && selectedUser.user_id==message.receiver_id) || selectedUser.user_id== message.sender_id">
-                  <div *ngIf="message.session_date">
-                    <li>date: {{message.session_date}}
-                      <br>
-                      tutor name: {{message.tutor_name}}
-                      <br>
-                      learner name: {{message.learner_name}}
-                      <br>
-                      subject: {{message.session_subject}}
-                      <br>
-                      location: {{message.session_location}}
-                    </li>
-                  </div>
-
-                  <li [ngClass]="{'sent': (message.sender_id==currentUser.user_id && selectedUser.user_id==message.receiver_id) , 'replies': selectedUser.user_id== message.sender_id  }">
-                    <div *ngIf="(message.sender_id==currentUser.user_id && selectedUser.user_id==message.receiver_id)|| selectedUser.user_id== message.sender_id">
-                      <div *ngIf=" message.msg ">
-                        <img src="{{commonSupportService.findUserImg(message.sender_id)}}" alt="" />
-                        <p style="word-break: break-all;">
-                          {{ message.msg}} <br>
-                          <span style="font-size: 10px; float: right; opacity: 0.5;">{{renderDate(message.createdAt)}}</span>
-                        </p>
-                      </div>
-                      <div *ngIf="message.drawImg">
-                        <img src="{{commonSupportService.findUserImg(message.sender_id)}}" alt="" />
-                        <p style="word-break: break-all;"><img src="{{message.drawImg}}" style="width:100%;" (click)="previewImg(message.drawImg)">
-                         <br>
-                          <span style="font-size: 10px; float: right; opacity: 0.5;">{{renderDate(message.createdAt)}}</span>
-                        </p>
-                      </div>
-                      <div *ngIf="message.file">
-                        <img src="{{commonSupportService.findUserImg(message.sender_id)}}" alt="" />
-                        <p style="word-break: break-all;"> <i class="material-icons">
-                  folder
-                  </i>
-                          <a style="width: 100%;" href="{{download_URL}}{{message.file}}" width="100 ">{{message.filename}}</a>
-                             <br>
-                            <span style="font-size: 10px; float: right; opacity: 0.5;">{{renderDate(message.createdAt)}}</span>
-                        </p>
-                      </div>
-                      <div *ngIf="message.img">
-                        <img src="{{commonSupportService.findUserImg(message.sender_id)}}" alt="" />
-                        <p style="width: 200px;">
-                          <img style="width: 100%;word-break: break-all;" src="{{download_URL}}{{message.img}}">
-                             <br>
-                            <span style="font-size: 10px; float: right; opacity: 0.5;">{{renderDate(message.createdAt)}}</span>
-                        </p>
-                      </div>
-                      <!--
-                      <div class="">
-                        <span style="color:grey;">{{renderDate(message.createdAt)}}</span>
-                      </div>-->
+              <ul class="chat" #scrollMe [scrollTop]="scrollMe.scrollHeight" *ngIf="messages.length > 0" [ngClass]="{'chat-with-upload': (selectedFile!=null || selectedImg!=null)}">
+                <div *ngFor="let message of messages">
+                  <div *ngIf="(message.sender_id==currentUser.user_id && selectedUser.user_id==message.receiver_id) || selectedUser.user_id== message.sender_id">
+                    <div *ngIf="message.session_date">
+                      <li>date: {{message.session_date}}
+                        <br>
+                        tutor name: {{message.tutor_name}}
+                        <br>
+                        learner name: {{message.learner_name}}
+                        <br>
+                        subject: {{message.session_subject}}
+                        <br>
+                        location: {{message.session_location}}
+                      </li>
                     </div>
-
-                  </li>
-
+  
+                    <li [ngClass]="{'sent': (message.sender_id==currentUser.user_id && selectedUser.user_id==message.receiver_id) , 'replies': selectedUser.user_id== message.sender_id  }">
+                      <div *ngIf="(message.sender_id==currentUser.user_id && selectedUser.user_id==message.receiver_id)|| selectedUser.user_id== message.sender_id">
+                        <div *ngIf=" message.msg ">
+                          <img src="{{commonSupportService.findUserImg(message.sender_id)}}" alt="" />
+                          <p style="word-break: break-all;">
+                            {{ message.msg}} <br>
+                            <span style="font-size: 10px; float: right; opacity: 0.5;">{{renderDate(message.createdAt)}}</span>
+                          </p>
+                        </div>
+                        <div *ngIf="message.drawImg">
+                          <img src="{{commonSupportService.findUserImg(message.sender_id)}}" alt="" />
+                          <p style="word-break: break-all;"><img src="{{message.drawImg}}" style="width:100%;" (click)="previewImg(message.drawImg)">
+                           <br>
+                            <span style="font-size: 10px; float: right; opacity: 0.5;">{{renderDate(message.createdAt)}}</span>
+                          </p>
+                        </div>
+                        <div *ngIf="message.file">
+                          <img src="{{commonSupportService.findUserImg(message.sender_id)}}" alt="" />
+                          <p style="word-break: break-all;"> <i class="material-icons">
+                    folder
+                    </i>
+                            <a style="width: 100%;" href="{{download_URL}}{{message.file}}" width="100 ">{{message.filename}}</a>
+                               <br>
+                              <span style="font-size: 10px; float: right; opacity: 0.5;">{{renderDate(message.createdAt)}}</span>
+                          </p>
+                        </div>
+                        <div *ngIf="message.img">
+                          <img src="{{commonSupportService.findUserImg(message.sender_id)}}" alt="" />
+                          <p style="width: 200px;">
+                            <img style="width: 100%;word-break: break-all;" src="{{download_URL}}{{message.img}}">
+                               <br>
+                              <span style="font-size: 10px; float: right; opacity: 0.5;">{{renderDate(message.createdAt)}}</span>
+                          </p>
+                        </div>
+                        <!--
+                        <div class="">
+                          <span style="color:grey;">{{renderDate(message.createdAt)}}</span>
+                        </div>-->
+                      </div>
+  
+                    </li>
+  
+                  </div>
                 </div>
-              </div>
-
-            </ul>
-          </div>
+                <p *ngIf="showWarningMes" class="text-danger">Sorry, something wrong with the network, Failed to sent</p>
+              </ul>
+            </div>
+  
 
 
 

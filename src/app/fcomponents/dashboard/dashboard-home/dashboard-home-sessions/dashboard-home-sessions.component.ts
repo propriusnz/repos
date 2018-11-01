@@ -697,7 +697,7 @@ export class DashboardHomeSessionsComponent implements OnInit {
     }
     // learner role:
     if (this.role === 1 || this.role === 2) {
-      let tutor_id = session_inquestion.tutor_user_id;
+      let tutor_id = session_inquestion.tutor_id;
       this.changeValue(tutor_id);
       console.log(tutor_id + 'sent successfully');
     }
@@ -705,10 +705,10 @@ export class DashboardHomeSessionsComponent implements OnInit {
   // change the value in the subject behaviour
   changeValue(data: any) {
     let current = this.messengerHelperService.trigger.getValue();
-    //if (current === 'no') {
+    if (current === 'no') {
       this.messengerHelperService.trigger.next(data);
-    //} else {
-      //this.messengerHelperService.trigger.next('no');
-    //}
+    } else {
+      this.messengerHelperService.trigger.next('no');
+    }
   }  
 }

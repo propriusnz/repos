@@ -2,6 +2,7 @@
 @import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
 @import 'utilities.css';
 @import '~css-star-rating/css/star-rating.css';
+@import "~@ctrl/ngx-emoji-mart/picker.css";
 
 .dialog1 .mat-dialog-container{
     border-radius: 10px;
@@ -234,4 +235,8 @@ s4{
 .popover{
     max-width: none !important;
     width: auto;
-  }
+}
+/*used to stop the button hover flicking in chat component, like "send a photo" tooltip*/
+.tooltip { 
+    pointer-events: none; 
+}

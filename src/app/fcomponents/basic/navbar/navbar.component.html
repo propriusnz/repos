@@ -3,7 +3,7 @@
 <ng-template #homepage>
   <nav id="top-navbar" class="navbar navbar-expand-md home" [ngClass]="(screenStatus && (navStatus || collapseStatus) ) || (!screenStatus && navStatus)?'backgColor1 borderColor1':'backgColor2 borderColor2'">
     <a class="navbar-brand" href="index">
-      <img src="../../../../assets/logo/learnspace_logo_transparent.png" alt="logoImg" style="height: 30px;">
+      <img src="../../../../assets/logo/learnspace_logo_transparent.png" alt="tutoring" style="height: 30px;">
     </a>
     <button class="navbar-toggler home" type="button" (click)="collapseShow()" data-toggle="collapse" data-target="#navbar-primary"
       aria-controls="navbar-primary" aria-expanded="false" aria-label="Toggle navigation">
@@ -13,7 +13,7 @@
     <div class="collapse navbar-collapse home" id="navbar-primary">
       <ul class="navbar-nav mr-auto home">
         <li class="nav-item home">
-          <a class="nav-link navLink home" href="https://learnspace.co.nz/app/find-tutor" routerLink="/app/find-tutor" [ngClass]="(screenStatus && (navStatus || collapseStatus) ) || (!screenStatus && navStatus)? 'fontColor1':'fontColor2'">Find a Teacher
+          <a class="nav-link navLink home" href="https://learnspace.co.nz/app/find-tutor-wellington" routerLink="/app/find-tutor" [ngClass]="(screenStatus && (navStatus || collapseStatus) ) || (!screenStatus && navStatus)? 'fontColor1':'fontColor2'">Find a Teacher
             <span class="sr-only">(current)</span>
           </a>
         </li>
@@ -57,7 +57,7 @@
         <li *ngIf="loggedIn && loggedInUserName" class="nav-item dropdown home">
           <a style="background-color:transparent;" class="nav-link dropdown-toggle navLink home" href="#" id="navbarDropdown" role="button"
             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" [ngClass]="(screenStatus && (navStatus || collapseStatus) ) || (!screenStatus && navStatus)?'fontColor1':'fontColor2'">
-            <img src={{userImg}} class="rounded-circle" width="23px"> {{loggedInUserName}}
+            <img src={{userImg}} alt='wellingten tutor' class="rounded-circle" width="23px"> {{loggedInUserName}}
           </a>
 
           <ul class="dropdown-menu dropdown-menu-user dropdown-menu-right home" aria-labelledby="navbarDropdown" [ngClass]="screenStatus? 'backgColor2':'backgColor1'">
@@ -95,7 +95,7 @@
 <ng-template #dashboard>
   <nav id="top-navbar" class="navbar navbar-expand-md dashboard">
     <a class="navbar-brand" href="index">
-      <img src="../../../../assets/logo/learnspace_logo_white.bmp" alt="New Zealand high school tutor" style="height: 30px;">
+      <img src="../../../../assets/logo/learnspace_logo_white.bmp" alt="nz tutor" style="height: 30px;">
     </a>
     <button class="navbar-toggler dashboard" type="button" (click)="collapseShow()" data-toggle="collapse" data-target="#navbar-primary"
       aria-controls="navbar-primary" aria-expanded="false" aria-label="Toggle navigation">
@@ -105,12 +105,12 @@
     <div class="collapse navbar-collapse dashboard" id="navbar-primary">
       <ul class="navbar-nav mr-auto dashboard">
         <li class="nav-item dashboard">
-          <a class="nav-link navLink dashboard" href="https://learnspace.co.nz/app/find-tutor" routerLink="/app/find-tutor">Find a Teacher
+          <a class="nav-link navLink dashboard" href="https://learnspace.co.nz/app/find-tutor-wellington" routerLink="/app/find-tutor">Find a Teacher
             <span class="sr-only dashboard">(current)</span>
           </a>
         </li>
         <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle navLink dashboard community" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
+          <a class="nav-link navLink dashboard dropdown-toggle community" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
             aria-expanded="false" style="background-color:transparent;">Community
             <span class="sr-only">(current)</span>
           </a>
@@ -154,7 +154,7 @@
           <a style="background-color:transparent;" class="nav-link dropdown-toggle navLink dashboard" href="#" id="navbarDropdown"
             role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <!-- <i style="font-size:23px;" class="fa fa-user-circle"></i> &nbsp;{{loggedInUserName}} -->
-            <img src={{userImg}} class="rounded-circle" width="23px"> {{loggedInUserName}}
+            <img src={{userImg}} alt='Private Teacher' class="rounded-circle" width="23px"> {{loggedInUserName}}
           </a>
 
           <ul class="dropdown-menu dropdown-menu-user dropdown-menu-right dashboard" aria-labelledby="navbarDropdown">

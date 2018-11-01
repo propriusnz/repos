@@ -1,5 +1,6 @@
 import { Component, OnInit, Inject, forwardRef } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatDialogConfig } from '@angular/material';
+import { FormControl } from '@angular/forms';
 
 
 @Component({
@@ -10,6 +11,10 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatDialogConfig } from '@angu
 export class CancelSessionDialogComponent implements OnInit {
   rescheduleStatus = false;
   withTwelveHours: boolean;
+  showDialog = true;
+  showComment = false;
+  warningMes = '';
+  comment = new FormControl('');
   constructor(
     private dialogRef: MatDialogRef<CancelSessionDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -25,11 +30,28 @@ export class CancelSessionDialogComponent implements OnInit {
     this.dialogRef.close();
   }
   save() {
-    this.dialogRef.close('yes');
+    console.log(this.comment.value);
+    let user_ticked = '';
+    $.each($('input[name=\'tick_comment\']:checked'), function(){
+      user_ticked += $(this).val() + ', ';
+  });
+    console.log(user_ticked);
+    let user_comment = this.comment.value + ',' + user_ticked;
+    if (user_comment === ',') {
+      this.warningMes = '* Please give some comments before cancel the lesson';
+    } else {
+      this.dialogRef.close(['yes', user_comment]);
+    }
   }
   reschedule() {
+    this.showComment = false;
     console.log('reschedule the lesson --------');
     this.rescheduleStatus = true;
-    this.dialogRef.close(this.rescheduleStatus);
+    this.dialogRef.close([this.rescheduleStatus]);
+  }
+  // show comment dialog when user clicks cancel lesson button
+  commentDialog() {
+    this.showDialog = false;
+    this.showComment = true;
   }
 }

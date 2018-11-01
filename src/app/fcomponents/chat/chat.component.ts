@@ -11,7 +11,7 @@ import { UserService  } from '../../services/servercalls/user.service';
 import { DrawboardComponent } from './drawboard/drawboard.component';
 import { PreviewImgComponent } from './preview-img/preview-img.component';
 import { HttpResponse } from '@angular/common/http';
-
+import { environment } from '../../../environments/environment.prod';
 const AVATAR_URL = 'https://api.adorable.io/avatars/285';
 //const upload_URL ='http://localhost:8080/api/upload-file';
 const upload_URL =environment.messengerApiUrl+'/api/upload-file';
@@ -23,7 +23,7 @@ import { first } from 'rxjs/operators';
 import { Subscription } from '../../../../node_modules/rxjs';
 import {Event} from '../../models/MessageEventModel';
 import {User} from '../../models/MessengerUserModel';
-import { environment } from '../../../environments/environment.prod';
+
 import { RepositoryService } from '../../services/repositories/repository.service';
 import { ResizeEvent } from 'angular-resizable-element';
 
@@ -50,6 +50,7 @@ imageData;
   drawImg=null;
   drawWidth=null;
   drawHeight=null;
+  showWarningMes=false;
 
 @Input() emoji=null;
 @Input() emoji_status=false;
@@ -321,8 +322,12 @@ total_unread_count = 0;
     if (!message) {
       return;
     }
-
-    this.socketService.send({
+    console.log(this.messages);
+    // check if the socket io is still connected
+    let io_connected = this.socketService.socket.connected;
+      if (io_connected) {
+        this.showWarningMes = false;
+        this.socketService.send({
           fromid: this.socketId,
             toid : this.selectedUser.channelid,
           msg : message,
@@ -331,11 +336,16 @@ total_unread_count = 0;
           //createAt: Date.now(),
           selfsockets: this.selfsockets,
           createdAt: new Date()
-    });
-
-
-    this.messageContent = null;
+      });
+      this.messageContent = null;
+    } else {
+      // if not connected
+      this.showWarningMes = true;
+     //  this.messages.push("Sorry, something wrong with the network, Failed to sent");
+    }
+    
   }
+
 
   getselfsockets(){
     for(var i =0; i<this.userList.length;i++){

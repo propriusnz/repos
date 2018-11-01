@@ -11,6 +11,8 @@ export class TutorReportDialogComponent implements OnInit {
   reportContent = '';
   reportForm: FormGroup;
   agIndex=['Student behaved well','Student showed a positive attitude','Student was very horriable','Student was unfocused','Student needs to show more appropriate behavior','Other'];
+  filter = true;
+  reason = new FormControl('');
   constructor(
     private builder: FormBuilder,
     private dialogRef: MatDialogRef<TutorReportDialogComponent>,
@@ -50,6 +52,10 @@ export class TutorReportDialogComponent implements OnInit {
     }else{
       console.log('no');
     }
+  }
+
+  onFilterChange(eve: any) {
+    this.filter = !this.filter;
   }
 
 }

@@ -17,6 +17,7 @@ button{
 .s2bold {
   position: relative;
   color: #0099FF;
+  font-weight: normal;
 }
 
 
@@ -31,6 +32,7 @@ button{
   background-color: lightgrey;
   border-radius: 5px 5px 5px 5px;
   color: #007bff;
+  /*color: #0099FF;*/
 }
 
 /* dropdown content */

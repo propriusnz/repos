@@ -17,6 +17,7 @@
     display: inline-block;
     vertical-align: middle;
     transform: translateY(-.1em);
+    font-feature-settings: 'liga';/* Support for IE */
 }
 
 @media (max-width: 768px) {
@@ -26,9 +27,15 @@
         display: inline-block;
         vertical-align: middle;
         transform: translateY(-.1em);
+        font-feature-settings: 'liga';/* Support for IE */
     }
     #pageBtn{
         font-size: 10px;
         margin: 2px;
       }
   }
+
+.material-icons {
+  /* Support for IE */
+  font-feature-settings: 'liga';
+}

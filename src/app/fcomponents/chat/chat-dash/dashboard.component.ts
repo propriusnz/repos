@@ -11,6 +11,7 @@ export class DashboardComponent implements OnInit {
   @ViewChild('myDrop') trigger: NgbDropdown;
   count = 0;
   trigger_messenger = null;
+  hasLoggedin = false; // check if user has logged in or not
 
   constructor(config: NgbDropdownConfig,
   private messengerHelperService: MessengerHelperService
@@ -21,6 +22,10 @@ export class DashboardComponent implements OnInit {
   }
 
   ngOnInit() {
+    if (localStorage.getItem('lsaWho') !== null) {
+      this.hasLoggedin = true;
+      console.log(this.hasLoggedin);
+    }
     // subscribe messenger helper
     this.messengerHelperService.trigger.subscribe(value => {
       this.trigger_messenger = value;
@@ -34,6 +39,7 @@ export class DashboardComponent implements OnInit {
       }
     });
   }
+
 
   handleUnreadCount(count){
     this.count = count;
