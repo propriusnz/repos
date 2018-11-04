@@ -13,7 +13,7 @@ import { LearnerTutorsPanelComponent } from './learner-tutors/learner-tutors-pan
 import { ViewAllSessionDialogComponent } from './dashboard-dialogs/view-all-session-dialog/view-all-session-dialog.component'; //learner
 import { LearnerSessionRatingDialogComponent } from './dashboard-dialogs/learner-session-rating-dialog/learner-session-rating-dialog.component';
 import { OrderConfirmComponentComponent } from './order/order-confirm-component/order-confirm-component.component';//all
-import { OrderListComponent } from './order/order-list/order-list.component';//learner
+import { LessonOrderComponent } from './order/lesson-order/lesson-order.component'
 
 import { MatDialogModule, MatCardModule, MatDatepickerModule, MatFormFieldModule, MatInputModule, MatCheckboxModule, MatAutocompleteModule, MatBadgeModule, MatBottomSheetModule, MatButtonModule, MatButtonToggleModule, MatChipsModule, MatDividerModule, MatExpansionModule, MatGridListModule, MatIconModule, MatListModule, MatMenuModule, MatProgressBarModule, MatProgressSpinnerModule, MatRadioModule, MatRippleModule, MatSelectModule, MatSidenavModule, MatSliderModule, MatSlideToggleModule, MatSnackBarModule, MatSortModule, MatTableModule, MatTabsModule, MatToolbarModule, MatTooltipModule, MatTreeModule, MatNativeDateModule, DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material';
 import { MatPaginatorModule, MatPaginatorIntl } from '@angular/material/paginator';
@@ -50,7 +50,7 @@ import {TagInputModule} from 'ngx-chips';
     ViewAllSessionDialogComponent,
     LearnerSessionRatingDialogComponent,
     OrderConfirmComponentComponent,
-    OrderListComponent
+    LessonOrderComponent,
   ],
   entryComponents: [
     ViewAllSessionDialogComponent,

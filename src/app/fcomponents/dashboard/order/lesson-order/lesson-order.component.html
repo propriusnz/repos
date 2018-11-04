@@ -1,0 +1,229 @@
+<mat-card>
+  <mat-card-header>
+    <img mat-card-avatar src="././assets/tutorpics/front3.jpg" style="background-size: cover" class="mr-2">
+    <mat-card-title class="title-name">Rabbit</mat-card-title>
+    <mat-card-subtitle class="">Rabbit</mat-card-subtitle>
+  </mat-card-header>
+
+  <mat-card-content>
+    <div class="text-right">
+    <mat-form-field>
+      <label class="s2">Order Time: </label><br>
+      <mat-select [(value)]="order_time">
+        <mat-option value="all">All time</mat-option>
+        <mat-option value="month">One mouth</mat-option>
+        <mat-option value="half-year">Half year</mat-option>
+        <mat-option value="year">One year</mat-option>
+      </mat-select>
+    </mat-form-field>
+    </div>
+    <mat-tab-group>
+      <mat-tab label="All">
+        <div class="table-panel mt-3 p-2">
+        <table mat-table [dataSource]="all" class="mat-elevation-z8">
+
+          <ng-container matColumnDef="tutor">
+            <th mat-header-cell *matHeaderCellDef> Tutor </th>
+            <td mat-cell *matCellDef="let order"><a href="#"><img class="tutor-img" src="{{order.tutor_img}}"> {{order.tutor}}</a> </td>
+          </ng-container>
+
+          <ng-container matColumnDef="lessons">
+            <th mat-header-cell *matHeaderCellDef> Lessons </th>
+            <td mat-cell *matCellDef="let order"><span> {{order.class}} </span></td>
+          </ng-container>
+
+          <ng-container matColumnDef="amount">
+            <th mat-header-cell *matHeaderCellDef> Amount </th>
+            <td mat-cell *matCellDef="let order"> {{order.amount}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="price">
+            <th mat-header-cell *matHeaderCellDef> Price </th>
+            <td mat-cell *matCellDef="let order"> $ {{order.price.toFixed(1)}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="status">
+            <th mat-header-cell *matHeaderCellDef> Status </th>
+            <td mat-cell *matCellDef="let order"> {{order.status}}<br><a href="javascript:void(0);" (click)="showDetail(order)">Details</a> </td>
+          </ng-container>
+
+          <ng-container matColumnDef="apply">
+            <th mat-header-cell *matHeaderCellDef> Apply </th>
+            <td mat-cell *matCellDef="let order">
+              <button *ngIf="order.status == 'Paid'" class="btn btn-outline-danger"> Refund </button>
+              <button *ngIf="order.status == 'Unpaid'" class="btn btn-outline-success"> Pay </button>
+              <button *ngIf="order.status == 'Refund'" class="btn btn-danger disabled"> refunding </button>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+          <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+        </div>
+      </mat-tab>
+      <mat-tab label="Progressing">
+        <div class="table-panel m-2 p-2">
+          <table mat-table [dataSource]="progressing" class="mat-elevation-z8">
+
+            <ng-container matColumnDef="tutor">
+              <th mat-header-cell *matHeaderCellDef> Tutor </th>
+              <td mat-cell *matCellDef="let order"><img class="tutor-img" src="{{order.tutor_img}}"> {{order.tutor}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="lessons">
+              <th mat-header-cell *matHeaderCellDef> Lessons </th>
+              <td mat-cell *matCellDef="let order"> {{order.class}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="amount">
+              <th mat-header-cell *matHeaderCellDef> Amount </th>
+              <td mat-cell *matCellDef="let order"> {{order.amount}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="price">
+              <th mat-header-cell *matHeaderCellDef> Price </th>
+              <td mat-cell *matCellDef="let order"> $ {{order.price.toFixed(1)}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="status">
+              <th mat-header-cell *matHeaderCellDef> Status </th>
+              <td mat-cell *matCellDef="let order"> {{order.status}}<br><a href="#">Details</a> </td>
+            </ng-container>
+
+            <ng-container matColumnDef="apply">
+              <th mat-header-cell *matHeaderCellDef> Apply </th>
+              <td mat-cell *matCellDef="let order">
+                <button class="btn btn-outline-danger"> Refund </button>
+              </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          </table>
+          <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+        </div>
+      </mat-tab>
+      <mat-tab label="Unpaid">
+        <div class="table-panel m-2 p-2">
+          <table mat-table [dataSource]="unpaid" class="mat-elevation-z8">
+
+            <ng-container matColumnDef="tutor">
+              <th mat-header-cell *matHeaderCellDef> Tutor </th>
+              <td mat-cell *matCellDef="let order"><img class="tutor-img" src="{{order.tutor_img}}"> {{order.tutor}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="lessons">
+              <th mat-header-cell *matHeaderCellDef> Lessons </th>
+              <td mat-cell *matCellDef="let order"> {{order.class}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="amount">
+              <th mat-header-cell *matHeaderCellDef> Amount </th>
+              <td mat-cell *matCellDef="let order"> {{order.amount}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="price">
+              <th mat-header-cell *matHeaderCellDef> Price </th>
+              <td mat-cell *matCellDef="let order"> $ {{order.price.toFixed(1)}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="status">
+              <th mat-header-cell *matHeaderCellDef> Status </th>
+              <td mat-cell *matCellDef="let order"> {{order.status}}<br><a href="#">Details</a> </td>
+            </ng-container>
+
+            <ng-container matColumnDef="apply">
+              <th mat-header-cell *matHeaderCellDef> Apply </th>
+              <td mat-cell *matCellDef="let order"><button class="btn btn-outline-success"> Pay </button></td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          </table>
+          <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+        </div>
+      </mat-tab>
+      <mat-tab label="Refund">
+        <div class="table-panel m-2 p-2">
+          <table mat-table [dataSource]="refund" class="mat-elevation-z8">
+
+            <ng-container matColumnDef="tutor">
+              <th mat-header-cell *matHeaderCellDef> Tutor </th>
+              <td mat-cell *matCellDef="let order"><img class="tutor-img" src="{{order.tutor_img}}"> {{order.tutor}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="lessons">
+              <th mat-header-cell *matHeaderCellDef> Lessons </th>
+              <td mat-cell *matCellDef="let order"> {{order.class}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="amount">
+              <th mat-header-cell *matHeaderCellDef> Amount </th>
+              <td mat-cell *matCellDef="let order"> {{order.amount}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="price">
+              <th mat-header-cell *matHeaderCellDef> Price </th>
+              <td mat-cell *matCellDef="let order"> $ {{order.price.toFixed(1)}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="status">
+              <th mat-header-cell *matHeaderCellDef> Status </th>
+              <td mat-cell *matCellDef="let order"> {{order.status}}<br><a href="#">Details</a> </td>
+            </ng-container>
+
+            <ng-container matColumnDef="apply">
+              <th mat-header-cell *matHeaderCellDef> Apply </th>
+              <td mat-cell *matCellDef="let order"><button *ngIf="order.status == 'refund'" class="btn btn-danger disabled"> refunding </button></td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          </table>
+          <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+        </div>
+      </mat-tab>
+      <mat-tab label="Finished">
+        <div class="table-panel m-2 p-2">
+          <table mat-table [dataSource]="finished" class="mat-elevation-z8">
+
+            <ng-container matColumnDef="tutor">
+              <th mat-header-cell *matHeaderCellDef> Tutor </th>
+              <td mat-cell *matCellDef="let order"><img class="tutor-img" src="{{order.tutor_img}}"> {{order.tutor}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="lessons">
+              <th mat-header-cell *matHeaderCellDef> Lessons </th>
+              <td mat-cell *matCellDef="let order"> {{order.class}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="amount">
+              <th mat-header-cell *matHeaderCellDef> Amount </th>
+              <td mat-cell *matCellDef="let order"> {{order.amount}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="price">
+              <th mat-header-cell *matHeaderCellDef> Price </th>
+              <td mat-cell *matCellDef="let order"> $ {{order.price.toFixed(1)}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="status">
+              <th mat-header-cell *matHeaderCellDef> Status </th>
+              <td mat-cell *matCellDef="let order"> {{order.status}}<br><a href="#">Details</a> </td>
+            </ng-container>
+
+            <ng-container matColumnDef="apply">
+              <th mat-header-cell *matHeaderCellDef> Apply </th>
+              <td mat-cell *matCellDef="let order"></td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          </table>
+          <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+        </div>
+      </mat-tab>
+    </mat-tab-group>
+  </mat-card-content>
+</mat-card>

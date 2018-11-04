@@ -20,4 +20,17 @@ export class AppComponent {
       "contactType": "Customer service"
     }
   };
+  schemaData = {
+    '@context': 'http://schema.org',
+    '@type': 'Product',
+    'name': 'LearnspaceTutor',
+    "aggregateRating": {
+      "@type": "aggregateRating",
+      "ratingValue": "4.8",
+      "reviewCount": "5438"
+    },
+    "priceRange": "25$/hr to 40$/hr",
+    'description' : "good tutor.",
+    'productId' : '1004'
+  };  
 }

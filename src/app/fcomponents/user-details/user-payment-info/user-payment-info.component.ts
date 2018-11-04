@@ -32,11 +32,11 @@ export class UserPaymentInfoComponent implements OnInit {
       result => {
         console.log(result);
         this.userBasicInfo = result['dataCon']['userBasic'];
-        if (result['dataCon']['userBasic']['stripe_id'] != null) {
-          this.hasPaymentInfo = true;
-        } else {
-          this.hasPaymentInfo = false;
-        }
+          this.paymentService.UserPaymentInfo().subscribe(
+            result=>{
+              console.log(result);
+            }
+          )
       }
     );
   }

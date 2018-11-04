@@ -1,0 +1,35 @@
+<div class="details">
+  <div class="order-detail p-3">
+    <h2 class="m2">Order Details</h2>
+    <div class="d-flex flex-row px-2">
+      <label>Tutor: </label>
+      <img class="tutor-img ml-2" src="{{data.image}}">
+      <label class="s2 align-self-center ml-1">{{data.tutor}}</label>
+    </div>
+    <div class="d-flex flex-row">
+    <table class="table">
+      <tbody>
+      <tr>
+        <td><label>Class:</label><span> {{data.class}}</span><img src="././assets/discussionIcons/English.png"></td>
+        <td><label>Order Time:<span> {{data.orderTime}}</span></label></td>
+        <td><label>Paid Time:
+          <span *ngIf="data.paidTime != null">{{data.paidTime}}</span>
+          <span *ngIf="data.paidTime == null || data.paidTime == ''">Unpaid</span>
+        </label></td>
+
+      </tr>
+      <tr>
+        <td><label>Total Class:<span> {{data.amount}}</span></label></td>
+        <td><label>Class Finished:<span> {{data.finished}}</span></label></td>
+        <td><label>Class Scheduled:<span> {{data.booking}}</span></label></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td></td>
+        <td><img src="././assets/icons/money.png"><label>Total Price:<span> $ {{data.price.toFixed(1)}}</span></label></td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+  </div>
+</div>

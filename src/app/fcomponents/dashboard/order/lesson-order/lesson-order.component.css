@@ -1,0 +1,26 @@
+table{
+  width: 100%;
+}
+.table-panel{
+  text-align: center;
+}
+th.mat-header-cell{
+  font-size: 20px;
+  text-align: center;
+  padding: 10px 0;
+}
+td.mat-cell{
+ padding: 10px 0;
+}
+.tutor-img{
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+td a{
+  color: black;
+}
+td a:hover{
+  color: #007bff;
+  text-decoration: none;
+}

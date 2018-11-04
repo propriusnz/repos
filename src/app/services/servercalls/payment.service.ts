@@ -35,4 +35,8 @@ export class PaymentService {
   deletePaymentInfo(){
     return this.http.delete(this.baseUrl+'/userspayment/'+this.id, {headers: this.headers1});
   }
+ //new method 11/2/2018
+  UserPaymentInfo(){
+    return this.http.get(this.baseUrl+'/userspaymethod/'+this.id, {headers: this.headers1});
+  } 
 }

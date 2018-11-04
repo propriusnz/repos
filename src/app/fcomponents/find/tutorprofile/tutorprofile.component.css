@@ -57,7 +57,9 @@
     padding-bottom:8px;
     border-radius:4px;
   }
-
+  .s2{
+    font-weight:400;
+  }
   .phoneNum{
     margin-top: 5px;
     text-align:center;

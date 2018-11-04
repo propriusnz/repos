@@ -23,9 +23,12 @@ export class GeneralService {
   }
 
   showTutor(id:string){
-    return this.http.get(this.baseUrl+'/findtutors/'+id);
+    return this.http.get(this.baseUrl+'/findtutorprofile/'+id);
   }
-
+  //new showTutor
+  findtutorprofile(id:string){
+    return this.http.get(this.baseUrl+'/findtutorprofile/'+id);
+  }
   // Posts
   sendPostId(val: string): void {
     this.post_id.next(val);
@@ -62,4 +65,6 @@ export class GeneralService {
   storeContact(contactUs){
     return this.http.post(this.baseUrl+'/contacts', contactUs);
   }
+  // new method
+  
 }

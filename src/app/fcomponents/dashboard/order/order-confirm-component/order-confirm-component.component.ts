@@ -31,21 +31,7 @@ export class OrderConfirmComponentComponent implements OnInit {
 
   ngOnInit() {
     this.id = this.route.snapshot.params['id'];
-    this.getTutorData(this.id).subscribe(
-      (res) => { 
-        console.log(res);        
-        this.setTutorData(res);
-        this.getCourseData(this.id);
-        this.getFeeRate();
-        this.initOrderData();
-        console.log(res);
-      },
-      (err) => { 
-        this.errorMessage = "Something went wrong, we cannot get any data at this time." 
-        this.alertservice.sendAlert(this.errorMessage, 'ERROR', 'toast-top-right', 3000);
-      }
-    )
-
+    this.getTutorData(this.id);
   }
   getFeeRate(){
     //need change get form service, just for test
@@ -53,12 +39,20 @@ export class OrderConfirmComponentComponent implements OnInit {
   }
   //get tutor data from the service
   getTutorData(id) {
-    return  this.searchService.showTutor(id);
-/*     this.searchService.showTutor(id).subscribe(
-      (res) => { this.setTutorData(res) },
-      (err) => { this.errorMessage = "Something went wrong, we cannot get any data at this time." }
+    this.searchService.findtutorprofile(id).subscribe(
+      (res) => { 
+        console.log(res);        
+        this.setTutorData(res);
+        this.getCourseData(this.id);
+        this.getFeeRate();
+        this.initOrderData();
+      },
+      (err) => { 
+        console.log(err);        
+        this.errorMessage = "Something went wrong, we cannot get any data at this time." 
+        this.alertservice.sendAlert(this.errorMessage, 'ERROR', 'toast-top-right', 3000);      }
     )
- */  }
+  }
  //set tutor data to local variable
   setTutorData(res){
     this.tutor = res['data'].thisTutorInfo;

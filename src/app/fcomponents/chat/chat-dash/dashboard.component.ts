@@ -31,7 +31,8 @@ export class DashboardComponent implements OnInit {
       this.trigger_messenger = value;
       if (this.trigger_messenger === 'no') {
         console.log('i am no');
-        this.trigger.close();
+        //this.trigger.close();
+      
         //this.trigger.open();
       } else {
         console.log(value);

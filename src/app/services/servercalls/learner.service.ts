@@ -88,7 +88,7 @@ export class LearnerService {
   }
 
   showTutor(id: string) {
-    return this.http.get(this.baseUrl + '/findtutors/' + id);
+    return this.http.get(this.baseUrl + '/findtutorprofile/' + id);
   }
 
   storeLearnerProfile(courseList) {
