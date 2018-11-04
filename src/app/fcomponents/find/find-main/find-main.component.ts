@@ -32,7 +32,19 @@ export class FindMainComponent implements OnInit {
   totalPosts = 0;
   perPage = 0;
 
-
+  schemaData = {
+    '@context': 'http://schema.org',
+    '@type': 'Product',
+    'name': 'LearnspaceTutor',
+    "aggregateRating": {
+      "@type": "aggregateRating",
+      "ratingValue": "4.8",
+      "reviewCount": "2538"
+    },
+    "priceRange": "25$/hr to 40$/hr",
+    'description' : "best tutor in wellington.",
+    'productId' : '1004'
+  };
   constructor(
     @Inject(PLATFORM_ID)
     private platformId,

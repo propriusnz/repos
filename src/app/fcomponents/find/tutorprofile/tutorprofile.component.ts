@@ -38,6 +38,20 @@ export class TutorprofileComponent implements OnInit {
 
   events: any = []; // session object
 
+  schemaData = {
+    '@context': 'http://schema.org',
+    '@type': 'Product',
+    'name': 'SomeTutor',
+    "aggregateRating": {
+      "@type": "aggregateRating",
+      "ratingValue": "4.8",
+      "reviewCount": "538"
+    },
+    "priceRange": "25$/hr to 40$/hr",
+    'description' : "good tutor.",
+    'productId' : '1004'
+  };
+
   constructor(
     @Inject(PLATFORM_ID)
     private platformId,
