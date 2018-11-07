@@ -95,7 +95,15 @@ export class StripePaymentComponent implements OnInit {
     });
     this.populatePaymentForm();
   }
-
+  //display error text
+  errorMsg(error){
+    let displayError = document.getElementById('card-errors');
+    if (error) {
+      displayError.textContent = error.message;
+    } else {
+      displayError.textContent = '';
+    }
+  }
   // close dialog
   close() {
     this.dialogRef.close({'result': 'nothing'});
@@ -143,30 +151,21 @@ export class StripePaymentComponent implements OnInit {
 
     // Handle real-time validation errors from the card Element.
     cardNumber.addEventListener('change', (event) => {
-      let displayError = document.getElementById('card-errors');
+      this.errorMsg(event.error);
+/*       let displayError = document.getElementById('card-errors');
       if (event.error) {
         displayError.textContent = event.error.message;
       } else {
         displayError.textContent = '';
-      }
+      } */
     });
 
     cardExpDate.addEventListener('change', (event) => {
-      let displayError = document.getElementById('card-errors');
-      if (event.error) {
-        displayError.textContent = event.error.message;
-      } else {
-        displayError.textContent = '';
-      }
+      this.errorMsg(event.error);      
     });
 
     cardCvc.addEventListener('change', (event) => {
-      let displayError = document.getElementById('card-errors');
-      if (event.error) {
-        displayError.textContent = event.error.message;
-      } else {
-        displayError.textContent = '';
-      }
+      this.errorMsg(event.error);      
     });
 
     let form = document.getElementById('payment-form');
@@ -208,6 +207,10 @@ export class StripePaymentComponent implements OnInit {
                 console.log('Store card result:');
                 console.log(res);
                 this.dialogRef.close(res);
+              },
+              err=>{
+                this.errorMsg({message:'Server or network error occurred ,please try again or contact the administrator'});
+                console.log(err);
               }
             );
           } else if (this.action === 'change') {
@@ -216,6 +219,10 @@ export class StripePaymentComponent implements OnInit {
                 console.log('Change card result:');
                 console.log(res);
                 this.dialogRef.close(res);
+              },
+              err=>{
+                this.errorMsg({message:'Server or network error occurred ,please try again or contact the administrator'});
+                console.log(err);
               }
             );
           }

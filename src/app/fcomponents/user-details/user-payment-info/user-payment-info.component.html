@@ -1,4 +1,4 @@
-<div *ngIf="userBasicInfo">
+<div *ngIf="userpaymentMethods">
   <div *ngIf="hasPaymentInfo">
     Your Payment Credit Card
     <div class="container">
@@ -8,8 +8,10 @@
             <tr id="card-tb-head">
               <th>Card Type</th>
               <th>Card Number</th>
+              <th>Operation</th>              
             </tr>
-            <tr id="card-tb-body">
+
+            <tr *ngFor="let userBasicInfo of userpaymentMethods" id="card-tb-body">
               <td *ngIf="userBasicInfo.card_brand == 'Visa'">
                 <i class="fab fa-cc-visa"></i>
               </td>
@@ -26,17 +28,25 @@
                 <i class="fab fa-cc-amex"></i>
               </td>
               <td>****{{userBasicInfo.card_last_four}}</td>
+              <td>
+                  <button type="button" class="btn btn-primary btn-sm mr-2" (click)="modifyPaymentCard(2)">Change Card</button>
+                  <button type="button" class="btn btn-danger btn-sm mx-2" (click)="deletePaymentCard()">Delete Card</button>
+              </td>              
             </tr>
+
           </table>
         </div>
-        <div class="col-12 my-2">         
-          <button type="button" class="btn btn-primary btn-sm mr-2" (click)="modifyPaymentCard()">Change Card</button>
-          <button type="button" class="btn btn-danger btn-sm mx-2" (click)="deletePaymentCard()">Delete Card</button>
+        <div *ngIf="errorObj.hasError" class="alert alert-danger" role="alert">
+          {{errorObj.errMsg}}
+         </div>
+        <div class="col-12 my-2">
+          <button type="button" class="btn btn-primary btn-sm mr-2" (click)="modifyPaymentCard(1)">Add Card</button>
         </div>
       </div>
     </div>
   </div>
   <div *ngIf="!hasPaymentInfo">
-    <p>You haven't provide your payment information. Click <a id="show-a" (click)="modifyPaymentCard()">Here</a> to setup.</p>
+    <p>You haven't provide your payment information. Click <a id="show-a" (click)="modifyPaymentCard(1)">Here</a> to
+      setup.</p>
   </div>
 </div>

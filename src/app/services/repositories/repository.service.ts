@@ -111,7 +111,8 @@ export class RepositoryService {
    currentTutorData() {
      this.tutorService.showTutorProfile().subscribe(
        (res) => {
-         this.combinedTutor = Object.assign(res['dataCon'].tutorInfo, res['dataCon'].tutorProfile,  );
+         console.log(res);
+         this.combinedTutor = Object.assign(res['tutorInfo'], res['tutorProfile'],  );
          this.tutorData.next(this.combinedTutor);
          this.saveTutorSession(res);
         },
@@ -120,8 +121,8 @@ export class RepositoryService {
    }
 
    saveTutorSession(res) {
-    sessionStorage.setItem('lsaSpTutorInfo', JSON.stringify(res['dataCon'].tutorInfo));
-    sessionStorage.setItem('lsaSpTutorProfile', JSON.stringify(res['dataCon'].tutorProfile));
+    sessionStorage.setItem('lsaSpTutorInfo', JSON.stringify(res['tutorInfo']));
+    sessionStorage.setItem('lsaSpTutorProfile', JSON.stringify(res['tutorProfile']));
   }
 
    // ---------------------- Learner role -------------------------
@@ -170,7 +171,7 @@ export class RepositoryService {
     this.userService.showUserInfo().subscribe(
      (res) => {
        this.saveUserSession(res);
-       this.combinedUser = Object.assign(res['dataCon'].userBasic, res['dataCon'].userSecondary),
+       this.combinedUser = Object.assign(res['userInfo'], res['userKey']),
        this.userData.next(this.combinedUser);
      },
      (error) => console.log(error)
@@ -178,8 +179,8 @@ export class RepositoryService {
   }
 
   saveUserSession(res) {
-    sessionStorage.setItem('lsaUserskeys', JSON.stringify(res['dataCon'].userBasic));
-    sessionStorage.setItem('lsaUsersInfo', JSON.stringify(res['dataCon'].userSecondary));
+    sessionStorage.setItem('lsaUserskeys', JSON.stringify(res['userInfo']));
+    sessionStorage.setItem('lsaUsersInfo', JSON.stringify(res['userKey']));
   }
 
   testEmptySub() {

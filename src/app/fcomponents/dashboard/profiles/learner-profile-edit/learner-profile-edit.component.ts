@@ -83,8 +83,8 @@ export class LearnerProfileEditComponent implements OnInit {
 
     this.userService.showUserInfo().subscribe(
       (res)=>{
-        this.userBasic=res['dataCon']['userBasic'];  
-        this.userSecondary=res['dataCon']['userSecondary'];   
+        this.userBasic=res['userInfo'];  
+        this.userSecondary=res['userKey'];   
         if (this.userSecondary.user_type===1) this.isParent=true;             
         console.log(res)
       },

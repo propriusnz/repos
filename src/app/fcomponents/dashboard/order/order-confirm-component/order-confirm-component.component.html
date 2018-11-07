@@ -35,7 +35,7 @@
       </div>
     </div>
     <div class="col-xl-9 col-lg-9 col-md-9">
-      <div *ngIf="courses" class="card">
+      <div *ngIf="tutorCourses" class="card">
         <div class="card-header">
           <h4 class="col-xl-6 col-md-6 m2">2. Product</h4>
           <div class="s1">How many lessons would you like to purchase?</div>
@@ -48,24 +48,24 @@
                   <thead>
                       <tr class='m2'>
                         <th scope="col">Course</th>
-                        <th scope="col">Discount</th>
+                        <th scope="col">Description</th>
                         <th scope="col">Price</th>
                       </tr>
                     </thead>
-                  <tbody class="s1" *ngFor="let course of courses;let idx=index">
+                  <tbody class="s1" *ngFor="let course of tutorCourses;let idx=index">
                     <tr>
                       <td class='tb_card'>
-                          <mat-radio-button matLine class="course-radio-button" [value]="course" (change)="radioChange($event)">
-                          {{course.description}}
+                          <mat-radio-button matLine class="course-radio-button" [checked]="course.checked" [value]="course" (change)="radioChange($event)">
+                          {{course.course_title}}
                           </mat-radio-button>
                       </td>
                       <td class='s2blue tb_card'>
                         <span>Save  </span>
-                        <span class='s3blue' >{{course.discount}}</span>
+                        <span class='s3blue' >{{course.course_description}}</span>
                         <span>%</span>                        
                       </td>
                       <td class='tb_card'>
-                        <span class='m2'>{{course.price}}  </span>
+                        <span class='m2'>{{course.course_price}}  </span>
                         <span>$</span>
                       </td>
                     </tr>

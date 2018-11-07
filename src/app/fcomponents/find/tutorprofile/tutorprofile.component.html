@@ -72,33 +72,15 @@
         <div class="card" *ngIf="tutorprofile">
           <div class="card-header m2">Private Lessons</div>
           <div *ngIf="tutor" class="card-body s2 pb-2">
-            <div class="price-link">
-              <a class="row" href="#">
-                <div class="col-6" style="font-size: 18px">1 Lesson</div>
-                <div class="col-6 text-right">
-                  <div class="mb-1 lessonPric">{{tutor.price_1}}&nbsp;$</div>
-                  per hour
+              <div *ngFor='let course of tutorCourses' class="price-link">
+                  <a class="row" href="#">
+                    <div class="col-6" style="font-size: 18px">{{course.course_title}}</div>
+                    <div class="col-6 text-right">
+                      <div class="mb-1 lessonPric">{{course.course_price}}&nbsp;$</div>
+                      per hour
+                    </div>
+                  </a>
                 </div>
-              </a>
-            </div>
-            <div class="price-link">
-              <a class="row" href="#">
-                <div class="col-6" style="font-size: 18px">5 Lesson</div>
-                <div class="col-6 text-right">
-                  <div class="mb-1 lessonPric">{{tutor.price_1}}&nbsp;$</div>
-                  per hour
-                </div>
-              </a>
-            </div>
-            <div class="price-link">
-              <a class="row" href="#">
-                <div class="col-6" style="font-size: 18px">10 Lesson</div>
-                <div class="col-6 text-right">
-                  <div class="mb-1 lessonPric">{{tutor.price_1}}&nbsp;$</div>
-                  per hour
-                </div>
-              </a>
-            </div>
             <button (click)="bookNow()" class="btn btn-primary btn-block btn-lg my-2">Book Now</button>
             <button class="btn btn-outline-primary btn-block btn-md">Message</button>
             <div class="phoneNum s2">Call us at &nbsp; <a href="tel:02102264770"> 021 022 64770</a></div>

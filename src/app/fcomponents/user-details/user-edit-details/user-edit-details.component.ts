@@ -34,7 +34,7 @@ export class UserEditDetailsComponent implements OnInit {
   ) {
     this.userService.showUserInfo().subscribe(
       (res) => {
-      this.userInfo = Object.assign(res['dataCon'].userBasic, res['dataCon'].userSecondary),
+      this.userInfo =	Object.assign(res['userInfo'], res['userKey']),
         console.log(this.userInfo),
         this.createForm(this.userInfo)
       },

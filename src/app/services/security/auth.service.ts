@@ -30,9 +30,12 @@ export class AuthService {
 
     login(loginUser){
       return  new Promise((resolve, reject) => {
+        console.log(loginUser); 
         this.http.post(this.baseUrl+'/login', loginUser).toPromise().then(
-          (userData)=>{resolve(userData), this.setTokens(userData)},
-          (err) => reject(err));
+          (userData)=>{ resolve(userData),
+            console.log(userData); 
+            this.setTokens(userData)},
+          (err) => {reject(err),console.log(err)} );
       });
     }
 
@@ -42,6 +45,7 @@ export class AuthService {
     }
 
     setTokens(user){
+      console.log(user);
       this.xtExpire =  String(this.currentTime + 43200000)
 
       this.localStorage.setItem('lsaToken_access', user.dataCon.xT.access_token);
@@ -51,7 +55,7 @@ export class AuthService {
       this.localStorage.setItem('lsaWho', user.dataCon.xUr);
 
       sessionStorage.setItem('lsaUserskeys', JSON.stringify(user.dataCon.userBasic));
-      sessionStorage.setItem('lsaUsersInfo', JSON.stringify(user.dataCon.userSecondary));
+      sessionStorage.setItem('lsaUsersInfo', JSON.stringify(user.dataCon.userInfo));
 
       if(user.dataCon.xUr==1){
 

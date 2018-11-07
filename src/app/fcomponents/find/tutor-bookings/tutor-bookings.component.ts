@@ -129,21 +129,21 @@ export class TutorBookingsComponent implements OnInit {
   // set the tutor data and schedule data
   setTutorData(res) {
     console.log(res);
-    let data = res['data'].thisTutorInfo;
+    let data = res['tutorKey'];
     this.subjects = data.discipline.split(",");
     this.curriculums = data.curriculum.split(',');
-    this.locations = res['data'].thisTutorProfile.teaching_locations;
+    this.locations = res['tutorProfile'].teaching_locations;
     this.session.subject = this.subjects[0];
     this.session.curriculum = this.curriculums[0];
     this.session.location = this.locations[0];
     this.session.rate.push(data.price_1, data.price_2);
     this.tutorPrice = this.session.rate;
 
-    this.tutorId = data.user_id.toString();
+    this.tutorId = data.tutor_id.toString();
     this.userId = this.localStorage.getItem('lsaUserId');
     console.log(this.tutorId, this.userId);
-    // set the schedule data for calendar
-    this.eventContainer = this.calendarService.first(res['data'].thisTutorSchedule);
+    // set the schedule data for calendar ??
+    this.eventContainer = this.calendarService.getEvent(res['tutorSchedule'],[]);
     this.events = this.eventContainer.free;
     for (let i = 0; i < this.events.length; i++) { // delete the free time that before current time
       let eve = this.events[i];
@@ -401,13 +401,14 @@ export class TutorBookingsComponent implements OnInit {
   setBill() {
     this.billNum = 0;
     this.savedBillNum = 0;
+ 
     for (let i = 0; i < this.sessions.length; i++) {
       let x = this.sessions[i];
       if (x.s_duration < 2) {
         this.billNum = this.billNum + this.session.rate[0] * x.s_duration;
       } else {
-        this.billNum = this.billNum + this.session.rate[1] * x.s_duration;
-        this.savedBillNum = this.savedBillNum + x.s_duration * (this.session.rate[0] - this.session.rate[1]);
+        this.billNum = this.billNum + this.session.rate[0] * x.s_duration;
+        this.savedBillNum = this.savedBillNum + x.s_duration * (this.session.rate[0] - this.session.rate[0]);
       }
     }
     console.log('The following is the bill info....');
@@ -428,14 +429,17 @@ export class TutorBookingsComponent implements OnInit {
       this.userService.showUserInfo().subscribe(
         result => {
           console.log(result);
-          let userBasicInfo = result['dataCon']['userBasic'];
-          if (result['dataCon']['userBasic']['stripe_id'] != null) {
+          let userBasicInfo = result['userInfo'];
+          let hasPaymentInfo ;
+          //hasPayInfo = result['userInfo']['stripe_id']
+          //hasPaymentInfo = false;
+          hasPaymentInfo = true;
+          if (hasPaymentInfo) {
             // send to server
             this.sendBookings();
-            this.updateCalendar();
+            //this.updateCalendar();
           } else {
-            let hasPaymentInfo = false;
-            let extraObject = {
+              let extraObject = {
               cost: this.billNum,
               hasPaymentInfo: hasPaymentInfo,
               action: 'save'
@@ -443,14 +447,20 @@ export class TutorBookingsComponent implements OnInit {
             console.log(extraObject);
             this.displayPaymentDialog(extraObject);
           }
+        },
+        error=>{
+          this.feedback = 'Error occurred!';
+          console.log(error);        
         }
       );
     }
   }
   // send the bookings to server
   sendBookings() {
-    this.learnerService.storeLearnerSessions(this.tutorProfileId, this.sessions).subscribe(
+    this.sessions.map(e=>e.learner_id=this.userId);
+    this.learnerService.storeLearnerSessions(this.tutorProfileId, this.billNum, this.sessions).subscribe(
         (res) => {
+          this.updateCalendar();
           console.log(res);
           this.feedback = 'Your lessons has been updated successfully!';
           console.log(this.newArray);
@@ -458,8 +468,10 @@ export class TutorBookingsComponent implements OnInit {
           this.newArray = [];
           this.sessions = [];
           this.setBill();
+
         },
         (error) => {
+          this.feedback = 'Error occurred!';
           console.log(error);
         }
       );
@@ -567,7 +579,8 @@ export class TutorBookingsComponent implements OnInit {
         right: 'today'
       },
       themeSystem: 'bootstrap3',
-      height: 'parent',
+      //height: 'parent',
+      height: 'auto', aspectRation: 1.35,
       defaultView: 'agendaWeek',
       firstDay: today,
       events: myevents,

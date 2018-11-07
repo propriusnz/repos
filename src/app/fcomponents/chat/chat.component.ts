@@ -750,17 +750,13 @@ updateUnreadMessage(){
   }
 }
 
-messageCheck(){
-  //console.log("user click");
-  if(this.selectedUser){
-    var count = this.selectedUser.unreadCount;
-    this.total_unread_count= this.total_unread_count-count;
-    this.total_unread_messages.emit(this.total_unread_count);
-    this.selectedUser.unreadCount=0;
+  messageCheck(){
+    //console.log("user click");
+    if(this.selectedUser){
+      var count = this.selectedUser.unreadCount;
+      this.total_unread_count= this.total_unread_count-count;
+      this.total_unread_messages.emit(this.total_unread_count);
+      this.selectedUser.unreadCount=0;
+    }
   }
-}
-
-
-
-
 }

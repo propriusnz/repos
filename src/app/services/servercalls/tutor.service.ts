@@ -34,11 +34,11 @@ export class TutorService {
 
   // Tutor Profile
   showTutorProfile() {
-    return this.http.get(this.baseUrl + '/tutorsedit/' + this.id, { headers: this.headers1 })
+    return this.http.get(this.baseUrl + '/tutorprofile/' + this.id, { headers: this.headers1 })
   }
 
   updateTutorProfile(tutorUpdate) {
-    return this.http.post(this.baseUrl + '/tutorsedit/' + this.id, tutorUpdate, { headers: this.headers1 });
+    return this.http.post(this.baseUrl + '/tutorprofile/' + this.id, tutorUpdate, { headers: this.headers1 });
   }
 
   // Tutor Students

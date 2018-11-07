@@ -24,11 +24,13 @@ export class TutorprofileComponent implements OnInit {
   tutor: SearchTutorModel;
   tutorprofile: TutorProfileModel;
   tutorfeedback: any;
+  tutorratings:any;
+  tutorCourses:any;
   firstname: string;
   cleanVideo: any;
   errorMessage: string;
   tutor_photo: string;
-  productFlag=true; //for some element do not display when product run,because of no data.
+  productFlag=false; //for some element do not display when product run,because of no data.
   eventContainer = {
     session: [],
     free: [],
@@ -88,19 +90,21 @@ export class TutorprofileComponent implements OnInit {
 
   setPageData(res) {
     console.log(res)
-    this.tutor = res['data'].thisTutorInfo;
+    this.tutor = res['tutorKey'];
     // Meta area
     // this.meta.addTags([{name: 'keywords', content: this.tutor.discipline+' tutor, '+this.tutor.curriculum+' tutor'}])
     // this.titleService.setTitle(this.tutor.discipline+' '+this.tutor.curriculum+' tutor in '+this.tutor['location']);
     this.setTagTitle();
-    this.tutorprofile = res['data'].thisTutorProfile;
-    this.tutorfeedback = res['data'].thisTutorFeedback;
+    this.tutorprofile = res['tutorProfile'];
+    this.tutorfeedback = res['tutorReferences'];
+    this.tutorratings = res['tutorratings'];
+    this.tutorCourses = res['tutorCourses'];
     // this.tutor['profile_photo'] = this.baseImgUrl + this.tutor['profile_photo']
-    this.tutor['profile_photo'] = this.commonSupport.findUserImg(this.tutor['user_id']) + "?ver=" + this.commonSupport.getTime();
+    this.tutor['profile_photo'] = this.commonSupport.findUserImg(this.tutor['tutor_id']) + "?ver=" + this.commonSupport.getTime();
 
     this.cleanVideo = this.sanitizer.bypassSecurityTrustResourceUrl(this.tutor.profile_video)
 
-    this.eventContainer = this.calendar.first(res['data'].thisTutorSchedule);
+    this.eventContainer = this.calendar.getEvent(res['tutorFreeTime'],res['tutorSessions']);
     if (this.eventContainer.free.length > 0) { this.tutorScheduleInit(this.eventContainer) }
   }
   setTagTitle(){
@@ -131,11 +135,13 @@ export class TutorprofileComponent implements OnInit {
   bookNow($event) {
     if (this.eventContainer.free.length > 0) {//if tutor has free time
       this.router.navigate(['./app/find-tutor/profile/' + this.tutor.tutor_id + '/book']);
+      
     } else {// if tutor didn't edit hir free time
-      let dialogRef = this.dialog.open(ContactDialogComponent, {
+      this.router.navigate(['./app/dashboard/learner/order/' + this.tutor.tutor_id]);
+/*       let dialogRef = this.dialog.open(ContactDialogComponent, {
         width: '700px',
         data: this.tutor.first_name
-      });
+      }); */
     }
   }
   // routerlink to book sessions via popover

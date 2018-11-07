@@ -61,12 +61,12 @@ export class ApplyTeachComponent implements OnInit {
     this.userService.showUserInfo().subscribe(
       (res) => {
         console.log(res);
-        if (res['dataCon'].userBasic.verified === '1') {
+        if (res['userInfo'].verified === '1') {
           this.emailVerifyStatus = true;
         } else {
           this.emailVerifyStatus = false;
         }
-        this.userInfo = Object.assign(res['dataCon'].userBasic, res['dataCon'].userSecondary),
+        this.userInfo = Object.assign(res['userInfo'], res['userKey']),
         this.setFormValuesTo(this.userInfo)
       },
       (error) => { this.errorMessage = "Sorry, we can't get to your information at this time." }

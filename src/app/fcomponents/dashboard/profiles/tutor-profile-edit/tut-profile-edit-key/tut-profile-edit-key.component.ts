@@ -87,7 +87,7 @@ export class TutProfileEditKeyComponent implements OnInit {
     this.tutorService.showTutorProfile().subscribe(
       (res) => {
         console.log(res);
-        this.tutorData = res['dataCon'];
+        this.tutorData = res;
         // get 'profile_video' from 'tutorInfo' data
         if(this.tutorData.tutorInfo.profile_video){
           this.linkValid = true;
@@ -152,10 +152,10 @@ export class TutProfileEditKeyComponent implements OnInit {
 
   // display web page by formValue
   setFormValues(data){
-    this.tutor.profile_photo=data['dataCon'].tutorInfo.profile_photo;
-    this.tutor.intro_statement=data['dataCon'].tutorInfo.intro_statement;
-    this.locations=data['dataCon'].tutorProfile.teaching_locations;
-    console.log(data['dataCon'].tutorProfile);
+    this.tutor.profile_photo=this.commonSupport.findUserImg(data['tutorInfo'].tutor_id);
+    this.tutor.intro_statement=data['tutorInfo'].intro_statement;
+    this.locations=data['tutorProfile'].teaching_locations;
+
     console.log(this.locations);
     // display location info in web page
     if(this.locations){
@@ -192,8 +192,6 @@ export class TutProfileEditKeyComponent implements OnInit {
           this.profile_photo = res;
           this.helperService.userImage.next(res);
           this.submitImage(res);
-          this.feedbackMessage = 'Your profile image has been edited and saved';
-          this.ariseAlert(this.feedbackMessage, 'INFO', 'toast-top-right', 1500);
         }
       },
       (err) => {
@@ -222,8 +220,16 @@ export class TutProfileEditKeyComponent implements OnInit {
   // profile img data sent to server
   sendToBackEnd(data) {
     this.userService.updateUserPhoto(data).subscribe(
-      (res) => console.log(res),
-      (err) => console.log(err)
+      (res) => {
+        console.log(res);
+        this.feedbackMessage = 'Your profile image has been edited and saved';
+        this.ariseAlert(this.feedbackMessage, 'INFO', 'toast-top-right', 1500);
+      },
+      (err) => {
+        console.log(err);
+        this.feedbackMessage = 'Sorry, something went wrong. Please try again';
+        this.ariseAlert(this.feedbackMessage, 'ERROR', 'toast-top-right', 5000);        
+      }
     )
   }
 

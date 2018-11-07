@@ -52,9 +52,10 @@ export class LearnerService {
   }
 
   // Learner Sessions
-  storeLearnerSessions(tutorId, bookings) {
-    console.log(tutorId, bookings);
-    return this.http.post(this.baseUrl + '/learners/' + this.id + '/tutors/' + tutorId + '/sessions', bookings, { headers: this.headers1 });
+  storeLearnerSessions(tutorId, billAmount, bookings) {
+    console.log(tutorId, billAmount ,bookings);
+//    users/(user)/products/(tutor)/flatorder/(price)
+    return this.http.post(this.baseUrl + '/users/' + this.id + '/products/' + tutorId + '/flatorder/'+billAmount, bookings[0], { headers: this.headers1 });
   }
 
   updateLearnerSessions(objects) {
@@ -120,6 +121,7 @@ export class LearnerService {
   updateLearnerPayment(transactionId){
     return this.http.post(this.baseUrl + '/learners/' + this.id + '/transactions/' + transactionId+'/oneoff', { headers: this.headers1});
   }
-
-
+  bookPackageOrder(courseId,price){
+    return this.http.post(this.baseUrl + '/users/' + this.id + '/products/' + courseId+'/packageorder/'+price, {},{ headers: this.headers1});
+  }
 }

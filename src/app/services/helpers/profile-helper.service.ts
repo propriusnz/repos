@@ -129,7 +129,7 @@ export class ProfileHelperService {
       this.gen = [{destination:"/app/dashboard/tutor/editprofile", main: "Your profile have been published.",icon:"<i class='fas fa-upload'></i>"}]
     }
     if(!data.profile_video){
-      this.gen.push({destination:"/app/dashboard/tutor/editprofile/", main:"Update an video introduction",icon:"<i class='fas fa-video'></i>"})
+      this.gen.push({destination:"/app/dashboard/tutor/editprofile/cv", main:"Update an video introduction",icon:"<i class='fas fa-video'></i>"})
     }
     if(!data.edu_1 && !data.edu_2 && !data.edu_3){
       this.gen.push({destination:"/app/dashboard/tutor/editprofile/cv", main:"Add a education history",icon:"<i class='fas fa-graduation-cap'></i>"})
@@ -154,7 +154,6 @@ export class ProfileHelperService {
     }    
     this.genU=this.gen.slice(1,5)
     this.helper.next(this.genU)
-
   }
 
   noRoles(){

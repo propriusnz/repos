@@ -132,7 +132,7 @@ export class TutProfileEditCvComponent implements OnInit {
     this.tutorService.showTutorProfile().subscribe(
       (res)=>{
         console.log(res);
-        this.tProfile = Object.assign(res['dataCon'].tutorProfile);
+        this.tProfile = Object.assign(res['tutorProfile']);
         console.log(this.tProfile);
         this.combineEduData();
         this.combineWorkData();

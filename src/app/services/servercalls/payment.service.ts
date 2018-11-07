@@ -24,19 +24,19 @@ export class PaymentService {
 
   storePaymentInfo(aaa:Object ){
     console.log(aaa);
-    return this.http.post(this.baseUrl+'/users/'+this.id+'/credit', aaa, {headers: this.headers1});
+    return this.http.post(this.baseUrl+'/users/'+this.id+'/paymethod', aaa, {headers: this.headers1});
   }
 
   updatePaymentInfo(aaa:Object){
     console.log('now updating credit card');
-    return this.http.put(this.baseUrl+'/userscredit/' + this.id, aaa, {headers: this.headers1});
+    return this.http.put(this.baseUrl+'/users/' + this.id+'/paymethod', aaa, {headers: this.headers1});
   }
 
-  deletePaymentInfo(){
-    return this.http.delete(this.baseUrl+'/userspayment/'+this.id, {headers: this.headers1});
+  deletepaymethod(){
+    return this.http.delete(this.baseUrl+'/users/'+this.id+'/paymethod', {headers: this.headers1});
   }
  //new method 11/2/2018
-  UserPaymentInfo(){
-    return this.http.get(this.baseUrl+'/userspaymethod/'+this.id, {headers: this.headers1});
+  Userpaymethod(){
+    return this.http.get(this.baseUrl+'/users/'+this.id+'/paymethod', {headers: this.headers1});
   } 
 }

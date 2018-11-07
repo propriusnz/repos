@@ -7,72 +7,129 @@ import * as moment from 'moment';
 export class CalendarSupportService {
   constructor() { }
   // change data to the events format
-  first(res) {
-    console.log(res);
-    let sessionEvents: any = [];
-    let freeEvents: any = [];
-    // tslint:disable-next-line:forin
-    for (let date in res) {
-      //console.log(date);
-      if (res[date] !== null) {
-        //console.log(res[date]);
-        // free property and get free array
-        //console.log(res[date]['free']);
-        let freeTime = res[date]['free'];
-        //console.log(freeTime);
-        // tslint:disable-next- line:forin
-        // start processing all the session data
-        for (let sessionID in res[date]) {
-          if (sessionID !== 'free') {
-            let sessionObject = res[date][sessionID];
-            let studentName = sessionObject.name;
-            let sessionStatus = '';
-            if (sessionObject['status']) {
-              sessionStatus = sessionObject.status;
-            }
-            let sessionTime = sessionObject.time;
-            //console.log(sessionTime);
-            for (let sessionSlot of sessionTime) {
-              // console.log(sessionSlot);
-              let startTime1 = this.setTimeFormat(date, sessionSlot);
-              let startTime = moment.utc(startTime1).local().format().slice(0, 19);
-              let endTime = moment(startTime).add(30, 'minutes').format().substr(0, 19);
-              let event = {
-                id: sessionID,
-                title: studentName + ' — ' + sessionStatus,
-                start: startTime,
-                end: endTime,
-                color: '#0099ff'
-              };
-              sessionEvents.push(event);
-              // delete the time from the free time, then the content in freetime will eventually become has no student
-              this.deleteFromArray(freeTime, sessionSlot);
-            }
-          }
-          }
-        // end processing session date
-        // start processing free time excluded the session time
-        for (let free of freeTime) {
-          let startTime2 = this.setTimeFormat(date, free);
-          let startTime = moment.utc(startTime2).local().format().slice(0, 19);
-          let endTime = moment(startTime).add(30, 'minutes').format().substr(0, 19);
-          let event = {
-            title: '',
-            start: startTime,
-            end: endTime,
-            color: '#00ad2b'
-          };
-          freeEvents.push(event);
-        }
-        }
-      }
-    // this.showCalendar();
+  // first1(res) {
+  //   console.log(res);
+  //   let sessionEvents: any = [];
+  //   let freeEvents: any = [];
+  //   // tslint:disable-next-line:forin
+  //   for (let date in res) {
+  //     //console.log(date);
+
+  //     //console.log(res[date]);
+  //     // free property and get free array
+  //     //let freeTime = res[date]['free'];
+  //     let freeTime = res[date];
+  //     //console.log(freeTime);
+  //     // tslint:disable-next- line:forin
+  //     // start processing all the session data
+  //     for (let sessionID in res[date]) {
+  //       //if (sessionID !== 'free') {
+  //         let sessionObject = res[date];
+  //         let studentName = sessionObject.name;
+  //         let sessionStatus = '';
+  //         if (sessionObject['status']) {
+  //           sessionStatus = sessionObject.status;
+  //         }
+  //         let sessionTime = sessionObject.time;
+  //         //console.log(sessionTime);
+  //         for (let sessionSlot of sessionTime) {
+  //           // console.log(sessionSlot);
+  //           let startTime1 = this.setTimeFormat(date, sessionSlot);
+  //           let startTime = moment.utc(startTime1).local().format().slice(0, 19);
+  //           let endTime = moment(startTime).add(30, 'minutes').format().substr(0, 19);
+  //           let event = {
+  //             id: sessionID,
+  //             title: studentName + ' — ' + sessionStatus,
+  //             start: startTime,
+  //             end: endTime,
+  //             color: '#0099ff'
+  //           };
+  //           sessionEvents.push(event);
+  //           // delete the time from the free time, then the content in freetime will eventually become has no student
+  //           this.deleteFromArray(freeTime, sessionSlot);
+  //         }
+
+  //       //}
+  //       // end processing session date
+  //       // start processing free time excluded the session time
+  //       for (let free of freeTime) {
+  //         let startTime2 = this.setTimeFormat(date, free);
+  //         let startTime = moment.utc(startTime2).local().format().slice(0, 19);
+  //         let endTime = moment(startTime).add(30, 'minutes').format().substr(0, 19);
+  //         let event = {
+  //           title: '',
+  //           start: startTime,
+  //           end: endTime,
+  //           color: '#00ad2b'
+  //         };
+  //         freeEvents.push(event);
+  //       }
+  //     }
+  //   }
+  //   // this.showCalendar();
+  //   let a = {
+  //     session: sessionEvents,
+  //     free: freeEvents
+  //   };
+  //   return a;
+  // }
+  //get all the event from the parameter data
+  //freeTimeObj
+  getEvent(freeTimeObj,SessionTimeArr){
+    let freeEvents = this.getFreeEvent(freeTimeObj);
+    let sessionEvents = this.getSessionEvent(SessionTimeArr); 
+    this.ridOfIntersection(freeEvents,sessionEvents);
     let a = {
       session: sessionEvents,
       free: freeEvents
-    };
-    return a;
+    };    
+    return  a;
+  }
+  //get rid of Intersection of free event data and session event data
+  ridOfIntersection(freeEvents,sessionEvents){
+    sessionEvents.forEach(sessionE=>{
+      freeEvents=freeEvents.filter(e=>e.start===sessionE.start);
+    })
+  }
+  getFreeEvent(freeTimeObj) {
+    let freeEvents: any = [];
+    for (let date in freeTimeObj) {
+      freeTimeObj[date].forEach(freeTime => {
+        let startTime2 = this.setTimeFormat(date, freeTime);
+        let startTime = moment.utc(startTime2).local().format().slice(0, 19);
+        let endTime = moment(startTime).add(30, 'minutes').format().substr(0, 19);
+        let event = {
+          title: '',
+          start: startTime,
+          end: endTime,
+          color: '#00ad2b'
+        };
+        freeEvents.push(event);
+      })
     }
+    return freeEvents;
+  }
+  getSessionEvent(SessionTimeArr){
+    let sessionEvents: any = [];
+    SessionTimeArr.forEach(ele => {
+      for (let i=0; i<ele.session_duration/0.5; i++){
+        let sessionDate= moment.utc(ele.session_date).local().format().slice(0, 19);
+        let startTime = moment(sessionDate).add(30*i, 'minutes').format().substr(0, 19);        
+        let endTime = moment(sessionDate).add(30*(i+1), 'minutes').format().substr(0, 19); 
+        let event = {
+          title: ele.learner_id + ' — ' + ele.session_status,
+          start: startTime,
+          end: endTime,
+          color: '#0099ff',
+          id: ele.session_id,          
+        }; 
+        sessionEvents.push(event); 
+      // delete the time from the free time, then the content in freetime will eventually become has no student
+        // this.deleteFromArray(freeTime, sessionSlot);                            
+      }
+    }); 
+    return sessionEvents;
+  }
   // delete an element from array
   deleteFromArray(array: any, element: any) {
     let index = array.indexOf(element);
@@ -125,32 +182,32 @@ export class CalendarSupportService {
   // get one day events, but several weeks(optional)
   getOneDayEvents(start: moment.Moment, end: moment.Moment, chooseWeeks: number) {
     let source = [];
-        let endMinutes = end.hour() * 60 + end.minute();
-        let startMinutes = start.hour() * 60 + start.minute();
-        let timeSlots = (endMinutes - startMinutes) / 30;
-        let sourceIndex = 0;
-        // update weeks
-        for (let j = 0; j < chooseWeeks; j++) {
-          for (let i = 0; i < timeSlots; i++) {
-            // check if already has this event, if not then add to sources
-            let allEvents = $('#calendar').fullCalendar('clientEvents');
-            source[sourceIndex] = {
-              title: '',
-              start: start.format(),
-              end: start.add(30, 'minutes').format(),
-              color: '#00ad2b',
-            };
-            sourceIndex++;
-          }
-          // make start go back to original
-          start.subtract(timeSlots * 30, 'minutes');
-          // go to next week
-          start.add(7, 'days');
-        }
-        // make day to go back to original
-        start.subtract(7 * chooseWeeks, 'days');
-        console.log('y1', source);
-        return source;
+    let endMinutes = end.hour() * 60 + end.minute();
+    let startMinutes = start.hour() * 60 + start.minute();
+    let timeSlots = (endMinutes - startMinutes) / 30;
+    let sourceIndex = 0;
+    // update weeks
+    for (let j = 0; j < chooseWeeks; j++) {
+      for (let i = 0; i < timeSlots; i++) {
+        // check if already has this event, if not then add to sources
+        let allEvents = $('#calendar').fullCalendar('clientEvents');
+        source[sourceIndex] = {
+          title: '',
+          start: start.format(),
+          end: start.add(30, 'minutes').format(),
+          color: '#00ad2b',
+        };
+        sourceIndex++;
+      }
+      // make start go back to original
+      start.subtract(timeSlots * 30, 'minutes');
+      // go to next week
+      start.add(7, 'days');
+    }
+    // make day to go back to original
+    start.subtract(7 * chooseWeeks, 'days');
+    console.log('y1', source);
+    return source;
   }
   // check if alreday has the events
   exist(calendarEvents: any[], newEvent: any) {

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { GeneralService } from '../../../../services/servercalls/general.service';
+import { LearnerService } from '../../../../services/servercalls/learner.service';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { CommonSupportService } from '../../../../services/support/common-support.service';
 import { AlertNotificationService } from '../../../../services/support/alert-notification.service';
@@ -20,10 +21,14 @@ export class OrderConfirmComponentComponent implements OnInit {
   errorMessage:string;
   feerate:number;
   wallet:number;
+  tutorProfile:any;
+  tutorCourses:any;
+  selectedCourseId:string;
 
 
   constructor(
     public searchService: GeneralService,
+    public learnerService: LearnerService,
     private route: ActivatedRoute,
     private commonSupport: CommonSupportService  ,
     private alertservice: AlertNotificationService 
@@ -35,16 +40,18 @@ export class OrderConfirmComponentComponent implements OnInit {
   }
   getFeeRate(){
     //need change get form service, just for test
-    this.feerate= 0.03;
+    this.feerate= 0.29;
   }
   //get tutor data from the service
   getTutorData(id) {
-    this.searchService.findtutorprofile(id).subscribe(
+    
+    this.searchService.showTutor(id).subscribe(
       (res) => { 
         console.log(res);        
         this.setTutorData(res);
-        this.getCourseData(this.id);
+        this.setCourseData();
         this.getFeeRate();
+        this.getWallet();
         this.initOrderData();
       },
       (err) => { 
@@ -55,40 +62,39 @@ export class OrderConfirmComponentComponent implements OnInit {
   }
  //set tutor data to local variable
   setTutorData(res){
-    this.tutor = res['data'].thisTutorInfo;
-    this.tutor['profile_photo'] = this.commonSupport.findUserImg(this.tutor['user_id']) + "?ver=" + this.commonSupport.getTime();    
+    this.tutor = res['tutorKey'];
+    this.tutorProfile = res['tutorProfile'];
+    this.tutorCourses = res['tutorCourses'];
+    this.tutor['profile_photo'] = this.commonSupport.findUserImg(this.tutor['tutor_id']) + "?ver=" + this.commonSupport.getTime();    
   }
-  //get course data from service
-  getCourseData(id){
-    this.courses=[
-      {id:1,quantity:1,description:'1 lesson',price:25,base_price:25},
-      {id:2,quantity:5,description:'5 lessons',price:120,base_price:25},
-      {id:3,quantity:10,description:'10 lessons',price:240,base_price:25},
-      {id:4,quantity:20,description:'20 lessons',price:480,base_price:25},
-      {id:5,quantity:50,description:'50 lessons',price:1200,base_price:25},
-    ];
-    this.courses.map(e=>{
-      e.discount=((1-e.price/(e.base_price*e.quantity))*100).toFixed(2);
-    });
+  //set course data from service
+  setCourseData(){
+    if (this.tutorCourses.length >0){
+      this.tutorCourses[0].checked=true;
+      this.selectedCourseId=this.tutorCourses[0].id;
+    }
   }
-  getwallet(){
+  getWallet(){
     //subscribe
     this.wallet=10.3;
+  }
+  CalculateFee(fee){
+    return  fee*this.feerate+0.3;
   }
   //initial local order data variable, set defaut user choose a single course
   initOrderData(){
     let i=1;
     this.order.push({
       sequence:i,
-      item:this.tutor.first_name+':'+this.courses[0].description,
-      price:this.courses[0].price
+      item:this.tutor.first_name+':'+this.tutorCourses[0].course_description,
+      price:this.tutorCourses[0].course_price*1
     });
     i++
     if (this.feerate!=0){
         this.order.push({
           sequence:i,
           item:'Fee',
-          price:this.courses[0].price*this.feerate
+          price:this.CalculateFee(this.tutorCourses[0].course_price)
         });
      }
      i++;
@@ -102,20 +108,31 @@ export class OrderConfirmComponentComponent implements OnInit {
      this.order.push({
       sequence:'',
       item:'Total',
-      price:this.courses[0].price+this.courses[1].price -this.wallet
+      price:this.order[0].price+this.order[1].price -this.wallet
     });
   }
   //on radio change event, to change order data
   radioChange(event){
     console.log(event);
-    this.order[0].item=this.tutor.first_name+':'+event.value.description;
-    this.order[0].price=event.value.price;
+    this.selectedCourseId=event.value.id;
+    this.order[0].item=this.tutor.first_name+':'+event.value.course_description;
+    this.order[0].price=event.value.course_price;
     if (this.feerate!=0){
-      this.order[1].price=this.courses[0].price*this.feerate;   
-      this.order[2].price=this.courses[0].price+this.courses[1].price;
+      this.order[1].price=this.CalculateFee(this.tutorCourses[0].course_price) ;
+      this.order[2].price=this.tutorCourses[0].course_price+this.tutorCourses[1].price;
     }
   }
   callPayment(){
-    $('#confirmModal').modal('hide')
+    this.learnerService.bookPackageOrder(this.selectedCourseId,this.order[0].price).subscribe(
+      (res) => { 
+        console.log(res);        
+        this.alertservice.sendAlert("Booking successed!", 'SUCCESS', 'toast-top-right', 3000);
+        $('#confirmModal').modal('hide')
+      },
+      (err) => { 
+        console.log(err);        
+        this.errorMessage = "Something went wrong, we can not book at this time." 
+        this.alertservice.sendAlert(this.errorMessage, 'ERROR', 'toast-top-right', 3000);      }
+    )
   }
 }

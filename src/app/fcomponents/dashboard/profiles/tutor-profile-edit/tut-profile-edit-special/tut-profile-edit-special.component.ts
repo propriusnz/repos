@@ -31,12 +31,20 @@ export class TutProfileEditSpecialComponent implements OnInit {
   ngOnInit() {
     this.tutorService.showTutorProfile().subscribe(
       (res)=>{
-        this.tutorprofile = res['dataCon'].tutorProfile
-        let x=res['dataCon'].tutorProfile.sp_ages;    if(x){this.tutorprofile.age = x;}else{this.tutorprofile.age = []}; 
-        let y=res['dataCon'].tutorProfile.sp_test_prep;   if(y){this.tutorprofile.test = y;}else{this.tutorprofile.test = []};
-        let z=res['dataCon'].tutorProfile.sp_lesson_structure;    if(z){this.tutorprofile.lesson=z;}else{this.tutorprofile.lesson = []};
-        let w=res['dataCon'].tutorProfile.sp_course_focus;    if(w){this.tutorprofile.course=w;}else{this.tutorprofile.course = []};
-        console.log(res['dataCon'].tutorProfile);
+        this.tutorprofile = res['tutorProfile']
+        let x=res['tutorProfile'].sp_ages;   
+           if(x)  {this.tutorprofile.age = x;}
+           else {this.tutorprofile.age = []}; 
+        let y=res['tutorProfile'].sp_test_prep;   
+          if(y){this.tutorprofile.test = y;}
+          else{this.tutorprofile.test = []};
+        let z=res['tutorProfile'].sp_lesson_structure;    
+          if(z){this.tutorprofile.lesson=z;}
+          else{this.tutorprofile.lesson = []};
+        let w=res['tutorProfile'].sp_course_focus;    
+          if(w){this.tutorprofile.course=w;}
+          else{this.tutorprofile.course = []};
+        console.log(res['tutorProfile']);
         console.log(this.tutorprofile);
         this.BuildForm();
         this.form();

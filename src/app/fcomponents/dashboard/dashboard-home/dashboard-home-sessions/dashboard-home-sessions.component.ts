@@ -296,9 +296,7 @@ export class DashboardHomeSessionsComponent implements OnInit {
     this.tutorService.showTutorSchedules().subscribe(
       (res) => {
         // this.locations = res['data'].thisTutorProfile.teaching_locations;
-        let data = res['dataCon'].tutorSchedule;
-        console.log(data);
-        let eventContainer = this.calendarService.first(data);
+        let eventContainer = this.calendarService.getEvent(res['tutorFreeTime'],res['tutorSessions']);
         console.log(eventContainer);
         this.calendarEvents = eventContainer.free;
         // only after get schedules data, then show the edit button
@@ -347,9 +345,9 @@ export class DashboardHomeSessionsComponent implements OnInit {
         (res) => {
           console.log(res);
           let loc = res['dataCon'].tutorProfile.teaching_locations;
-          let data = res['dataCon'].tutorSchedule;
+          
           // store the free events into 'freeEvents' variable
-          let eventContainer = this.calendarService.first(data);
+          let eventContainer = this.calendarService.getEvent(res['tutorFreeTime'],res['tutorSessions']);
           let free = eventContainer.free;
           let freeObj = {};
           freeObj[tutorID] = free;

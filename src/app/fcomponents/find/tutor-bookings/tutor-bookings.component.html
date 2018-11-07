@@ -82,12 +82,12 @@
                 </div>
 
                 <div class="float-right">
-                  <span *ngIf="session.s_duration>=2">${{session.s_duration*tutorPrice[1]}}
+                  <span *ngIf="session.s_duration>=2">${{session.s_duration*tutorPrice[0]}}
                   </span>
                   <span *ngIf="session.s_duration<2">${{session.s_duration*tutorPrice[0]}}</span>
                 </div>
 
-                <span *ngIf="session.s_duration>=2" style="position: relative; top:4px; float: right;font-size: 12px; font-style: italic; color:#6ccc84;">saved ${{session.s_duration*(tutorPrice[0]-tutorPrice[1])}}</span>
+                <span *ngIf="session.s_duration>=2" style="position: relative; top:4px; float: right;font-size: 12px; font-style: italic; color:#6ccc84;">saved ${{session.s_duration*(tutorPrice[0]-tutorPrice[0])}}</span>
               </div>
             </div>
           </div>

@@ -40,7 +40,7 @@ export class TutorScheduleShowComponent implements OnInit {
     // console.log($(this.window).width());
     this.tutorService.showTutorSchedules().subscribe(
       (res) => {
-        let events = this.calendarService.first(res['dataCon'].tutorSchedule);
+        let events = this.calendarService.getEvent(res['tutorFreeTime'],res['tutorSessions']);
         this.sessionEvents = events['session'];
         this.freeEvents = events['free'];
         console.log(this.sessionEvents);
