@@ -36,9 +36,10 @@
   margin-bottom: 0.8rem;
 }
 
+/* 
 #pay-head > h5 {
 
-}
+} */
 
 #pay-logo {
   height: 75%;
@@ -90,9 +91,9 @@
   font-weight: 400;
 }
 
-.success {
-  /* margin-top: */
-}
+/* .success {
+  margin-top: 
+} */
 
 .success-icon, .success-content {
   text-align: center;

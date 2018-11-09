@@ -8,45 +8,60 @@
             <tr id="card-tb-head">
               <th>Card Type</th>
               <th>Card Number</th>
-              <th>Operation</th>              
+              <th></th>
             </tr>
 
             <tr *ngFor="let userBasicInfo of userpaymentMethods" id="card-tb-body">
-              <td *ngIf="userBasicInfo.card_brand == 'Visa'">
+              <td *ngIf="userBasicInfo.brand == 'Visa'">
                 <i class="fab fa-cc-visa"></i>
               </td>
-              <td *ngIf="userBasicInfo.card_brand == 'Master'">
+              <td *ngIf="userBasicInfo.brand == 'Master'">
                 <i class="fab fa-cc-mastercard"></i>
               </td>
-              <td *ngIf="userBasicInfo.card_brand == 'Jcb'">
+              <td *ngIf="userBasicInfo.brand == 'Jcb'">
                 <i class="fab fa-cc-jcb"></i>
               </td>
-              <td *ngIf="userBasicInfo.card_brand == 'Discover'">
+              <td *ngIf="userBasicInfo.brand == 'Discover'">
                 <i class="fab fa-cc-discover"></i>
               </td>
-              <td *ngIf="userBasicInfo.card_brand == 'Amex'">
+              <td *ngIf="userBasicInfo.brand == 'Amex'">
                 <i class="fab fa-cc-amex"></i>
               </td>
-              <td>****{{userBasicInfo.card_last_four}}</td>
+              <td>****{{userBasicInfo.last4}}</td>
               <td>
-                  <button type="button" class="btn btn-primary btn-sm mr-2" (click)="modifyPaymentCard(2)">Change Card</button>
-                  <button type="button" class="btn btn-danger btn-sm mx-2" (click)="deletePaymentCard()">Delete Card</button>
-              </td>              
+                <button type="button" class="btn btn-primary btn-sm mr-2" (click)="modifyPaymentCard(1)">Change Card</button>
+                <!-- <button type="button" class="btn btn-danger btn-sm mx-2" (click)="deletePaymentCard()">Delete Card</button> -->
+              </td>
             </tr>
 
           </table>
         </div>
-        <div *ngIf="errorObj.hasError" class="alert alert-danger" role="alert">
-          {{errorObj.errMsg}}
-         </div>
-        <div class="col-12 my-2">
+       
+        <!--         <div class="col-12 my-2">
           <button type="button" class="btn btn-primary btn-sm mr-2" (click)="modifyPaymentCard(1)">Add Card</button>
         </div>
+ -->
       </div>
     </div>
   </div>
+
+  <div *ngIf="errorObj.hasError" class="alert alert-danger" role="alert">
+      {{errorObj.errMsg}}
+  </div>
+
   <div *ngIf="!hasPaymentInfo">
     <p>You haven't provide your payment information. Click <a id="show-a" (click)="modifyPaymentCard(1)">Here</a> to
       setup.</p>
+  </div>
+
+  <div class="row">
+    <div class="d-flex align-items-center col-12 my-2">
+      <div style='display:inline-block;margin-left:30px' >
+        <i class="fab fa-2x fa-cc-visa" style='margin-left:5px'></i>
+        <i class="fab fa-2x fa-cc-mastercard" style='margin-left:5px'></i>
+        <i class="fab fa-2x fa-cc-jcb" style='margin-left:5px'></i>
+        <i class="fab fa-2x fa-cc-discover" style='margin-left:5px'></i>
+        <i class="fab fa-2x fa-cc-amex" style='margin-left:5px'></i>
+    </div>
   </div>
 </div>

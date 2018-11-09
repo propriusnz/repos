@@ -11,6 +11,7 @@ import { ToastrComponent } from '../fcomponents/basic/toastr/toastr.component';
 import { SideHelperComponent } from '../fcomponents/basic/side-helper/side-helper.component';
 import { ApplicantTutorComponent } from '../fcomponents/jobs/applicant-tutor-manager/applicant-tutor.component';
 import { UserPaymentInfoComponent } from '../fcomponents/user-details/user-payment-info/user-payment-info.component';
+import { TutorBookingsComponent } from '../fcomponents/find/tutor-bookings/tutor-bookings.component';
 
 
 
@@ -34,14 +35,16 @@ import { UserPaymentInfoComponent } from '../fcomponents/user-details/user-payme
         SideHelperComponent,
         ApplicantTutorComponent,
         ToastrComponent,
-        UserPaymentInfoComponent
+        UserPaymentInfoComponent,
+        TutorBookingsComponent
      ],
     exports: [
         PaginationComponent,
         SideHelperComponent,
         ApplicantTutorComponent,
         ToastrComponent,
-        UserPaymentInfoComponent
+        UserPaymentInfoComponent,
+        TutorBookingsComponent
       ],
     entryComponents: [ToastrComponent]
  })

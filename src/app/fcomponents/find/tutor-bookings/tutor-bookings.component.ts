@@ -52,6 +52,8 @@ export class TutorBookingsComponent implements OnInit {
   tutorProfileId: string;
   startTime = [];
   preDate: any; // when user click via book popover
+  urlFrom:number;// 0: url from book, user schedule and book, 1:url from order, user has booked order, specificed order to schedule.
+  orderId:string; //
   session = {
     date_time: '',
     duration: 0,
@@ -86,6 +88,7 @@ export class TutorBookingsComponent implements OnInit {
     console.log(moment.utc().format());
     this.route.params.subscribe(params => {
       this.tutorProfileId = params['id'];
+      this.urlFrom = this.getUrlFrom(this.route);
     });
     this.route.queryParams.subscribe(params => {
       this.preDate = params['dTime'];
@@ -94,7 +97,16 @@ export class TutorBookingsComponent implements OnInit {
     this.getTutorData();
     this.addLessonPop();
     this.deleLessonPop();
-
+  }
+  getUrlFrom(route){
+    if (route.url.value[0].path==='find-tutor')
+      return 0;
+    else if (route.url.value[0].path==='schedule'){
+      this.orderId = this.route.params['value'].orderid;
+      return 1;
+    }
+    else 
+      return 0;
   }
   // check if the user is verified or not
   isVerified() {
@@ -415,6 +427,14 @@ export class TutorBookingsComponent implements OnInit {
     console.log(this.sessions, this.billNum, this.savedBillNum);
   }
   // when user click checkout button to submit
+  confirm(){
+    if (this.urlFrom===0){
+      this.checkOut()
+    }
+    else{
+      this.sendSchedule();
+    }
+  }
   checkOut() {
     console.log(this.sessions);
     // check if the userId equel the tutorId first
@@ -462,19 +482,40 @@ export class TutorBookingsComponent implements OnInit {
         (res) => {
           this.updateCalendar();
           console.log(res);
-          this.feedback = 'Your lessons has been updated successfully!';
+          this.feedback = 'Your lessons has been booked successfully!';
           console.log(this.newArray);
           // reset the session and newarray and bill box to be empty
           this.newArray = [];
           this.sessions = [];
           this.setBill();
-
         },
         (error) => {
-          this.feedback = 'Error occurred!';
+          this.feedback = 'Server or network error occurred, please try again or contact the administrator!';
           console.log(error);
         }
       );
+  }
+  // send the scheduling to server
+  sendSchedule(){
+    //storeSchedulingSessions(orderId ,scheduling){
+    //add learner id info into the array for temporary
+    this.sessions.map(e=>e.learner_id=this.userId);      
+    this.learnerService.storeSchedulingSessions(this.orderId, this.sessions).subscribe(
+      (res) => {
+        this.updateCalendar();
+        console.log(res);
+        this.feedback = 'Your lessons has been scheduled successfully!';
+        console.log(this.newArray);
+        // reset the session and newarray and bill box to be empty
+        this.newArray = [];
+        this.sessions = [];
+        this.setBill();
+      },
+      (error) => {
+        this.feedback = 'Error occurred!';
+        console.log(error);
+      }
+    );
   }
   // display payment dialog
   displayPaymentDialog(extraObject: object) {
@@ -579,8 +620,8 @@ export class TutorBookingsComponent implements OnInit {
         right: 'today'
       },
       themeSystem: 'bootstrap3',
-      //height: 'parent',
-      height: 'auto', aspectRation: 1.35,
+      height: 'parent',
+      //height: 'auto', aspectRation: 1.35,
       defaultView: 'agendaWeek',
       firstDay: today,
       events: myevents,

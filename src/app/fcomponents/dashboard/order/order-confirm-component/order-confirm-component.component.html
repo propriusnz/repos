@@ -120,8 +120,7 @@
               </tr>
             </tbody>
           </table>
-          <button type="button" class="btn btn-primary btn-sm mr-2" data-toggle="modal" data-target="#confirmModal">Check
-            Out</button>
+          <button type="button" class="btn btn-primary btn-sm mr-2" (click)="checkOut()">Check Out</button>
         </div>
       </div>
     </div>
@@ -129,12 +128,12 @@
 </div>
 
 
-<!-- Modal -->
-<div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<!-- Modal for confirm-->
+<div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="confirmModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Comfirm payment</h5>
+        <h5 class="modal-title" id="confirmModalLabel">Comfirm payment</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -149,3 +148,23 @@
     </div>
   </div>
 </div>
+<!-- Modal for success-->
+  <div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="successModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="successModalLabel">Booking successed</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            Do you want to schedule your lessions now?
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary  btn-sm mr-2" (click)="goMyOrder()">Next Time</button>
+            <button type="button" class="btn btn-primary  btn-sm mr-2" (click)="goSchedule()">Yes</button>
+          </div>
+        </div>
+      </div>
+    </div>

@@ -35,21 +35,21 @@ export class RepositoryService {
     private tutorService: TutorService,
     private learnerService: LearnerService
   ) {
-    if (isPlatformBrowser(this.platformId)) {
-      this.isBrowser = true;
-    }
+      if (isPlatformBrowser(this.platformId)) {
+        this.isBrowser = true;
+      }
 
-    this.uR = this.authService.getUserRole();
-    if (this.isBrowser) {
-      this.userSpData();
-      this.sessionUserData();
-    }
+      this.uR = this.authService.getUserRole();
+      if (this.isBrowser) {
+        this.userSpData();
+        this.sessionUserData();
+      }
 
-    this.applicantInfo = this.applicantData.asObservable();
-    this.userInfo = this.userData.asObservable();
-    this.tutorInfo = this.tutorData.asObservable();
-    this.learnerInfo = this.learnerData.asObservable();
-    this.thisUserPosts = this.userPostsData.asObservable();
+      this.applicantInfo = this.applicantData.asObservable();
+      this.userInfo = this.userData.asObservable();
+      this.tutorInfo = this.tutorData.asObservable();
+      this.learnerInfo = this.learnerData.asObservable();
+      this.thisUserPosts = this.userPostsData.asObservable();
    }
    userSpData() {
     if (this.uR === 1) {
@@ -97,8 +97,13 @@ export class RepositoryService {
    sessionTutorData() {
     // this.currentTutorData();
     if (this.isBrowser) {
-      let tInfo = JSON.parse(sessionStorage.getItem('lsaSpTutorInfo'));
-      let tProf = JSON.parse(sessionStorage.getItem('lsaSpTutorProfile'));
+      let tInfo,tProf
+      let TutorInfo = sessionStorage.getItem('lsaSpTutorInfo');
+      let TutorProfile = sessionStorage.getItem('lsaSpTutorProfile');
+      if (!TutorInfo || !TutorProfile) {      
+        tInfo = JSON.parse(TutorInfo);
+        tProf = JSON.parse(TutorProfile);
+      }
       if (!tInfo || !tProf) {
         this.currentTutorData();
       } else {

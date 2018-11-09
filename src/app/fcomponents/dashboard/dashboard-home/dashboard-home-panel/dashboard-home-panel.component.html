@@ -69,8 +69,9 @@
         <div class="card-header m2">My Lessons</div>
         <div class="card-body">
           <div *ngIf="!sessions" class="s3Blue">You have no sessions yet.</div>
+          <!--  //becasue of some error comment whole messager component 
           <app-dashboard-home-sessions (s_indicatorEvent)='receiveMessage($event)' [locations]='tutorInfo.teaching_locations' *ngIf='uRole === 3'></app-dashboard-home-sessions>
-          <app-dashboard-home-sessions (s_indicatorEvent)='receiveMessage($event)' *ngIf='uRole === 1 || uRole === 2'></app-dashboard-home-sessions>
+          <app-dashboard-home-sessions (s_indicatorEvent)='receiveMessage($event)' *ngIf='uRole === 1 || uRole === 2'></app-dashboard-home-sessions> -->
         </div>
       </div>
     </div>

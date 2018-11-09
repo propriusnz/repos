@@ -209,7 +209,7 @@ export const MY_FORMATS = {
     UserDetailsPanelComponent,
 
     ExternalLoadComponent,
-    TutorBookingsComponent,
+    //TutorBookingsComponent,
     UserTransactionsComponent,
     ImageEditorDialogComponent,
     StripePaymentComponent,

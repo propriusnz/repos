@@ -150,7 +150,7 @@ export class ProfileHelperService {
       this.gen.push({destination:"/app/dashboard/tutor/editprofile/cv", main:"Add a favorite quote",icon:"<i class='fas fa-quote-right'></i>"})
     }
     if(!data.profile_photo){
-      this.gen.push({destination:"/app/dashboard/tutor/editprofile", main:"Add a photo",icon:"<i class='fas fa-camera-retro'></i>"})
+      this.gen.push({destination:"/app/dashboard/tutor/editprofile/key", main:"Add a photo",icon:"<i class='fas fa-camera-retro'></i>"})
     }    
     this.genU=this.gen.slice(1,5)
     this.helper.next(this.genU)

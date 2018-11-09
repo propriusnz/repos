@@ -59,10 +59,11 @@ export class DashboardHomePanelComponent implements OnInit, OnDestroy {
   dataInit() {
     this.repositoryService.currentUserData();
     this.userRepositoryService = this.repositoryService.userInfo.subscribe(
-      (res) => {// console.log(res);
+      (res) => {
+        console.log(res);
         if (res.hasOwnProperty("user_id")) {
           this.userInfo = res;
-          if (this.userInfo['user_profile_photo']) {
+          if (this.userInfo['user_id']) {
             let ver = new Date().getTime();
             // console.log("timestamp for ver is: " + ver);
             // console.log(this.baseImgUrl + this.userInfo['user_profile_photo']);

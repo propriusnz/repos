@@ -14,6 +14,7 @@ import { LearnerTutorsPanelComponent } from './learner-tutors/learner-tutors-pan
 import { ViewAllSessionDialogComponent } from './dashboard-dialogs/view-all-session-dialog/view-all-session-dialog.component'; //learner
 import { OrderConfirmComponentComponent } from './order/order-confirm-component/order-confirm-component.component';//learner
 import { LessonOrderComponent } from './order/lesson-order/lesson-order.component'
+import { TutorBookingsComponent } from '../find/tutor-bookings/tutor-bookings.component'
 
 const routes: Routes = [
     /*{ path: 'discussions/:id', component: DiscussionComponent },
@@ -24,6 +25,7 @@ const routes: Routes = [
     { path: 'profile', component: LearnerProfileEditComponent },
     { path: 'myorders', component: LessonOrderComponent },     
     { path: 'order/:id', component: OrderConfirmComponentComponent }, 
+    { path: 'schedule/:orderid/:id', component: TutorBookingsComponent }, 
     ];
 
 @NgModule({

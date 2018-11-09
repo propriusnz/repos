@@ -26,20 +26,25 @@ export class UserPaymentInfoComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.getData();
+  }
+  getData(){
     this.paymentService.Userpaymethod().subscribe(
       result => {
         console.log(result);        
-        this.userpaymentMethods = result['paymentMethods'];
+        if (result['userPaymentInfo'].length===0) return ;
+        //only display the default card
+        this.userpaymentMethods = result['userPaymentInfo'].filter(element=>element.default===1);
         if (this.userpaymentMethods.length>=1)
           this.hasPaymentInfo = true;
       },
       error => {
         console.log(error);        
-        this.errorObj = {hasError:true,errMsg:'Server or Network error occurred ,please try again or contact the administrator'};
+        this.errorObj = {hasError:true, errMsg:'Server or Network error occurred ,please try again or contact the administrator'};
+        console.log(this.errorObj );                
       }
     );
   }
-
   // modify payment card, paremeter:type,1 'save', 2 'change'
   modifyPaymentCard(type) {
     console.log("Modify Card");
@@ -62,6 +67,7 @@ export class UserPaymentInfoComponent implements OnInit {
         extraObject: extraObject
       }
     });
+    this.getData();    
   }
 
   // delete card

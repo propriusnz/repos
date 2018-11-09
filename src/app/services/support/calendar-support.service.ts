@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import * as moment from 'moment';
+import { nextTick } from 'q';
 
 @Injectable({
   providedIn: 'root'
@@ -78,22 +79,24 @@ export class CalendarSupportService {
   getEvent(freeTimeObj,SessionTimeArr){
     let freeEvents = this.getFreeEvent(freeTimeObj);
     let sessionEvents = this.getSessionEvent(SessionTimeArr); 
-    this.ridOfIntersection(freeEvents,sessionEvents);
+    let afterRidfreeEvents = this.ridOfIntersection(freeEvents,sessionEvents);
     let a = {
       session: sessionEvents,
-      free: freeEvents
+      free: afterRidfreeEvents
     };    
     return  a;
   }
   //get rid of Intersection of free event data and session event data
   ridOfIntersection(freeEvents,sessionEvents){
     sessionEvents.forEach(sessionE=>{
-      freeEvents=freeEvents.filter(e=>e.start===sessionE.start);
+      freeEvents=freeEvents.filter(e=>e.start!=sessionE.start);
     })
+    return freeEvents;
   }
   getFreeEvent(freeTimeObj) {
     let freeEvents: any = [];
     for (let date in freeTimeObj) {
+      if (freeTimeObj[date]===null) continue;
       freeTimeObj[date].forEach(freeTime => {
         let startTime2 = this.setTimeFormat(date, freeTime);
         let startTime = moment.utc(startTime2).local().format().slice(0, 19);

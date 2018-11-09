@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-
+import { MatInputModule } from '@angular/material';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { JobsRoutingModule } from './jobs-routing.module';
@@ -28,7 +28,8 @@ import {MatDialogModule} from '@angular/material/dialog';
     FormsModule, ReactiveFormsModule,
     MatDatepickerModule,
     MatFormFieldModule,
-    MatDialogModule
+    MatDialogModule,
+    MatInputModule,
    ],
   declarations: [
     //ApplicantTutorComponent,

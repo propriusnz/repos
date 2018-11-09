@@ -57,6 +57,9 @@ export class LearnerService {
 //    users/(user)/products/(tutor)/flatorder/(price)
     return this.http.post(this.baseUrl + '/users/' + this.id + '/products/' + tutorId + '/flatorder/'+billAmount, bookings[0], { headers: this.headers1 });
   }
+  storeSchedulingSessions(orderId, scheduling){
+    return this.http.post(this.baseUrl + '/learners/' + this.id + '/orders/' + orderId + '/session', scheduling, { headers: this.headers1 });
+  }
 
   updateLearnerSessions(objects) {
     return this.http.put(this.baseUrl + '/learnersessions/' + this.id, objects, { headers: this.headers1 });
