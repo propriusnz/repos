@@ -41,7 +41,6 @@ export class FindMainComponent implements OnInit {
       "ratingValue": "4.8",
       "reviewCount": "2538"
     },
-    "priceRange": "25$/hr to 40$/hr",
     'description' : "best tutor in wellington.",
     'productId' : '1004'
   };

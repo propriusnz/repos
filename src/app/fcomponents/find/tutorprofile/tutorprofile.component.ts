@@ -47,7 +47,6 @@ export class TutorprofileComponent implements OnInit {
       "ratingValue": "4.8",
       "reviewCount": "538"
     },
-    "priceRange": "25$/hr to 40$/hr",
     'description' : "good tutor.",
     'productId' : '1004'
   };

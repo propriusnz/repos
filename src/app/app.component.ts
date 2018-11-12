@@ -30,7 +30,6 @@ export class AppComponent {
       "ratingValue": "4.8",
       "reviewCount": "5438"
     },
-    "priceRange": "25$/hr to 40$/hr",
     'description' : "good tutor.",
     'productId' : '1004'
   };  
