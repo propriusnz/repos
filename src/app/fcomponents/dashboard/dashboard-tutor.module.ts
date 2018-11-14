@@ -13,6 +13,7 @@ import { TutProfileEditPanelComponent } from './profiles/tutor-profile-edit/tut-
 import { TutProfileEditKeyComponent } from './profiles/tutor-profile-edit/tut-profile-edit-key/tut-profile-edit-key.component';//tutor
 import { TutProfileEditCvComponent } from './profiles/tutor-profile-edit/tut-profile-edit-cv/tut-profile-edit-cv.component';//tutor
 import { TutProfileEditSpecialComponent } from './profiles/tutor-profile-edit/tut-profile-edit-special/tut-profile-edit-special.component';//tutor
+import { TutProfileCoursesComponent } from './profiles/tutor-profile-edit/tut-profile-courses/tut-profile-courses.component';
 import { VideoUploadHelpComponentComponent } from './profiles/tutor-profile-edit/tut-profile-edit-key/video-upload-help-component/video-upload-help-component.component';
 
 import { MatDialogModule, MatCardModule, MatDatepickerModule, MatFormFieldModule, MatInputModule, MatCheckboxModule, MatAutocompleteModule, MatBadgeModule, MatBottomSheetModule, MatButtonModule, MatButtonToggleModule, MatChipsModule, MatDividerModule, MatExpansionModule, MatGridListModule, MatIconModule, MatListModule, MatMenuModule, MatProgressBarModule, MatProgressSpinnerModule, MatRadioModule, MatRippleModule, MatSelectModule, MatSidenavModule, MatSliderModule, MatSlideToggleModule, MatSnackBarModule, MatSortModule, MatTableModule, MatTabsModule, MatToolbarModule, MatTooltipModule, MatTreeModule, MatNativeDateModule, DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material';
@@ -48,9 +49,10 @@ import {TagInputModule} from 'ngx-chips';
     TutProfileEditPanelComponent,
     TutProfileEditKeyComponent,
     TutProfileEditCvComponent,
+    TutProfileCoursesComponent,
     TutProfileEditSpecialComponent,
     VideoUploadHelpComponentComponent,
-    //FillBlankComponent
+     //FillBlankComponent
     
   ],
   entryComponents: [

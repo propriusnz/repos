@@ -102,6 +102,7 @@ export class TutorScheduleShowComponent implements OnInit {
       // defaultView: 'agendaThreeDay',
       aspectRatio: 1.09,
       navLinks: true,
+      contentHeight:"auto",
       eventSources: [fcSources.events1, fcSources.events2],
       eventColor: '#0099FF',
       displayEventTime: false,

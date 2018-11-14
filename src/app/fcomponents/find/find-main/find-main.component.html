@@ -23,7 +23,9 @@
     <input class="btn btn-info" type="submit" value="Search">
   </form>
 </div>
-
+<div *ngIf="loadingFlag" class="col-md-12">
+  <div class="loader"></div>
+</div>
 <div *ngIf="tutors;else noTutors">
   <div *ngIf="tutors.length>0;else noTutors">
     <div *ngFor="let tutor of tutors" class="card template">

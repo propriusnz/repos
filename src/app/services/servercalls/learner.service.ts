@@ -72,9 +72,14 @@ export class LearnerService {
     return this.http.get(this.baseUrl + '/learners/' + this.id + '/sessions?' + 'start=' + searchValue[0] + '&end=' + searchValue[1], { headers: this.headers1 });
   }
   
-  updateLearnerSessionStatus(sessionId, sessionValues) {
+  LearnerCancelSession(sessionId, reason) {
     // tslint:disable-next-line:max-line-length
-    return this.http.post(this.baseUrl + '/learners/' + this.id + '/sessions/' + sessionId + '/status', sessionValues, { headers: this.headers1 });
+    return this.http.post(this.baseUrl + '/learners/' + this.id + '/sessions/' + sessionId + '/cancel', reason, { headers: this.headers1 });
+  }
+
+  updateLearnerSessionStatus(sessionId, reason) {
+    // tslint:disable-next-line:max-line-length
+    return this.http.post(this.baseUrl + '/learners/' + this.id + '/sessions/' + sessionId + '/cancel', reason, { headers: this.headers1 });
   }
 
   updateLearnerSessionTimelocation(sessionId, sessionValues) {

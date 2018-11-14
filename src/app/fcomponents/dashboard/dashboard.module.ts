@@ -39,8 +39,8 @@ import { ResourceSummaryComponent} from '../dashboard/resources-homework/resourc
 
 import { ShowResourceComponent} from '../dashboard/resources-homework/show-resource/show-resource.component' //all
 import { ResourcesQuestionShowComponent} from '../dashboard/resources-homework/show-resource/question/resources-question-show/resources-question-show.component' //all
-
-
+import { LearnerSessionRatingDialogComponent } from './dashboard-dialogs/learner-session-rating-dialog/learner-session-rating-dialog.component';
+import { StarRatingModule } from 'angular-star-rating';
 
 import {TagInputModule} from 'ngx-chips';
 
@@ -50,7 +50,7 @@ import {TagInputModule} from 'ngx-chips';
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-
+    StarRatingModule,
     DashboardRoutingModule,
     TagInputModule,
     MatDialogModule,
@@ -94,7 +94,7 @@ import {TagInputModule} from 'ngx-chips';
     FinishQuizComponent,
     ShowResourceComponent,
     ResourcesQuestionShowComponent,
-
+    LearnerSessionRatingDialogComponent 
   ],
   entryComponents: [
     CancelSessionDialogComponent,
@@ -102,7 +102,7 @@ import {TagInputModule} from 'ngx-chips';
     SessionEditDialogComponent,
     ReportSessionIssueDialogComponent,
     FinishQuizComponent,
-
+    LearnerSessionRatingDialogComponent, 
   ],
   providers: [
   

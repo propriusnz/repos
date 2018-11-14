@@ -25,6 +25,10 @@ export class GeneralService {
   showTutor(id:string){
     return this.http.get(this.baseUrl+'/findtutorprofile/'+id);
   }
+  showTutorSession(tutorId:string){
+    return this.http.get(this.baseUrl+'/tutors/'+tutorId+'/sessions');
+  }
+
   //new showTutor
   findtutorprofile(id:string){
     return this.http.get(this.baseUrl+'/findtutorprofile/'+id);

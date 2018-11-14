@@ -30,25 +30,25 @@ export class TutorReportDialogComponent implements OnInit {
   }
   save() {
     console.log(this.reportForm.value);
-    let reportData = {  comment:'' };
+    let reportData = {  tutor_report:'' };
     let checkboxes = this.elem.nativeElement.querySelectorAll('input[type="checkbox"]');
     let checkedOne = Array.prototype.slice.call(checkboxes).some(x => x.checked);
     if(checkedOne){
       for(let x of this.agIndex){
         console.log(x);
         if(this.reportForm.value[x]){
-          if(reportData.comment===''){
-            reportData.comment = reportData.comment + x;
+          if(reportData.tutor_report===''){
+            reportData.tutor_report = reportData.tutor_report + x;
           }else{
-            reportData.comment = reportData.comment +','+x;
+            reportData.tutor_report = reportData.tutor_report +','+x;
           };
         }
       }
       if(this.reportForm.value['comment']!==''){
-        reportData.comment = reportData.comment+','+this.reportForm.value['comment'];
+        reportData.tutor_report = reportData.tutor_report+','+this.reportForm.value['comment'];
       };
       console.log(reportData);
-      this.dialogRef.close();
+      this.dialogRef.close(reportData);
     }else{
       console.log('no');
     }

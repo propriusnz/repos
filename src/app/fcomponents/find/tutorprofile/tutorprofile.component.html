@@ -1,5 +1,8 @@
 <div class="container">
   <div class="row">
+    <div *ngIf="loadingFlag" class="col-xl-8 col-lg-8 col-md-12">
+      <div class="loader"></div>
+    </div>
     <div class="col-xl-8 col-lg-8 col-md-12">
       <div *ngIf="tutor" class="card">
         <div *ngIf="tutor.profile_video" class="embed-responsive embed-responsive-16by9">
@@ -94,7 +97,7 @@
       <div class="card" id="calendar1">
         <div class="card-header  m1" style="border-bottom:0px">Schedule</div>
         <div class="card-body">
-          <div id="calendar" style="height:500px;"></div>
+          <div id="calendar"></div>
         </div>
       </div>
     </div>

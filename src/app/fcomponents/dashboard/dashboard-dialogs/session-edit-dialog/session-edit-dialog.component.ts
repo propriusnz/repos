@@ -218,6 +218,7 @@ export class SessionEditDialogComponent implements OnInit {
       },
       themeSystem: 'bootstrap3',
       height: 'parent',
+      contentHeight:"auto",
       // defaultView: 'agendaWeek',
       defaultView: $(this.window).width() < 576 ? 'agendaThreeDay' : 'agendaWeek',
       firstDay: today,

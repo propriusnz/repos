@@ -60,6 +60,11 @@ export class TutorService {
   indexTutorSessions(searchValue) {
     return this.http.get(this.baseUrl + '/tutors/' + this.id + '/sessions?' + 'start=' + searchValue[0] + '&end=' + searchValue[1], { headers: this.headers1 });
   }
+  tutorCancelSession(sessionId, reason) {
+    // tslint:disable-next-line:max-line-length
+    return this.http.post(this.baseUrl + '/tutors/' + this.id + '/sessions/' + sessionId + '/cancel', reason, { headers: this.headers1 });
+  }
+
   updateTutorSessionStatus(sessionId, sessionValues) {
     // tslint:disable-next-line:max-line-length
     return this.http.post(this.baseUrl + '/tutors/' + this.id + '/sessions/' + sessionId + '/status', sessionValues, { headers: this.headers1 });
@@ -69,9 +74,10 @@ export class TutorService {
     // tslint:disable-next-line:max-line-length
     return this.http.post(this.baseUrl + '/tutors/' + this.id + '/sessions/' + sessionId + '/timelocation', sessionValues, { headers: this.headers1 });
   }
+  //sessionValues including object{tutor_report:''} and tutor_report must more than charactor
   storeTutorSessionReport(sessionId, sessionValues) {
     // tslint:disable-next-line:max-line-length
-    return this.http.post(this.baseUrl + '/tutors/' + this.id + '/sessions/' + sessionId + '/report', sessionValues, { headers: this.headers1 });
+    return this.http.post(this.baseUrl + '/tutors/' + this.id + '/sessions/' + sessionId + '/complete', sessionValues, { headers: this.headers1 });
   }
 
   // ** update tutor posts ** //
@@ -102,6 +108,13 @@ export class TutorService {
 
   updateTutorResource(hwId, hwInfo) {
     return this.http.post(this.baseUrl + '/tutors/' + this.id + '/resources/' + hwId, hwInfo, { headers: this.headers1 });
+  }
+ // Tutor himself's courses,tutors/1/courses?type=0
+  showTutorCourses() {
+    return this.http.get(this.baseUrl + '/tutors/' + this.id+'/courses?type=0', { headers: this.headers1 })
+  }
+  showAllCourses() {
+    return this.http.get(this.baseUrl + '/tutors/' + this.id+'/courses?type=1', { headers: this.headers1 })
   }
 
 

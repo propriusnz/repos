@@ -21,7 +21,8 @@ export class FindMainComponent implements OnInit {
   discipline: string;
   location = this.default_location;
   f: string;
-  isBrowser = false
+  isBrowser = false;
+  loadingFlag = false;
 
   baseImgUrl = environment.baseImgUrl + '/tutorimg/';
 
@@ -110,8 +111,10 @@ export class FindMainComponent implements OnInit {
   }
   searchTutor(f, e) {
     console.log(this.discipline, this.location)
+    this.loadingFlag=true;
     this.searchService.indexTutors([this.discipline, this.location]).subscribe(
       (data) => {
+        this.loadingFlag=false;
         this.dataLoop(data);
         if (this.currentPage == 0) {
           this.currentPage = data['current_page'];
@@ -130,7 +133,7 @@ export class FindMainComponent implements OnInit {
           this.currentPage = data['current_page'];
         }
       },
-      (error) => { this.searchInfo = "Something went wrong. We'll be fixing it right away . . " }
+      (error) => { this.loadingFlag=false;  this.searchInfo = "Something went wrong. We'll be fixing it right away . . " }
     )
   }
 

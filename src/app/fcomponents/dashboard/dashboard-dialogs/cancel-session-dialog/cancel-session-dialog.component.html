@@ -33,18 +33,36 @@
     </div>
     <div class="card-body">
         <div class="form-group">
-          <div class="custom-control custom-checkbox">
-            <input type="checkbox" class="custom-control-input" id="customCheck1" name="tick_comment" value="Teacher no good">
-            <label class="custom-control-label" for="customCheck1">Teacher no good</label>
+          <div *ngIf="role!=3; else tutor_input">
+            <div class="custom-control custom-checkbox">
+              <input type="checkbox" class="custom-control-input" id="customCheck1" name="tick_comment" value="Sick">
+              <label class="custom-control-label" for="customCheck1">Learner is sick</label>
+            </div>
+            <div class="custom-control custom-checkbox">
+              <input type="checkbox" class="custom-control-input" id="customCheck2" name="tick_comment" value="Emergency">
+              <label class="custom-control-label" for="customCheck2">Emergency</label>
+            </div>
+            <div class="custom-control custom-checkbox">
+              <input type="checkbox" class="custom-control-input" id="customCheck3" name="tick_comment" value="Change Plan">
+              <label class="custom-control-label" for="customCheck3">Change Plan</label>
+            </div>
           </div>
-          <div class="custom-control custom-checkbox">
-            <input type="checkbox" class="custom-control-input" id="customCheck2" name="tick_comment" value="Tutor too ugly">
-            <label class="custom-control-label" for="customCheck2">Tutor too ugly</label>
-          </div>
-          <div class="custom-control custom-checkbox">
-            <input type="checkbox" class="custom-control-input" id="customCheck3" name="tick_comment" value="Too expensive">
-            <label class="custom-control-label" for="customCheck3">Too expensive</label>
-          </div>
+          <ng-template #tutor_input>
+              <div class="custom-control custom-checkbox">
+                  <input type="checkbox" class="custom-control-input" id="customCheck1" name="tick_comment" value="Emergency">
+                  <label class="custom-control-label" for="customCheck1">Emergency</label>
+                </div>
+                <div class="custom-control custom-checkbox">
+                  <input type="checkbox" class="custom-control-input" id="customCheck2" name="tick_comment" value="Sick">
+                  <label class="custom-control-label" for="customCheck2">I am Sick</label>
+                </div>
+                <div class="custom-control custom-checkbox">
+                  <input type="checkbox" class="custom-control-input" id="customCheck3" name="tick_comment" value="Not Ready">
+                  <label class="custom-control-label" for="customCheck3">Not Ready</label>
+                </div>
+                <label for="suggestion">suggestion:</label>
+                <textarea class="form-control" id="suggestion" rows="3" [formControl]="suggestion"></textarea>
+          </ng-template>
           <label for="comment">Comment:</label>
           <textarea class="form-control" id="comment" rows="3" [formControl]="comment"></textarea>
           <p class="text-danger"><em>{{warningMes}}</em></p>

@@ -1,0 +1,11 @@
+.card1{
+    background:#f7f7f7;
+    padding:5px;  
+    border-radius: 4px;
+    height:100%;
+    width:100%;
+}
+.fake{
+    position: fixed;
+    top:0;
+}

@@ -11,7 +11,7 @@ import { StarRatingModule } from 'angular-star-rating';
 import { LearnerProfileEditComponent } from './profiles/learner-profile-edit/learner-profile-edit.component'; //learner
 import { LearnerTutorsPanelComponent } from './learner-tutors/learner-tutors-panel/learner-tutors-panel.component'; //learner
 import { ViewAllSessionDialogComponent } from './dashboard-dialogs/view-all-session-dialog/view-all-session-dialog.component'; //learner
-import { LearnerSessionRatingDialogComponent } from './dashboard-dialogs/learner-session-rating-dialog/learner-session-rating-dialog.component';
+
 import { OrderConfirmComponentComponent } from './order/order-confirm-component/order-confirm-component.component';//all
 import { LessonOrderComponent } from './order/lesson-order/lesson-order.component'
 
@@ -45,16 +45,15 @@ import {TagInputModule} from 'ngx-chips';
 
   ],
   declarations: [
-     LearnerProfileEditComponent,
+    LearnerProfileEditComponent,
     LearnerTutorsPanelComponent,
     ViewAllSessionDialogComponent,
-    LearnerSessionRatingDialogComponent,
     OrderConfirmComponentComponent,
     LessonOrderComponent,
   ],
   entryComponents: [
     ViewAllSessionDialogComponent,
-    LearnerSessionRatingDialogComponent    
+
   ],   
 })
 export class DashboardLearnerModule { }

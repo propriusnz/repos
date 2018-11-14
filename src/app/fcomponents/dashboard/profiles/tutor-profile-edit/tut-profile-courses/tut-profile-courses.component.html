@@ -1,3 +1,43 @@
-<p>
-  tut-profile-courses works!
-</p>
+<div *ngIf="errorObj.hasError" class="error-feedback">{{errorObj.errorMessage}}</div>
+<div class="col-xl-8 col-lg-8 col-md-12">
+  <div *ngFor="let course of courses" class="card" style="margin-top: 25px;">
+    <div class="card-header m2">{{course.course_title}}</div>
+    <div class="card-body">
+      <div class="row">
+        <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-6 img">
+          <img [src]="commonSupport.findUserImg(course.tutor_id)" alt="tutor" width="150" height="150">
+          <br>
+          <div class="s2blue"> hour</div>
+        </div>
+        <div class="col-xl-9 col-lg-9 col-md-9 col-sm-9 col-6">
+          <!-- <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3 fake"></div> -->
+
+          <h4 class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-6 m2 name">{{course.course_subtitle}}</h4>
+
+          <h4 class="col-xl-3 col-lg-3 col-md-3 col-sm-3 col-6 m2 name">{{course.course_type}}</h4>
+          <div class="col-xl-3 col-lg-3 col-md-3 col-sm-3"></div>
+          <div class="col-xl-3 col-lg-3 col-md-3"></div>
+          <div class="col-xl-3 col-lg-3 col-md-3 col-sm-12 col-12 box1 box">
+            <div class="card1 s2"><span class="s3bold">Teaches</span>
+              <p>{{course.course_price}}</p>
+            </div>
+          </div>
+          <div class="col-xl-3 col-lg-3 col-md-3 col-sm-12 col-12 box">
+            <div class="card1 s2"><span class="s3bold">Location</span>
+              <p>{{course.course_length}}</p>
+            </div>
+          </div>
+          <div class="col-xl-3 col-lg-3 col-md-3 col-sm-12 col-12 box3 box">
+            <div class="card1 s2"><span class="s3bold">Curriculum</span>
+              <p>{{course.course_plan}}</p>
+            </div>
+          </div>
+          <div class="col-xl-3 col-lg-3 col-md-3"></div>
+          <div class="col-xl-9 col-lg-9 col-md-9 col-sm-12 col-12 statement s3">
+            {{course.course_description}}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

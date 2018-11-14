@@ -621,6 +621,7 @@ export class TutorBookingsComponent implements OnInit {
       },
       themeSystem: 'bootstrap3',
       height: 'parent',
+      contentHeight:"auto",
       //height: 'auto', aspectRation: 1.35,
       defaultView: 'agendaWeek',
       firstDay: today,

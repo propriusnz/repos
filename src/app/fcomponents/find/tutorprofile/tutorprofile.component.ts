@@ -13,6 +13,11 @@ import { Meta, Title, DomSanitizer } from '@angular/platform-browser';
 import { isPlatformBrowser, isPlatformServer } from '@angular/common';
 
 import { CommonSupportService } from '../../../services/support/common-support.service';
+import { flatten } from '@angular/compiler';
+import { Observable, of } from 'rxjs';
+import 'rxjs/add/observable/forkJoin';
+import { map } from 'rxjs-compat/operator/map';
+import { catchError } from 'rxjs/operators';
 
 @Component({
   selector: 'app-tutorprofile',
@@ -26,6 +31,8 @@ export class TutorprofileComponent implements OnInit {
   tutorfeedback: any;
   tutorratings:any;
   tutorCourses:any;
+  tutorSchedule:any;
+  tutorSessions:any;  
   firstname: string;
   cleanVideo: any;
   errorMessage: string;
@@ -35,7 +42,7 @@ export class TutorprofileComponent implements OnInit {
     session: [],
     free: [],
   };
-
+  loadingFlag=false;
   // baseImgUrl = environment.baseImgUrl + '/tutorimg/';
 
   events: any = []; // session object
@@ -80,14 +87,50 @@ export class TutorprofileComponent implements OnInit {
     this.popoverBook();
     this.stickySideBar();
   }
-
+  // this.searchService.showTutor(id).
+  // showTutorSession
   getTutorData(id) {
-    this.searchService.showTutor(id).subscribe(
-      (res) => { this.setPageData(res) },
-      (err) => { this.errorMessage = "Something went wrong, we cannot get any data at this time." }
-    );
+    this.loadingFlag = true;
+
+    Observable.forkJoin(
+      this.searchService.showTutor(id).map(res => {
+        console.log(res);
+        this.setPageData(res);
+        }),
+      this.searchService.showTutorSession(id).map(res => {
+        this.tutorSessions=res['allSessions'];
+        console.log(this.tutorSessions);
+      })
+    ).subscribe(
+      data=>{
+        this.loadingFlag = false; 
+        this.setCalendarData();           
+      },
+      err=>{
+        console.error(err);
+        this.loadingFlag = false;        
+        this.errorMessage = "Something went wrong, we cannot get any data at this time." 
+      }      
+    )
+
+
+    // this.searchService.showTutor(id).toPromise().then(
+    //   (res) => { 
+    //     this.loadingFlag = false;
+    //      this.setPageData(res) 
+    //     },
+    //   (err) => { 
+    //     this.loadingFlag = false;        
+    //     this.errorMessage = "Something went wrong, we cannot get any data at this time." 
+    //   }
+    // );
   }
 
+  setCalendarData() {
+    this.eventContainer = this.calendar.getEvent(this.tutorSchedule, this.tutorSessions);
+    if (this.eventContainer.free.length > 0) 
+       this.tutorScheduleInit(this.eventContainer);
+  }
   setPageData(res) {
     console.log(res)
     this.tutor = res['tutorKey'];
@@ -99,13 +142,11 @@ export class TutorprofileComponent implements OnInit {
     this.tutorfeedback = res['tutorReferences'];
     this.tutorratings = res['tutorratings'];
     this.tutorCourses = res['tutorCourses'];
+    this.tutorSchedule= res['tutorSchedule'];
     // this.tutor['profile_photo'] = this.baseImgUrl + this.tutor['profile_photo']
     this.tutor['profile_photo'] = this.commonSupport.findUserImg(this.tutor['tutor_id']) + "?ver=" + this.commonSupport.getTime();
 
     this.cleanVideo = this.sanitizer.bypassSecurityTrustResourceUrl(this.tutor.profile_video)
-
-    this.eventContainer = this.calendar.getEvent(res['tutorFreeTime'],res['tutorSessions']);
-    if (this.eventContainer.free.length > 0) { this.tutorScheduleInit(this.eventContainer) }
   }
   setTagTitle(){
     this.titleService.setTitle(this.tutor.discipline+' '+this.tutor.curriculum+' tutor in '+this.tutor['location']);
@@ -193,7 +234,8 @@ export class TutorprofileComponent implements OnInit {
       themeSystem: 'bootstrap3',
       defaultView: 'agendaWeek',
       firstDay: today,
-      aspectRatio: 1.09,
+      contentHeight:"auto",
+      aspectRatio: 1.2,
       navLinks: true,
       displayEventTime: false,
       eventSources: [fcSources.events2],

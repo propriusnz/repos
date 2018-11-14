@@ -4,6 +4,7 @@ import * as moment from 'moment';
 import { TutorService } from '../../../../services/servercalls/tutor.service';
 import { CalendarSupportService } from '../../../../services/support/calendar-support.service';
 import { isPlatformBrowser } from '@angular/common';
+import {FormBuilder, FormGroup} from '@angular/forms';
 
 @Component({
   selector: 'app-tutor-schedules-edit',
@@ -208,6 +209,7 @@ export class TutorSchedulesEditComponent implements OnInit {
       },
       themeSystem: 'bootstrap3',
       height: 'parent',
+      contentHeight:"auto",
       defaultView: 'agendaWeek',
       events: myevents,
       eventLongPressDelay:1,
@@ -220,12 +222,14 @@ export class TutorSchedulesEditComponent implements OnInit {
       minTime: moment.duration('08:00:00'),
       maxTime: moment.duration('21:00:00'),
       viewRender: function(view,element){//set the button in header
-        $('.fc-today-button').css({'position':'absolute','top':'11px','font-size':'15px','background-color':'#0099FF','color':'white','font-weight':'bold'});
+        $('.fc-today-button').css({'position':'absolute','left':'20%','font-size':'15px','background-color':'#0099FF','color':'white','font-weight':'bold','border-radius': '100%','height':'30px'});
         $('.fc-prev-button').css({'position':'absolute','left':'8%','height':'30px','width':'30px','border-radius':'100%','font-size':'15px','color':'#0099FF','font-weight':'bold','border':'2px solid #0099FF','background-color':'white'});//
-        $('.fc-prev-button').text('<');
+
+        $('.fc-prev-button')[0].innerHTML='<span class="glyphicon glyphicon-chevron-left" style="font-size: 13px; color: rgb(82, 82, 82);"></span><i class="fas fa-step-forward"></i>'
         $('.fc-center h2').css({'font-size':'25px','color':'#525252','font-weight':'bold'});
         $('.fc-next-button').css({'position':'absolute','right':'8%','height':'30px','width':'30px','border-radius':'100%','font-size':'15px','color':'#0099FF','font-weight':'bold','border':'2px solid #0099FF','background-color':'white'});
-        $('.fc-next-button').text('>');
+
+        $('.fc-next-button')[0].innerHTML='<span class="glyphicon glyphicon-chevron-left" style="font-size: 13px; color: rgb(82, 82, 82);"></span><i class="fas fa-step-backward"></i>'
       },
       eventAfterRender: function(event, element, view) {// style the events
         $(element).css({'pointer-events':'none','font-size':'13px','border-radius':'0px','border':'0.1px solid white','margin':'0px'});
@@ -267,6 +271,7 @@ export class TutorSchedulesEditComponent implements OnInit {
         }
       },
       height: 'parent',
+      contentHeight:"auto",      
       defaultView: 'agendaWeek',
       events: myevents,
       selectable: true,
@@ -278,12 +283,17 @@ export class TutorSchedulesEditComponent implements OnInit {
       minTime: moment.duration('08:0:00'),
       maxTime: moment.duration('21:00:00'),
       viewRender: function(view,element){// set the button in header
-        $('.fc-today-button').css({'position':'absolute','top':'11px','font-size':'15px','background-color':'#0099FF','color':'white','font-weight':'bold'});
+        $('.fc-today-button').css({'position':'absolute','left':'20%','font-size':'15px','background-color':'#0099FF','color':'white','font-weight':'bold','border-radius': '100%','height':'30px'});
         $('.fc-prev-button').css({'position':'absolute','left':'8%','height':'30px','width':'30px','border-radius':'100%','font-size':'15px','color':'#0099FF','font-weight':'bold','border':'2px solid #0099FF','background-color':'white'});//
-        $('.fc-prev-button').text('<');
+
+        $('.fc-prev-button')[0].innerHTML='<span class="glyphicon glyphicon-chevron-left" style="font-size: 13px; color: rgb(82, 82, 82);"></span><i class="fas fa-step-forward"></i>'
+        
         $('.fc-center h2').css({'font-size':'25px','color':'#525252','font-weight':'bold'});
         $('.fc-next-button').css({'position':'absolute','right':'8%','height':'30px','width':'30px','border-radius':'100%','font-size':'15px','color':'#0099FF','font-weight':'bold','border':'2px solid #0099FF','background-color':'white'});
-        $('.fc-next-button').text('>');
+
+        $('.fc-prev-button')[0].innerHTML='<span class="glyphicon glyphicon-chevron-left" style="font-size: 13px; color: rgb(82, 82, 82);"></span><i class="fas fa-step-backward"></i>'        
+        
+
       },
       eventAfterRender: function(event, element, view) {// style the events
         $(element).css({'pointer-events':'none','font-size':'13px','border-radius':'0px','border':'0.1px solid white','margin':'0px'});
@@ -345,5 +355,14 @@ export class TutorSchedulesEditComponent implements OnInit {
   }
   spinner() {
     this.showSpinner = true;
+  }
+  onRadioChange(event){
+    if (event.value==='1')
+      this.addEvent();
+    else
+      this.removeEvent();
+  }
+  triggerSelectChange(event){
+    this.chooseWeeks = event.value;
   }
 }

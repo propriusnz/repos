@@ -34,7 +34,7 @@ export class SchedulesListComponent implements OnInit {
   freeEvents = []; // learner role: store freeEvents object with tutor id
   baseUrl = 'http://learnspace.co.nz/api/public/';
   sucSubmit = false;
-  role: number;
+
   s_indicatorEvent = false;
   // user can choose the session times
   startDate: any;
@@ -42,7 +42,12 @@ export class SchedulesListComponent implements OnInit {
   endDate: any;
   timeMes = false;
   // See if client is using browser (SSR)
-  isBrowser = false
+  isBrowser = false;
+
+  role: number;
+  static TUTOR = 3;  //role definition
+  static LEARNER = 1; //role definition
+  static APPLICANT = 2;     //role definition
 
   constructor(
     @Inject(PLATFORM_ID) private platformId,
@@ -97,10 +102,10 @@ export class SchedulesListComponent implements OnInit {
     };
     // update text which is related to html
     // this.updateText(data, sessionID);
-    this.updateStatus(data, this.sessionsInfo, sessionID);
+    //this.updateStatus(data, this.sessionsInfo, sessionID);
     console.log(sessionID, data, this.role);
     // send to server
-    this.sendStatus(sessionID, data, this.role);
+    this.sendStatus(sessionID, data, this.role,'');
   }
   // user clicks on cancel button
   cancelSession(event) {
@@ -117,18 +122,19 @@ export class SchedulesListComponent implements OnInit {
     let dialogRef = this.dialog.open(CancelSessionDialogComponent,
       {
         panelClass: 'dialog1',
-        data: [sessionID, data, withinTwelveHours],
+        data: [sessionID, data, withinTwelveHours ,this.role],
       });
     dialogRef.afterClosed().subscribe(
       (res) => {
         console.log(res);
-        if (res === 'yes') {
+        if (res[0] === 'yes') {
           // update text which is related to html
           // this.updateText(data, sessionID);
-          this.updateStatus(data, this.sessionsInfo, sessionID);
+          //this.updateStatus(data, this.sessionsInfo, sessionID);
           // send to server
           console.log(res);
-          this.sendStatus(sessionID, data, this.role);
+          let reason={reason:res[1],suggestion:res[2]}
+          this.sendStatus(sessionID, data, this.role,reason);
         }
       },
       (err) => console.warn(err)
@@ -170,6 +176,7 @@ export class SchedulesListComponent implements OnInit {
       // this.getInfoShedules();
     }
   }
+ 
   // process dialog fullcalendar
   processDialog(selectedSession: any, calendarEvents: any, locations: any, times: any, role: any) {
     this.addFreetimes(calendarEvents, times);
@@ -217,31 +224,65 @@ export class SchedulesListComponent implements OnInit {
       (err) => console.warn(err)
     );
   }
-  sendStatus(id: any, data: Object, role: any) {
+  sendStatus(id: any, data: Object, role: any ,reason) {
     if (Object.keys(data).length !== 0) {
       if (role === 3) {
         console.log('Now sending status');
+        if (data['s_status']==='cancel')
+        this.tutorService.tutorCancelSession(id, reason).subscribe(
+          (res) => {
+            // show successfully message
+            this.sucSubmit = true;
+            console.log(res);
+            console.log('Successfully sent data!');
+            // update text which is related to html
+            // this.updateText(data, sessionID);            
+            this.updateStatus(data, this.sessionsInfo, id);                        
+          }
+          , (err) => { console.warn(err); }
+        )
+        else        
         this.tutorService.updateTutorSessionStatus(id, data).subscribe(
           (res) => {
             // show successfully message
             this.sucSubmit = true;
             console.log(res);
             console.log('Successfully sent data!');
+            // update text which is related to html
+            // this.updateText(data, sessionID);
+            this.updateStatus(data, this.sessionsInfo, id);            
           }
           , (err) => { console.warn(err); }
         );
       }
       if (role === 1 || role === 2) {
         console.log('post learner update!!!');
+        if (data['s_status']==='cancel')
+        this.learnerService.LearnerCancelSession(id, reason).subscribe(
+          (res) => {
+            // show successfully message
+            this.sucSubmit = true;
+            console.log(res);
+            console.log('Successfully sent data!');
+            // update text which is related to html
+            // this.updateText(data, sessionID);            
+            this.updateStatus(data, this.sessionsInfo, id);                        
+          }
+          , (err) => { console.warn(err); }
+        )
+        else
         this.learnerService.updateLearnerSessionStatus(id, data).subscribe(
           (res) => {
             // show successfully message
             this.sucSubmit = true;
             console.log(res);
             console.log('Successfully sent data!');
+            // update text which is related to html
+            // this.updateText(data, sessionID);            
+            this.updateStatus(data, this.sessionsInfo, id);                
           }
           , (err) => { console.warn(err); }
-        );
+        )
       }
     }
   }
@@ -298,8 +339,8 @@ export class SchedulesListComponent implements OnInit {
   getSessionInfo() {
     console.log(this.range);
     this.tutorService.indexTutorSessions(this.range).subscribe((res) => {
-      // console.log(res['dataCon']);
-      let allSessions = res['dataCon'];
+       console.log(res);
+      let allSessions = res['allSessions'];
       console.log(allSessions);
       this.sessionsInfo = this.changeFormat(allSessions);
       console.log(this.sessionsInfo);
@@ -330,8 +371,8 @@ export class SchedulesListComponent implements OnInit {
   getLearnerSessionInfo() {
     console.log('search this range:', this.range);
     this.learnerService.indexLearnerSessions(this.range).subscribe((res) => {
-      console.log(res['dataCon']);
-      let allSessions = res['dataCon'];
+      console.log(res);
+      let allSessions = res['sessions'];
       console.log(allSessions);
       this.sessionsInfo = this.changeFormat(allSessions);
       console.log(this.sessionsInfo);
@@ -415,10 +456,10 @@ export class SchedulesListComponent implements OnInit {
       let times = this.getTimes(e);
       let day = date.format('ddd');
       let tutorID = e.tutor_id.toString();
-      let tutor_user_id = e.tutor_user_id.toString();
+      //let tutor_user_id = e.tutor_user_id.toString();
       let learnerID = e.learner_id.toString();
       let update: number = e.last_update_party;
-      let tutor_img = this.imageService.findUserImg(tutor_user_id);
+      let tutor_img = this.imageService.findUserImg(tutorID);
       let learner_img = this.imageService.findUserImg(learnerID);
       // set property withinTwelveHours to be boolean
       let now = moment();
@@ -427,6 +468,12 @@ export class SchedulesListComponent implements OnInit {
       if (interval <= 12) {
         withinTwelveHours = true;
       }
+      //if session is passed, assign session_status is proceed!
+      let session_status = (e.session_status==='planned'&&now > date.add(e.session_duration, 'hours'))?
+              'proceed':
+              e.session_status;
+              
+      date.add(e.session_duration, 'hours')
       console.log(interval, withinTwelveHours);
       newObj = {
         session_date: newDate,
@@ -437,7 +484,7 @@ export class SchedulesListComponent implements OnInit {
         tutor_name: e.tutor_name,
         session_subject: e.session_subject,
         session_location: e.session_location,
-        session_status: e.session_status,
+        session_status: session_status,
         session_times: times,
         session_day: day,
         tutor_id: tutorID,
@@ -450,6 +497,7 @@ export class SchedulesListComponent implements OnInit {
     });
     return newSessions;
   }
+
   // get time slots of one session
   getTimes(session: any) {
     let timesArray = [];
@@ -619,6 +667,7 @@ export class SchedulesListComponent implements OnInit {
   // show generate report dialog
   generateReport() {
     console.log('report');
+    let sessionID = Number(event.srcElement.id.slice(3));    
     let dialogRef = this.dialog.open(TutorReportDialogComponent,
       {
         panelClass: 'dialog1',
@@ -631,6 +680,7 @@ export class SchedulesListComponent implements OnInit {
         if (res) {
           // this.profile_photo = res;
           // this.submitImage(res)
+          this.sendReport(sessionID, res);          
         }
       },
       (err) => console.warn(err)
@@ -649,10 +699,19 @@ export class SchedulesListComponent implements OnInit {
         console.log(res);
         if (res) {
           console.log('got something', res);
-          // this.sendReport(sessionID, res);
+
         }
       },
       (err) => console.warn(err)
+    );
+  }
+  sendReport(id: number, data: object) {
+    this.tutorService.storeTutorSessionReport(id, data).subscribe(
+      (res) => {
+        console.log(res);
+        console.log('Successfully sent report!');
+      }
+      , (err) => { console.warn(err); }
     );
   }
   rateLesson(event,session) {
