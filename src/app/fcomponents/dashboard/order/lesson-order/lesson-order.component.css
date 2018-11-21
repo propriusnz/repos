@@ -24,3 +24,17 @@ td a:hover{
   color: #007bff;
   text-decoration: none;
 }
+
+.tutorName{
+  margin-bottom: 10px;
+  font-size: 24px;
+}
+
+.tutorImg{
+  width: 100%;
+}
+@media(max-width:1199px) {
+  .tutorImg{
+    width: 80%;
+  }
+}

@@ -1,23 +1,23 @@
 <div class="row">
   <div>
-    <div class="col-12 col-lg-8 col-md-8 col-sm-12 col-xl-12 card">
+    <div class="col-md-12 col-lg-9 card">
         <div class='card-body' style="border-bottom:0px">
             <div *ngIf=" sucMessage" class="my-3 ml-3" style="font-size:21px; color:#525252;"><i class="fa fa-check-circle"></i>&nbsp;{{sucMessage}}</div>
             <div class="row ">              
-        <div class="col-4">
+        <div class="col-md-12 col-lg-5">
           <form>
             <fieldset>
               <legend></legend>
               <mat-radio-group >
-                <mat-radio-button  (change)="onRadioChange($event)" value="1">Add free time</mat-radio-button>
+                <mat-radio-button  (change)="onRadioChange($event)" value="1" checked="checked">Add free time</mat-radio-button>
                 <mat-radio-button  (change)="onRadioChange($event)" value="2">Remove free time</mat-radio-button>
               </mat-radio-group>
             </fieldset>
           </form>
         </div>
-        <div class="col-4">
+        <div class="col-md-12 col-lg-5">
           <mat-form-field>
-            <mat-label>How many weeks do</mat-label>
+            <mat-label>How many weeks do you schedule?</mat-label>
             <mat-select #fontSize value="1" (selectionChange)="triggerSelectChange($event)">
               <mat-option value="1">1 week</mat-option>
               <mat-option value="2">2 weeks</mat-option>
@@ -29,23 +29,23 @@
               <mat-option value="6">8 weeks</mat-option>                            
             </mat-select>
 
-            <mat-label>
-              <mat-icon>favorite</mat-icon> <b> want</b> <i> to schedule.</i>
-            </mat-label>
           </mat-form-field>
         </div>
-        <div class="col-4"><button mat-raised-button color="primary"  (click)="submit()">Save</button></div>
+        <div class="col-md-12 col-lg-2"><button mat-raised-button color="primary"  (click)="submit()">Save</button></div>
       </div>
     </div>
   </div>    
 
-    <div class="card" style="margin-top: 10px">
+    <div class="col-md-12 col-lg-9 card" style="margin-top: 10px">
       <div class="card-body" class="px-0 mt-2" style="margin:10px">
         <div id="calendar"></div>
       </div>
     </div>
     <br><br><br>
-    <div *ngIf="!indicator" style="position: absolute; font-size:21px; color:#525252; top:128px;">
+    <!-- <div *ngIf="!indicator" style="position: absolute; font-size:21px; color:#525252; top:128px;">
       <i class="fa fa-spinner fa-spin"></i>
-      Loading...</div>
+      Loading...</div> -->
+      <div *ngIf="!indicator" class="col-xl-8 col-lg-8 col-md-12">
+          <div class="loader"></div>
+        </div>      
   </div>

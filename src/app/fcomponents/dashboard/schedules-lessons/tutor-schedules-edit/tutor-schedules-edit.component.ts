@@ -225,11 +225,11 @@ export class TutorSchedulesEditComponent implements OnInit {
         $('.fc-today-button').css({'position':'absolute','left':'20%','font-size':'15px','background-color':'#0099FF','color':'white','font-weight':'bold','border-radius': '100%','height':'30px'});
         $('.fc-prev-button').css({'position':'absolute','left':'8%','height':'30px','width':'30px','border-radius':'100%','font-size':'15px','color':'#0099FF','font-weight':'bold','border':'2px solid #0099FF','background-color':'white'});//
 
-        $('.fc-prev-button')[0].innerHTML='<span class="glyphicon glyphicon-chevron-left" style="font-size: 13px; color: rgb(82, 82, 82);"></span><i class="fas fa-step-forward"></i>'
+        $('.fc-prev-button')[0].innerHTML='<span class="glyphicon glyphicon-chevron-left" style="font-size: 13px; color: rgb(82, 82, 82);"></span><i class="fas fa-step-backward"></i>'
         $('.fc-center h2').css({'font-size':'25px','color':'#525252','font-weight':'bold'});
         $('.fc-next-button').css({'position':'absolute','right':'8%','height':'30px','width':'30px','border-radius':'100%','font-size':'15px','color':'#0099FF','font-weight':'bold','border':'2px solid #0099FF','background-color':'white'});
 
-        $('.fc-next-button')[0].innerHTML='<span class="glyphicon glyphicon-chevron-left" style="font-size: 13px; color: rgb(82, 82, 82);"></span><i class="fas fa-step-backward"></i>'
+        $('.fc-next-button')[0].innerHTML='<span class="glyphicon glyphicon-chevron-left" style="font-size: 13px; color: rgb(82, 82, 82);"></span><i class="fas fa-step-forward"></i>'
       },
       eventAfterRender: function(event, element, view) {// style the events
         $(element).css({'pointer-events':'none','font-size':'13px','border-radius':'0px','border':'0.1px solid white','margin':'0px'});

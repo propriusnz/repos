@@ -28,11 +28,14 @@ export class UserPaymentInfoComponent implements OnInit {
   ngOnInit() {
     this.getData();
   }
+  ngOnChanges(){
+    this.getData();    
+  }
   getData(){
     this.paymentService.Userpaymethod().subscribe(
       result => {
         console.log(result);        
-        if (result['userPaymentInfo'].length===0) return ;
+        if (!(result['userPaymentInfo'])||(result['userPaymentInfo'].length===0)) return ;
         //only display the default card
         this.userpaymentMethods = result['userPaymentInfo'].filter(element=>element.default===1);
         if (this.userpaymentMethods.length>=1)
@@ -67,7 +70,14 @@ export class UserPaymentInfoComponent implements OnInit {
         extraObject: extraObject
       }
     });
-    this.getData();    
+    dialogRef.afterClosed().subscribe(
+      (res) => {
+        console.log(res);
+        this.getData();    
+      },
+      (err) => console.warn(err)
+    );
+
   }
 
   // delete card

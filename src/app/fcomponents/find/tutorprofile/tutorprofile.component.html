@@ -69,7 +69,7 @@
               </a>
             </div>
             <!--<div *ngIf="tutor.price_2" class="s2">2 Hours plus Lesson<span>$ {{tutor.price_2}}/hour</span></div>-->
-            <button (click)="bookNow()" class="btn btn-primary btn-block btn-lg my-2">Book Free Trial</button>
+            <button (click)="bookFree()" class="btn btn-primary btn-block btn-lg my-2">Book Free Trial</button>
           </div>
         </div>
         <div class="card" *ngIf="tutorprofile">
@@ -215,15 +215,15 @@
       </div>
     </div>
 
-    <div class="col-xl-8 col-lg-8 col-md-12">
+    <div *ngIf="false" class="col-xl-8 col-lg-8 col-md-12">
       <div *ngIf="tutorfeedback" class="card">
         <div class="card-header m2">Feedback</div>
         <div class="card-body">
           <div *ngFor="let feedback of tutorfeedback">
             <img src="{{feedback.photo}}" style="width: 30px;height: 30px;border-radius: 50%">
             <span class="s2" style="padding: 20px">{{feedback.name}}</span>
-            <p class="s2" style="padding-left: 50px;margin-bottom: 0px">{{feedback.dateTime|date:'MM/yyyy'}}</p>
-            <p class="s2" style="padding-left: 50px;">{{feedback.content}}</p>
+            <p class="s2" style="padding-left: 50px;margin-bottom: 0px">{{feedback.updated_at|date:'MM/yyyy'}}</p>
+            <p class="s2" style="padding-left: 50px;">{{feedback.comment}}</p>
             <hr>
           </div>
         </div>
@@ -231,11 +231,13 @@
     </div>
     <ngx-json-ld [json]="schemaData"></ngx-json-ld>
       <div *ngIf="!productFlag" class="col-xl-8 col-lg-8 col-md-12">
-        <app-tutor-stats></app-tutor-stats>
+        <!-- <app-tutor-stats></app-tutor-stats> -->
       </div>
 
       <div *ngIf="!productFlag" class="col-xl-8 col-lg-8 col-md-12">
-        <app-tutor-ratings></app-tutor-ratings>
+        <app-tutor-ratings [tutorKey]="tutor" [tutorFeedback]="tutorfeedback" [tutorAwards]="tutorAwards">
+
+        </app-tutor-ratings>
       </div>
  
 

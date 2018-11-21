@@ -21,6 +21,10 @@ import {
 } from '../../../services/servercalls/user.service';
 
 import {
+  PaymentService
+} from '../../../services/servercalls/payment.service';
+
+import {
   MatDialog,
   MatDialogRef,
   MAT_DIALOG_DATA
@@ -54,6 +58,7 @@ export class TutorBookingsComponent implements OnInit {
   preDate: any; // when user click via book popover
   urlFrom:number;// 0: url from book, user schedule and book, 1:url from order, user has booked order, specificed order to schedule.
   orderId:string; //
+  hasPaymentInfo=false;
   session = {
     date_time: '',
     duration: 0,
@@ -68,6 +73,7 @@ export class TutorBookingsComponent implements OnInit {
     session: [],
     free: [],
   };
+  errorObj:any;
 
   // dialog width and height
   dialogWidth = 500;
@@ -81,6 +87,7 @@ export class TutorBookingsComponent implements OnInit {
     private learnerService: LearnerService,
     private route: ActivatedRoute,
     private userService: UserService,
+    private paymentService:PaymentService,
     public dialog: MatDialog,
   ) {}
 
@@ -97,6 +104,26 @@ export class TutorBookingsComponent implements OnInit {
     this.getTutorData();
     this.addLessonPop();
     this.deleLessonPop();
+    this.getPayMethod();
+    //this.calendarHome([]);
+  }
+  //get pay method for check verify
+  getPayMethod(){
+    this.paymentService.Userpaymethod().subscribe(
+      result => {
+        console.log(result);        
+        if (result['userPaymentInfo'].length===0) return ;
+        //only display the default card
+        let userpaymentMethods = result['userPaymentInfo'].filter(element=>element.default===1);
+        if (userpaymentMethods.length>=1)
+          this.hasPaymentInfo = true;
+      },
+      error => {
+        console.log(error);        
+        this.errorObj = {hasError:true, errMsg:'Server or Network error occurred ,please try again or contact the administrator'};
+        console.log(this.errorObj );                
+      }
+    );
   }
   getUrlFrom(route){
     if (route.url.value[0].path==='find-tutor')
@@ -437,6 +464,7 @@ export class TutorBookingsComponent implements OnInit {
   }
   checkOut() {
     console.log(this.sessions);
+
     // check if the userId equel the tutorId first
     if (!this.isVerified()) {
       this.feedback = 'You are unverified until now. Please activate in your email.';
@@ -444,6 +472,8 @@ export class TutorBookingsComponent implements OnInit {
       this.feedback = 'Please book lessons firstly.';
     } else if (this.tutorId === this.userId) {
       this.feedback = 'You cannot book your own free time.';
+    } else if (!this.hasPaymentInfo) {
+      this.feedback = 'You have not any pay method now. Please add a pay method first.';    
     } else {
       // check for credit card info
       this.userService.showUserInfo().subscribe(
@@ -550,20 +580,15 @@ export class TutorBookingsComponent implements OnInit {
     $('#calendar').fullCalendar('addEventSource', this.events);
   }
   // let the user to set session information like subject, curriculum and location
-  setInfo(x) {
-    let selected = event.srcElement.innerHTML;
-    console.log(selected);
-    let displayedText = selected.slice(0, 10) + ' ...';
-    console.log(displayedText, selected);
-    $(x.btn).html(displayedText);
-    if (x.item === 'subject') {
-      this.session.subject = selected;
+  setInfo(infoType,e) {
+    if (infoType === 1) {
+      this.session.subject = event.target['value'];
     }
-    if (x.item === 'curriculum') {
-      this.session.curriculum = selected;
+    else if (infoType === 2) {
+      this.session.curriculum = event.target['value'];
     }
-    if (x.item === 'location') {
-      this.session.location = selected;
+    else if (infoType === 3) {
+      this.session.location = event.target['value'];
     }
   }
   // set the sessions object value for subscription
@@ -616,8 +641,8 @@ export class TutorBookingsComponent implements OnInit {
     $('#calendar').fullCalendar({
       header: {
         left: '',
-        center: 'prev title next',
-        right: 'today'
+        center: 'today prev title next',
+        right: ''
       },
       themeSystem: 'bootstrap3',
       height: 'parent',
@@ -637,8 +662,8 @@ export class TutorBookingsComponent implements OnInit {
       viewRender: function (view, element) { // set the button in header
         $('.fc-today-button').css({
           'position': 'absolute',
-          'top': '11px',
-          'right': '6%',
+          // 'top': '11px',
+          'left': '20%',
           'font-size': '15px',
           'background-color': '#0099FF',
           'color': 'white',

@@ -137,8 +137,8 @@ export class OrderConfirmComponentComponent implements OnInit {
     let indTotalItem = this.order.findIndex(e=>{return e.id===3})
     let totalPrice = basePrice + feePrice - walletPrice;
 
-    this.order[indBaseItem].item=basePrice;
-    this.order[indBaseItem].price=this.tutor.first_name+':'+event.value.course_title;
+    this.order[indBaseItem].price=basePrice;
+    this.order[indBaseItem].item=this.tutor.first_name+':'+event.value.course_title;
     this.order[indFeeItem].price=feePrice;
     this.order[indTotalItem].price= totalPrice;  
   }

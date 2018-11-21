@@ -567,7 +567,7 @@ export class DashboardHomeSessionsComponent implements OnInit {
           session['session_endTime'] = endTime;
           session['session_startTime'] = startTime;
           // no matter, time changed or location changed, update the status
-          session['session_status'] = 'planned';
+          session['session_status'] = 0;
           session['session_times'] = times;
           session['session_day'] = day;
           // add a new property to indicate that the session has been updated at least one time

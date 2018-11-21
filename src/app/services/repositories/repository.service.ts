@@ -133,20 +133,21 @@ export class RepositoryService {
    // ---------------------- Learner role -------------------------
    sessionLearnerData() {
     if (this.isBrowser) {
-      let aInfo = JSON.parse(sessionStorage.getItem('lsaSpLearnerInfo'));
-      if (!aInfo) {
+      let lsaSpLearnerInfo = sessionStorage.getItem('lsaSpLearnerInfo');
+
+      if (!lsaSpLearnerInfo) {
         this.currentLearnerData();
       } else {
-        this.learnerData.next(aInfo);
+        this.learnerData.next(JSON.parse(lsaSpLearnerInfo));
       }
     }
   }
 
   currentLearnerData() {
     console.log('hello i am a learner');
-    return this.learnerService.showLearnerProfile().subscribe(
+    return this.learnerService.indexLearnerProfile().subscribe(
       (res) => {
-        this.learnerData.next(res['dataCon']);
+        this.learnerData.next(res['allLearners']);
         this.saveLearnerSession(res); },
       (error) => console.log(error)
     );
@@ -154,7 +155,7 @@ export class RepositoryService {
   }
 
   saveLearnerSession(res) {
-    sessionStorage.setItem('lsaSpLearnerInfo', JSON.stringify(res['dataCon']));
+    sessionStorage.setItem('lsaSpLearnerInfo', JSON.stringify(res['allLearners']));
   }
 
    // ---------------------- All Users -------------------------

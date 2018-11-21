@@ -176,19 +176,21 @@ export class TutorScheduleShowComponent implements OnInit {
         } else {
           $('.fc-center h2').css({'font-size': '25px', 'color': '#525252', 'font-weight': 'bold'});
         }
-          $('.fc-today-button').css({'position': 'relative', 'bottom': '41px', 'font-size': '15px', 'background-color': '#0099FF', 'color': 'white', 'font-weight': 'bold' });
-          $('.fc-prev-button').css({'position': 'absolute', 'top': '17%', 'left': '5%', 'height': '30px', 'width': '30px', 'border-radius': '100%', 'font-size': '15px', 'color': '#0099FF', 'font-weight': 'bold', 'border': '2px solid #0099FF', 'background-color': 'white' }); //
-          $('.fc-prev-button').text('<');
-          $('.fc-next-button').css({'position': 'absolute', 'top': '17%', 'right': '5%', 'height': '30px', 'width': '30px', 'border-radius': '100%', 'font-size': '15px', 'color': '#0099FF', 'font-weight': 'bold', 'border': '2px solid #0099FF', 'background-color': 'white'});
-          $('.fc-next-button').text('>');
-          $('.fc-state-default').css({'text-shadow': 'none', 'box-shadow': 'none' }); //
-          $('.fc-month-button').css({'position': 'relative','bottom': '41px','font-size': '15px','color': 'white', 'font-weight': 'bold', 'background-color': '#0099FF'});
-          $('.fc-month-button').click(function () { $('.fc-month-button').css({'background-color': '#0077c6'}); });
-          $('.fc-agendaWeek-button').css({'position': 'relative','bottom': '41px','font-size': '15px','color': 'white','font-weight': 'bold','background-color': '#0099FF'});
-          $('.fc-agendaWeek-button').click(function () { $('.fc-agendaWeek-button').css({'background-color': '#0077c6'});});
-          $('.fc-listMonth-button').css({'position': 'relative', 'bottom': '41px','font-size': '15px','color': 'white','font-weight': 'bold', 'background-color': '#0099FF'});
-          $('.fc-listMonth-button').click(function () { $('.fc-listMonth-button').css({'background-color': '#0077c6'});});
-      },
+        $('.fc-today-button').css({'position': 'relative', 'bottom': '41px', 'font-size': '15px', 'background-color': '#0099FF', 'color': 'white' });
+        $('.fc-prev-button').css({'position': 'absolute', 'top': '110px', 'left': '5%', 'height': '30px', 'width': '30px', 'border-radius': '100%', 'font-size': '15px', 'color': '#0099FF', 'font-weight': 'bold', 'border': '2px solid #0099FF', 'background-color': 'white' }); //
+        //$('.fc-prev-button').text('<');
+        $('.fc-prev-button')[0].innerHTML='<i class="fas fa-step-backward"></i>'
+        $('.fc-next-button').css({'position': 'absolute', 'top': '110px', 'right': '5%', 'height': '30px', 'width': '30px', 'border-radius': '100%', 'font-size': '15px', 'color': '#0099FF', 'font-weight': 'bold', 'border': '2px solid #0099FF', 'background-color': 'white'});
+        //$('.fc-next-button').text('>');
+        $('.fc-next-button')[0].innerHTML='<i class="fas fa-step-forward"></i>'
+        $('.fc-state-default').css({'text-shadow': 'none', 'box-shadow': 'none' }); //
+        $('.fc-month-button').css({'position': 'relative','bottom': '41px','font-size': '15px','color': 'white',  'background-color': '#0099FF'});
+        $('.fc-month-button').click(function () { $('.fc-month-button').css({'background-color': '#0077c6'}); });
+        $('.fc-agendaWeek-button').css({'position': 'relative','bottom': '41px','font-size': '15px','color': 'white','background-color': '#0099FF'});
+        $('.fc-agendaWeek-button').click(function () { $('.fc-agendaWeek-button').css({'background-color': '#0077c6'});});
+        $('.fc-listMonth-button').css({'position': 'relative', 'bottom': '41px','font-size': '15px','color': 'white', 'background-color': '#0099FF'});
+        $('.fc-listMonth-button').click(function () { $('.fc-listMonth-button').css({'background-color': '#0077c6'});});
+    },
       eventClick: (calEvent, jsEvent, view) => {
         // here we must use arrow function because this will not be created for the event, so we can refer to this function
         let studentName: string = calEvent.title;

@@ -33,6 +33,8 @@ export class TutorprofileComponent implements OnInit {
   tutorCourses:any;
   tutorSchedule:any;
   tutorSessions:any;  
+  tutorAwards:any;
+  allAwards:any;  
   firstname: string;
   cleanVideo: any;
   errorMessage: string;
@@ -143,10 +145,24 @@ export class TutorprofileComponent implements OnInit {
     this.tutorratings = res['tutorratings'];
     this.tutorCourses = res['tutorCourses'];
     this.tutorSchedule= res['tutorSchedule'];
+    this.tutorAwards =  res['tutorAwards'];
+    this.allAwards =  res['allAwards']; 
+    this.mapAwards();   
     // this.tutor['profile_photo'] = this.baseImgUrl + this.tutor['profile_photo']
     this.tutor['profile_photo'] = this.commonSupport.findUserImg(this.tutor['tutor_id']) + "?ver=" + this.commonSupport.getTime();
 
     this.cleanVideo = this.sanitizer.bypassSecurityTrustResourceUrl(this.tutor.profile_video)
+  }
+  mapAwards(){
+    let tutorAwards = this.tutorAwards;
+    let allAwards = this.allAwards;
+    if (tutorAwards===null||tutorAwards.length===0) return;
+    
+    tutorAwards.map((eleTutor)=>{
+      eleTutor.title = allAwards.find(eleAll=> {
+        return eleAll.award_id===eleTutor.award_id;
+      }).title;
+    })
   }
   setTagTitle(){
     this.titleService.setTitle(this.tutor.discipline+' '+this.tutor.curriculum+' tutor in '+this.tutor['location']);
@@ -175,16 +191,28 @@ export class TutorprofileComponent implements OnInit {
   // book button
   bookNow($event) {
     if (this.eventContainer.free.length > 0) {//if tutor has free time
-      this.router.navigate(['./app/find-tutor/profile/' + this.tutor.tutor_id + '/book']);
-      
-    } else {// if tutor didn't edit hir free time
+      //this.router.navigate(['./app/find-tutor/profile/' + this.tutor.tutor_id + '/book']);
       this.router.navigate(['./app/dashboard/learner/order/' + this.tutor.tutor_id]);
-/*       let dialogRef = this.dialog.open(ContactDialogComponent, {
+    } else {// if tutor didn't edit hir free time
+      //this.router.navigate(['./app/dashboard/learner/order/' + this.tutor.tutor_id]);
+       let dialogRef = this.dialog.open(ContactDialogComponent, {
         width: '700px',
         data: this.tutor.first_name
-      }); */
+      }); 
     }
   }
+  // book button
+  bookFree($event) {
+    if (this.eventContainer.free.length > 0) {//if tutor has free time
+      this.router.navigate(['./app/find-tutor/profile/' + this.tutor.tutor_id + '/book']);
+    } 
+    else {
+      let dialogRef = this.dialog.open(ContactDialogComponent, {
+        width: '700px',
+        data: this.tutor.first_name
+      });       
+    }
+  }  
   // routerlink to book sessions via popover
   popoverBook() {
     if (isPlatformBrowser(this.platformId)) {

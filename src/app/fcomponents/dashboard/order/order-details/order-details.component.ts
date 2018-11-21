@@ -14,6 +14,7 @@ export class OrderDetailsComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.data = this.data.order;
     console.log(this.data);
   }
 

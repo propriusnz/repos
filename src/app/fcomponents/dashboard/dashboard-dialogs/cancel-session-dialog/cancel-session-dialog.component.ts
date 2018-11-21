@@ -14,13 +14,13 @@ export class CancelSessionDialogComponent implements OnInit {
   showDialog = true;
   showComment = false;
   warningMes = '';
-  role:number; //learner or tutor
+  role: number; //learner or tutor
   comment = new FormControl('');
-  suggestion = new FormControl('') ;
+  suggestion = new FormControl('');
 
   static TUTOR = 3;
   static LEARNER = 1;
-  static APPLICANT = 2;    
+  static APPLICANT = 2;
 
   constructor(
     private dialogRef: MatDialogRef<CancelSessionDialogComponent>,
@@ -32,7 +32,7 @@ export class CancelSessionDialogComponent implements OnInit {
     this.role = this.data[3];
     console.log(this.withTwelveHours);
     // Remove padding top and padding bottom gaps
-    $('.dialog1 .mat-dialog-container').css({'padding-top':'0', 'padding-bottom':'0'});
+    $('.dialog1 .mat-dialog-container').css({ 'padding-top': '0', 'padding-bottom': '0' });
   }
   close() {
     this.dialogRef.close();
@@ -40,22 +40,24 @@ export class CancelSessionDialogComponent implements OnInit {
   save() {
     console.log(this.comment.value);
     let user_ticked = '';
-    $.each($('input[name=\'tick_comment\']:checked'), function(){
+    $.each($('input[name=\'tick_comment\']:checked'), function () {
       user_ticked += $(this).val() + ', ';
-  });
+    });
     console.log(user_ticked);
     let user_comment = this.comment.value + ',' + user_ticked;
     let user_suggestion = this.suggestion.value;
 
-    if (user_suggestion.length <=15) {
-    this.warningMes = 'Please give suggestion before cancel the lesson and the suggestion must be at least 15 characters.';
-      return;
-    } 
+    if (this.role === 3 ){ //tutor
+      if (user_suggestion.length <= 15) {
+        this.warningMes = 'Please give suggestion before cancel the lesson and the suggestion must be at least 15 characters.';
+        return;
+      }
+    }
 
     if (user_comment === ',') {
       this.warningMes = '* Please check the reason options or give some comments before cancel the lesson';
     } else {
-      this.dialogRef.close(['yes', user_comment,user_suggestion]);
+      this.dialogRef.close(['yes', user_comment, user_suggestion]);
     }
   }
   reschedule() {

@@ -15,6 +15,7 @@ import { LearnerSessionRatingDialogComponent } from '../../dashboard-dialogs/lea
 import { isPlatformBrowser } from '@angular/common';
 import { CommonSupportService } from '../../../../services/support/common-support.service';
 import { MessengerHelperService } from '../../../../services/helpers/messenger-helper.service';
+import { AlertNotificationService } from '../../../../services/support/alert-notification.service';
 
 @Component({
   selector: 'app-schedules-list',
@@ -22,7 +23,7 @@ import { MessengerHelperService } from '../../../../services/helpers/messenger-h
   styleUrls: ['./schedules-list.component.css']
 })
 export class SchedulesListComponent implements OnInit {
-
+  developVersion =true;//for test
   sessionsInfo = []; // tutor role and learner role
   range = [];
   now: any;
@@ -58,7 +59,8 @@ export class SchedulesListComponent implements OnInit {
     private calendarService: CalendarSupportService,
     private learnerService: LearnerService,
     private imageService: CommonSupportService,
-    private messengerHelperService: MessengerHelperService
+    private messengerHelperService: MessengerHelperService,
+    private alertservice: AlertNotificationService,
   ) {
     if (isPlatformBrowser(this.platformId)) {
       this.isBrowser = true;
@@ -199,14 +201,11 @@ export class SchedulesListComponent implements OnInit {
           if (this.isBrowser) {
             this.removeOptions(res[0]);
           }
-          // 2. update this.sessionInfo because it is connected to the html template,using local session obj
-          this.updateSessions(this.sessionsInfo, res[0]);
-          console.log(this.sessionsInfo);
           // send to server, because res is an array, using utc_session obj
           let id = Object.keys(res[1])[0];
           let data = res[1][id];
           console.log(id, data);
-          this.sendTimeLocation(id, data, this.role);
+          this.sendTimeLocation(id, data, this.role, res[0]);
         } else {
           // user clicks outside dialog or esc key to close the dialog
           if (res !== '1' && res !== '2') {
@@ -224,6 +223,8 @@ export class SchedulesListComponent implements OnInit {
       (err) => console.warn(err)
     );
   }
+
+  //if user cancel and update session ,need send status to server  
   sendStatus(id: any, data: Object, role: any ,reason) {
     if (Object.keys(data).length !== 0) {
       if (role === 3) {
@@ -236,10 +237,14 @@ export class SchedulesListComponent implements OnInit {
             console.log(res);
             console.log('Successfully sent data!');
             // update text which is related to html
-            // this.updateText(data, sessionID);            
+            // this.updateText(data, sessionID);    
+            this.alertservice.sendAlert('This operation succeeded!','SUCCESS', 'toast-top-right', 1500);                    
             this.updateStatus(data, this.sessionsInfo, id);                        
           }
-          , (err) => { console.warn(err); }
+          , (err) => { 
+            console.warn(err); 
+            this.alertservice.sendAlert('This operation failed!','ERROR', 'toast-top-right', 5000);            
+          }
         )
         else        
         this.tutorService.updateTutorSessionStatus(id, data).subscribe(
@@ -250,9 +255,14 @@ export class SchedulesListComponent implements OnInit {
             console.log('Successfully sent data!');
             // update text which is related to html
             // this.updateText(data, sessionID);
+            this.alertservice.sendAlert('This operation succeeded!','SUCCESS', 'toast-top-right', 1500);            
             this.updateStatus(data, this.sessionsInfo, id);            
           }
-          , (err) => { console.warn(err); }
+          , (err) => { 
+            console.warn(err); 
+            this.alertservice.sendAlert('This operation failed!','ERROR', 'toast-top-right', 5000);            
+          }
+
         );
       }
       if (role === 1 || role === 2) {
@@ -265,10 +275,15 @@ export class SchedulesListComponent implements OnInit {
             console.log(res);
             console.log('Successfully sent data!');
             // update text which is related to html
-            // this.updateText(data, sessionID);            
+            // this.updateText(data, sessionID);     
+            this.alertservice.sendAlert('This operation succeeded!','SUCCESS', 'toast-top-right', 1500);                   
             this.updateStatus(data, this.sessionsInfo, id);                        
           }
-          , (err) => { console.warn(err); }
+          , (err) => { 
+            console.warn(err); 
+            this.alertservice.sendAlert('This operation failed!','ERROR', 'toast-top-right', 5000);            
+          }
+
         )
         else
         this.learnerService.updateLearnerSessionStatus(id, data).subscribe(
@@ -281,12 +296,16 @@ export class SchedulesListComponent implements OnInit {
             // this.updateText(data, sessionID);            
             this.updateStatus(data, this.sessionsInfo, id);                
           }
-          , (err) => { console.warn(err); }
+          , (err) => { 
+            console.warn(err); 
+            this.alertservice.sendAlert('This operation failed!','ERROR', 'toast-top-right', 5000);            
+          }
+
         )
       }
     }
   }
-  sendTimeLocation(id: any, data: Object, role: any) {
+  sendTimeLocation(id: any, data: Object, role: any , para) {
     console.log(data);
     if (Object.keys(data).length !== 0) {
       if (role === 3) {
@@ -296,8 +315,16 @@ export class SchedulesListComponent implements OnInit {
             this.sucSubmit = true;
             console.log(res);
             console.log('Successfully sent data!');
+            // 2. update this.sessionInfo because it is connected to the html template,using local session obj
+            this.updateSessions(this.sessionsInfo, para);
+            console.log(this.sessionsInfo);
+
+            this.alertservice.sendAlert('This operation succeeded!','SUCCESS', 'toast-top-right', 1500);
           }
-          , (err) => { console.warn(err); }
+          , (err) => { 
+            console.warn(err); 
+            this.alertservice.sendAlert('This operation failed!','ERROR', 'toast-top-right', 5000);            
+          }
         );
       }
       if (role === 1 || role === 2) {
@@ -308,8 +335,15 @@ export class SchedulesListComponent implements OnInit {
             this.sucSubmit = true;
             console.log(res);
             console.log('Successfully sent data!');
+            // 2. update this.sessionInfo because it is connected to the html template,using local session obj
+            this.updateSessions(this.sessionsInfo, para);
+            console.log(this.sessionsInfo);            
+            this.alertservice.sendAlert('This operation succeeded!','SUCCESS', 'toast-top-right', 1500);            
           }
-          , (err) => { console.warn(err); }
+          , (err) => { 
+            console.warn(err); 
+            this.alertservice.sendAlert('This operation failed!','ERROR', 'toast-top-right', 5000);            
+          }
         );
       }
     }
@@ -350,6 +384,7 @@ export class SchedulesListComponent implements OnInit {
       }
     }, (error) => {
       console.log(error);
+      this.alertservice.sendAlert('Sorry, can not get data now, please try again!','ERROR', 'toast-top-right', 5000);                  
     });
   }
   // tutor role: get tutor schedules
@@ -365,14 +400,18 @@ export class SchedulesListComponent implements OnInit {
         this.showEdit = true;
         // console.log(this.calendarEvents);
         // console.log('edit coming');
-      }, (error) => console.log(error));
+      }, (error) => {
+        console.log(error);
+        this.alertservice.sendAlert('Sorry, can not get data now, please try again!','ERROR', 'toast-top-right', 5000);                  
+      });
+  
   }
   // learner role: get learner sessions information
   getLearnerSessionInfo() {
     console.log('search this range:', this.range);
     this.learnerService.indexLearnerSessions(this.range).subscribe((res) => {
       console.log(res);
-      let allSessions = res['sessions'];
+      let allSessions = res['allSessions'];
       console.log(allSessions);
       this.sessionsInfo = this.changeFormat(allSessions);
       console.log(this.sessionsInfo);
@@ -383,6 +422,7 @@ export class SchedulesListComponent implements OnInit {
       }
     }, (error) => {
       console.log(error);
+      this.alertservice.sendAlert('Sorry, can not get data now, please try again!','ERROR', 'toast-top-right', 5000);                  
     });
   }
   // learner role: used to get a specific tutor schedules
@@ -425,7 +465,10 @@ export class SchedulesListComponent implements OnInit {
           console.log(myLocs);
           // pass to dialog
           this.processDialog(selectedSession, myEvents, myLocs, times, this.role);
-        }, (error) => console.log(error));
+        }, (error) => {
+          console.log(error);
+          this.alertservice.sendAlert('Sorry, can not get data now, please try again!','ERROR', 'toast-top-right', 5000);                  
+        });
     }
   }
   // learner role: find if already get the tutor schedules from server
@@ -469,10 +512,45 @@ export class SchedulesListComponent implements OnInit {
         withinTwelveHours = true;
       }
       //if session is passed, assign session_status is proceed!
-      let session_status = (e.session_status==='planned'&&now > date.add(e.session_duration, 'hours'))?
-              'proceed':
-              e.session_status;
-              
+      let session_status ;
+      if (this.role===3){
+        if (this.developVersion===true)  //for develop mode test, in 48 hour session can be report
+          session_status = (e.session_status===0 &&now > date.add(e.session_duration-48, 'hours'))?
+                50:e.session_status;
+        else
+          session_status = (e.session_status===0 &&now > date.add(e.session_duration, 'hours'))?
+                50:e.session_status;
+      }
+      else{
+        session_status = e.session_status;
+      }
+
+      let session_status_name;
+      switch(session_status) {
+        case 0:
+            session_status_name = "Planned";
+            break;
+        case 1:
+            session_status_name = "Canceled";
+            break;
+        case 2:
+            if (this.role===3){ 
+              session_status_name = "Completed";
+            }
+            else
+              session_status_name = "Waiting rating";            
+            break;
+        case 3:            
+            session_status_name = "Dispute";
+            break;
+        case 50:            
+            session_status_name = "Proceeding";
+            break;            
+        default:
+            session_status_name = "Others";
+      }        
+
+
       date.add(e.session_duration, 'hours')
       console.log(interval, withinTwelveHours);
       newObj = {
@@ -491,7 +569,8 @@ export class SchedulesListComponent implements OnInit {
         session_update: update,
         tutor_img: tutor_img,
         learner_img: learner_img,
-        withinTwelveHours: withinTwelveHours
+        withinTwelveHours: withinTwelveHours,
+        session_status_name:session_status_name
       };
       return newObj;
     });
@@ -609,7 +688,7 @@ export class SchedulesListComponent implements OnInit {
           session['session_endTime'] = endTime;
           session['session_startTime'] = startTime;
           // no matter, time changed or location changed, update the status
-          session['session_status'] = 'planned';
+          session['session_status'] = 0;
           session['session_times'] = times;
           session['session_day'] = day;
           // add a new property to indicate that the session has been updated at least one time
@@ -677,13 +756,17 @@ export class SchedulesListComponent implements OnInit {
     dialogRef.afterClosed().subscribe(
       (res) => {
         console.log(res);
+        // this.alertservice.sendAlert('This operation successed!','SUCCESS', 'toast-top-right', 1500);                                  
         if (res) {
           // this.profile_photo = res;
           // this.submitImage(res)
           this.sendReport(sessionID, res);          
         }
       },
-      (err) => console.warn(err)
+      (err) => {
+        console.warn(err);
+        this.alertservice.sendAlert('This operation failed!','ERROR', 'toast-top-right', 5000);                          
+      }
     );
   }
   reportIssue(event) {
@@ -697,27 +780,64 @@ export class SchedulesListComponent implements OnInit {
     dialogRef.afterClosed().subscribe(
       (res) => {
         console.log(res);
+        this.alertservice.sendAlert('This operation successed!','SUCCESS', 'toast-top-right', 1500);                                  
         if (res) {
           console.log('got something', res);
-
         }
       },
-      (err) => console.warn(err)
+      (err) => {
+        console.warn(err);
+        this.alertservice.sendAlert('This operation failed!','ERROR', 'toast-top-right', 5000);                          
+      }
     );
   }
-  sendReport(id: number, data: object) {
-    this.tutorService.storeTutorSessionReport(id, data).subscribe(
+  //send reference data to server  
+  sendReference(tutorId: number, reference: object) {
+    this.learnerService.storeTutorReference(tutorId, reference).subscribe(
+      (res) => {
+        console.log(res);
+        console.log('Successfully sent reference!');
+        this.alertservice.sendAlert('This operation successed!','SUCCESS', 'toast-top-right', 1500);                                  
+      }
+      , (err) => {
+        console.warn(err);
+        this.alertservice.sendAlert('This operation failed!','ERROR', 'toast-top-right', 5000);                          
+      }
+    );
+  }
+
+  //send rating data to server  
+  sendRating(sessionId: number, rating: object) {
+    this.learnerService.storeRateSession(sessionId, rating).subscribe(
+      (res) => {
+        console.log(res);
+        console.log('Successfully sent rating!');
+        this.alertservice.sendAlert('This operation successed!','SUCCESS', 'toast-top-right', 1500);                                  
+      }
+      , (err) => {
+        console.warn(err);
+        this.alertservice.sendAlert('This operation failed!','ERROR', 'toast-top-right', 5000);                          
+      }
+    );
+  }
+  //send report data to server
+  sendReport(sessionId: number, report: object) {
+    this.tutorService.storeTutorSessionReport(sessionId, report).subscribe(
       (res) => {
         console.log(res);
         console.log('Successfully sent report!');
+        this.alertservice.sendAlert('This operation successed!','SUCCESS', 'toast-top-right', 1500);                                  
       }
-      , (err) => { console.warn(err); }
+      , (err) => {
+        console.warn(err);
+        this.alertservice.sendAlert('This operation failed!','ERROR', 'toast-top-right', 5000);                          
+      }
     );
   }
   rateLesson(event,session) {
     console.log('view all session');
     let dialogRef = this.dialog.open(LearnerSessionRatingDialogComponent,
-      {
+      { 
         panelClass: 'dialog1',
         data: {
           tutor_name: session.tutor_name,
@@ -734,8 +854,14 @@ export class SchedulesListComponent implements OnInit {
         if (res) {
           console.log('got something', res);
         }
+        this.sendRating(session.session_id,res[0]);
+        if (res[1].comment.length>0)
+          this.sendReference(session.tutor_id,res[1]);        
       },
-      (err) => console.warn(err)
+      (err) => {
+        console.warn(err);
+        this.alertservice.sendAlert('This operation failed!','ERROR', 'toast-top-right', 5000);                          
+      }
     );
   }
   triggerMessenger(event) {

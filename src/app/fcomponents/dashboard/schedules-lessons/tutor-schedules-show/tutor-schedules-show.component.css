@@ -7,3 +7,24 @@ color: #0F0;
 .fc-center h2 {
   font-size: 0.7rem;
 }
+
+.card
+{
+    border-radius: 20px;
+    margin: 15px;
+}
+.card-header
+{
+    border: 0;
+    border-top-right-radius: 20px;
+    border-top-left-radius: 20px;
+    margin-top: 0;
+    font-family: inherit;
+    line-height: 1.35;
+    color: #4f5457;
+    letter-spacing: -.144rem;
+    font-weight: 700;
+    text-rendering: geometricPrecision;
+    font-size: 32px;
+    margin-bottom: 20px;    
+}

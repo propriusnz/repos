@@ -2,17 +2,17 @@
     <h4 class="card-header m2">Ratings</h4>
     <div class="card-body">
       <div class="p-2 badges d-flex flex-direction-row flex-wrap justify-content-center">
-        <div *ngFor="let bage of bages">
-        <div *ngIf="bage.capacity !== 0" class="flex flex-direction-column flex-align-center m-3">
-          <div ngClass="{{bage.color}}" class="badge Badge" matBadge="{{bage.capacity}}"><img src="{{bage.src}}"></div>
-          <div class="bage_name">{{bage.name}}</div>
+        <div *ngFor="let bage of tutorAwards">
+        <div *ngIf="bage.award_amount !== 0" class="flex flex-direction-column flex-align-center m-3">
+          <div ngClass="{{bage.color}}" class="badge Badge" matBadge="{{bage.award_amount}}"><img src="{{bage.src}}"></div>
+          <div class="bage_name">{{bage.title}}</div>
         </div>
         </div>
       </div>
       <div class="star-rating">
       <star-rating [readOnly]="true" [rating]="rate.rates/rate.ratings" [showHalfStars]="true" size="large"></star-rating>
       <h3 class="m2 mb-0">{{(rate.rates/rate.ratings).toFixed(1)}} Average</h3>
-      <div class="s4 font-weight-bold text-grey">{{rate.ratings}} ratings, {{rate.students}} students</div>
+      <div class="s4 font-weight-bold text-grey">{{rate.ratings}} ratings</div>
       </div>
       <div *ngFor="let comment of page_comments;let i = index" class="rating-comment">
         <div class="comment-person d-flex">

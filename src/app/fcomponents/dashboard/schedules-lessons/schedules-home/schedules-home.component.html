@@ -1,14 +1,16 @@
 <div class="container">
   <div class="row">
-    <div class="col-12">
+    <div class="col-12 col-md-10">
       <div class="btn-group">
-          <button type="button" (click)="showCalendar()" class="btn btn-primary rounded-left" id="myCalendar">Calendar</button>
-          <button type="button" (click)="showList()" class="btn btn-primary rounded-right" id="myList">List</button>
+          <!-- <button type="button" (click)="showCalendar()" class="btn btn-primary rounded-left" id="myCalendar">Calendar</button>
+          <button type="button" (click)="showList()" class="btn btn-primary rounded-right" id="myList">List</button> -->
+          <button type="button" class="btn btn-info" id="myCalendar" (click)="showCalendar()"><i class="fa fa-calendar" aria-hidden="true"></i> Calendar</button>
+          <button type="button" class="btn btn-info" id="myList"  (click)="showList()"><i class="fa fa-list" aria-hidden="true"></i> List</button>
       </div>
     </div>
     <br>
     <br>
-    <div class="col-12">
+    <div class="col-12 col-md-10">
         <router-outlet></router-outlet>
     </div>
   </div>

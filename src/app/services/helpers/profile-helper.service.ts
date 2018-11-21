@@ -55,9 +55,12 @@ export class ProfileHelperService {
 
   students(data){
     console.log(data);
-    if(data===null||data===''||data.learnerProfile.length===0){
+    if(!data||data===''||data.length===0){
       this.gen=[{destination:"/app/dashboard/learner/profile", main:"You need complete your profile",icon:'<i class="fas fa-edit"></i>'}]
-      } 
+    } else {
+      this.gen=[{destination:"/app/dashboard/learner/profile", main:"Go to fill your profile",icon:'<i class="fas fa-edit"></i>'}]      
+    }
+
     }
   students2(data){
     if (data===false){

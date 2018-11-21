@@ -83,4 +83,7 @@ export class UserService {
     } else
       return this.http.get(this.baseUrl + '/learners/' + this.userId + '/contacts', { headers: this.headers1 })
   }
+  getAwards(){
+    return this.http.get(this.baseUrl+'/allawards', {headers: this.headers1})
+  }
 }

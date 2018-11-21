@@ -23,15 +23,11 @@ export class LearnerService {
 
   // Learner Profile
   indexLearnerProfile(){
-    return this.http.get(this.baseUrl + '/learners/' + this.id +'/profile', {headers: this.headers1});
+    return this.http.get(this.baseUrl + '/users/' + this.id +'/learners', {headers: this.headers1});
   }
   
-  showLearnerProfile() {
-    return this.http.get(this.baseUrl + '/learnerprofile/' + this.id, { headers: this.headers1 });
-  }
-
-  updateLearnerProfile(profileId, ee) {
-    return this.http.put(this.baseUrl + '/learners/' + this.id +'/profile/' + profileId, ee, { headers: this.headers1 });
+  updateLearnerProfile(learnerId, learner) {
+    return this.http.put(this.baseUrl + '/learners/' + this.id +'/learners/' + learnerId, learner, { headers: this.headers1 });
   }
 
   // Learner Resources
@@ -100,8 +96,8 @@ export class LearnerService {
     return this.http.get(this.baseUrl + '/findtutorprofile/' + id);
   }
 
-  storeLearnerProfile(courseList) {
-    return this.http.post(this.baseUrl + '/learners/' + this.id + '/profile', courseList, { headers: this.headers1 });
+  storeLearnerProfile(learner) {
+    return this.http.post(this.baseUrl + '/users/' + this.id + '/learners', learner, { headers: this.headers1 });
   }
   // Learner See Tutor
   indexLearnersTutor(queryParams: string) {
@@ -132,4 +128,18 @@ export class LearnerService {
   bookPackageOrder(courseId,price){
     return this.http.post(this.baseUrl + '/users/' + this.id + '/products/' + courseId+'/packageorder/'+price, {},{ headers: this.headers1});
   }
+  userOrder(){
+    return this.http.get(this.baseUrl + '/buyers/' + this.id + '/orders', { headers: this.headers1});    
+  }
+  //rate session
+  storeRateSession(sessionId,rating){
+    return this.http.post(this.baseUrl + '/learners/' + this.id + '/sessions/' + sessionId+'/rating',rating,{ headers: this.headers1});  }  
+  //rate session
+  storeTutorReference(tutorId,reference){
+    return this.http.post(this.baseUrl + '/learners/' + this.id + '/tutors/' + tutorId+'/reference',reference,{ headers: this.headers1});  }  
+    //report session
+  storeReportSession(sessionId,report){
+    return this.http.post(this.baseUrl + '/learners/' + this.id + '/sessions/' + sessionId+'/report',report,{ headers: this.headers1});
+  } 
+  
 }

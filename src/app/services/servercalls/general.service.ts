@@ -69,6 +69,5 @@ export class GeneralService {
   storeContact(contactUs){
     return this.http.post(this.baseUrl+'/contacts', contactUs);
   }
-  // new method
   
 }

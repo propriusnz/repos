@@ -1,4 +1,6 @@
 import { LearnerService } from '../../../../services/servercalls/learner.service';
+import { UserService } from '../../../../services/servercalls/user.service';
+
 import {
   ClickEvent,
   HoverRatingChangeEvent,
@@ -7,6 +9,7 @@ import {
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { Validators,FormGroup, FormControl, FormBuilder, FormControlName } from '@angular/forms';
 import { Component, OnInit, Inject, ElementRef } from '@angular/core';
+
 
 @Component({
   selector: 'app-learner-session-rating-dialog',
@@ -23,12 +26,12 @@ export class LearnerSessionRatingDialogComponent implements OnInit {
   onHoverRatingChangeResult: HoverRatingChangeEvent;
   onRatingChangeResult: RatingChangeEvent;
 
-  agIndex = [];
+  awdIndex = [];
   reportForm: FormGroup;
 
   constructor(
     private builder: FormBuilder,
-    private learnerServive: LearnerService,
+    private userService: UserService,
     private dialogRef: MatDialogRef<LearnerSessionRatingDialogComponent>,
     private elem: ElementRef,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -44,11 +47,8 @@ export class LearnerSessionRatingDialogComponent implements OnInit {
       session_location: this.data.session_location,
       session_id: this.data.session_id
     }
+    this.getAward();
     // set the options
-    this.agIndex = ['Student was late','Student was absent','Student left early',
-      'Student-related technical difficulities','Other'];
-    this.reportForm = this.builder.group({ 'Student was late':['',],'Student was absent':['',],'Student left early':['',],'Teacher was absent':['',],'Teacher was late':['',],'Teacher left early':['',],
-    'My own technical difficulities':['',],'Student-related technical difficulities':['',],'Other':['',],'comment':['',Validators.minLength(2)]});
   }
 
   onstarClick = ($event: ClickEvent) => {
@@ -56,49 +56,51 @@ export class LearnerSessionRatingDialogComponent implements OnInit {
     this.onClickResult = $event;
     this.rate = this.onClickResult;
   };
+//
 
-  // onSubmit(){
-  //   console.log("submited")
-  //   this.learnerServive.storeLearnerSessionsRating(this.tutors.session_id, this.rate).subscribe(
-  //     (res) => {
-  //       console.log(res);
-  //     },
-  //     (err) => { console.log(err), this.errorMessage = "Sorry, but something went wrong." }
-  //   )
-
-  //   this.dialogRef.close("Done")
-  // }
-
+    //get award data from server  
+  getAward() {
+    this.userService.getAwards().subscribe(
+      (res) => {
+        console.log(res);
+        this.awdIndex =res['allAwards'];
+         this.reportForm = this.builder.group({ 
+            awards:this.builder.array(this.awdIndex.map(e=>this.builder.control(false)),[]) ,
+            'comment':['',Validators.minLength(40)]});
+        console.log(this.reportForm);
+        console.log('get awards sucessed!');
+      }
+      , (err) => {
+        console.warn(err);
+      }
+    );
+  }
+  
   close() {
     this.dialogRef.close();
   }
 
   save() {
-    console.log(this.reportForm.value);
-    let reportData = {
-      problem:'',
-      comment:''
+    let comment={comment:''};
+    let ratingData = {
+      ratings:0,
+      award:[]
     };
-    let checkboxes = this.elem.nativeElement.querySelectorAll('input[type="checkbox"]');
-    let checkedOne = Array.prototype.slice.call(checkboxes).some(x => x.checked);
-    if(checkedOne){
-      for(let x of this.agIndex){
-        if(this.reportForm.value[x]){
-          if(reportData.problem===''){
-            reportData.problem = reportData.problem + x;
-          }else{
-            reportData.problem = reportData.problem +','+x;
-          };
-        }
+    comment.comment = this.reportForm.value.comment;
+
+    console.log(this.reportForm.value);
+    if (comment.comment.length<40)
+      return;
+
+    ratingData.ratings = this.rate.rating;
+    
+    this.reportForm.value.awards.map((e,index)=>{
+      if (e===true){
+        ratingData.award.push(this.awdIndex[index].award_id);
       }
-      reportData.comment = this.reportForm.value['comment'];
-      console.log(reportData);
-      this.dialogRef.close();
-    }else{
-      console.log('no');
+    });    
+
+    console.log(ratingData,);
+      this.dialogRef.close([ratingData,comment]);
     }
-
-    }
-
-
 }

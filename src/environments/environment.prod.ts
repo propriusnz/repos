@@ -4,7 +4,9 @@ export const environment = {
   // baseImgUrl: 'http://ls3.api2'
   baseSsrUrl: 'https://www.learnspace.co.nz',
   //baseUrl: 'https://proprius.co.nz/api/public/api',
-  baseUrl: 'http://192.168.1.72:8081', //for test
+  //baseUrl: 'http://192.168.1.72:8081', //for test
+  baseUrl:'http://proprius.co.nz/testing/public',
+ 
   // baseSsrUrl: 'http://deansapi',
   // baseUrl: 'http://deansapi',
   baseImgUrl: 'https://proprius.co.nz/api/public',

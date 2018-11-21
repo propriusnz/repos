@@ -59,7 +59,7 @@ export class ReportSessionIssueDialogComponent implements OnInit {
       }
       reportData.comment = this.reportForm.value['comment'];
       console.log(reportData);
-      this.dialogRef.close();
+      this.dialogRef.close(reportData);
     }else{
       console.log('no');
     }

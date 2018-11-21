@@ -13,6 +13,8 @@ import { LearnerTutorsPanelComponent } from './learner-tutors/learner-tutors-pan
 import { ViewAllSessionDialogComponent } from './dashboard-dialogs/view-all-session-dialog/view-all-session-dialog.component'; //learner
 
 import { OrderConfirmComponentComponent } from './order/order-confirm-component/order-confirm-component.component';//all
+
+import { OrderDetailsComponent } from './order/order-details/order-details.component'
 import { LessonOrderComponent } from './order/lesson-order/lesson-order.component'
 
 import { MatDialogModule, MatCardModule, MatDatepickerModule, MatFormFieldModule, MatInputModule, MatCheckboxModule, MatAutocompleteModule, MatBadgeModule, MatBottomSheetModule, MatButtonModule, MatButtonToggleModule, MatChipsModule, MatDividerModule, MatExpansionModule, MatGridListModule, MatIconModule, MatListModule, MatMenuModule, MatProgressBarModule, MatProgressSpinnerModule, MatRadioModule, MatRippleModule, MatSelectModule, MatSidenavModule, MatSliderModule, MatSlideToggleModule, MatSnackBarModule, MatSortModule, MatTableModule, MatTabsModule, MatToolbarModule, MatTooltipModule, MatTreeModule, MatNativeDateModule, DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material';
@@ -50,10 +52,11 @@ import {TagInputModule} from 'ngx-chips';
     ViewAllSessionDialogComponent,
     OrderConfirmComponentComponent,
     LessonOrderComponent,
+    OrderDetailsComponent,
   ],
   entryComponents: [
     ViewAllSessionDialogComponent,
-
+    OrderDetailsComponent,
   ],   
 })
 export class DashboardLearnerModule { }
