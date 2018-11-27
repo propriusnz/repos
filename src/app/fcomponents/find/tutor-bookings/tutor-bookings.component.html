@@ -1,6 +1,9 @@
 <div class="container">
-  <div class="row">
-    <div class="col-12 col-sm-12 col-md-12 col-lg-8 col-xl-8">
+    <div *ngIf="loading" >
+        <div class="loader"></div>
+     </div>
+  <div *ngIf="!loading" class="row">
+     <div  class="col-12 col-sm-12 col-md-12 col-lg-8 col-xl-8">
       <div class='card'>
         <div class='card-head'>
           <h2>Lesson option</h2>

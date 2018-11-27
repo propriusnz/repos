@@ -89,7 +89,7 @@ export class LessonOrderComponent implements OnInit {
   { name: 'Completed', filter: 'finished' },
   { name: 'Processing', filter: 'processing' },
   { name: 'Cancel', filter: 'cancel' }
-  ]
+  ];
 
 
   dialogRef: MatDialogRef<OrderDetailsComponent>;

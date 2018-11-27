@@ -77,6 +77,7 @@ export class TutorBookingsComponent implements OnInit {
   };
   hasSessions=[]; //for calendar
   errorObj:any;
+  loading=false;
 
   // dialog width and height
   dialogWidth = 500;
@@ -97,10 +98,13 @@ export class TutorBookingsComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    console.log(moment.utc().format());
-    this.route.params.subscribe(params => {
+      this.route.params.subscribe(params => {
       this.tutorProfileId = params['id'];
-      this.urlFrom = this.getUrlFrom(this.route);
+      this.urlFrom = 0;
+      if (params['orderid']!=null){
+        this.orderId = params['orderid'];
+        this.urlFrom = 1;
+      }
     });
     this.route.queryParams.subscribe(params => {
       this.preDate = params['dTime'];
@@ -129,16 +133,6 @@ export class TutorBookingsComponent implements OnInit {
         console.log(this.errorObj );                
       }
     );
-  }
-  getUrlFrom(route){
-    if (route.url.value[0].path==='find-tutor')
-      return 0;
-    else if (route.url.value[0].path==='schedule'){
-      this.orderId = this.route.params['value'].orderid;
-      return 1;
-    }
-    else 
-      return 0;
   }
   // check if the user is verified or not
   isVerified() {
@@ -175,7 +169,8 @@ export class TutorBookingsComponent implements OnInit {
           if (allEvents[0]) {
             this.addLesson(allEvents[0]);
           }
-        }        
+        } 
+        this.loading=false;
       },
       err=>{
         console.error(err);
@@ -526,7 +521,12 @@ export class TutorBookingsComponent implements OnInit {
   }
   // send the bookings to server
   sendBookings() {
-    this.sessions.map(e=>e.learner_id=this.userId);
+    this.sessions.map(e=>{
+      e.learner_id=this.userId;
+      e.s_curriculum=this.session.curriculum;
+      e.s_subject=this.session.subject;
+      e.s_location=this.session.location;
+     });
     this.learnerService.storeLearnerSessions(this.tutorProfileId, this.billNum, this.sessions).subscribe(
         (res) => {
           this.updateCalendar();
@@ -548,7 +548,12 @@ export class TutorBookingsComponent implements OnInit {
   sendSchedule(){
     //storeSchedulingSessions(orderId ,scheduling){
     //add learner id info into the array for temporary
-    this.sessions.map(e=>e.learner_id=this.userId);      
+    this.sessions.map(e=>{
+      e.learner_id=this.userId;
+      e.s_curriculum=this.session.curriculum;
+      e.s_subject=this.session.subject;
+      e.s_location=this.session.location;      
+    });      
     this.learnerService.storeSchedulingSessions(this.orderId, this.sessions).subscribe(
       (res) => {
         this.updateCalendar();

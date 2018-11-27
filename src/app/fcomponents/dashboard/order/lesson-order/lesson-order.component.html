@@ -6,7 +6,10 @@
   </mat-card-header> -->
 
   <mat-card-content>
-    <div *ngIf='buyerOrders == null; else orders'>
+    <div *ngIf="loading" >
+        <div class="loader"></div>
+     </div>
+    <div *ngIf='buyerOrders == null&&!loading"; else orders'>
       <div>
         Sorry, there is no order found.
       </div>
