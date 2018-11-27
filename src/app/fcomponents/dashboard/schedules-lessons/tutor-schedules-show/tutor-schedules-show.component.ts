@@ -40,11 +40,12 @@ export class TutorScheduleShowComponent implements OnInit {
     // console.log($(this.window).width());
     this.tutorService.showTutorSchedules().subscribe(
       (res) => {
+        console.log(res);
         let events = this.calendarService.getEvent(res['tutorFreeTime'],res['tutorSessions']);
         this.sessionEvents = events['session'];
         this.freeEvents = events['free'];
-        console.log(this.sessionEvents);
-        console.log(this.freeEvents);
+        // console.log(this.sessionEvents);
+        // console.log(this.freeEvents);
         // set the merged events
         for (let element of this.sessionEvents) {
           if (!this.inSide(this.mergedEvents, element)) {
@@ -60,7 +61,7 @@ export class TutorScheduleShowComponent implements OnInit {
               color: element.color
             };
             this.mergedEvents.push(myObj);
-            console.log(this.mergedEvents);
+            // console.log(this.mergedEvents);
           }
         }
         this.mergedEvents = this.mergedEvents.filter((value, index, array) =>
@@ -132,7 +133,7 @@ export class TutorScheduleShowComponent implements OnInit {
         }); // 'margin-top':'0.5px'
       },
       eventRender: (event, element, view) => {
-        console.log(view.name);
+        //console.log(view.name);
         if ((event.title) !== '') {
           let x = event.start as moment.Moment;
           let y = event.end as moment.Moment;

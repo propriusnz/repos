@@ -25,7 +25,8 @@ export class NewTutorService {
 
 
   storeTutorApplication(aaa:Object ){
-    return this.http.post(this.baseUrl+'/jobs/'+this.id+'/apply', aaa, {headers: this.headers1});
+    return this.http.post(this.baseUrl+'/users/'+this.id+'/jobs/1/apply', aaa, {headers: this.headers1});
+
   }
 
   showTutorApplication(){

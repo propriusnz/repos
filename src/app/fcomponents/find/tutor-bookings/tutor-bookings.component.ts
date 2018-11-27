@@ -12,10 +12,11 @@ import {
 import {
   CalendarSupportService
 } from '../../../services/support/calendar-support.service';
-import {
-  LearnerService
-} from '../../../services/servercalls/learner.service';
+import { LearnerService } from '../../../services/servercalls/learner.service';
+import { CommonSupportService } from '../../../services/support/common-support.service';
+import {GeneralService} from '../../../services/servercalls/general.service';
 import * as moment from 'moment';
+import { Observable } from 'rxjs/Observable';
 import {
   UserService
 } from '../../../services/servercalls/user.service';
@@ -52,6 +53,7 @@ export class TutorBookingsComponent implements OnInit {
   curriculums = []; // curriculum view
   locations = []; // location view
   tutorId: string;
+  tutorPhoto:string;
   userId: string;
   tutorProfileId: string;
   startTime = [];
@@ -73,6 +75,7 @@ export class TutorBookingsComponent implements OnInit {
     session: [],
     free: [],
   };
+  hasSessions=[]; //for calendar
   errorObj:any;
 
   // dialog width and height
@@ -85,10 +88,12 @@ export class TutorBookingsComponent implements OnInit {
     @Inject(LOCAL_STORAGE) private localStorage: any,
     private calendarService: CalendarSupportService,
     private learnerService: LearnerService,
+    private generalService:GeneralService,
     private route: ActivatedRoute,
     private userService: UserService,
     private paymentService:PaymentService,
-    public dialog: MatDialog,
+    private commonService:CommonSupportService,
+    public  dialog: MatDialog,
   ) {}
 
   ngOnInit() {
@@ -147,9 +152,19 @@ export class TutorBookingsComponent implements OnInit {
   }
   // subscribe data from the server
   getTutorData() {
-    this.learnerService.showTutor(this.tutorProfileId).subscribe(
-      (res) => {
-        this.setTutorData(res);
+    let tutorInfo,tutorSession
+    Observable.forkJoin(
+      this.generalService.showTutor(this.tutorProfileId).map(res => {
+        console.log(res);
+        tutorInfo = res;
+        }),
+      this.generalService.showTutorSession(this.tutorProfileId).map(res => {
+        console.log(res);
+        tutorSession =res['allSessions'];
+      })
+    ).subscribe(
+      data=>{
+        this.setTutorData(tutorInfo,tutorSession);
         // set initial session data via 'book session' popover
         console.log(this.preDate);
         if (this.preDate) {
@@ -160,13 +175,16 @@ export class TutorBookingsComponent implements OnInit {
           if (allEvents[0]) {
             this.addLesson(allEvents[0]);
           }
-        }
+        }        
       },
-      (error) => console.log(error)
+      err=>{
+        console.error(err);
+      }      
     )
+
   }
   // set the tutor data and schedule data
-  setTutorData(res) {
+  setTutorData(res,sessions) {
     console.log(res);
     let data = res['tutorKey'];
     this.subjects = data.discipline.split(",");
@@ -179,10 +197,11 @@ export class TutorBookingsComponent implements OnInit {
     this.tutorPrice = this.session.rate;
 
     this.tutorId = data.tutor_id.toString();
+    this.tutorPhoto = this.commonService.findUserImg(this.tutorId );
     this.userId = this.localStorage.getItem('lsaUserId');
     console.log(this.tutorId, this.userId);
     // set the schedule data for calendar ??
-    this.eventContainer = this.calendarService.getEvent(res['tutorSchedule'],[]);
+    this.eventContainer = this.calendarService.getEvent(res['tutorSchedule'],sessions);
     this.events = this.eventContainer.free;
     for (let i = 0; i < this.events.length; i++) { // delete the free time that before current time
       let eve = this.events[i];

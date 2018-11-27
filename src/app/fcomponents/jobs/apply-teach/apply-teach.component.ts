@@ -66,8 +66,8 @@ export class ApplyTeachComponent implements OnInit {
         } else {
           this.emailVerifyStatus = false;
         }
-        this.userInfo = Object.assign(res['userInfo'], res['userKey']),
-        this.setFormValuesTo(this.userInfo)
+        this.userInfo = Object.assign(res['userInfo'], res['userKey'])
+        //this.setFormValuesTo(this.userInfo)
       },
       (error) => { this.errorMessage = "Sorry, we can't get to your information at this time." }
     )
@@ -75,11 +75,11 @@ export class ApplyTeachComponent implements OnInit {
 
   createForm() {
     this.appForm = this.formBuilder.group({
-      first_name: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(30), Validators.pattern('^[a-zA-Z\s]*$')]],
-      last_name: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(30), Validators.pattern('^[a-zA-Z\s]*$')]],
-      phone_num_pri: ['', [Validators.required, Validators.minLength(7), Validators.maxLength(12), Validators.pattern('^[0-9]*$')]],
-      location: ['', Validators.required],
-      DOB: ['', [Validators.required, this.dateRange]],
+      // first_name: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(30), Validators.pattern('^[a-zA-Z\s]*$')]],
+      // last_name: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(30), Validators.pattern('^[a-zA-Z\s]*$')]],
+      // phone_num_pri: ['', [Validators.required, Validators.minLength(7), Validators.maxLength(12), Validators.pattern('^[0-9]*$')]],
+      // location: ['', Validators.required],
+      // DOB: ['', [Validators.required, this.dateRange]],
       discipline_1: ['', Validators.required],
       discipline_2: [''],
       curriculum_1: ['', Validators.required],
@@ -97,14 +97,14 @@ export class ApplyTeachComponent implements OnInit {
       })
   }
 
-  setFormValuesTo(userInfoData) {
-    this.appForm.controls['first_name'].setValue(userInfoData.first_name);
-    this.appForm.controls['last_name'].setValue(userInfoData.last_name);
-    this.appForm.controls['phone_num_pri'].setValue(userInfoData.phone_num_pri);
-    this.appForm.controls['location'].setValue(userInfoData.location);
-    this.appForm.controls['DOB'].setValue(userInfoData.DOB);
-    this.appForm.updateValueAndValidity();
-  }
+  // setFormValuesTo(userInfoData) {
+  //   this.appForm.controls['first_name'].setValue(userInfoData.first_name);
+  //   this.appForm.controls['last_name'].setValue(userInfoData.last_name);
+  //   this.appForm.controls['phone_num_pri'].setValue(userInfoData.phone_num_pri);
+  //   this.appForm.controls['location'].setValue(userInfoData.location);
+  //   this.appForm.controls['DOB'].setValue(userInfoData.DOB);
+  //   this.appForm.updateValueAndValidity();
+  // }
 
   dateRange(AC: FormControl) {
     if (AC.value) {
@@ -156,7 +156,7 @@ export class ApplyTeachComponent implements OnInit {
         console.warn('File is not valid')
       } else {
         console.log(this.appForm.value);
-        this.processingForm(this.appForm.value)
+        this.processingAppForm(this.appForm.value)
       }
     }
   }
@@ -186,18 +186,29 @@ export class ApplyTeachComponent implements OnInit {
     this.formData.append('work_date', this.elem.nativeElement.querySelector('#workDate').value)
     this.transferDataToBack(this.formData);
   }
+  processingAppForm(appFormValue) {
+    this.formData.append('answer_1',appFormValue.curriculum_1+','+appFormValue.curriculum_2);
+    this.formData.append('answer_2',appFormValue.discipline_1+','+appFormValue.discipline_2);
+    this.formData.append('answer_3',appFormValue.work_1+','+appFormValue.work_1_detail+','+
+          appFormValue.work_start+'-'+appFormValue.work_end);
+    this.formData.append('answer_4',appFormValue.sp_ques_1);
+    this.formData.append('answer_5',appFormValue.sp_ques_1);
+    this.formData.append('answer_6',appFormValue.criminal_record);    
+    this.formData.append('cv', this.file, this.file.name);
+    this.transferDataToBack(this.formData);    
+  }
 
   transferDataToBack(formDataV) {
     this.NewTutorService.storeTutorApplication(formDataV).subscribe(
       (res) => {console.log(res)
-        this.localStorage.setItem('lsaWho', res['dataCon'].xUr);
+        // this.localStorage.setItem('lsaWho', res['dataCon'].xUr);
         this.router.navigate(['/app/apply/manager']);
         // window.location.reload();
       },
       (err) => {
         console.log(err),
         // this.errorMessage = 'Sorry, Something went wrong. '+ err['error'].error;
-        this.errorMessage = 'Sorry, Something went wrong. '+ 'Please verify your email account first.';
+        this.errorMessage = 'Sorry, Something went wrong. ';
       }
     )
   }

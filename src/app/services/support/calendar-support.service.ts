@@ -119,8 +119,23 @@ export class CalendarSupportService {
         let sessionDate= moment.utc(ele.session_date).local().format().slice(0, 19);
         let startTime = moment(sessionDate).add(30*i, 'minutes').format().substr(0, 19);        
         let endTime = moment(sessionDate).add(30*(i+1), 'minutes').format().substr(0, 19); 
+        let session_name;
+        switch (ele.session_status){
+          case 0:
+            session_name = 'Planned'
+            break;
+          case 1:
+            session_name = 'Canceled'
+            break;
+          case 2:
+            session_name = 'Completed'
+            break;
+          case 3:
+            session_name = 'Disputed'          
+            break;                    
+        }
         let event = {
-          title: ele.learner_id + ' — ' + ele.session_status,
+          title: ele.learner_first_name + '—' + session_name,
           start: startTime,
           end: endTime,
           color: '#0099ff',

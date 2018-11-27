@@ -5,6 +5,8 @@ import { MatDialog, MatDialogRef } from '@angular/material';
 import { LearnerService } from '../../../../services/servercalls/learner.service';
 import { CommonSupportService } from '../../../../services/support/common-support.service';
 import { Router } from '@angular/router';
+import { PaginationComponent } from '../../../basic/Pagination/pagination.component';
+import { all } from 'q';
 
 @Component({
   selector: 'app-lesson-order',
@@ -61,11 +63,11 @@ export class LessonOrderComponent implements OnInit {
   //     tutor_img: 'https://via.placeholder.com/150',
 
   //     lesson_name: 'math',},
-    // { tutor: 'DFG', class: 'Maths', amount: 3, price: 1, tutor_img: '././assets/tutorpics/front2.jpg', status: 'Refund', order_time: '2018-08-28', paid_time: '2018-08-28', classed: 1, booking: 0 },
-    // { tutor: 'XYZ', class: 'Chinese', amount: 1, price: 10, tutor_img: '././assets/tutorpics/front3.jpg', status: 'Unpaid', order_time: '2018-03-21', paid_time: null, classed: 0, booking: 0 },
-    // { tutor: 'City', class: 'Maths', amount: 5, price: 101, tutor_img: '././assets/tutorpics/front4.jpg', status: 'Paid', order_time: '2018-07-12', paid_time: '2018-07-12', classed: 2, booking: 2 },
-    // { tutor: 'Manu', class: 'Maths', amount: 12, price: 200, tutor_img: '././assets/tutorpics/front5.jpg', status: 'Finished', order_time: '2018-09-30', paid_time: '2018-09-30', classed: 12, booking: 0 },
-    // { tutor: 'Hooo', class: 'English', amount: 2, price: 12, tutor_img: '././assets/tutorpics/front1.jpg', status: 'Unpaid', order_time: '2018-04-25', paid_time: null, classed: 0, booking: 0 }
+  // { tutor: 'DFG', class: 'Maths', amount: 3, price: 1, tutor_img: '././assets/tutorpics/front2.jpg', status: 'Refund', order_time: '2018-08-28', paid_time: '2018-08-28', classed: 1, booking: 0 },
+  // { tutor: 'XYZ', class: 'Chinese', amount: 1, price: 10, tutor_img: '././assets/tutorpics/front3.jpg', status: 'Unpaid', order_time: '2018-03-21', paid_time: null, classed: 0, booking: 0 },
+  // { tutor: 'City', class: 'Maths', amount: 5, price: 101, tutor_img: '././assets/tutorpics/front4.jpg', status: 'Paid', order_time: '2018-07-12', paid_time: '2018-07-12', classed: 2, booking: 2 },
+  // { tutor: 'Manu', class: 'Maths', amount: 12, price: 200, tutor_img: '././assets/tutorpics/front5.jpg', status: 'Finished', order_time: '2018-09-30', paid_time: '2018-09-30', classed: 12, booking: 0 },
+  // { tutor: 'Hooo', class: 'English', amount: 2, price: 12, tutor_img: '././assets/tutorpics/front1.jpg', status: 'Unpaid', order_time: '2018-04-25', paid_time: null, classed: 0, booking: 0 }
   // ]
   //displayedColumns: string[] = ['tutor', 'lessons', 'amount', 'apply'];
   // all = this.orders;
@@ -74,9 +76,20 @@ export class LessonOrderComponent implements OnInit {
   // refund = this.orders.filter(value => value.status === 'Refund');
   // finished = this.orders.filter(value => value.status === 'Finished');
   // order_time = 'all';
-
+  loading = true;
   buyerOrders: any;
+  pageOrders: any;
   errorMessage: string;
+  currentPage: number;
+  pageNumber: number;
+  totalPosts: number;
+  pages = [];
+  perPage = 10;
+  tabs = [{ name: 'All', filter: 'all' },
+  { name: 'Completed', filter: 'finished' },
+  { name: 'Processing', filter: 'processing' },
+  { name: 'Cancel', filter: 'cancel' }
+  ]
 
 
   dialogRef: MatDialogRef<OrderDetailsComponent>;
@@ -85,7 +98,7 @@ export class LessonOrderComponent implements OnInit {
     public dialog: MatDialog,
     private learnerServive: LearnerService,
     private commonSupport: CommonSupportService,
-    private router:Router,
+    private router: Router,
 
   ) {
   }
@@ -98,9 +111,10 @@ export class LessonOrderComponent implements OnInit {
 
         if (res['allOrders'].length) {
           this.buyerOrders = this.getAllOrders(res['allOrders']);
-
+          this.loading = false;
+          this.getPage(1);
           console.log(this.buyerOrders);
-        }else{
+        } else {
           this.buyerOrders = null;
         }
 
@@ -112,7 +126,31 @@ export class LessonOrderComponent implements OnInit {
 
 
   }
+  getFilterOrder(status) {
+  let filterOrders;
+  if (status === 'all')
+    filterOrders= this.buyerOrders
+  else
+    filterOrders = this.buyerOrders.filter(e => e.order_status === status)
 
+    this.totalPosts = filterOrders.length;
+    //this.currentPage = page;
+    this.pageNumber = Math.ceil(filterOrders.length / this.perPage);
+    this.pages=[];
+    if (this.pageNumber > 1) {
+      for (let i = 1; i < this.pageNumber + 1; i++) {
+        this.pages.push(i);
+      }
+      console.log(this.pages);
+    } else {
+      this.pages.push(1);
+    }
+    return filterOrders.slice((this.currentPage-1) * this.perPage, this.currentPage*this.perPage);
+  }
+  // make website turn to this specific page
+  getPage(page: number) {
+    this.currentPage = page;
+  }
   getAllOrders(ordersList: any) {
     let orderList = ordersList.map(e => {
       let order = e.order;
@@ -130,7 +168,7 @@ export class LessonOrderComponent implements OnInit {
       if (orderCancelTime != null) {
         orderStatus = "refund";
       } else if (orderRemain == '0') {
-        orderStatus = "finished";
+        orderStatus = "completed";
       } else {
         orderStatus = "processing"
       }
@@ -148,16 +186,11 @@ export class LessonOrderComponent implements OnInit {
         order_quantity: orderQuantity,
         order_remain: orderRemain,
         order_status: orderStatus,
-
         tutor_id: tutorId,
         tutor_name: tutorName,
         tutor_img: tutorImg,
-
         lesson_name: lessonName,
       }
-
-
-
       return newObj;
     })
     return orderList;
@@ -169,10 +202,11 @@ export class LessonOrderComponent implements OnInit {
       data: { order }
     });
   }
-  goSchedule(idx){
+  goSchedule(idx) {
     //this.router.navigate(['/app/']);
-    this.router.navigate(['/app/dashboard/learner/schedule/'+this.buyerOrders[idx].order_id+'/'+this.buyerOrders[idx].tutor_id]);
+    this.router.navigate(['/app/dashboard/learner/schedule/' + this.buyerOrders[idx].order_id + '/' + this.buyerOrders[idx].tutor_id]);
   }
+
 }
 
 

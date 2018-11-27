@@ -19,7 +19,8 @@ import { Component, OnInit, Inject, ElementRef } from '@angular/core';
 })
 export class LearnerSessionRatingDialogComponent implements OnInit {
   tutors: any;
-  rate: any
+  rate = 0;
+  submit=false;
   errorMessage: string;
 
   onClickResult: ClickEvent;
@@ -54,7 +55,7 @@ export class LearnerSessionRatingDialogComponent implements OnInit {
   onstarClick = ($event: ClickEvent) => {
     console.log('onClick $event: ', $event);
     this.onClickResult = $event;
-    this.rate = this.onClickResult;
+    this.rate = this.onClickResult.rating;
   };
 //
 
@@ -86,13 +87,14 @@ export class LearnerSessionRatingDialogComponent implements OnInit {
       ratings:0,
       award:[]
     };
+    this.submit = true;
     comment.comment = this.reportForm.value.comment;
 
     console.log(this.reportForm.value);
     if (comment.comment.length<40)
       return;
 
-    ratingData.ratings = this.rate.rating;
+    ratingData.ratings = this.rate;
     
     this.reportForm.value.awards.map((e,index)=>{
       if (e===true){

@@ -80,7 +80,7 @@ export class OrderConfirmComponentComponent implements OnInit {
   }
   getWallet(){
     //subscribe
-    this.wallet=10.3;
+    this.wallet=0;
   }
   calculateFee(fee){
     return  Math.round((fee*this.feerate+0.3)*100)/100;

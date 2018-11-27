@@ -1,5 +1,5 @@
 <mat-dialog-content>
-  <div style="height: 500px">
+  <div>
   <!--session rate-->
   <div *ngIf='awdIndex.length>0' class="card border-0">
     <div class="card-header bg-white text-center"><strong style="font-size: 20px">Rate your lesson</strong><i class="fa fa-close float-right" (click)="close()"></i></div>
@@ -44,11 +44,12 @@
           <div>
             <div>Comment</div>
             <textarea type="text" class="form-control" placeholder="The Comment about this tutor ..." name="comment" rows="3" formControlName="comment"></textarea>
-            <div *ngIf="reportForm.controls.comment.invalid && reportForm.controls.comment.touched" class="indicator text-danger" >40 characters at least.</div>
+            <div *ngIf="reportForm.controls.comment.invalid||(submit&&reportForm.value.comment.length<40)" class="indicator text-danger" >40 characters at least.</div>
           </div>
         </form>
         <hr>
         <div class="clearfix">
+          <div *ngIf="rate<1&&submit" class="indicator text-danger" >rating must be more than 1 star.</div>
           <button type="button" class="btn btn-outline-primary float-left" (click)="close()">Close</button>&nbsp;&nbsp;
           <button type="submit" class="btn btn-primary float-right" (click)="save()">Submit</button>
         </div>

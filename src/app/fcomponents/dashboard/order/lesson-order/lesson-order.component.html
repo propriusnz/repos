@@ -24,173 +24,64 @@
     </div> -->
     <ng-template #orders>
       <mat-tab-group>
-        <mat-tab label="All">
-          <div class="table-panel text-left mt-3 p-2">
-            <!-- <table mat-table [dataSource]="all" class="mat-elevation-z8"> -->
+        <div *ngFor='let tab of tabs;'>
+          <mat-tab [label]="tab.name">
+            <div class="table-panel text-left mt-3 p-2">
+              <!-- <table mat-table [dataSource]="all" class="mat-elevation-z8"> -->
+              <!-- <ng-container matColumnDef="tutor">
+              <th mat-header-cell *matHeaderCellDef> Tutor </th>
+              <td mat-cell *matCellDef="let order"><a href="#"><img class="tutor-img" src="{{order.tutor_img}}"> {{order.tutor}}</a> </td>
+            </ng-container>
 
-            <!-- <ng-container matColumnDef="tutor">
-            <th mat-header-cell *matHeaderCellDef> Tutor </th>
-            <td mat-cell *matCellDef="let order"><a href="#"><img class="tutor-img" src="{{order.tutor_img}}"> {{order.tutor}}</a> </td>
-          </ng-container>
+            <ng-container matColumnDef="lessons">
+              <th mat-header-cell *matHeaderCellDef> Lessons </th>
+              <td mat-cell *matCellDef="let order"><span> {{order.class}} </span></td>
+            </ng-container>
 
-          <ng-container matColumnDef="lessons">
-            <th mat-header-cell *matHeaderCellDef> Lessons </th>
-            <td mat-cell *matCellDef="let order"><span> {{order.class}} </span></td>
-          </ng-container>
+            <ng-container matColumnDef="amount">
+              <th mat-header-cell *matHeaderCellDef> Amount </th>
+              <td mat-cell *matCellDef="let order"> {{order.amount}} </td>
+            </ng-container>
 
-          <ng-container matColumnDef="amount">
-            <th mat-header-cell *matHeaderCellDef> Amount </th>
-            <td mat-cell *matCellDef="let order"> {{order.amount}} </td>
-          </ng-container>
+            <ng-container matColumnDef="price">
+              <th mat-header-cell *matHeaderCellDef> Price </th>
+              <td mat-cell *matCellDef="let order"> $ {{order.price.toFixed(1)}} </td>
+            </ng-container>
 
-          <ng-container matColumnDef="price">
-            <th mat-header-cell *matHeaderCellDef> Price </th>
-            <td mat-cell *matCellDef="let order"> $ {{order.price.toFixed(1)}} </td>
-          </ng-container>
+            <ng-container matColumnDef="status">
+              <th mat-header-cell *matHeaderCellDef> Status </th>
+              <td mat-cell *matCellDef="let order"> {{order.status}}<br><a href="javascript:void(0);" (click)="showDetail(order)">Details</a> </td>
+            </ng-container>
 
-          <ng-container matColumnDef="status">
-            <th mat-header-cell *matHeaderCellDef> Status </th>
-            <td mat-cell *matCellDef="let order"> {{order.status}}<br><a href="javascript:void(0);" (click)="showDetail(order)">Details</a> </td>
-          </ng-container>
-
-          <ng-container matColumnDef="apply">
-            <th mat-header-cell *matHeaderCellDef> Apply </th>
-            <td mat-cell *matCellDef="let order">
-              <button *ngIf="order.status == 'Paid'" class="btn btn-outline-danger"> Refund </button>
-              <button *ngIf="order.status == 'Unpaid'" class="btn btn-outline-success"> Pay </button>
-              <button *ngIf="order.status == 'Refund'" class="btn btn-danger disabled"> refunding </button>
-            </td>
-          </ng-container> -->
-            <div *ngFor='let order of buyerOrders;let idx=index'>
-              <div class="card" style="width: 100%">
-                <div class="card-body">
-                  <div class='row'>
-                    <div class='col-xl-2 col-lg-3'>
-                      <img class='tutorImg rounded-circle' src='{{order.tutor_img}}'>
-                      <!-- <span class="border border-info rounded-circle">{{buyerOrders.tutor_img}}</span> -->
-                    </div>
-                    <div class='col-xl-10 col-lg-9'>
-                      <div class='row'>
-                        <div class='col-12 tutorName'>
-                          <strong>{{order.tutor_name}}</strong>
-                          <button class="btn btn-outline-danger float-right"> actions</button>
-                          <button class="btn btn-outline-danger float-right" (click)='goSchedule(idx)'>schedule</button>                          
-                          <span class='float-right align-middle mr-2 text-info' (click)='showDetail(order)'>
-                            <i class="btn fa fa-info-circle fa-lg"></i>
-                          </span>
-                        </div>
-                        <div class='col-4'>
-                          <div class='rol'>
-                            <div class='col-12'>
-                              <strong>
-                                Course Name
-                              </strong>
-                            </div>
-                            <div class='col-9'>
-                              &nbsp;&nbsp;{{order.lesson_name}}
-                            </div>
-                          </div>
-                        </div>
-                        <div class='col-4'>
-                          <div class='rol'>
-                            <div class='col-12'>
-                              <strong>
-                                Order Status
-                              </strong>
-                            </div>
-                            <div class='col-9'>
-                              &nbsp;&nbsp;{{order.order_status}}
-                            </div>
-                          </div>
-                        </div>
-                        <div class='col-4'>
-                          <div class='rol'>
-                            <div class='col-12'>
-                              <strong>
-                                Remain
-                              </strong>
-                            </div>
-                            <div class='col-9'>
-                              &nbsp;&nbsp;{{order.order_remain}}
-                            </div>
-                          </div>
-                        </div>
-                        <!-- <div class='col-12'>
-                          {{order.order_price}}
-                        </div> -->
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-            <!-- </table> -->
-            <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
-          </div>
-        </mat-tab>
-        <mat-tab label="Progressing">
-          <div class="table-panel text-left mt-3 p-2">
-            <!-- <table mat-table [dataSource]="progressing" class="mat-elevation-z8">
-
-              <ng-container matColumnDef="tutor">
-                <th mat-header-cell *matHeaderCellDef> Tutor </th>
-                <td mat-cell *matCellDef="let order"><img class="tutor-img" src="{{order.tutor_img}}"> {{order.tutor}}
-                </td>
-              </ng-container>
-
-              <ng-container matColumnDef="lessons">
-                <th mat-header-cell *matHeaderCellDef> Lessons </th>
-                <td mat-cell *matCellDef="let order"> {{order.class}} </td>
-              </ng-container>
-
-              <ng-container matColumnDef="amount">
-                <th mat-header-cell *matHeaderCellDef> Amount </th>
-                <td mat-cell *matCellDef="let order"> {{order.amount}} </td>
-              </ng-container>
-
-              <ng-container matColumnDef="price">
-                <th mat-header-cell *matHeaderCellDef> Price </th>
-                <td mat-cell *matCellDef="let order"> $ {{order.price.toFixed(1)}} </td>
-              </ng-container>
-
-              <ng-container matColumnDef="status">
-                <th mat-header-cell *matHeaderCellDef> Status </th>
-                <td mat-cell *matCellDef="let order"> {{order.status}}<br><a href="#">Details</a> </td>
-              </ng-container>
-
-              <ng-container matColumnDef="apply">
-                <th mat-header-cell *matHeaderCellDef> Apply </th>
-                <td mat-cell *matCellDef="let order">
-                  <button class="btn btn-outline-danger"> Refund </button>
-                </td>
-              </ng-container>
-
-              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-              <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-            </table> -->
-            <div *ngFor='let order of buyerOrders'>
-              <div *ngIf="order.order_status == 'processing'">
-                <div class="card" style="width: 100%">
+            <ng-container matColumnDef="apply">
+              <th mat-header-cell *matHeaderCellDef> Apply </th>
+              <td mat-cell *matCellDef="let order">
+                <button *ngIf="order.status == 'Paid'" class="btn btn-outline-danger"> Refund </button>
+                <button *ngIf="order.status == 'Unpaid'" class="btn btn-outline-success"> Pay </button>
+                <button *ngIf="order.status == 'Refund'" class="btn btn-danger disabled"> refunding </button>
+              </td>
+            </ng-container> -->
+              <div *ngFor='let order of getFilterOrder(tab.filter);let idx=index;'>
+                <div class="card" style="width: 100%;margin-top: 15px">
                   <div class="card-body">
                     <div class='row'>
                       <div class='col-xl-2 col-lg-3'>
-                        <img class='tutorImg rounded-circle' src='{{order.tutor_img}}'>
+                        <img class='tutorImg rounded-circle' style='height:90px;width:90px' src='{{order.tutor_img}}'>
                         <!-- <span class="border border-info rounded-circle">{{buyerOrders.tutor_img}}</span> -->
                       </div>
                       <div class='col-xl-10 col-lg-9'>
                         <div class='row'>
                           <div class='col-12 tutorName'>
-                            <strong>{{order.tutor_name}}</strong>
-                            <button class="btn btn-outline-danger float-right"> actions</button>
-                            <span class='float-right align-middle mr-2 text-info' (click)='showDetail(order)'>
-                              <i class="btn fa fa-info-circle fa-lg"></i>
+                            <span><strong>{{order.tutor_name}}</strong></span>      
+                            <span>
+                                <button class="btn btn-outline-danger float-right" (click)='showDetail(order)'>Order detail</button>
+                            </span>
+                            <span>
+                                <button class="btn btn-outline-danger float-right" (click)='goSchedule(idx)'>Schedule</button>
                             </span>
                           </div>
                           <div class='col-4'>
-                            <div class='rol'>
+                            <div class='card' style='background-color:#f9f9f9'>
                               <div class='col-12'>
                                 <strong>
                                   Course Name
@@ -202,7 +93,7 @@
                             </div>
                           </div>
                           <div class='col-4'>
-                            <div class='rol'>
+                            <div class='card' style='background-color:#f9f9f9'>
                               <div class='col-12'>
                                 <strong>
                                   Order Status
@@ -214,7 +105,7 @@
                             </div>
                           </div>
                           <div class='col-4'>
-                            <div class='rol'>
+                            <div class='card' style='background-color:#f9f9f9'>
                               <div class='col-12'>
                                 <strong>
                                   Remain
@@ -234,261 +125,15 @@
                   </div>
                 </div>
               </div>
+
+              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+              <!-- </table> -->
+              <app-pagination [currentPage]="currentPage" [pageNumber]="pageNumber" [pages]="pages" [totalPosts]="totalPosts"
+                [perPage]="perPage" (getthePage)="getPage($event)"></app-pagination>
             </div>
-            <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
-          </div>
-        </mat-tab>
-        <!-- <mat-tab label="Unpaid">
-        <div class="table-panel m-2 p-2">
-          <table mat-table [dataSource]="unpaid" class="mat-elevation-z8">
-
-            <ng-container matColumnDef="tutor">
-              <th mat-header-cell *matHeaderCellDef> Tutor </th>
-              <td mat-cell *matCellDef="let order"><img class="tutor-img" src="{{order.tutor_img}}"> {{order.tutor}} </td>
-            </ng-container>
-
-            <ng-container matColumnDef="lessons">
-              <th mat-header-cell *matHeaderCellDef> Lessons </th>
-              <td mat-cell *matCellDef="let order"> {{order.class}} </td>
-            </ng-container>
-
-            <ng-container matColumnDef="amount">
-              <th mat-header-cell *matHeaderCellDef> Amount </th>
-              <td mat-cell *matCellDef="let order"> {{order.amount}} </td>
-            </ng-container>
-
-            <ng-container matColumnDef="price">
-              <th mat-header-cell *matHeaderCellDef> Price </th>
-              <td mat-cell *matCellDef="let order"> $ {{order.price.toFixed(1)}} </td>
-            </ng-container>
-
-            <ng-container matColumnDef="status">
-              <th mat-header-cell *matHeaderCellDef> Status </th>
-              <td mat-cell *matCellDef="let order"> {{order.status}}<br><a href="#">Details</a> </td>
-            </ng-container>
-
-            <ng-container matColumnDef="apply">
-              <th mat-header-cell *matHeaderCellDef> Apply </th>
-              <td mat-cell *matCellDef="let order"><button class="btn btn-outline-success"> Pay </button></td>
-            </ng-container>
-
-            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-          </table>
-          <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+          </mat-tab>
         </div>
-      </mat-tab> -->
-        <mat-tab label="Cancel">
-          <div class="table-panel text-left mt-3 p-2">
-            <!-- <table mat-table [dataSource]="refund" class="mat-elevation-z8">
-
-              <ng-container matColumnDef="tutor">
-                <th mat-header-cell *matHeaderCellDef> Tutor </th>
-                <td mat-cell *matCellDef="let order"><img class="tutor-img" src="{{order.tutor_img}}"> {{order.tutor}}
-                </td>
-              </ng-container>
-
-              <ng-container matColumnDef="lessons">
-                <th mat-header-cell *matHeaderCellDef> Lessons </th>
-                <td mat-cell *matCellDef="let order"> {{order.class}} </td>
-              </ng-container>
-
-              <ng-container matColumnDef="amount">
-                <th mat-header-cell *matHeaderCellDef> Amount </th>
-                <td mat-cell *matCellDef="let order"> {{order.amount}} </td>
-              </ng-container>
-
-              <ng-container matColumnDef="price">
-                <th mat-header-cell *matHeaderCellDef> Price </th>
-                <td mat-cell *matCellDef="let order"> $ {{order.price.toFixed(1)}} </td>
-              </ng-container>
-
-              <ng-container matColumnDef="status">
-                <th mat-header-cell *matHeaderCellDef> Status </th>
-                <td mat-cell *matCellDef="let order"> {{order.status}}<br><a href="#">Details</a> </td>
-              </ng-container>
-
-              <ng-container matColumnDef="apply">
-                <th mat-header-cell *matHeaderCellDef> Apply </th>
-                <td mat-cell *matCellDef="let order"><button *ngIf="order.status == 'refund'" class="btn btn-danger disabled">
-                    refunding </button></td>
-              </ng-container>
-
-              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-              <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-            </table> -->
-            <div *ngFor='let order of buyerOrders'>
-                <div *ngIf="order.order_status == 'canceled'">
-                  <div class="card" style="width: 100%">
-                    <div class="card-body">
-                      <div class='row'>
-                        <div class='col-xl-2 col-lg-3'>
-                          <img class='tutorImg rounded-circle' src='{{order.tutor_img}}'>
-                          <!-- <span class="border border-info rounded-circle">{{buyerOrders.tutor_img}}</span> -->
-                        </div>
-                        <div class='col-xl-10 col-lg-9'>
-                          <div class='row'>
-                            <div class='col-12 tutorName'>
-                              <strong>{{order.tutor_name}}</strong>
-                              <button class="btn btn-outline-danger float-right"> actions</button>
-                              <span class='float-right align-middle mr-2 text-info' (click)='showDetail(order)'>
-                                <i class="btn fa fa-info-circle fa-lg"></i>
-                              </span>
-                            </div>
-                            <div class='col-4'>
-                              <div class='rol'>
-                                <div class='col-12'>
-                                  <strong>
-                                    Course Name
-                                  </strong>
-                                </div>
-                                <div class='col-9'>
-                                  &nbsp;&nbsp;{{order.lesson_name}}
-                                </div>
-                              </div>
-                            </div>
-                            <div class='col-4'>
-                              <div class='rol'>
-                                <div class='col-12'>
-                                  <strong>
-                                    Order Status
-                                  </strong>
-                                </div>
-                                <div class='col-9'>
-                                  &nbsp;&nbsp;{{order.order_status}}
-                                </div>
-                              </div>
-                            </div>
-                            <div class='col-4'>
-                              <div class='rol'>
-                                <div class='col-12'>
-                                  <strong>
-                                    Remain
-                                  </strong>
-                                </div>
-                                <div class='col-9'>
-                                  &nbsp;&nbsp;{{order.order_remain}}
-                                </div>
-                              </div>
-                            </div>
-                            <!-- <div class='col-12'>
-                              {{order.order_price}}
-                            </div> -->
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
-          </div>
-        </mat-tab>
-        <mat-tab label="Finished">
-          <div class="table-panel text-left mt-3 p-2">
-            <!-- <table mat-table [dataSource]="finished" class="mat-elevation-z8">
-
-              <ng-container matColumnDef="tutor">
-                <th mat-header-cell *matHeaderCellDef> Tutor </th>
-                <td mat-cell *matCellDef="let order"><img class="tutor-img" src="{{order.tutor_img}}"> {{order.tutor}}
-                </td>
-              </ng-container>
-
-              <ng-container matColumnDef="lessons">
-                <th mat-header-cell *matHeaderCellDef> Lessons </th>
-                <td mat-cell *matCellDef="let order"> {{order.class}} </td>
-              </ng-container>
-
-              <ng-container matColumnDef="amount">
-                <th mat-header-cell *matHeaderCellDef> Amount </th>
-                <td mat-cell *matCellDef="let order"> {{order.amount}} </td>
-              </ng-container>
-
-              <ng-container matColumnDef="price">
-                <th mat-header-cell *matHeaderCellDef> Price </th>
-                <td mat-cell *matCellDef="let order"> $ {{order.price.toFixed(1)}} </td>
-              </ng-container>
-
-              <ng-container matColumnDef="status">
-                <th mat-header-cell *matHeaderCellDef> Status </th>
-                <td mat-cell *matCellDef="let order"> {{order.status}}<br><a href="#">Details</a> </td>
-              </ng-container>
-
-              <ng-container matColumnDef="apply">
-                <th mat-header-cell *matHeaderCellDef> Apply </th>
-                <td mat-cell *matCellDef="let order"></td>
-              </ng-container>
-
-              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-              <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-            </table> -->
-            <div *ngFor='let order of buyerOrders'>
-                <div *ngIf="order.order_status == 'finished'">
-                  <div class="card" style="width: 100%">
-                    <div class="card-body">
-                      <div class='row'>
-                        <div class='col-xl-2 col-lg-3'>
-                          <img class='tutorImg rounded-circle' src='{{order.tutor_img}}'>
-                          <!-- <span class="border border-info rounded-circle">{{buyerOrders.tutor_img}}</span> -->
-                        </div>
-                        <div class='col-xl-10 col-lg-9'>
-                          <div class='row'>
-                            <div class='col-12 tutorName'>
-                              <strong>{{order.tutor_name}}</strong>
-                              <button class="btn btn-outline-danger float-right"> actions</button>
-                              <span class='float-right align-middle mr-2 text-info' (click)='showDetail(order)'>
-                                <i class="btn fa fa-info-circle fa-lg"></i>
-                              </span>
-                            </div>
-                            <div class='col-4'>
-                              <div class='rol'>
-                                <div class='col-12'>
-                                  <strong>
-                                    Course Name
-                                  </strong>
-                                </div>
-                                <div class='col-9'>
-                                  &nbsp;&nbsp;{{order.lesson_name}}
-                                </div>
-                              </div>
-                            </div>
-                            <div class='col-4'>
-                              <div class='rol'>
-                                <div class='col-12'>
-                                  <strong>
-                                    Order Status
-                                  </strong>
-                                </div>
-                                <div class='col-9'>
-                                  &nbsp;&nbsp;{{order.order_status}}
-                                </div>
-                              </div>
-                            </div>
-                            <div class='col-4'>
-                              <div class='rol'>
-                                <div class='col-12'>
-                                  <strong>
-                                    Remain
-                                  </strong>
-                                </div>
-                                <div class='col-9'>
-                                  &nbsp;&nbsp;{{order.order_remain}}
-                                </div>
-                              </div>
-                            </div>
-                            <!-- <div class='col-12'>
-                              {{order.order_price}}
-                            </div> -->
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
-          </div>
-        </mat-tab>
       </mat-tab-group>
     </ng-template>
   </mat-card-content>

@@ -1,8 +1,8 @@
-<div *ngIf="display.innerWidth <= 576">
+<div *ngIf="display.innerWidth <= 576&&pageNumber>1">
     <mat-paginator class="col-12" [length]="totalPosts" [pageSize]="perPage" [showFirstLastButtons]=true [hidePageSize]=true
       (page)="changed($event)"></mat-paginator>
   </div>
-  <div *ngIf="display.innerWidth > 576">
+  <div *ngIf="display.innerWidth > 576&&pageNumber>1">
     <!-- <div class="text-center">
       <span *ngFor="let page of pages; let i = index">
         <button type="submit" class="btn btn-default btn-sm" id="pageBtn" (click)="getPage(i+1)">{{page}}</button>

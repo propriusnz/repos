@@ -76,7 +76,7 @@ export class PaginationComponent implements OnInit {
       }
     }
 
-    console.log(this.pageActive)
+    //console.log(this.pageActive)
   }
 
   // make website turn to this specific page

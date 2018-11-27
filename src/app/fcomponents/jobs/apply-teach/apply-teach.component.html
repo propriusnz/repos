@@ -12,66 +12,7 @@
   <div class="row">
     <form *ngIf="userInfo" [formGroup]="appForm" class="col-12 col-md-9 col-lg-8">
 
-      <div class="card" style="margin-top: 25px;" (mouseenter)="mouseEnter('Profile General Information')">
-        <div class="card-header">
-          <h5>Profile General Information</h5> Please enter your general information here
-        </div>
-        <div class="card-body">
-          <div class="form-group">
-            <label for="legal_name">First Name</label>
-            <input type="text" id="first_name" value="{{userInfo.first_name}}" class="form-control" formControlName="first_name">
-            <div class="invalid_feedback" *ngIf="appForm.controls.first_name.errors?.required && appForm.controls.first_name.touched || appForm.controls.first_name.errors?.required &&  errorMessage">First Name is required</div>
-            <div class="invalid_feedback" *ngIf="appForm.controls.first_name.errors?.minlength">First name must be 2 characters long.</div>
-            <div class="invalid_feedback" *ngIf="appForm.controls.first_name.errors?.maxlength">First name can not be more than 30 characters.</div>
-            <div class="invalid_feedback" *ngIf="appForm.controls.first_name.errors?.pattern">First name contains only characters.</div>
-          </div>
-          <div class="form-group">
-            <label for="legal_name">Last Name</label>
-            <input type="text" id="last_name" value="{{userInfo.last_name}}" class="form-control" formControlName="last_name">
-            <div class="invalid_feedback" *ngIf="appForm.controls.last_name.errors?.required && appForm.controls.last_name.touched || appForm.controls.last_name.errors?.required &&  errorMessage">Last Name is required</div>
-            <div class="invalid_feedback" *ngIf="appForm.controls.last_name.errors?.minlength">Last name must be 2 characters long.</div>
-            <div class="invalid_feedback" *ngIf="appForm.controls.last_name.errors?.maxlength">Last name can not be more than 30 characters.</div>
-            <div class="invalid_feedback" *ngIf="appForm.controls.last_name.errors?.pattern">Last name contains only characters.</div>
-          </div>
-          <div class="form-group">
-            <label for="phone">Phone</label>
-            <input type="text" id="phone" value="{{userInfo.phone_num_pri}}" class="form-control" formControlName="phone_num_pri">
-            <div class="invalid_feedback" *ngIf="appForm.controls.phone_num_pri.errors?.required && appForm.controls.phone_num_pri.touched || appForm.controls.phone_num_pri.errors?.required &&  errorMessage">Phone number is required</div>
-            <div class="invalid_feedback" *ngIf="appForm.controls.phone_num_pri.errors?.minlength">Phone number must be 7 digits long.</div>
-            <div class="invalid_feedback" *ngIf="appForm.controls.phone_num_pri.errors?.maxlength">Phone number can not be more than 12 digits.</div>
-            <div class="invalid_feedback" *ngIf="appForm.controls.phone_num_pri.errors?.pattern">Phone number must be digits.</div>
-          </div>
-
-          <div class="form-group">
-            <label for="location">Where are you based (Location)</label>
-            <select type="text" id="location" class="form-control" formControlName="location" required>
-               <option disabled value="">---Please select a location---</option>
-               <option *ngFor="let location of locations" [ngValue]="location">{{location}}</option>
-            </select>
-            <div class="invalid_feedback" *ngIf="appForm.controls.location.errors?.required && appForm.controls.location.touched || appForm.controls.location.errors?.required && errorMessage"> Location is required </div>
-          </div>
-
-          <div class="form-group">
-            <label for="date_birth">Date of birth</label>
-            <div style="margin-top:-18px;">
-              <mat-form-field class="example-full-width">
-                <input matInput [min]="minDOB" [max]="maxDOB"  [matDatepicker]="picker" formControlName="DOB" >
-                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                <mat-datepicker #picker ></mat-datepicker>
-                <mat-error *ngIf="appForm.controls.DOB.errors?.required">Date of birth is required</mat-error>
-                <!-- <mat-error *ngIf="appForm.controls.DOB.errors?.dFormat">Date of birth should be in MM/DD/YYYY format.</mat-error> -->
-                <mat-error *ngIf="appForm.controls.DOB.errors?.mindob">Year of birth year can not be earlier than 1930.</mat-error>
-                <mat-error *ngIf="appForm.controls.DOB.errors?.maxdob">Year of birth year can not be later than 2020.</mat-error>
-              </mat-form-field>
-            </div>
-          </div>
-          <!--form-group-->
-        </div>
-        <!-- card-body -->
-      </div>
-      <!-- card -->
-
-      <div class="card" style="margin-top: 25px;" (mouseenter)="mouseEnter('Subjects and Curriculum')">
+       <div class="card" style="margin-top: 25px;" (mouseenter)="mouseEnter('Subjects and Curriculum')">
         <div class="card-header">
           <h5>Subjects and Curriculum</h5> What subject and curriculum would you like to teach
         </div>
