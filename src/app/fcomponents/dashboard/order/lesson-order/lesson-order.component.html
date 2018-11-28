@@ -9,7 +9,7 @@
     <div *ngIf="loading" >
         <div class="loader"></div>
      </div>
-    <div *ngIf='buyerOrders == null&&!loading"; else orders'>
+    <div *ngIf='buyerOrders == null&&!loading; else orders'>
       <div>
         Sorry, there is no order found.
       </div>
@@ -79,7 +79,7 @@
                             <span>
                                 <button class="btn btn-outline-danger float-right" (click)='showDetail(order)'>Order detail</button>
                             </span>
-                            <span>
+                            <span *ngIf="order.order_status == 'processing'">
                                 <button class="btn btn-outline-danger float-right" (click)='goSchedule(idx)'>Schedule</button>
                             </span>
                           </div>

@@ -1,0 +1,25 @@
+/* local styles */
+.table-hover tr:hover td {
+    background-color: #E3F3FE;
+}
+
+table {
+    border-radius: 12px;
+    overflow: hidden;
+    width: 100%;
+    -ms-overflow-style: -ms-autohiding-scrollbar;
+}
+tr {
+    border-left: 1px solid  #f4f4f4;
+    border-right: 1px solid #f4f4f4;
+}
+tr:first-child{
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+    border-top: 1px solid #f4f4f4;
+}
+tr:last-child{
+    border-top-left-radius: 12px;
+    border-radius: 12px;
+    border-bottom: 1px solid #f4f4f4;
+}

@@ -120,25 +120,32 @@ export class CalendarSupportService {
         let startTime = moment(sessionDate).add(30*i, 'minutes').format().substr(0, 19);        
         let endTime = moment(sessionDate).add(30*(i+1), 'minutes').format().substr(0, 19); 
         let session_name;
+        let swtich_color = "";
         switch (ele.session_status){
           case 0:
             session_name = 'Planned'
+            swtich_color = "#b3d1ff" 
             break;
           case 1:
             session_name = 'Canceled'
+            swtich_color = "#d9d9d9"
             break;
           case 2:
             session_name = 'Completed'
+            swtich_color = "#99e699"
             break;
           case 3:
-            session_name = 'Disputed'          
+            session_name = 'Disputed'
+            swtich_color = "#ff6666"          
             break;                    
         }
+
+
         let event = {
           title: ele.learner_first_name + '—' + session_name,
           start: startTime,
           end: endTime,
-          color: '#0099ff',
+          color: swtich_color,
           id: ele.session_id,          
         }; 
         sessionEvents.push(event); 

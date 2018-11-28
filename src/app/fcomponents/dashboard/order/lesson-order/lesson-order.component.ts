@@ -86,7 +86,7 @@ export class LessonOrderComponent implements OnInit {
   pages = [];
   perPage = 10;
   tabs = [{ name: 'All', filter: 'all' },
-  { name: 'Completed', filter: 'finished' },
+  { name: 'Completed', filter: 'completed' },
   { name: 'Processing', filter: 'processing' },
   { name: 'Cancel', filter: 'cancel' }
   ];

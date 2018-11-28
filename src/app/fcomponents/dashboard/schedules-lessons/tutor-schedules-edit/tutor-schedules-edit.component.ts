@@ -225,6 +225,14 @@ export class TutorSchedulesEditComponent implements OnInit {
         $('.fc-today-button').css({'position':'absolute','left':'20%','font-size':'15px','background-color':'#0099FF','color':'white','font-weight':'bold','border-radius': '100%','height':'30px'});
         $('.fc-prev-button').css({'position':'absolute','left':'8%','height':'30px','width':'30px','border-radius':'100%','font-size':'15px','color':'#0099FF','font-weight':'bold','border':'2px solid #0099FF','background-color':'white'});//
 
+        if ($(window).width() < 576) {
+          $(".fc-time-grid-container").attr("style","height:34rem !important");
+          $('.fc-today-button').css({'left':'40%','top':'35px','line-height':'5px','height':'20px'});
+
+          $('.fc-prev-button').css({'top':'30px'});
+          $('.fc-next-button').css({'right':'8%','top':'30px'});
+      }          
+
         $('.fc-prev-button')[0].innerHTML='<span class="glyphicon glyphicon-chevron-left" style="font-size: 13px; color: rgb(82, 82, 82);"></span><i class="fas fa-step-backward"></i>'
         $('.fc-center h2').css({'font-size':'25px','color':'#525252','font-weight':'bold'});
         $('.fc-next-button').css({'position':'absolute','right':'8%','height':'30px','width':'30px','border-radius':'100%','font-size':'15px','color':'#0099FF','font-weight':'bold','border':'2px solid #0099FF','background-color':'white'});
@@ -286,12 +294,20 @@ export class TutorSchedulesEditComponent implements OnInit {
         $('.fc-today-button').css({'position':'absolute','left':'20%','font-size':'15px','background-color':'#0099FF','color':'white','font-weight':'bold','border-radius': '100%','height':'30px'});
         $('.fc-prev-button').css({'position':'absolute','left':'8%','height':'30px','width':'30px','border-radius':'100%','font-size':'15px','color':'#0099FF','font-weight':'bold','border':'2px solid #0099FF','background-color':'white'});//
 
-        $('.fc-prev-button')[0].innerHTML='<span class="glyphicon glyphicon-chevron-left" style="font-size: 13px; color: rgb(82, 82, 82);"></span><i class="fas fa-step-forward"></i>'
+        if ($(window).width() < 576) {
+          $(".fc-time-grid-container").attr("style","height:34rem !important");
+          $('.fc-today-button').css({'left':'40%','top':'35px','line-height':'5px','height':'20px'});
+
+          $('.fc-prev-button').css({'top':'30px'});
+          $('.fc-next-button').css({'right':'8%','top':'30px'});
+      }      
+
+        $('.fc-prev-button')[0].innerHTML='<span class="glyphicon glyphicon-chevron-left" style="font-size: 13px; color: rgb(82, 82, 82);"></span><i class="fas fa-step-backward"></i>'
         
         $('.fc-center h2').css({'font-size':'25px','color':'#525252','font-weight':'bold'});
         $('.fc-next-button').css({'position':'absolute','right':'8%','height':'30px','width':'30px','border-radius':'100%','font-size':'15px','color':'#0099FF','font-weight':'bold','border':'2px solid #0099FF','background-color':'white'});
 
-        $('.fc-prev-button')[0].innerHTML='<span class="glyphicon glyphicon-chevron-left" style="font-size: 13px; color: rgb(82, 82, 82);"></span><i class="fas fa-step-backward"></i>'        
+        $('.fc-next-button')[0].innerHTML='<span class="glyphicon glyphicon-chevron-left" style="font-size: 13px; color: rgb(82, 82, 82);"></span><i class="fas fa-step-forward"></i>'       
         
 
       },
