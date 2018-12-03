@@ -41,7 +41,11 @@ export class TutorSchedulesEditComponent implements OnInit {
     this.tutorService.showTutorSchedules().subscribe(
       (res) => {
         console.log(res);
-        let eventSessObject = this.calendarService.getEvent(res['tutorFreeTime'],res['tutorSessions']);
+        let tutorSessions = res['tutorSessions'].filter(e=>{
+          return e.session_status!=1;
+        });
+
+        let eventSessObject = this.calendarService.getEvent(res['tutorFreeTime'],tutorSessions);
 
         this.sessionEvents = eventSessObject.session;
         this.freeEvents = eventSessObject.free;

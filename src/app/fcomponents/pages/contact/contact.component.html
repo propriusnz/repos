@@ -15,7 +15,7 @@
     <hr>  
     <div class="hlText1" *ngIf="successMessage">{{successMessage}}</div>
     <br>    
-    <form class="col-12 col-md-8" novalidate #f="ngForm" (ngSubmit)="onSubmit(f)">
+    <form class="col-12 col-md-8" novalidate #f="ngForm" (ngSubmit)="onSubmit(f)" style="padding-left:0;">
         <div class="form-group">  
            <div class="invalid_feedback" *ngIf="name.errors?.required && name.touched">Please enter your name</div>
            <div class="invalid_feedback" *ngIf=" name.errors?.minlength && name.touched ">

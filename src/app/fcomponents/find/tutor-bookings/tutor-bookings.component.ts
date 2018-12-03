@@ -33,6 +33,7 @@ import {
 import {
   StripePaymentComponent
 } from '../../support/stripe-payment/stripe-payment.component';
+import { AlertNotificationService } from '../../../services/support/alert-notification.service';
 
 @Component({
   selector: 'app-tutor-bookings',
@@ -95,6 +96,7 @@ export class TutorBookingsComponent implements OnInit {
     private paymentService:PaymentService,
     private commonService:CommonSupportService,
     public  dialog: MatDialog,
+    private alertservice:AlertNotificationService,
   ) {}
 
   ngOnInit() {
@@ -146,19 +148,20 @@ export class TutorBookingsComponent implements OnInit {
   }
   // subscribe data from the server
   getTutorData() {
-    let tutorInfo,tutorSession
+    let tutorInfo,tutorSession,tutorSchedule;
     Observable.forkJoin(
       this.generalService.showTutor(this.tutorProfileId).map(res => {
         console.log(res);
         tutorInfo = res;
         }),
-      this.generalService.showTutorSession(this.tutorProfileId).map(res => {
+      this.generalService.findTutorSchedule(this.tutorProfileId).map(res => {
         console.log(res);
-        tutorSession =res['allSessions'];
+        tutorSession =res['tutorSessions'];
+        tutorSchedule =res['tutorSchedule'];        
       })
     ).subscribe(
       data=>{
-        this.setTutorData(tutorInfo,tutorSession);
+        this.setTutorData(tutorInfo,tutorSession,tutorSchedule);
         // set initial session data via 'book session' popover
         console.log(this.preDate);
         if (this.preDate) {
@@ -179,7 +182,7 @@ export class TutorBookingsComponent implements OnInit {
 
   }
   // set the tutor data and schedule data
-  setTutorData(res,sessions) {
+  setTutorData(res,sessions,tutorSchedule) {
     console.log(res);
     let data = res['tutorKey'];
     this.subjects = data.discipline.split(",");
@@ -196,7 +199,7 @@ export class TutorBookingsComponent implements OnInit {
     this.userId = this.localStorage.getItem('lsaUserId');
     console.log(this.tutorId, this.userId);
     // set the schedule data for calendar ??
-    this.eventContainer = this.calendarService.getEvent(res['tutorSchedule'],sessions);
+    this.eventContainer = this.calendarService.getEvent(tutorSchedule,sessions);
     this.events = this.eventContainer.free;
     for (let i = 0; i < this.events.length; i++) { // delete the free time that before current time
       let eve = this.events[i];
@@ -531,16 +534,26 @@ export class TutorBookingsComponent implements OnInit {
         (res) => {
           this.updateCalendar();
           console.log(res);
-          this.feedback = 'Your lessons has been booked successfully!';
+          //this.feedback = 'Your lessons has been booked successfully!';
+          this.alertservice.sendAlert('Your lessons has been booked successfully!',  'SUCCESS', 'toast-top-right', 5000);          
           console.log(this.newArray);
           // reset the session and newarray and bill box to be empty
           this.newArray = [];
           this.sessions = [];
           this.setBill();
         },
-        (error) => {
-          this.feedback = 'Server or network error occurred, please try again or contact the administrator!';
-          console.log(error);
+        (err) => {
+          console.log(err);          
+          if (err.error.code&&(err.error.code > 400&&err.error.code < 500)){
+            // this.feedback = "Failed, "+ err.error.error;
+            this.alertservice.sendAlert("Failed, "+ err.error.error,  
+                'ERROR', 'toast-top-right', 5000);          
+          } 
+          else      
+            // this.feedback =  'Server or network error occurred, please try again or contact the administrator!';
+            this.alertservice.sendAlert('Server or network error occurred, please try again or contact the administrator!',  
+                'ERROR', 'toast-top-right', 5000);          
+
         }
       );
   }
@@ -565,9 +578,16 @@ export class TutorBookingsComponent implements OnInit {
         this.sessions = [];
         this.setBill();
       },
-      (error) => {
-        this.feedback = 'Error occurred!';
-        console.log(error);
+      (err) => {
+        if (err.error.code&&(err.error.code > 400&&err.error.code < 500)){
+          // this.feedback = "Failed, "+ err.error.error;
+          this.alertservice.sendAlert("Failed, "+ err.error.error,  
+              'ERROR', 'toast-top-right', 5000);          
+        } 
+        else      
+          // this.feedback =  'Server or network error occurred, please try again or contact the administrator!';
+          this.alertservice.sendAlert('Server or network error occurred, please try again or contact the administrator!',  
+              'ERROR', 'toast-top-right', 5000);          
       }
     );
   }
@@ -606,13 +626,13 @@ export class TutorBookingsComponent implements OnInit {
   // let the user to set session information like subject, curriculum and location
   setInfo(infoType,e) {
     if (infoType === 1) {
-      this.session.subject = event.target['value'];
+      this.session.location = event.target['value'];
     }
     else if (infoType === 2) {
-      this.session.curriculum = event.target['value'];
+      this.session.subject = event.target['value'];
     }
     else if (infoType === 3) {
-      this.session.location = event.target['value'];
+      this.session.curriculum = event.target['value'];
     }
   }
   // set the sessions object value for subscription

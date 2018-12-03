@@ -131,6 +131,9 @@ export class LearnerService {
   userOrder(){
     return this.http.get(this.baseUrl + '/buyers/' + this.id + '/orders', { headers: this.headers1});    
   }
+  userCredit(){
+    return this.http.get(this.baseUrl + '/users/' + this.id + '/credit', { headers: this.headers1});    
+  }
   //rate session
   storeRateSession(sessionId,rating){
     return this.http.post(this.baseUrl + '/learners/' + this.id + '/sessions/' + sessionId+'/rating',rating,{ headers: this.headers1});  }  

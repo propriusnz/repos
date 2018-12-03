@@ -4,7 +4,7 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 import { FormBuilder, FormGroup, FormControl, FormArray, Validators, FormControlName, AbstractControl } from '@angular/forms';
 import { Observable } from 'rxjs/Observable';
 import { SideHelperService } from '../../../services/helpers/side-helper.service';
-
+import { AlertNotificationService } from '../../../services/support/alert-notification.service';
 @Component({
   selector: 'app-user-edit-details',
   templateUrl: './user-edit-details.component.html',
@@ -30,6 +30,7 @@ export class UserEditDetailsComponent implements OnInit {
     private userService: UserService,
     private formBuilder: FormBuilder,
     private SideHelperService: SideHelperService,
+    private alertservice:AlertNotificationService
 
   ) {
     this.userService.showUserInfo().subscribe(
@@ -87,12 +88,19 @@ export class UserEditDetailsComponent implements OnInit {
 
   // on sumbit button
   onSubmit() {
-
     if (this.userDetailsForm.valid && this.userDetailsForm.dirty) {
       console.log('conditions met');
       this.userService.updateUserInfo(this.userDetailsForm.value).subscribe(
-        (res) => { this.feedbackMessage = 'Your changes have been saved' },
-        (error) => { this.feedbackMessage = 'Sorry, but something has gone wrong.', console.log(error) }
+        (res) => { 
+          console.log(res);           
+          this.feedbackMessage = 'Your changes have been saved' 
+          this.alertservice.sendAlert(this.feedbackMessage, 'SUCCESS', 'toast-top-right', 3000);         
+        },
+        (error) => { 
+          this.feedbackMessage = 'Sorry, but something has gone wrong.', 
+          this.alertservice.sendAlert(this.feedbackMessage, 'ERROR', 'toast-top-right', 3000);                   
+          console.log(error) 
+        }
       )
     }
   }

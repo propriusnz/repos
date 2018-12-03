@@ -407,7 +407,7 @@ export class SchedulesListComponent implements OnInit {
     console.log(this.range);
     this.tutorService.indexTutorSessions(this.range).subscribe((res) => {
       console.log(res);
-      let allSessions = res['allSessions'];
+      let allSessions = res['tutorSessions'];
       console.log(allSessions);
       this.sessionsInfo = this.changeFormat(allSessions);
       console.log(this.sessionsInfo);

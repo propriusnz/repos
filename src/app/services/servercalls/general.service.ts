@@ -64,6 +64,10 @@ export class GeneralService {
   showDiscussions(){
 
   }
+ //get tutor schedule for find tutor and calendar
+  findTutorSchedule(tutorId){
+    return this.http.get(this.baseUrl+'/findtutorschedule/'+tutorId)
+  }
 
   // Contact us forms
   storeContact(contactUs){

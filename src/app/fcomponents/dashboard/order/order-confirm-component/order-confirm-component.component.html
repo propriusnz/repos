@@ -4,7 +4,7 @@
       <h1>Order Confirm</h1>
     </div>
     <div class="col-xl-9 col-lg-9 col-md-9">
-      <div *ngIf="tutor" class="card">
+      <div *ngIf="tutor&&tutorCourses" class="card">
         <div class="card-header">
           <h4 class="col-xl-6 col-md-6 m2">1. Tutor</h4>
           <div class="s1">The tutor you have choosed.</div>
@@ -35,7 +35,7 @@
       </div>
     </div>
     <div class="col-xl-9 col-lg-9 col-md-9">
-      <div *ngIf="tutorCourses" class="card">
+      <div *ngIf="tutor&&tutorCourses" class="card">
         <div class="card-header">
           <h4 class="col-xl-6 col-md-6 m2">2. Product</h4>
           <div class="s1">How many lessons would you like to purchase?</div>
@@ -84,7 +84,7 @@
 
   <div class='row'>
     <div class="col-xl-9 col-lg-9 col-md-9">
-      <div class="card">
+      <div *ngIf="tutor&&tutorCourses&&order" class="card">
         <div class="card-header">
           <h4 class="col-xl-6 col-md-6 m2">3. Payment</h4>
           <div class="s1">Confirm your payment card.</div>
@@ -97,7 +97,7 @@
   </div>
   <div class='row'>
     <div class="col-xl-9 col-lg-9 col-md-9">
-      <div *ngIf="order" class="card">
+      <div *ngIf="tutor&&tutorCourses&&order" class="card">
         <div class="card-header">
           <h4 class="col-xl-6 col-md-6 m2">4. Check Out</h4>
           <div class="s1">Confirm and check out!</div>

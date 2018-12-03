@@ -29,10 +29,8 @@ export class UserDetailsEditComponent implements OnInit {
   curriculums: string[] = ['(NCEA) National Certificates of Educational Achievement', '(CIE) Cambridge', '(IB) International Baccalaureate'];
   emailVerifyStatus = false;
   userUpdate={
-    userKey:
-    { first_name:'',last_name:''},
-    userInfo:
-    { phone_num_pri:'',location:'',DOB:null}
+    first_name:'',last_name:'',
+    phone_num_pri:'',location:'',DOB:null
   }
 
   constructor(
@@ -71,7 +69,7 @@ export class UserDetailsEditComponent implements OnInit {
       last_name: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(30), Validators.pattern('^[a-zA-Z\s]*$')]],
       phone_num_pri: ['', [Validators.required, Validators.minLength(7), Validators.maxLength(12), Validators.pattern('^[0-9]*$')]],
       location: ['', Validators.required],
-      DOB: ['', [Validators.required, this.dateRange]]}
+      DOB: ['', [Validators.required]]}
     )
   }
 
@@ -124,16 +122,17 @@ export class UserDetailsEditComponent implements OnInit {
     }
   }
   transferDataToBack() {
-    this.userUpdate.userKey.first_name=this.appForm.value['first_name'];
-    this.userUpdate.userKey.last_name=this.appForm.value['last_name'];
-    this.userUpdate.userInfo.phone_num_pri=this.appForm.value['phone_num_pri'];
-    this.userUpdate.userInfo.location=this.appForm.value['location'];
-    this.userUpdate.userInfo.DOB=this.appForm.value['DOB'];
+    this.userUpdate.first_name=this.appForm.value['first_name'];
+    this.userUpdate.last_name=this.appForm.value['last_name'];
+    this.userUpdate.phone_num_pri=this.appForm.value['phone_num_pri'];
+    this.userUpdate.location=this.appForm.value['location'];
+    this.userUpdate.DOB=this.appForm.value['DOB'];
     this.userService.updateUserInfo(this.userUpdate).subscribe(
       (res) => {console.log(res)
         // this.localStorage.setItem('lsaWho', res['dataCon'].xUr);
         // this.router.navigate(['/app/apply/manager']);
-         window.location.reload();
+         //window.location.reload();
+         this.getUserInfo();
       },
       (err) => {
         console.log(err),

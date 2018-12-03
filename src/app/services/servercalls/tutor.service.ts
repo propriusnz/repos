@@ -25,7 +25,7 @@ export class TutorService {
 
   // Tutor Schedules
   showTutorSchedules() {
-    return this.http.get(this.baseUrl + '/tutorschedule/' + this.id, { headers: this.headers1 });
+    return this.http.get(this.baseUrl + '/tutors/' + this.id+'/schedulecalender', { headers: this.headers1 });
   }
 
   updateTutorSchedules(scheduleUpdate) {
@@ -58,7 +58,7 @@ export class TutorService {
   }
   // Tutor Sessions
   indexTutorSessions(searchValue) {
-    return this.http.get(this.baseUrl + '/tutors/' + this.id + '/sessions?' + 'start=' + searchValue[0] + '&end=' + searchValue[1], { headers: this.headers1 });
+    return this.http.get(this.baseUrl + '/tutors/' + this.id + '/schedulelist?' + 'start=' + searchValue[0] + '&end=' + searchValue[1], { headers: this.headers1 });
   }
   tutorCancelSession(sessionId, reason) {
     // tslint:disable-next-line:max-line-length

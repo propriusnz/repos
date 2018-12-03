@@ -3,6 +3,7 @@ import { WINDOW } from '@ng-toolkit/universal';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { TutorService } from '../../../../services/servercalls/tutor.service';
+import { GeneralService } from '../../../../services/servercalls/general.service';
 import { CalendarSupportService } from '../../../../services/support/calendar-support.service';
 import * as moment from 'moment';
 import { isPlatformBrowser } from '@angular/common';
@@ -29,6 +30,7 @@ export class TutorScheduleShowComponent implements OnInit {
     private window: Window,
     private router: Router,
     private tutorService: TutorService,
+    private generalService: GeneralService,    
     private calendarService: CalendarSupportService,
   ) {
     if (isPlatformBrowser(this.platformId)) {

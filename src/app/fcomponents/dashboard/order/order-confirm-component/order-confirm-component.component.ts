@@ -5,7 +5,7 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 import { CommonSupportService } from '../../../../services/support/common-support.service';
 import { AlertNotificationService } from '../../../../services/support/alert-notification.service';
 import { UserPaymentInfoComponent}  from '../../../../fcomponents/user-details/user-payment-info/user-payment-info.component'; 
-
+import { Observable, of } from 'rxjs';
 
 @Component({
   selector: 'app-order-confirm-component',
@@ -48,21 +48,31 @@ export class OrderConfirmComponentComponent implements OnInit {
   }
   //get tutor data from the service
   getTutorData(id) {
-    
-    this.searchService.showTutor(id).subscribe(
+    Observable.forkJoin(
+     this.searchService.showTutor(id).map(
       (res) => { 
         console.log(res);        
         this.setTutorData(res);
         this.setCourseData();
         this.getFeeRate();
-        this.getWallet();
-        this.initOrderData();
-      },
-      (err) => { 
-        console.log(err);        
-        this.errorMessage = "Something went wrong, we cannot get any data at this time." 
-        this.alertservice.sendAlert(this.errorMessage, 'ERROR', 'toast-top-right', 3000);      }
-    )
+
+      }),
+      this.learnerService.userCredit().map(
+        (res) => { 
+          console.log(res);        
+          this.setWallet(res);
+        })
+        ).subscribe(
+          data=>{
+            this.initOrderData();            
+            console.log(data);
+          },
+          error=>{
+            console.log(error);
+            this.errorMessage = "Something went wrong, we cannot get any data at this time." 
+            this.alertservice.sendAlert(this.errorMessage, 'ERROR', 'toast-top-right', 3000); 
+          }
+        )
   }
  //set tutor data to local variable
   setTutorData(res){
@@ -78,9 +88,9 @@ export class OrderConfirmComponentComponent implements OnInit {
       this.selectedCourseId=this.tutorCourses[0].id;
     }
   }
-  getWallet(){
+  setWallet(data){
     //subscribe
-    this.wallet=0;
+    this.wallet=data.userCredit.credit;
   }
   calculateFee(fee){
     return  Math.round((fee*this.feerate+0.3)*100)/100;
@@ -140,7 +150,7 @@ export class OrderConfirmComponentComponent implements OnInit {
     this.order[indBaseItem].price=basePrice;
     this.order[indBaseItem].item=this.tutor.first_name+':'+event.value.course_title;
     this.order[indFeeItem].price=feePrice;
-    this.order[indTotalItem].price= totalPrice;  
+    this.order[indTotalItem].price= totalPrice>0?totalPrice:0;  
   }
   //check out
   checkOut(){
@@ -170,8 +180,12 @@ export class OrderConfirmComponentComponent implements OnInit {
         $('#successModal').modal('show');
       },
       (err) => { 
-        console.log(err);        
-        this.errorMessage = "Something went wrong, we can not book at this time." 
+        console.log(err); 
+        if (err.error.code&&(err.error.code > 400&&err.error.code < 500)){
+          this.errorMessage = "Failed, "+ err.error.error;
+        } 
+        else      
+          this.errorMessage = "Something went wrong, we can not book at this time." 
         this.alertservice.sendAlert(this.errorMessage, 'ERROR', 'toast-top-right', 3000);      }
     )
   }

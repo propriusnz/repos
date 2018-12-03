@@ -99,10 +99,12 @@ export class TutorprofileComponent implements OnInit {
         console.log(res);
         this.setPageData(res);
         }),
-      this.searchService.showTutorSession(id).map(res => {
-        this.tutorSessions=res['allSessions'];
+      this.searchService.findTutorSchedule(id).map(res => {
+        this.tutorSchedule= res['tutorSchedule'];
+        this.tutorSessions=res['tutorSessions']; 
+        console.log(this.tutorSchedule);                       
         console.log(this.tutorSessions);
-      })
+      })      
     ).subscribe(
       data=>{
         this.loadingFlag = false; 
@@ -144,7 +146,7 @@ export class TutorprofileComponent implements OnInit {
     this.tutorfeedback = res['tutorReferences'];
     this.tutorratings = res['tutorratings'];
     this.tutorCourses = res['tutorCourses'];
-    this.tutorSchedule= res['tutorSchedule'];
+
     this.tutorAwards =  res['tutorAwards'];
     this.allAwards =  res['allAwards']; 
     this.mapAwards();   

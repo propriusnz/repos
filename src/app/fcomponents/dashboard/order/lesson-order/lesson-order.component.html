@@ -80,7 +80,7 @@
                                 <button class="btn btn-outline-danger float-right" (click)='showDetail(order)'>Order detail</button>
                             </span>
                             <span *ngIf="order.order_status == 'processing'">
-                                <button class="btn btn-outline-danger float-right" (click)='goSchedule(idx)'>Schedule</button>
+                                <button class="btn btn-outline-danger float-right" (click)='goSchedule(order.order_id,order.tutor_id)'>Schedule</button>
                             </span>
                           </div>
                           <div class='col-4'>

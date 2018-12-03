@@ -36,7 +36,6 @@ export class UserService {
   updateUserPassword(a){
     return this.http.put(this.baseUrl+'/userpasswordchange/'+this.userId, a, {headers: this.headers1})
   }
-
   // User Edit Photos
   updateUserPhoto(aa) {
     console.log('update photos');

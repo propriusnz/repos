@@ -14,68 +14,7 @@ import { all } from 'q';
   styleUrls: ['./lesson-order.component.css']
 })
 export class LessonOrderComponent implements OnInit {
-  // orders = [
-  //   { order_id: '2',
-  //     order_time: '01/01/2010',
-  //     order_price: '10',
-  //     order_quantity: '10',
-  //     order_remain: '5',
-  //     order_status: 'processing',
 
-  //     tutor_id: '1',
-  //     tutor_name: 'someone',
-  //     tutor_img: 'https://via.placeholder.com/150',
-
-  //     lesson_name: 'math',},
-  //     { order_id: '2',
-  //     order_time: '01/01/2010',
-  //     order_price: '10',
-  //     order_quantity: '10',
-  //     order_remain: '5',
-  //     order_status: 'processing',
-
-  //     tutor_id: '1',
-  //     tutor_name: 'someone',
-  //     tutor_img: 'https://via.placeholder.com/150',
-
-  //     lesson_name: 'math',},
-  //     { order_id: '2',
-  //     order_time: '01/01/2010',
-  //     order_price: '10',
-  //     order_quantity: '10',
-  //     order_remain: '5',
-  //     order_status: 'canceled',
-
-  //     tutor_id: '1',
-  //     tutor_name: 'someone',
-  //     tutor_img: 'https://via.placeholder.com/150',
-
-  //     lesson_name: 'math',},
-  //     { order_id: '2',
-  //     order_time: '01/01/2010',
-  //     order_price: '10',
-  //     order_quantity: '10',
-  //     order_remain: '5',
-  //     order_status: 'finished',
-
-  //     tutor_id: '1',
-  //     tutor_name: 'someone',
-  //     tutor_img: 'https://via.placeholder.com/150',
-
-  //     lesson_name: 'math',},
-  // { tutor: 'DFG', class: 'Maths', amount: 3, price: 1, tutor_img: '././assets/tutorpics/front2.jpg', status: 'Refund', order_time: '2018-08-28', paid_time: '2018-08-28', classed: 1, booking: 0 },
-  // { tutor: 'XYZ', class: 'Chinese', amount: 1, price: 10, tutor_img: '././assets/tutorpics/front3.jpg', status: 'Unpaid', order_time: '2018-03-21', paid_time: null, classed: 0, booking: 0 },
-  // { tutor: 'City', class: 'Maths', amount: 5, price: 101, tutor_img: '././assets/tutorpics/front4.jpg', status: 'Paid', order_time: '2018-07-12', paid_time: '2018-07-12', classed: 2, booking: 2 },
-  // { tutor: 'Manu', class: 'Maths', amount: 12, price: 200, tutor_img: '././assets/tutorpics/front5.jpg', status: 'Finished', order_time: '2018-09-30', paid_time: '2018-09-30', classed: 12, booking: 0 },
-  // { tutor: 'Hooo', class: 'English', amount: 2, price: 12, tutor_img: '././assets/tutorpics/front1.jpg', status: 'Unpaid', order_time: '2018-04-25', paid_time: null, classed: 0, booking: 0 }
-  // ]
-  //displayedColumns: string[] = ['tutor', 'lessons', 'amount', 'apply'];
-  // all = this.orders;
-  // progressing = this.orders.filter(value => value.order_status === 'processing');
-  // unpaid = this.orders.filter(value => value.status === 'Unpaid');
-  // refund = this.orders.filter(value => value.status === 'Refund');
-  // finished = this.orders.filter(value => value.status === 'Finished');
-  // order_time = 'all';
   loading = true;
   buyerOrders: any;
   pageOrders: any;
@@ -202,9 +141,9 @@ export class LessonOrderComponent implements OnInit {
       data: { order }
     });
   }
-  goSchedule(idx) {
+  goSchedule(orderId,tutorId) {
     //this.router.navigate(['/app/']);
-    this.router.navigate(['/app/dashboard/learner/schedule/' + this.buyerOrders[idx].order_id + '/' + this.buyerOrders[idx].tutor_id]);
+    this.router.navigate(['/app/dashboard/learner/schedule/' + orderId + '/' + tutorId]);
   }
 
 }

@@ -4,8 +4,7 @@
   <div *ngIf="errorMessage" style="color:red;">{{errorMessage}}</div>
   <div class="row">
     <form *ngIf="userInfo" [formGroup]="appForm" class="col-12 col-md-9 col-lg-8">
-
-      <div class="card" style="margin-top: 25px;" (mouseenter)="mouseEnter('Profile General Information')">
+      <div class="card" style="margin-top: 25px;">
         <div class="card-header">
           <h5>Profile General Information</h5> Please enter your general information here
         </div>
