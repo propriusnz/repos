@@ -1,7 +1,7 @@
 <mat-dialog-content class="p-0 my-0">
 
   
-    <div class="form-check ml-3">
+    <div *ngIf="false" class="form-check ml-3">
         <input type="checkbox" class="form-check-input" id="sessionck" checked (ngModelChange)="onFilterChange($event)" [ngModel]="filter">
         <label class="form-check-label" for="sessionck">Session has completed</label>
     </div>

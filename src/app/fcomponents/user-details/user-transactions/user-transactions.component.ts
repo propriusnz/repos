@@ -22,18 +22,22 @@ export class UserTransactionsComponent implements OnInit {
   startDate: any;
   start: any;
   endDate: any;
+  minDate:any;
+  maxDate:any;
   timeMes = false;
   range = [];
 
   content: { ber; date_of_session: string; session_status: string; student: string; quantity: number; hourly_rate: number;description: string; amount: number; };
-  transaction=[]; 
-  trans=[]; // for data display
+  dateValidator:boolean;
+  transactions:any;
   totalHour = 0;// total session hour for invoice
-  totalAmount = 0; // total session dollars for invoice
+  totalAmount:number = 0; // total session dollars for invoice
   dateStatus = false;
   descriptionIndex=[];// used for description collapse drop down button
   dropIndex=[];// for the overall loop number
   originalData = [];
+  trans = [];
+  searchNumber:number
   billInfo= {
     // company: '',
     // street: '',
@@ -47,8 +51,9 @@ export class UserTransactionsComponent implements OnInit {
     // tax: 0,
     name: '',
     allAmount: 0,
-    allHour: 0
+    // allHour: this.totalHour
   };
+  singlePrice=[]
   // for invoice print
   title = 'app';
   inputData: string;
@@ -56,7 +61,7 @@ export class UserTransactionsComponent implements OnInit {
   // for invoice print end
   role: number;
   showPdfButton = false;
-  showWarningMes = true;
+  showWarningMes = false;
   showTable = false;
   constructor(
     @Inject(PLATFORM_ID) private platformId,
@@ -75,198 +80,191 @@ export class UserTransactionsComponent implements OnInit {
       return;
     }
     this.endDate = new FormControl(moment().format());
-    this.start = moment().subtract(30, 'days');
-    this.startDate = new FormControl(this.start.format());
-    
-    this.range = [this.start.format().substr(0, 19), moment().format().substr(0, 19)];
+    this.maxDate = moment().format();
+    // this.start = moment().subtract(1, 'months');
+    // this.startDate = new FormControl(this.start.format());
+    // this.range = [this.start.format().substr(0, 19), moment().format().substr(0, 19)];
+    // this.startDate = new FormControl(this.minDate);
+    this.startDate = new FormControl();
     this.role = Number(localStorage.getItem('lsaWho'));
-
+    this.billInfo['name'] = localStorage.getItem('lsaUserName')
   }
 
   ngOnInit() {
-    if (this.isBrowser) {
-        // Client only code.
+  // if (this.isBrowser) {
+  //       Client only code.
 
-      // console.log(this.range);
-      // // set billinfo
-      // let userFirstName = JSON.parse(sessionStorage.getItem('lsaSpTutorInfo')).first_name;
-      // this.billInfo['name'] = userFirstName;
-      // learner or applicant role
-      if (this.role === 1 || this.role === 2) {
-      this.getLearnerTransactions();
-      }
-      // tutor role
-      // if (this.role === 3) {
-      //   console.log(this.role);
-      //   this.getTutorTransactions();
-      // }
-    }
+  //     console.log(this.range);
+  //     // set billinfo
+  //     let userFirstName = JSON.parse(sessionStorage.getItem('lsaSpTutorInfo')).first_name;
+  //     learner or applicant role
+  //     if (this.role == 1 || this.role == 2) {
+  //     this.getLearnerTransactions();
+  //     }
+  //     tutor role
+  //     if (this.role === 3) {
+  //       console.log(this.role);
+  //       this.getTutorTransactions();
+  //     }
+  //           console.log("role:"+this.role)
+  //   }
+      if (this.role == 1 || this.role == 2) {
+        this.getLearnerTransactions();
+        console.log("role:"+this.role)
+        }
+    // this.learnerService.showLearnerPayment().subscribe((res) => {
+    //   console.log(res)
+    // });
+    
   }
   // get transactions and put in originalData variable
   // learner role or applicant role
   getLearnerTransactions() {
-    this.learnerService.indexLearnerTransactions(this.range).subscribe(res => {
-      let transactions = res['dataCon'];
-      console.log(transactions);
-      if (transactions.length !== 0) {
+    // showLearnerPayment
+    this.learnerService.userOrder().subscribe((res) => {
+      // console.log(res)
+      // let transactions = res['dataCon'];
+      this.transactions = res['allOrders'];
+      // this.startDate = new FormControl(this.minDate);
+      this.start = this.transactions[0]['order'].created_at;
+      this.minDate = moment(this.start).format();
+      this.startDate.setValue(this.minDate)
+      this.range = [this.start.substr(0, 19), moment().format().substr(0, 19)];
+      // console.log("minDate:")  
+      // console.log(this.minDate)    
+      console.log("range:"+this.range)
+
+      if (this.transactions.length !== 0) {
         this.showTable = true;
         this.showWarningMes = false;
-        this.originalData = this.mapData(transactions);
+        // this.originalData = this.mapData(transactions);
         console.log(this.originalData);
         // calculate data
         let initialStart = this.range[0];
         let initialEnd = this.range[1];
         this.calculateData(initialStart, initialEnd);
+        // this.calculateData();
         // show generate pdf invoice button
         this.showPdfButton = true;
+      }else{
+        this.showWarningMes = true;
       }
     });
-  }
-  // tutor role
-  getTutorTransactions() {
-    this.tutorService.indexTutorTransactions(this.range).subscribe(res => {
-      let transactions = res['dataCon'];
-      console.log(transactions);
-      if (transactions.length !== 0) {
-        this.showTable = true;
-        this.showWarningMes = false;
-        this.originalData = this.mapData(transactions);
-        console.log(this.originalData);
-        // calculate data
-        let initialStart = this.range[0];
-        let initialEnd = this.range[1];
-        this.calculateData(initialStart, initialEnd);
-        // show generate pdf invoice button
-        this.showPdfButton = true;
-      }
-    });
-  }
-
-  setStatus(e){
-    let status = '';
-    switch(e) {
-      case 'before-unconfirmed':  status = 'not-paid, yet to confirm';  break;
-      case 'before-canceled':   status = 'not paid, canceled';  break;
-      case 'before-confirmed-payfail':   status = 'Confirmed, pay failed';  break;
-      case 'before-confirmed-payfail-cancel':   status = 'Canceled as Not paid';  break;
-      case 'before-confirmed-normal':   status = 'Paid';  break;
-      case 'before-confirmed-cancel-early':   status = 'Canceled, refunded';  break;
-      case 'before-confirmed-cancel-late':   status = 'Canceled, partial refund';  break;
-
-      case 'after-normal':   status = 'Paid';  break;
-      case 'after-dispute-refund-total':   status = 'Dispute, total refund';  break;
-      case 'after-dispute-refund-partial':   status = 'Dispute, partial refund';  break;
-      case 'after-dispute-declined':   status = 'Dispute, declined';  break;
-      default:  status = 'not-paid, yet to confirm';
-    }
-    return status;
   }
   // map data
-  mapData(transactions: any[]) {
-    console.log(transactions);
-    let data = transactions.map(e => {
-      return {
-        date_of_session: e.transaction_date,
-        session_status: this.setStatus(e.payment_status),// transfer status
-        student: e.buyer_name,
-        tutor: e.seller_name,
-        quantity: e.quantity,
-        hourly_rate: e.unit_price,
-        description: e.description,
-        transaction_id: e.transaction_id,
-        amount: Number((e.unit_price * e.quantity).toFixed(2))
-      };
-    });
-    return data;
-  }
-  calculateData(start, end) {
+  // mapData(transactions: any[]) {
+  //   console.log(transactions);
+  //   let data = transactions.map(e => {
+  //     return {
+  //       date_of_session: e['order'].created_at,
+  //       // hourly_rate: e.payment_amount,
+  //       // course_name:e.discipline,
+  //     };
+  //   });
+  //   return data;
+  // }
+  calculateData(start,end) {
     // calculate the original data basing on the selected input start and end date
-    this.trans = [];
     this.dropIndex = [];
+    this.trans = [];
+    this.singlePrice = [];
     this.totalHour = 0;
-    this.totalAmount = 0;
-    this.transaction = this.originalData;
-    for(let i =0; i < this.transaction.length; i++) {
-      let startStatus = moment(this.transaction[i].date_of_session).isAfter(start);
-      let endStatus = moment(this.transaction[i].date_of_session).isBefore(end);
+    this.totalAmount= 0;
+    // this.transaction = this.originalData;
+    for(let i =0; i < this.transactions.length; i++) {
+      let startStatus = moment(this.transactions[i]['order'].created_at).isSameOrAfter(start,'days');
+      let endStatus = moment(this.transactions[i]['order'].created_at).isSameOrBefore(end,'days');
       console.log(startStatus,endStatus);
       if(startStatus && endStatus) {
         // change date format
-        let x = this.transaction[i].date_of_session;
-        x = moment(x).format('lll');
-        console.log(x);
-        this.transaction[i].date_of_session = x;
+        // let x = this.transaction[i].date_of_session;
+        // x = moment(x).format('lll');
+        // console.log(x);
+        // this.transaction[i].date_of_session = x;
         // add into new trans array
-        this.trans.push(this.transaction[i]);
-        this.totalHour += this.transaction[i].quantity;
-        this.totalAmount += Number(this.transaction[i].amount);
+        this.trans.push(this.transactions[i]);
+        // this.totalHour += this.transaction[i].quantity;
+        this.singlePrice.push(Number(this.transactions[i]['order'].order_price)*Number(this.transactions[i]['order'].order_quantity))
       }
     }
+    if (this.trans.length == 0){
+      this.showWarningMes = true;
+      this.showTable = false;
+    }else{
+      this.showTable = true;
+      this.showWarningMes = false;
+
+    }
+    for ( let i = 0; i < this.singlePrice.length; i++){
+      this.totalAmount+=Number(this.singlePrice[i])
+    }
+    this.billInfo['allAmount'] = this.totalAmount;
     for ( let i = 0; i < this.trans.length; i++) {
       this.dropIndex.push(i); // is for front page table row loop
-      let index ='desciption' + i;
-      this.descriptionIndex.push(index); // is for the collapse id number
     }
-    console.log(this.trans, this.dropIndex, this.transaction, this.originalData);
-    // update bill info
-    this.billInfo['allAmount'] = this.totalAmount;
-    this.billInfo['allHour'] = this.totalHour;
-    this.billInfo['name'] = this.originalData[0].student;
+    console.log("trans:",this.trans)
   }
 
   resetTransactions() {
+    this.showWarningMes = false;
+    this.showTable = false;
     let start = this.startDate.value;
     let end = this.endDate.value;
-    console.log(start);
-    if (moment(end).isSameOrBefore(moment(start))) {
-      this.timeMes = true;
-    } else {
+    // console.log(start);
+    // if (moment(end).isSameOrBefore(moment(start))) {
+    //   this.timeMes = true;
+    // } else {
       // hide warning message
-      this.timeMes = false;
-      let s_time = moment(start).format().substr(0, 19);
+      // this.timeMes = false;
+      let s_time = moment(start).format('YYYY-MM-DD h:mm:ss').substr(0, 19);
       let e_time = moment(end).format().substr(0, 19);
-      // console.log('234');
-      // this.calculateData(start,end);
-      // update this.range
+      // console.log("s_time e_time:",s_time,e_time)
       this.range[0] = s_time;
       this.range[1] = e_time;
-      console.log(this.range);
+      console.log("range:"+this.range)
+      this.calculateData(s_time,e_time);
+      // update this.range
+
       // update sessions
-      this.ngOnInit();
-    }
+      // this.ngOnInit();
+    // }
   }
-  dispute(event) {
-    // get transaction id
-    let trans_id = event.srcElement.id.slice(3);
-    // dispute action
-    let sessionID = Number(event.srcElement.id.slice(3));
-    let dialogRef = this.dialog.open(UserTransactionsActionsDialogComponent,
-      {
-        panelClass: 'dialog1',
-        data: sessionID,
-      });
-    dialogRef.afterClosed().subscribe(
-      (res) => {
-        console.log(res);
-        if (res) {
-          this.sendDisputeToServer(trans_id, res);
-          // this.sendReport(sessionID, res);
-        }
-      },
-      (err) => console.warn(err)
-    );
+
+  showAll(){
+    this.ngOnInit();
   }
-  MakePayment(x){
-    // x is the session id
-    let transid = this.originalData[x].transaction_id;
-    this.learnerService.updateLearnerPayment(transid).subscribe(res=>{
-      console.log(res);
-    });
-    console.log(transid);
-  }
+  // dispute(event) {
+  //   // get transaction id
+  //   let trans_id = event.srcElement.id.slice(3);
+  //   // dispute action
+  //   let sessionID = Number(event.srcElement.id.slice(3));
+  //   let dialogRef = this.dialog.open(UserTransactionsActionsDialogComponent,
+  //     {
+  //       panelClass: 'dialog1',
+  //       data: sessionID,
+  //     });
+  //   dialogRef.afterClosed().subscribe(
+  //     (res) => {
+  //       console.log(res);
+  //       if (res) {
+  //         this.sendDisputeToServer(trans_id, res);
+  //         // this.sendReport(sessionID, res);
+  //       }
+  //     },
+  //     (err) => console.warn(err)
+  //   );
+  // }
+  // MakePayment(x){
+  //   // x is the session id
+  //   let transid = this.originalData[x].transaction_id;
+  //   this.learnerService.updateLearnerPayment(transid).subscribe(res=>{
+  //     console.log(res);
+  //   });
+  //   console.log(transid);
+  // }
   createPdf() {
     let sourceDom = document.getElementById('template_paper');
-    console.log(sourceDom, this.billInfo, this.trans);
+    // console.log(sourceDom, this.billInfo, this.trans);
     this.pdfCreation.createTransPdf(sourceDom, this.billInfo, this.trans);
   }
 

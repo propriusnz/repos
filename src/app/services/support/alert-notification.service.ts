@@ -20,6 +20,16 @@ export class AlertNotificationService {
     console.log("The result is :", this.data);
   }
 
+  serviceErrorAlert(err) {
+    let errorMessage;
+    if (err.error.code&&(err.error.code > 400&&err.error.code < 500)){
+      errorMessage = "Failed, "+ err.error.error;
+    } 
+    else      
+      errorMessage = "Something went wrong, please try again or contact with our Administrator." 
+    this.sendAlert(errorMessage, 'ERROR', 'toast-top-right', 3000);      
+  }
+  
   getAlert() {
     return this.myObs$;
   }

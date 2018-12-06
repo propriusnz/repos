@@ -47,10 +47,9 @@ export class LessonOrderComponent implements OnInit {
     this.learnerServive.userOrder().subscribe(
       (res) => {
         console.log(res);
-
+        this.loading = false;
         if (res['allOrders'].length) {
           this.buyerOrders = this.getAllOrders(res['allOrders']);
-          this.loading = false;
           this.getPage(1);
           console.log(this.buyerOrders);
         } else {
@@ -67,11 +66,13 @@ export class LessonOrderComponent implements OnInit {
   }
   getFilterOrder(status) {
   let filterOrders;
+  if (!this.buyerOrders) return;
   if (status === 'all')
     filterOrders= this.buyerOrders
   else
     filterOrders = this.buyerOrders.filter(e => e.order_status === status)
 
+    if (!filterOrders) return
     this.totalPosts = filterOrders.length;
     //this.currentPage = page;
     this.pageNumber = Math.ceil(filterOrders.length / this.perPage);

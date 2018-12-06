@@ -14,7 +14,7 @@ export class ContactComponent implements OnInit {
     name:'',
     email:'',
     phone:'',
-    tutor_name:'',
+    subject:'',
     message:'',
   };
 

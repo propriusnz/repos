@@ -1,103 +1,108 @@
 <div class="container">
-    <div class="row">
-        <div class="col-12">
-            <!--Start time datepicker-->
-            <mat-form-field class="mx-2">
-                <input matInput [matDatepicker]="picker" placeholder="Select your start date" [formControl]="startDate" [min]='startDate'>
-                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                <mat-datepicker #picker></mat-datepicker>
-            </mat-form-field>
-            <!--End time datepicker-->
-            <mat-form-field class="mx-2">
-                <input matInput [matDatepicker]="picker1" placeholder="Select your end date" [formControl]="endDate">
-                <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
-                <mat-datepicker #picker1></mat-datepicker>
-            </mat-form-field>
-            <button type="button" (click)='resetTransactions()' class="btn btn-primary btn-sm ml-3">Search</button>
-            <p *ngIf='timeMes' style="color: red;">End time cannot be ahead of start time!</p>
-        </div>
-        <div class="col-12">
-            <p class="text-danger ml-3" *ngIf="showWarningMes">You have no transactions.</p>
+        <div class="row">
+            <div class="col-12">
+                <!--Start time datepicker-->
+                <mat-form-field class="mx-2">
+                    <input matInput [matDatepicker]="picker" placeholder="Select your start date" [formControl]="startDate" [min]='minDate' [max]='maxDate'>
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+                <!--End time datepicker-->
+                <mat-form-field class="mx-2">
+                    <input matInput [matDatepicker]="picker1" placeholder="Select your end date" [formControl]="endDate" [min]='minDate' [max]='maxDate'>
+                    <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                    <mat-datepicker #picker1></mat-datepicker>
+                </mat-form-field>
+                <button type="button" (click)='resetTransactions()' class="btn btn-primary btn-sm ml-3">Search</button>
+    
+                    <button type="button" (click)='showAll()' class="btn btn-primary btn-sm ml-3">showAll</button>
+    
+                <p *ngIf='timeMes' style="color: red;">End time cannot be ahead of start time!</p>
+            </div>
+            <div class="col-12">
+                <p class="text-danger ml-3" *ngIf="showWarningMes">You have no transactions.</p>
+            </div>
         </div>
     </div>
-</div>
-
-<!--transaction section card-->
-<div class="container" *ngIf="showTable">
-    <div class="card">
-        <div class="card-header m1 bg-light">My Transactions</div>
-        <div class="card-body" style="overflow: scroll;">
-            <table class="col-12" class="table">
-                <thead class="text-center thead-dark">
-                <tr class="th bottomBorder">
-                    <th class="mdView">Date</th>
-                    <th class="mdView">Status</th>
-                    <th>Description</th>
-                    <th class="lgView">Student</th>
-                    <th class="lgView">Tutor</th>
-                    <th class="mdView">Hourly rate($)</th>
-                    <th class="lgView">Quantity</th>
-                    <th>Amount($)</th>
-                    <th *ngIf="role === 1 || role === 2">Action</th>
-                </tr>  
-                </thead>
-                <tbody id="accordion" *ngFor="let i of dropIndex">
-                <tr id="headingOne" class="text-center bottomBorder">
-                    <td class="mdView">{{trans[i].date_of_session}}</td>
-                    <td class="mdView">{{trans[i].session_status}}</td>
-                    <td>
-                        <button class="btn btn-link fontSize descriptionBtn py-0" data-toggle="collapse" [attr.data-target]="'#' + descriptionIndex[i]"  aria-expanded="false">
-                            <span>{{trans[i].description}}</span>&nbsp;
-                            <i class="fa fa-angle-down"></i>
-                            <i class="fa fa-angle-up"></i>
-                        </button>
-                    </td>
-                    <td class="lgView">{{trans[i].student}}</td>
-                    <td class="lgView">{{trans[i].tutor}}</td>
-                    <td class="mdView">{{trans[i].hourly_rate}}</td>
-                    <td class="lgView">{{trans[i].quantity}} hours</td>
-                    <td>{{trans[i].amount}}</td>
-                    <td *ngIf="role === 1 || role === 2">
-                        <div class="btn-group w-60 px-0 my-0 fontSize">
-                            <button type="button" class="btn btn-sm btn-link w-52 dropdown-toggle dropdown-toggle-split py-0" data-toggle="dropdown">Actions&nbsp;</button>
-                            <div class="dropdown-menu dropdown-menu-right">
-                            <a class="dropdown-item pointer" (click)='dispute($event)'id="dis{{trans[i].transaction_id}}">Dispute</a>
-                            <a *ngIf="trans[i].session_status ==='Confirmed, pay failed'" class="dropdown-item pointer" (click)='MakePayment(i)'>Make payment</a>
+    
+    <!--transaction section card-->
+    <div class="container" *ngIf="showTable">
+        <div class="card">
+            <div class="card-header m1 bg-light">My Transactions</div>
+            <div class="card-body" style="overflow: scroll;">
+                <table class="col-12" class="table">
+                    <thead class="text-center thead-dark">
+                    <tr class="th bottomBorder">
+                        <th class="mdView">Date</th>
+                        <!-- <th class="mdView">Status</th>
+                        <th>Description</th>
+                        <th class="lgView">Student</th> -->
+                        <th class="lgView">Tutor</th>
+                        <th class="lgView">Subject</th>
+                        <th class="mdView">Price($)</th>
+                        <th class="lgView">Quantity</th>
+                        <th>Amount($)</th>
+                        <!-- <th *ngIf="role === 1 || role === 2">Action</th> -->
+                    </tr>  
+                    </thead>
+                    <tbody id="accordion" *ngFor="let i of dropIndex">
+                    <tr id="headingOne" class="text-center bottomBorder">
+                        <td class="mdView">{{trans[i]['order'].created_at}}</td>
+                        <!-- <td class="mdView">{{trans[i].session_status}}</td>
+                        <td>
+                            <button class="btn btn-link fontSize descriptionBtn py-0" data-toggle="collapse" [attr.data-target]="'#' + descriptionIndex[i]"  aria-expanded="false">
+                                <span>{{trans[i].description}}</span>&nbsp;
+                                <i class="fa fa-angle-down"></i>
+                                <i class="fa fa-angle-up"></i>
+                            </button>
+                        </td> -->
+                        <!-- <td class="lgView">{{trans[i].student}}</td> -->
+                        <td class="lgView">{{trans[i]['tutor_key'].first_name}}</td>
+                        <td class="lgView">{{trans[i]['tutor_key'].discipline}} </td>
+                        <td class="mdView">{{trans[i]['order'].order_price}}</td>
+                        <td class="lgView">{{trans[i]['order'].order_quantity}} </td>
+                        <td>{{singlePrice[i]}}</td>
+                        <!-- <td *ngIf="role === 1 || role === 2">
+                            <div class="btn-group w-60 px-0 my-0 fontSize">
+                                <button type="button" class="btn btn-sm btn-link w-52 dropdown-toggle dropdown-toggle-split py-0" data-toggle="dropdown">Actions&nbsp;</button>
+                                <div class="dropdown-menu dropdown-menu-right">
+                                <a class="dropdown-item pointer" (click)='dispute($event)'id="dis{{trans[i].transaction_id}}">Dispute</a>
+                                <a *ngIf="trans[i].session_status ==='Confirmed, pay failed'" class="dropdown-item pointer" (click)='MakePayment(i)'>Make payment</a>
+                                </div>
                             </div>
-                        </div>
-                    </td>
-                </tr>
-                <tr id="{{descriptionIndex[i]}}" class="collapse bgColor" aria-labelledby="headingOne" data-parent="#accordion">
-                    <td colspan="10" style="text-align: left;">
-                        <i class="fa fa-close float-right mr-5 pointer" data-toggle="collapse" [attr.data-target]="'#' + descriptionIndex[i]"  aria-expanded="false"></i>
-                        <span class="lgCollapse collaoseMargin">
-                            <strong>Tutor</strong>: {{trans[i].tutor}}<br>
-                            <strong>Student</strong>: {{trans[i].student}}<br>
-                            <strong>Quantity</strong>: <span>{{trans[i].quantity}} hours</span>
-                        </span>
-                        <span class="mdCollapse collaoseMargin">
-                            <strong>Hourly rate($)</strong>: {{trans[i].hourly_rate}}<br>
-                            <strong>Date</strong>: {{trans[i].date_of_session}}<br>
-                            <strong>Status</strong>: {{trans[i].session_status}}
-                        </span>
-                    </td>
-                </tr>
-                </tbody>
-            </table>     
-        </div>
-        <!--transaction summary-->
-        <div class="col-12 clearfix">
-        <div class="float-right fontSize">
-            <h6 class="fontSize">Total hours: {{totalHour}} hours</h6>
-            <h6 class="fontSize">Total amount: ${{totalAmount}}.00</h6>
+                        </td> -->
+                    </tr>
+                    <!-- <tr id="{{descriptionIndex[i]}}" class="collapse bgColor" aria-labelledby="headingOne" data-parent="#accordion">
+                        <td colspan="10" style="text-align: left;">
+                            <i class="fa fa-close float-right mr-5 pointer" data-toggle="collapse" [attr.data-target]="'#' + descriptionIndex[i]"  aria-expanded="false"></i>
+                            <span class="lgCollapse collaoseMargin">
+                                <strong>Tutor</strong>: {{trans[i].tutor}}<br>
+                                <strong>Student</strong>: {{trans[i].student}}<br>
+                                <strong>Quantity</strong>: <span>{{trans[i].quantity}} hours</span>
+                            </span>
+                            <span class="mdCollapse collaoseMargin">
+                                <strong>Hourly rate($)</strong>: {{trans[i].hourly_rate}}<br>
+                                <strong>Date</strong>: {{trans[i].date_of_session}}<br>
+                                <strong>Status</strong>: {{trans[i].session_status}}
+                            </span>
+                        </td>
+                    </tr> -->
+                    </tbody>
+                </table>     
+            </div>
+            <!--transaction summary-->
+            <div class="col-12 clearfix">
+            <div class="float-right fontSize">
+                <!-- <h6 class="fontSize">Total hours: {{totalHour}} hours</h6> -->
+                <h6 class="fontSize">Total amount: ${{totalAmount}}.00</h6>
+                <br>
+                <button type="button" (click)="createPdf()" class="btn btn-primary btn-sm" *ngIf='showPdfButton'>Generate Invoice</button>
+            </div>
+            <div class="container-fluid" id="template_paper">
+                <div id="paper_title"></div>
+                <div id="paper_content"></div>
+            </div>
+            </div>
             <br>
-            <button type="button" (click)="createPdf()" class="btn btn-primary btn-sm" *ngIf='showPdfButton'>Generate Invoice</button>
         </div>
-        <div class="container-fluid" id="template_paper">
-            <div id="paper_title"></div>
-            <div id="paper_content"></div>
-        </div>
-        </div>
-        <br>
     </div>
-</div>

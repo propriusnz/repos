@@ -23,7 +23,7 @@ import { AlertNotificationService } from '../../../../services/support/alert-not
   styleUrls: ['./schedules-list.component.css']
 })
 export class SchedulesListComponent implements OnInit {
-  developVersion = true;//for test
+  developVersion = false;//for test
   sessionsInfo = []; // tutor role and learner role
   range = [];
   now: any;
@@ -274,7 +274,8 @@ export class SchedulesListComponent implements OnInit {
             }
             , (err) => {
               console.warn(err);
-              this.alertservice.sendAlert('This operation failed!', 'ERROR', 'toast-top-right', 5000);
+              this.alertservice.serviceErrorAlert(err);
+              // this.alertservice.sendAlert('This operation failed!', 'ERROR', 'toast-top-right', 5000);
             }
           )
         else
@@ -287,11 +288,12 @@ export class SchedulesListComponent implements OnInit {
               // update text which is related to html
               // this.updateText(data, sessionID);
               this.alertservice.sendAlert('This operation succeeded!', 'SUCCESS', 'toast-top-right', 1500);
-              this.updateStatus(data, this.sessionsInfo, id);
+              this.showAllSessions();
             }
             , (err) => {
               console.warn(err);
-              this.alertservice.sendAlert('This operation failed!', 'ERROR', 'toast-top-right', 5000);
+              this.alertservice.serviceErrorAlert(err);
+              // this.alertservice.sendAlert('This operation failed!', 'ERROR', 'toast-top-right', 5000);
             }
 
           );
@@ -308,11 +310,13 @@ export class SchedulesListComponent implements OnInit {
               // update text which is related to html
               // this.updateText(data, sessionID);     
               this.alertservice.sendAlert('This operation succeeded!', 'SUCCESS', 'toast-top-right', 1500);
-              this.updateStatus(data, this.sessionsInfo, id);
+              // this.updateStatus(data, this.sessionsInfo, id);
+              this.showAllSessions();
             }
             , (err) => {
               console.warn(err);
-              this.alertservice.sendAlert('This operation failed!', 'ERROR', 'toast-top-right', 5000);
+              // this.alertservice.sendAlert('This operation failed!', 'ERROR', 'toast-top-right', 5000);
+              this.alertservice.serviceErrorAlert(err);
             }
 
           )
@@ -325,11 +329,13 @@ export class SchedulesListComponent implements OnInit {
               console.log('Successfully sent data!');
               // update text which is related to html
               // this.updateText(data, sessionID);            
-              this.updateStatus(data, this.sessionsInfo, id);
+              // this.updateStatus(data, this.sessionsInfo, id);
+              this.showAllSessions();
             }
             , (err) => {
               console.warn(err);
-              this.alertservice.sendAlert('This operation failed!', 'ERROR', 'toast-top-right', 5000);
+              // this.alertservice.sendAlert('This operation failed!', 'ERROR', 'toast-top-right', 5000);
+              this.alertservice.serviceErrorAlert(err);
             }
 
           )
@@ -355,7 +361,8 @@ export class SchedulesListComponent implements OnInit {
           }
           , (err) => {
             console.warn(err);
-            this.alertservice.sendAlert('This operation failed!', 'ERROR', 'toast-top-right', 5000);
+            // this.alertservice.sendAlert('This operation failed!', 'ERROR', 'toast-top-right', 5000);
+            this.alertservice.serviceErrorAlert(err);
           }
         );
       }
@@ -375,7 +382,8 @@ export class SchedulesListComponent implements OnInit {
           }
           , (err) => {
             console.warn(err);
-            this.alertservice.sendAlert('This operation failed!', 'ERROR', 'toast-top-right', 5000);
+            // this.alertservice.sendAlert('This operation failed!', 'ERROR', 'toast-top-right', 5000);
+            this.alertservice.serviceErrorAlert(err);
           }
         );
       }
@@ -542,7 +550,7 @@ export class SchedulesListComponent implements OnInit {
       let now = moment();
       let interval = moment.duration(date.diff(now)).asHours();
       let withinTwelveHours = false;
-      if (interval <= 12) {
+      if (interval <= 8) {
         withinTwelveHours = true;
       }
       //if session is passed, assign session_status is proceed!
@@ -552,7 +560,7 @@ export class SchedulesListComponent implements OnInit {
         session_status = (e.session_status === 0 && now > date.add(e.session_duration - 48, 'hours')) ?
           50 : e.session_status;
       else
-        session_status = (e.session_status === 0 && now > date.add(e.session_duration, 'hours')) ?
+        session_status = (e.session_status === 0 && now > date) ?
           50 : e.session_status;
       
       if (e.session_status===2 && e.ratings ===null)
@@ -573,16 +581,24 @@ export class SchedulesListComponent implements OnInit {
           session_status_name = "Dispute"; //action: nothing
           break;
         case 49:
-          session_status_name = "waiting rating";//statue==2 and without rating, action:L,rating and dispute,T ,nothing
+          session_status_name = "Waiting rating";//statue==2 and without rating, action:L,rating and dispute,T ,nothing
           break;
         case 50:
-          session_status_name = "waiting report";//status==0 and session time passed,action L,nothing ,T,report and dispute
+          session_status_name = "Waiting report";//status==0 and session time passed,action L,nothing ,T,report and dispute
           break;
         default:
           session_status_name = "Others";
       }
 
-
+      let canceled_party;
+      if (session_status!=1)
+        canceled_party='';
+      else{
+        if (e.canceled_party===1)
+          canceled_party=' by tutor'
+        else
+          canceled_party=' by learner'
+      }
       date.add(e.session_duration, 'hours')
       console.log(interval, withinTwelveHours);
       newObj = {
@@ -604,7 +620,10 @@ export class SchedulesListComponent implements OnInit {
         withinTwelveHours: withinTwelveHours,
         session_status_name: session_status_name,
         tutor_report: e.tutor_report,
-        ratings: e.ratings
+        ratings: e.ratings,
+        cancel_comment:e.cancel_comment,
+        canceled_party:canceled_party,
+        suggestion:e.suggestion
       };
       return newObj;
     });
@@ -778,7 +797,7 @@ export class SchedulesListComponent implements OnInit {
     }
   }
   // show generate report dialog
-  generateReport() {
+  generateReport(event) {
     console.log('report');
     let sessionID = Number(event.srcElement.id.slice(3));
     let dialogRef = this.dialog.open(TutorReportDialogComponent,
@@ -836,7 +855,8 @@ export class SchedulesListComponent implements OnInit {
       }
       , (err) => {
         console.warn(err);
-        this.alertservice.sendAlert('This operation failed!', 'ERROR', 'toast-top-right', 5000);
+        // this.alertservice.sendAlert('This operation failed!', 'ERROR', 'toast-top-right', 5000);
+        this.alertservice.serviceErrorAlert(err);
       }
     );
   }
@@ -852,7 +872,8 @@ export class SchedulesListComponent implements OnInit {
       }
       , (err) => {
         console.warn(err);
-        this.alertservice.sendAlert('This operation failed!', 'ERROR', 'toast-top-right', 5000);
+        // this.alertservice.sendAlert('This operation failed!', 'ERROR', 'toast-top-right', 5000);
+        this.alertservice.serviceErrorAlert(err);
       }
     );
   }
@@ -867,7 +888,8 @@ export class SchedulesListComponent implements OnInit {
       }
       , (err) => {
         console.warn(err);
-        this.alertservice.sendAlert('This operation failed!', 'ERROR', 'toast-top-right', 5000);
+        // this.alertservice.sendAlert('This operation failed!', 'ERROR', 'toast-top-right', 5000);
+        this.alertservice.serviceErrorAlert(err);
       }
     );
   }

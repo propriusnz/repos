@@ -183,5 +183,4 @@ export class NewUserWelcomeComponent implements OnInit {
   finished(){
     this.router.navigate(["/app/find-tutor"])
   }
-
 }

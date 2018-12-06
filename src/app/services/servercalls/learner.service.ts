@@ -25,11 +25,18 @@ export class LearnerService {
   indexLearnerProfile(){
     return this.http.get(this.baseUrl + '/users/' + this.id +'/learners', {headers: this.headers1});
   }
-  
+    // Learner Profile
+  indexLearner(){
+      // proprius.co.nz/testing/public/users/60/alllearners  
+      return this.http.get(this.baseUrl + '/users/' + this.id +'/alllearners', {headers: this.headers1});
+  }
   updateLearnerProfile(learnerId, learner) {
-    return this.http.put(this.baseUrl + '/learners/' + this.id +'/learners/' + learnerId, learner, { headers: this.headers1 });
+    return this.http.put(this.baseUrl + '/users/' + this.id +'/learners/' + learnerId, learner, { headers: this.headers1 });
   }
 
+  storeLearnerProfile(learner) {
+    return this.http.post(this.baseUrl + '/users/' + this.id + '/learners', learner, { headers: this.headers1 });
+  }
   // Learner Resources
   indexLearnerResources() {
     return this.http.get(this.baseUrl + '/learners/' + this.id + '/resources?hw=0', { headers: this.headers1 });
@@ -43,11 +50,7 @@ export class LearnerService {
     return this.http.get(this.baseUrl + '/learners/' + this.id + '/resources/' + resourceId, { headers: this.headers1 });
   }
 
-  updateLearnerResourceResult() {
-
-  }
-
-  // Learner Sessions
+    // Learner Sessions
   storeLearnerSessions(tutorId, billAmount, bookings) {
     console.log(tutorId, billAmount ,bookings);
 //    users/(user)/products/(tutor)/flatorder/(price)
@@ -94,10 +97,6 @@ export class LearnerService {
 
   showTutor(id: string) {
     return this.http.get(this.baseUrl + '/findtutorprofile/' + id);
-  }
-
-  storeLearnerProfile(learner) {
-    return this.http.post(this.baseUrl + '/users/' + this.id + '/learners', learner, { headers: this.headers1 });
   }
   // Learner See Tutor
   indexLearnersTutor(queryParams: string) {

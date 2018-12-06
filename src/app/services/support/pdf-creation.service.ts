@@ -35,9 +35,8 @@ export class PdfCreationService {
   //let sourceDom = document.getElementById("template_paper");
   //this.pdfCreation.createTransPdf(sourceDom, this.billInfo, this.originalData);
 
-  public createTransPdf(sourceDom,user, originalData) {
-    if(this.isBrowser){
-
+  public createTransPdf(sourceDom,user, trans) {
+    if(!this.isBrowser){
       var doc = new jsPDF("p", "pt", "letter"),
       source = sourceDom,
           margins = {
@@ -218,39 +217,41 @@ export class PdfCreationService {
           //table top line
           doc.line(30,tableBase-lineHeight+6,580,tableBase-lineHeight+6);
           doc.text('Date', leftLine+colWidth, tableBase,'left');
-          doc.text('Status', leftLine+colWidth*4+halfCol, tableBase,'left');
-          doc.text('Description', leftLine+colWidth*7+halfCol, tableBase,'left');
-          doc.text('Student', leftLine+colWidth*9+halfCol*3, tableBase,'left');
-          doc.text('Tutor', leftLine+colWidth*11+halfCol*2, tableBase,'left');
-          doc.text('Unit rate', leftLine+colWidth*13+halfCol, tableBase,'left');
-          doc.text('QTY', leftLine+colWidth*15, tableBase,'left');
-          doc.text('Amount($)', leftLine+colWidth*16+halfCol, tableBase,'left');
+          // doc.text('Status', leftLine+colWidth*4+halfCol, tableBase,'left');
+          doc.text('Subject', leftLine+colWidth*5, tableBase,'left');
+          // doc.text('Student', leftLine+colWidth*9+halfCol*3, tableBase,'left');
+          doc.text('Tutor', leftLine+colWidth*8+halfCol, tableBase,'left');
+          doc.text('Unit price($)', leftLine+colWidth*11+halfCol, tableBase,'left');
+          doc.text('QTY', leftLine+colWidth*15+halfCol, tableBase,'left');
+          // doc.text('Amount($)', leftLine+colWidth*16+halfCol, tableBase,'left');
           
           doc.line(30, tableBase+6, 580, tableBase+6);
-          for(let i=0; i<originalData.length; i++){
-            console.log(originalData[i])
-            let data = originalData[i];
+          for(let i=0; i<trans.length; i++){
+            console.log(trans[i])
+            let data = trans[i];
             if(tableBase+lineHeight*(i+1)>=700){// to chaeck ned set new page or not
               doc.addPage();
               mainHeight +=700;  //16 row is a main page
               tableBase = 0-lineHeight*(i-1-(mainHeight/700-1)*19);
             }
-            doc.text(data.date_of_session, leftLine, tableBase+lineHeight*(i+1),'left');
-            doc.text(data.session_status, leftLine+colWidth*3.2+halfCol, tableBase+lineHeight*(i+1),'left');
-            doc.text(data.description, leftLine+colWidth*7, tableBase+lineHeight*(i+1),'left');
-            doc.text(data.student, leftLine+colWidth*9+halfCol*3, tableBase+lineHeight*(i+1),'left');
-            doc.text(data.tutor, leftLine+colWidth*11+halfCol*2, tableBase+lineHeight*(i+1),'left');
-            doc.text(''+data.hourly_rate, leftLine+colWidth*13+halfCol*2, tableBase+lineHeight*(i+1),'left');
-            doc.text(''+data.quantity, leftLine+colWidth*15+halfCol, tableBase+lineHeight*(i+1),'left');
-            doc.text(''+data.amount, leftLine+colWidth*16+halfCol*3, tableBase+lineHeight*(i+1),'left');
+            doc.text(data['order'].created_at, leftLine, tableBase+lineHeight*(i+1),'left');
+            // doc.text(data.session_status, leftLine+colWidth*3.2+halfCol, tableBase+lineHeight*(i+1),'left');
+            doc.text(data['tutor_key'].discipline, leftLine+colWidth*5, tableBase+lineHeight*(i+1),'left');
+            // doc.text(data.student, leftLine+colWidth*9+halfCol*3, tableBase+lineHeight*(i+1),'left');
+            doc.text(data['tutor_key'].first_name, leftLine+colWidth*8+halfCol, tableBase+lineHeight*(i+1),'left');
+            // doc.text(''+data.hourly_rate, leftLine+colWidth*13+halfCol*2, tableBase+lineHeight*(i+1),'left');
+
+            doc.text(''+data['order'].order_price, leftLine+colWidth*12, tableBase+lineHeight*(i+1),'left');
+
+            doc.text(''+data['order'].order_quantity, leftLine+colWidth*15+halfCol*2, tableBase+lineHeight*(i+1),'left');
             doc.line(30, tableBase+lineHeight*(i+1)+6, 580, tableBase+lineHeight*(i+1)+6);
           }
 
-          let tableFinishBase =tableBase+lineHeight*(originalData.length+2)-20;
+          let tableFinishBase =tableBase+lineHeight*(trans.length+2)-20;
           let tableFinishRow = lineHeight/2;
           setToSubTitle();
-          doc.text('Total Hours:', 450, tableFinishBase,'left');
-          doc.text(user.allHour+"", 550, tableFinishBase,'left');
+          // doc.text('Total Hours:', 450, tableFinishBase,'left');
+          // doc.text(user.allHour+"", 550, tableFinishBase,'left');
           // doc.text('GST:', 450, tableFinishBase+tableFinishRow,'left');
           // doc.text(user.tax+"", 550, tableFinishBase+tableFinishRow,'left');
           doc.text('Total Amount:', 450, tableFinishBase+tableFinishRow*2,'left');
@@ -280,7 +281,8 @@ export class PdfCreationService {
               doc.setPage(i); 
               doc.text(450,750, "" +doc.internal.getCurrentPageInfo().pageNumber + "/" + pageCount);
             }
-          this.window.open(doc.output('bloburl'), '_blank');
+          // this.window.open(doc.output('bloburl'), '_blank');
+          window.open(doc.output('bloburl'), '_blank');
         },
         margins
       );
@@ -422,8 +424,8 @@ export class PdfCreationService {
     head.appendChild(style);  
   }
 
-  setTable(originalData){
-    console.log(originalData);
+  setTable(trans){
+    console.log(trans);
   };
 
   // set the paper object of exam result

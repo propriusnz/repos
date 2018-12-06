@@ -10,8 +10,8 @@
         <div class="col-lg-6 col-sm-6 border-right gapBottom">
           <div class="card-block">
             <img src="../../../../assets/icons/cancelicon.png" alt="Cancel Icon" width="80" height="80">
-            <p class="s2 mt-2" *ngIf='!withTwelveHours'>This cancelling <b>cannot be undone</b>.</p>
-            <p class="s2 mt-2" *ngIf='withTwelveHours'>Cancelling this lesson will result in a late cancellation charge of <b>40%</b>. A cancellation <b>cannot be undone</b></p>
+            <p class="s2 mt-2" *ngIf='!withTwelveHours||role==3'>This cancelling <b>cannot be undone</b>.</p>
+            <p class="s2 mt-2" *ngIf='withTwelveHours&&role!=3'>Cancelling this lesson within 8 hours of the planned start time will result in a late cancellation charge of <b>30 mins</b>. A cancellation <b>cannot be undone</b></p>
           </div>
           <button type="submit" class="btn btn-danger" (click)="commentDialog()">Cancel Lesson</button>
         </div>

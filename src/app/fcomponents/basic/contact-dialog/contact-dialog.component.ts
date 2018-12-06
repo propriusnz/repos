@@ -15,7 +15,7 @@ export class ContactDialogComponent implements OnInit {
     email:'',
     phone:'',
     message:'',
-    tutor_name:''
+    subject:''
   }
   fillAll:string
   contactForm=<boolean>true
@@ -28,7 +28,7 @@ export class ContactDialogComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.contactUs.tutor_name = this.data
+    this.contactUs.subject = this.data
     return this.data;
   }
 

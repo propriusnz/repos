@@ -8,7 +8,7 @@
           <div class="card-body ">
               <div *ngIf='!multiProfile' class="col-9 col-lg-6">
                 <label class="form-check-label">
-                  <mat-checkbox [(ngModel)]="isParent" (click)="isParentClick()">Checked,if you are a parent!</mat-checkbox>
+                  <mat-checkbox [(ngModel)]="isParent" (click)="isParentClick()">Check it,if you are a parent!</mat-checkbox>
                 </label>
               </div>
             <div *ngIf='isParent||multiProfile' class="centred">
@@ -100,14 +100,6 @@
                     {{profile.aspiration}}
                   </div>
               </div>                  
-              <div class="row">                  
-                  <div class="col-3">
-                    <label class='label-text' for="YearLevel">Special Request:</label>
-                  </div>
-                  <div class="col-9">
-                    {{profile.sp_need}}
-                  </div>
-                </div>              
             </div>
           </div>
           <hr>
@@ -192,12 +184,6 @@
                     <mat-form-field class="field-width">
                       <textarea matInput #aspirations formControlName="aspiration" placeholder="My aspirations"></textarea>
                       <mat-hint align="end">{{aspirations.value?.length || 0}}/50</mat-hint>
-                    </mat-form-field>
-                  </div>
-                  <div class="form_input">
-                    <mat-form-field class="field-width">
-                      <textarea matInput #input formControlName="sp_need" placeholder="Any special Request"></textarea>
-                      <mat-hint align="end">{{input.value?.length || 0}}/50</mat-hint>
                     </mat-form-field>
                   </div>
                   <div class="submit_success" [hidden]="!submitted">

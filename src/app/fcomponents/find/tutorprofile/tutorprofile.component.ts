@@ -205,15 +205,19 @@ export class TutorprofileComponent implements OnInit {
   }
   // book button
   bookFree($event) {
-    if (this.eventContainer.free.length > 0) {//if tutor has free time
-      this.router.navigate(['./app/find-tutor/profile/' + this.tutor.tutor_id + '/book']);
-    } 
-    else {
       let dialogRef = this.dialog.open(ContactDialogComponent, {
         width: '700px',
         data: this.tutor.first_name
-      });       
-    }
+      });      
+    // if (this.eventContainer.free.length > 0) {//if tutor has free time
+    //   this.router.navigate(['./app/find-tutor/profile/' + this.tutor.tutor_id + '/book']);
+    // } 
+    // else {
+    //   let dialogRef = this.dialog.open(ContactDialogComponent, {
+    //     width: '700px',
+    //     data: this.tutor.first_name
+    //   });       
+    // }
   }  
   // routerlink to book sessions via popover
   popoverBook() {

@@ -58,7 +58,7 @@
                               <label *ngIf="role === 1 || role === 2" class="smName" style="color: #0099FF;"><b>{{session.tutor_name}}</b></label>
                               <label class="smScreen" id="label{{session.session_id}}"><b>{{session.session_status_name
                                   |
-                                  titlecase}}</b></label>
+                                  titlecase}}{{session.canceled_party}}</b></label>
                               <label class="smScreen"><b>{{session.session_startTime | lowercase}} -
                                   {{session.session_endTime |
                                   lowercase}}</b></label>
@@ -119,15 +119,17 @@
                                 <!--status is proccessed-->
                                 <div *ngIf="session.session_status === 50 ">
                                   <div class="btn-group w-100 px-2 my-2">
-                                    <button type="button" class="btn btn-sm btn-primary w-100" id="act{{session.session_id}}">Actions</button>
+                                    <!-- <button type="button" class="btn btn-sm btn-primary w-100" id="act{{session.session_id}}">Actions</button>
                                     <button type="button" class="btn btn-sm btn-primary dropdown-toggle dropdown-toggle-split"
-                                      data-toggle="dropdown"></button>
-                                    <div class="dropdown-menu dropdown-menu-right">
-                                      <a class="dropdown-item pointer" (click)='generateReport($event)' *ngIf="session.session_status === 50"
+                                      data-toggle="dropdown"></button> -->
+                                    <!-- <div class="dropdown-menu dropdown-menu-right"> -->
+                                      <!-- <a class="dropdown-item pointer" (click)='generateReport($event)' *ngIf="session.session_status === 50"
                                         id="gen{{session.session_id}}">Generate Report</a>
                                       <a class="dropdown-item pointer" (click)='reportIssue($event)' *ngIf="session.session_status === 50"
-                                        id="iss{{session.session_id}}">Report Issue</a>
-                                    </div>
+                                        id="iss{{session.session_id}}">Report Issue</a> -->
+                                    <!-- </div> -->
+                                    <button type="button" class="btn btn-sm btn-primary w-100" id="gen{{session.session_id}}"
+                                    *ngIf="session.session_status === 50" (click)='generateReport($event)'>Generate Report</button>                                    
                                   </div>
                                 </div>
                               </div>
@@ -180,10 +182,10 @@
                               <b> Session report: </b>{{session.tutor_report}}
                             </div>
                             <div *ngIf=session.cancel_comment>
-                                <b> Cancel comment: </b>{{session.cancel_comment}} stars
+                                <b> Cancel comment: </b>{{session.cancel_comment}}
                             </div>
                             <div *ngIf=session.suggestion>
-                              <b> Reschedule suggestion: </b>{{session.tutor_report}}
+                              <b> Reschedule suggestion: </b>{{session.suggestion}}
                             </div>
                           </div>                        
                       </div>
@@ -197,7 +199,7 @@
                 </div>
               </mat-tab-group>
               <br>
-              <p style="color: red;" *ngIf='sucSubmit'>Submitted successfully!</p>
+              <!-- <p style="color: red;" *ngIf='sucSubmit'>Submitted successfully!</p> -->
             </form>
           </div> <!-- Close tag for Lesson List Container -->
           <div class="d-none d-sm-none d-lg-block d-md-block col-lg-4 col-md-4">

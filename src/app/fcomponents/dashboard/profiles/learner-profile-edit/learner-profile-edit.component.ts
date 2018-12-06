@@ -83,18 +83,18 @@ export class LearnerProfileEditComponent implements OnInit {
 
     this.userService.showUserInfo().subscribe(
       (res)=>{
+        console.log(res)
         this.userBasic=res['userInfo'];  
         this.userSecondary=res['userKey'];   
         if (this.userSecondary.user_type===1) this.isParent=true;             
-        console.log(res)
       },
       (error)=>{console.log(error)}
     );
 
     this.learnerService.indexLearnerProfile().subscribe(
       (res) => {
-        this.profiles = res['dataCon']['learnerProfile'];
         console.log(res)
+        this.profiles = res['allLearners'];
         if (this.profiles.length > 0) {
           this.hasProfile = true;
         }
@@ -139,7 +139,6 @@ export class LearnerProfileEditComponent implements OnInit {
       grade: ['', Validators.required],
       curriculum: [''],
       aspiration: [''],
-      sp_need: [''],
     });
   }
 
@@ -154,7 +153,6 @@ export class LearnerProfileEditComponent implements OnInit {
       grade: [profile.grade, Validators.required],
       curriculum: [profile.curriculum],
       aspiration: [profile.aspiration],
-      sp_need: [profile.sp_need],
     });
   }
   isParentClick() {

@@ -71,6 +71,7 @@ export class TutorBookingsComponent implements OnInit {
     location: '',
   };
   sessions = [];
+  learnerId:number;
   events: any = []; // session object
   eventContainer = {
     session: [],
@@ -158,7 +159,11 @@ export class TutorBookingsComponent implements OnInit {
         console.log(res);
         tutorSession =res['tutorSessions'];
         tutorSchedule =res['tutorSchedule'];        
-      })
+      }),//indexLearnerProfile
+      this.learnerService.indexLearner().map(res => {
+        console.log(res);
+        this.learnerId=res['allLearners'][0].learner_id;
+      })//indexLearnerProfile      
     ).subscribe(
       data=>{
         this.setTutorData(tutorInfo,tutorSession,tutorSchedule);
@@ -525,7 +530,7 @@ export class TutorBookingsComponent implements OnInit {
   // send the bookings to server
   sendBookings() {
     this.sessions.map(e=>{
-      e.learner_id=this.userId;
+      e.learner_id=this.learnerId;
       e.s_curriculum=this.session.curriculum;
       e.s_subject=this.session.subject;
       e.s_location=this.session.location;
@@ -562,7 +567,7 @@ export class TutorBookingsComponent implements OnInit {
     //storeSchedulingSessions(orderId ,scheduling){
     //add learner id info into the array for temporary
     this.sessions.map(e=>{
-      e.learner_id=this.userId;
+      e.learner_id=this.learnerId;
       e.s_curriculum=this.session.curriculum;
       e.s_subject=this.session.subject;
       e.s_location=this.session.location;      
@@ -579,6 +584,7 @@ export class TutorBookingsComponent implements OnInit {
         this.setBill();
       },
       (err) => {
+        console.log(err);        
         if (err.error.code&&(err.error.code > 400&&err.error.code < 500)){
           // this.feedback = "Failed, "+ err.error.error;
           this.alertservice.sendAlert("Failed, "+ err.error.error,  
