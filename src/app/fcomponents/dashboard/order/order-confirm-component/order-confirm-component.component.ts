@@ -127,7 +127,7 @@ export class OrderConfirmComponentComponent implements OnInit {
       id:3,       
       sequence:'',
       item:'Total',
-      price:totalPrice>0?totalPrice:0;  
+      price:totalPrice>0?totalPrice:0  
     });
   }
   //on radio change event, to change order data
