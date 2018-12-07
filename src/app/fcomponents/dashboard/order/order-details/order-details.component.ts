@@ -1,5 +1,6 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { OrderCancelDialogComponent } from '../order-cancel-dialog/order-cancel-dialog.component'
 
 
 @Component({
@@ -10,6 +11,8 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 export class OrderDetailsComponent implements OnInit {
 
   constructor(
+    private dialog: MatDialog,
+
     @Inject(MAT_DIALOG_DATA) public data: any
   ) { }
 
@@ -18,4 +21,14 @@ export class OrderDetailsComponent implements OnInit {
     console.log(this.data);
   }
 
+  refund() {
+    let dialogRef = this.dialog.open(OrderCancelDialogComponent,
+      {
+        panelClass: 'dialog1',
+        data: {
+          data: this.data,
+          //here should pass the order id to dialog component.
+        },
+      });
+  }
 }

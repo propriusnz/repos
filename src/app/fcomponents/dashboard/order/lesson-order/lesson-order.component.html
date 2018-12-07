@@ -30,7 +30,41 @@
         <div *ngFor='let tab of tabs;'>
           <mat-tab [label]="tab.name">
             <div class="table-panel text-left mt-3 p-2">
-              <div *ngFor='let order of getFilterOrder(tab.filter);let idx=index;'>
+              <!-- <table mat-table [dataSource]="all" class="mat-elevation-z8"> -->
+              <!-- <ng-container matColumnDef="tutor">
+              <th mat-header-cell *matHeaderCellDef> Tutor </th>
+              <td mat-cell *matCellDef="let order"><a href="#"><img class="tutor-img" src="{{order.tutor_img}}"> {{order.tutor}}</a> </td>
+            </ng-container>
+
+            <ng-container matColumnDef="lessons">
+              <th mat-header-cell *matHeaderCellDef> Lessons </th>
+              <td mat-cell *matCellDef="let order"><span> {{order.class}} </span></td>
+            </ng-container>
+
+            <ng-container matColumnDef="amount">
+              <th mat-header-cell *matHeaderCellDef> Amount </th>
+              <td mat-cell *matCellDef="let order"> {{order.amount}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="price">
+              <th mat-header-cell *matHeaderCellDef> Price </th>
+              <td mat-cell *matCellDef="let order"> $ {{order.price.toFixed(1)}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="status">
+              <th mat-header-cell *matHeaderCellDef> Status </th>
+              <td mat-cell *matCellDef="let order"> {{order.status}}<br><a href="javascript:void(0);" (click)="showDetail(order)">Details</a> </td>
+            </ng-container>
+
+            <ng-container matColumnDef="apply">
+              <th mat-header-cell *matHeaderCellDef> Apply </th>
+              <td mat-cell *matCellDef="let order">
+                <button *ngIf="order.status == 'Paid'" class="btn btn-outline-danger"> Refund </button>
+                <button *ngIf="order.status == 'Unpaid'" class="btn btn-outline-success"> Pay </button>
+                <button *ngIf="order.status == 'Refund'" class="btn btn-danger disabled"> refunding </button>
+              </td>
+            </ng-container> -->
+              <div *ngFor='let order of tab.orders;let idx=index;'>
                 <div class="card" style="width: 100%;margin-top: 15px">
                   <div class="card-body">
                     <div class='row'>
@@ -43,10 +77,10 @@
                           <div class='col-12 tutorName'>
                             <span><strong>{{order.tutor_name}}</strong></span>      
                             <span>
-                                <button class="btn btn-outline-danger float-right" (click)='showDetail(order)'>Order detail</button>
+                                <button mat-button class="float-right" (click)='showDetail(order)'>Order detail</button>
                             </span>
                             <span *ngIf="order.order_status == 'processing'">
-                                <button class="btn btn-outline-danger float-right" (click)='goSchedule(order.order_id,order.tutor_id)'>Schedule</button>
+                                <button mat-button class="float-right" (click)='goSchedule(idx)'>Schedule</button>
                             </span>
                           </div>
                           <div class='col-4'>
@@ -98,8 +132,14 @@
               <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
               <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
               <!-- </table> -->
-              <app-pagination [currentPage]="currentPage" [pageNumber]="pageNumber" [pages]="pages" [totalPosts]="totalPosts"
-                [perPage]="perPage" (getthePage)="getPage($event)"></app-pagination>
+              <app-pagination 
+              [currentPage]="tab.pagenation.currentPage" 
+              [pageNumber]="tab.pagenation.pageNumber" 
+              [pages]="tab.pagenation.pages" 
+              [totalPosts]="tab.pagenation.totalPosts"
+              [perPage]="perPage" 
+              (getthePage)="getPage($event)">
+            </app-pagination>
             </div>
           </mat-tab>
         </div>

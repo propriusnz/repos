@@ -15,7 +15,7 @@ export class AccessApplicantGuard implements CanActivate {
   
   canActivate(): boolean{
     if (isPlatformBrowser(this.platformId)) {
-      if(this.auth.getUserRole()== 2){
+      if(this.auth.getAppicant()=== 1){
           return true;
       } else {
         this.router.navigate(['/app/dashboard/home']);

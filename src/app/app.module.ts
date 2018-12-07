@@ -90,6 +90,7 @@ import { TutorStatsComponent } from './fcomponents/find/tutor-stats/tutor-stats.
 import { NotificationComponent } from './fcomponents/notifications/notification/notification.component';
 import { NotificationDialogComponent } from './fcomponents/notifications/notification-dialog/notification-dialog.component';
 
+
 //chat 
 import { SocketService } from './services/servercalls/socket.service';
 import { ChatComponent } from './fcomponents/chat/chat.component';
@@ -226,8 +227,9 @@ export const MY_FORMATS = {
     PreviewImgComponent,
     DrawboardComponent,
     ChatComponent,
-    ChatWindowComponent
+    ChatWindowComponent,
     //for chat end
+
   ],
 
   imports: [
@@ -270,8 +272,10 @@ export const MY_FORMATS = {
     ImageEditorDialogComponent,
     StripePaymentComponent,
     UserTransactionsActionsDialogComponent,
-    NotificationDialogComponent
+    NotificationDialogComponent,
     //ToastrComponent
+
+
   ],
 
   providers: [

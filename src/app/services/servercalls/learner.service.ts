@@ -146,4 +146,5 @@ export class LearnerService {
   showLearnerPayment(){
     return this.http.get(this.baseUrl + '/users/' + this.id + '/payments');
   }
+
 }

@@ -14,7 +14,7 @@ import { all } from 'q';
   styleUrls: ['./lesson-order.component.css']
 })
 export class LessonOrderComponent implements OnInit {
-
+  
   loading = true;
   buyerOrders: any;
   pageOrders: any;
@@ -24,10 +24,39 @@ export class LessonOrderComponent implements OnInit {
   totalPosts: number;
   pages = [];
   perPage = 10;
-  tabs = [{ name: 'All', filter: 'all' },
-  { name: 'Completed', filter: 'completed' },
-  { name: 'Processing', filter: 'processing' },
-  { name: 'Cancel', filter: 'cancel' }
+  currentTab:any;
+  tabs = [{
+    name: 'All', filter: 'all', orders: [], pagenation: {
+      currentPage: this.currentPage,
+      pageNumber: this.pageNumber,
+      totalPosts: this.totalPosts,
+      pages: this.pages,
+    }
+  },
+  {
+    name: 'Completed', filter: 'completed', orders: [], pagenation: {
+      currentPage: this.currentPage,
+      pageNumber: this.pageNumber,
+      totalPosts: this.totalPosts,
+      pages: this.pages,
+    }
+  },
+  {
+    name: 'Processing', filter: 'processing', orders: [], pagenation: {
+      currentPage: this.currentPage,
+      pageNumber: this.pageNumber,
+      totalPosts: this.totalPosts,
+      pages: this.pages,
+    }
+  },
+  {
+    name: 'Cancel', filter: 'cancel', orders: [], pagenation: {
+      currentPage: this.currentPage,
+      pageNumber: this.pageNumber,
+      totalPosts: this.totalPosts,
+      pages: this.pages,
+    }
+  }
   ];
 
 
@@ -43,15 +72,22 @@ export class LessonOrderComponent implements OnInit {
   }
 
   ngOnInit() {
-
+    console.log(typeof (this.tabs))
+    this.currentTab = 'all';
+    this.buyerOrders = { 'all': [], 'completed': [], 'processing': [], 'cancel': [] }
     this.learnerServive.userOrder().subscribe(
       (res) => {
         console.log(res);
-        this.loading = false;
+
         if (res['allOrders'].length) {
-          this.buyerOrders = this.getAllOrders(res['allOrders']);
+          this.buyerOrders['all'] = this.getAllOrders(res['allOrders']);
+          console.log(this.buyerOrders)
+          this.loading = false;
           this.getPage(1);
-          console.log(this.buyerOrders);
+          //console.log(this.buyerOrders);
+          //this.getFilterOrder();
+          console.log(this.tabs)
+          console.log(this.tabs[0].pagenation)
         } else {
           this.buyerOrders = null;
         }
@@ -61,36 +97,69 @@ export class LessonOrderComponent implements OnInit {
     )
 
     //this.buyerOrders = this.orders;
-
-
   }
-  getFilterOrder(status) {
-  let filterOrders;
-  if (!this.buyerOrders) return;
-  if (status === 'all')
-    filterOrders= this.buyerOrders
-  else
-    filterOrders = this.buyerOrders.filter(e => e.order_status === status)
 
-    if (!filterOrders) return
-    this.totalPosts = filterOrders.length;
-    //this.currentPage = page;
-    this.pageNumber = Math.ceil(filterOrders.length / this.perPage);
-    this.pages=[];
-    if (this.pageNumber > 1) {
-      for (let i = 1; i < this.pageNumber + 1; i++) {
-        this.pages.push(i);
+  //init tabs at the first page
+  getFilterOrder() {
+    let filterOrders;
+
+    for (let i in this.tabs) {
+      //console.log(this.tabs[i])
+
+      if (this.tabs[i].filter === 'all') {
+        filterOrders = this.buyerOrders[this.tabs[i].filter]
+        console.log(this.tabs[i].filter, filterOrders)
+      } else {
+        filterOrders = this.buyerOrders['all'].filter(e => e.order_status === this.tabs[i].filter)
+        this.buyerOrders[this.tabs[i].filter] = filterOrders;
+        console.log(this.tabs[i].filter, filterOrders)
       }
-      console.log(this.pages);
-    } else {
-      this.pages.push(1);
+
+      this.totalPosts = filterOrders.length;
+      console.log(this.totalPosts)
+      //this.currentPage = page;
+      this.pageNumber = Math.ceil(this.totalPosts / this.perPage);
+      this.pages = [];
+      if (this.pageNumber > 1) {
+        for (let i = 1; i < this.pageNumber + 1; i++) {
+          this.pages.push(i);
+        }
+      } else {
+        this.pages.push(1);
+      }
+      console.log(this.currentPage, this.totalPosts, this.pages, this.pageNumber);
+
+      this.tabs[i].pagenation.currentPage = this.currentPage;
+      this.tabs[i].pagenation.totalPosts = this.totalPosts;
+      this.tabs[i].pagenation.pageNumber = this.pageNumber;
+      this.tabs[i].pagenation.pages = this.pages;
+
+      this.tabs[i].orders = filterOrders.slice((this.currentPage - 1) * this.perPage, this.currentPage * this.perPage);
     }
-    return filterOrders.slice((this.currentPage-1) * this.perPage, this.currentPage*this.perPage);
+    console.log(this.buyerOrders, this.tabs)
+
   }
   // make website turn to this specific page
   getPage(page: number) {
     this.currentPage = page;
+
+    this.getFilterOrder();
+
+    // for (let i in this.tabs) {
+    //   this.totalPosts = this.buyerOrders[i].length;
+    //   this.pageNumber = Math.ceil(this.totalPosts / this.perPage);
+    //   this.pages = [];
+    //   if (this.pageNumber > 1) {
+    //     for (let i = 1; i < this.pageNumber + 1; i++) {
+    //       this.pages.push(i);
+    //     }
+    //     console.log(this.pages);
+    //   } else {
+    //     this.pages.push(1);
+    //   }
+    // }
   }
+
   getAllOrders(ordersList: any) {
     let orderList = ordersList.map(e => {
       let order = e.order;
@@ -104,9 +173,10 @@ export class LessonOrderComponent implements OnInit {
       let orderQuantity = order.order_quantity;
       let orderCancelTime = order.canceled_time;
       let orderRemain = order.order_quantity_left;
+      let coursePrice = tutor.price_1;
       let orderStatus: any;
       if (orderCancelTime != null) {
-        orderStatus = "refund";
+        orderStatus = "cancel";
       } else if (orderRemain == '0') {
         orderStatus = "completed";
       } else {
@@ -130,6 +200,7 @@ export class LessonOrderComponent implements OnInit {
         tutor_name: tutorName,
         tutor_img: tutorImg,
         lesson_name: lessonName,
+        course_price: coursePrice,
       }
       return newObj;
     })
@@ -142,9 +213,9 @@ export class LessonOrderComponent implements OnInit {
       data: { order }
     });
   }
-  goSchedule(orderId,tutorId) {
+  goSchedule(idx) {
     //this.router.navigate(['/app/']);
-    this.router.navigate(['/app/dashboard/learner/schedule/' + orderId + '/' + tutorId]);
+    this.router.navigate(['/app/dashboard/learner/schedule/' + this.buyerOrders[idx].order_id + '/' + this.buyerOrders[idx].tutor_id]);
   }
 
 }

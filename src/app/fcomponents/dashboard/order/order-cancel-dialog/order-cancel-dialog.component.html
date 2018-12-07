@@ -1,0 +1,24 @@
+<div class="container">
+  <div class='row'>
+    <div class="col-12">
+      <p *ngIf='refund_amount>0'>
+        You really want to cancel the order?
+        <br>
+        some conditions apply.
+        <br>
+        refund amount: ${{refund_amount}}.
+      </p>
+      <p *ngIf='refund_amount==0'>
+        because this order refund amount is less than zero, this order can not be canceled!
+      </p>
+    </div>
+    <div class='col-12 text-center'>
+      <button *ngIf='refund_amount>0' mat-button  (click)='cancelOrder()'>
+        yes
+      </button>
+      <button mat-button mat-dialog-close>
+        no
+      </button>
+    </div>
+  </div>
+</div>

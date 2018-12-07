@@ -183,4 +183,7 @@ export class NewUserWelcomeComponent implements OnInit {
   finished(){
     this.router.navigate(["/app/find-tutor"])
   }
+  goApply(){
+    this.router.navigate(['/app/apply/teach']);
+  }
 }

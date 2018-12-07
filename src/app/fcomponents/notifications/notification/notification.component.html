@@ -1,180 +1,37 @@
 <div class="container">
-  
-  <nav>
-    <div class="nav nav-tabs" id="nav-tab" role="tablist">
-      <a class="nav-item nav-link" (click)="showSystem()" [ngClass]="{'active': systemTab && !sessionTab && !replyTab && !announcementTab}">system</a>
-      <a class="nav-item nav-link" (click)="showSession()" [ngClass]="{'active': !systemTab && sessionTab && !replyTab && !announcementTab}">session</a>
-      <a class="nav-item nav-link" (click)="showReply()" [ngClass]="{'active': !systemTab && !sessionTab && replyTab && !announcementTab}">reply</a>
-      <a class="nav-item nav-link" (click)="showAnnouncement()" [ngClass]="{'active': !systemTab && !sessionTab && !replyTab && announcementTab}">announcement</a>
-    </div>
-  </nav>
 
-  <div *ngIf="systemTab; then system"></div>
-  <div *ngIf="sessionTab; then session"></div>
-  <div *ngIf="replyTab; then reply"></div>
-  <div *ngIf="announcementTab; then announcement"></div>
-
-  <ng-template #system>
-    <!-- System Tab -->
-
-    <div class='container'>
-      <div class='row'>
-        <div *ngFor='let noti of systemNotis; let i = index' class='card' style='width:100%' (click)="read(i,noti.notification_type)">
-          <div class='card-body'>
-            <div class='row'>
-              <div class='col-12 card-title'>
-                <strong class='h5'> {{noti.title}} </strong>
-                <small style='color:lightgray'> &nbsp;&nbsp;{{noti.date}}</small>
-                <div *ngIf="noti.read_status == 'unread'" class='float-right'>
-                  <i class="fas fa-envelope fa-2x"></i>
-                </div>
-                <div *ngIf="noti.read_status == 'read'" class='float-right'>
-                  <i class="far fa-envelope-open fa-lg"></i>
-                </div>
-              </div>
-              <div>
-  
-              </div>
-              <div class='col-12'>
-                &nbsp;&nbsp;&nbsp;&nbsp;{{noti.message}}
-              </div>
-              <div class='col-12'>
-                <small style='color:gray'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{noti.message_author}}</small>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </ng-template>
-
-  <ng-template #session>
-    <!-- Session Tab -->
-    <div class='container'>
-      <div class='row'>
-        <div *ngFor='let noti of sessionNotis; let i = index' class='card' style='width:100%' (click)="read(i,noti.notification_type)">
-          <div class='card-body'>
-            <div class='row'>
-              <div class='col-12 card-title'>
-                <strong class='h5'> {{noti.title}} </strong>
-                <small style='color:lightgray'> &nbsp;&nbsp;{{noti.date}}</small>
-                <div *ngIf="noti.read_status == 'unread'" class='float-right'>
-                  <i class="fas fa-envelope fa-2x"></i>
-                </div>
-                <div *ngIf="noti.read_status == 'read'" class='float-right'>
-                  <i class="far fa-envelope-open fa-lg"></i>
-                </div>
-              </div>
-              <div>
-  
-              </div>
-              <div class='col-12'>
-                &nbsp;&nbsp;&nbsp;&nbsp;{{noti.message}}
-              </div>
-              <div class='col-12'>
-                <small style='color:gray'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{noti.message_author}}</small>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </ng-template>
-
-  <ng-template #reply>
-    <!-- Reply Tab -->
-
-    <div class='container'>
-      <div class='row'>
-        <div *ngFor='let noti of replyNotis; let i = index' class='card' style='width:100%' (click)="read(i,noti.notification_type)">
-          <div class='card-body'>
-            <div class='row'>
-              <div class='col-12 card-title'>
-                <strong class='h5'> {{noti.title}} </strong>
-                <small style='color:lightgray'> &nbsp;&nbsp;{{noti.date}}</small>
-                <div *ngIf="noti.read_status == 'unread'" class='float-right'>
-                  <i class="fas fa-envelope fa-2x"></i>
-                </div>
-                <div *ngIf="noti.read_status == 'read'" class='float-right'>
-                  <i class="far fa-envelope-open fa-lg"></i>
-                </div>
-              </div>
-              <div>
-  
-              </div>
-              <div class='col-12'>
-                &nbsp;&nbsp;&nbsp;&nbsp;{{noti.message}}
-              </div>
-              <div class='col-12'>
-                <small style='color:gray'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{noti.message_author}}</small>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </ng-template>
-
-
-  <ng-template #announcement>
-    <!-- announcement tab -->
-
-    <div class='container'>
-      <div class='row'>
-        <div *ngFor='let noti of announceNotis; let i = index' class='card' style='width:100%' (click)="read(i, noti.notification_type)">
-          <div class='card-body'>
-            <div class='row'>
-              <div class='col-12 card-title'>
-                <strong class='h5'> {{noti.title}} </strong>
-                <small style='color:lightgray'> &nbsp;&nbsp;{{noti.date}}</small>
-                <div *ngIf="noti.read_status == 'unread'" class='float-right'>
-                  <i class="fas fa-envelope fa-2x"></i>
-                </div>
-                <div *ngIf="noti.read_status == 'read'" class='float-right'>
-                  <i class="far fa-envelope-open fa-lg"></i>
-                </div>
-              </div>
-              <div>
-  
-              </div>
-              <div class='col-12'>
-                &nbsp;&nbsp;&nbsp;&nbsp;{{noti.message}}
-              </div>
-              <div class='col-12'>
-                <small style='color:gray'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{noti.message_author}}</small>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </ng-template>
-
-  <!-- <div class='container'>
+  <h3>Notifications</h3>
+  <div class='container'>
     <div class='row'>
-      <div *ngFor='let noti of notis; let i = index' class='card' style='width:100%' (click)="read(i)">
+      <div *ngFor='let noti of notifications; let i = index' class='card' style='width:100%'>
         <div class='card-body'>
           <div class='row'>
-            <div class='col-12 card-title'>
-              <strong> {{noti.title}} </strong>
-              <small style='color:gray'> {{noti.date}}</small>
-              <div *ngIf="noti.read_status == 'unread'" class='float-right'>
+            <!-- <div class='col-12 card-title'>
+              <div *ngIf="noti.status == 'unread'" class='float-right'>
                 <i class="fas fa-envelope fa-2x"></i>
               </div>
-              <div *ngIf="noti.read_status == 'read'" class='float-right'>
+              <div *ngIf="noti.status == 'read'" class='float-right'>
                 <i class="far fa-envelope-open fa-lg"></i>
               </div>
+            </div> -->
+            <div class='col-2'>
+              image
             </div>
-            <div>
-
-            </div>
-            <div class='col-12'>
-              <small>{{noti.message}}</small>
+            <div class='col-10'>
+              <div class='row'>
+                <div class='col-12'>
+                  &nbsp;&nbsp;&nbsp;&nbsp;{{noti.message}}
+                </div>
+                <div class='col-12'>
+                  <small style='color:gray'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{noti.message_author}}</small>
+                  <small style='color:lightgray'> &nbsp;&nbsp;{{noti.created_time}}</small>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </div> -->
+  </div>
 
 </div>

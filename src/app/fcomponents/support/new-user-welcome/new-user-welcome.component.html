@@ -7,8 +7,12 @@
           Welcome to Learnspace
         </div>
         <div>
-          <small> For Learner </small>
+          This Form is For Learner
         </div>
+        <div>
+          If you register for appling to teach, please click below button
+        </div>
+        <button class="btn btn-outline-dark btn-sm" style="color:black" (click)='goApply()'>Apply to teach</button>
         <hr>
 
         <div *ngIf="options.value.isLearner; else notLearner">
@@ -55,7 +59,7 @@
             </mat-select>
             <mat-error *ngIf="yearLevelControl.invalid">{{getErrorMessage('year')}}</mat-error>
           </mat-form-field>
-          <br/>
+          <br />
           <div>
             <button class="s3Blue btn btn-outline-info btn-sm" style="float:left; width:100px;" (click)="showNamePage()">Previous</button>
             <button class="btn btn-outline-success btn-sm" style="float: right; width:100px;" (click)="showCourse()">Next</button>
@@ -74,7 +78,8 @@
     <div class="card col-12">
       <div class="card-body col-12 col-lg-7 col-xl-6 col-md-11  offset-xl-3 offset-lg-2 offset-md-1 offset-0.000000001">
         <div class="btn-group" role="group" aria-label="Basic example">
-          <button type="button" class="btn btn-outline-primary col-12 col-md-12" (click)="showHighCourse()">High School Courses</button>
+          <button type="button" class="btn btn-outline-primary col-12 col-md-12" (click)="showHighCourse()">High School
+            Courses</button>
         </div>
 
         <ng-template [ngIf]="highCourse">
@@ -83,7 +88,7 @@
             <a class="col-12 col-md-5 col-lg-6 col-xl-5 m-r-2 TabHover s2bold" (click)="this.courses[0].selected=!this.courses[0].selected">
               <img src="assets/img/math.jpg" />
               <div style="margin-left:60px;">Math
-                <img src="assets/img/selected.svg" class="selected" *ngIf=this.courses[0].selected/>
+                <img src="assets/img/selected.svg" class="selected" *ngIf=this.courses[0].selected />
                 <span class="badge badge-success yearIcons">Y 7-13</span>
               </div>
             </a>
@@ -91,14 +96,14 @@
             <a class="col-12 col-md-5 col-lg-6 col-xl-5 TabHover s2bold" (click)="this.courses[1].selected=!this.courses[1].selected">
               <img src="assets/img/english.jpg" />
               <div style="margin-left:60px;">English
-                <img src="assets/img/selected.svg" class="selected" *ngIf=this.courses[1].selected/>
+                <img src="assets/img/selected.svg" class="selected" *ngIf=this.courses[1].selected />
                 <span class="badge badge-success yearIcons">Y 7-13</span>
               </div>
             </a>
             <a class="col-12 col-md-5 col-lg-6 col-xl-5 TabHover s2bold" (click)="this.courses[16].selected=!this.courses[16].selected">
               <img src="assets/img/english.jpg" />
               <div style="margin-left:60px;">ESOL
-                <img src="assets/img/selected.svg" class="selected" *ngIf=this.courses[16].selected/>
+                <img src="assets/img/selected.svg" class="selected" *ngIf=this.courses[16].selected />
                 <span class="badge badge-success yearIcons">Y 7-13</span>
               </div>
             </a>
@@ -106,14 +111,14 @@
             <a class="col-12 col-md-5  col-lg-6 col-xl-5 TabHover s2bold" (click)="this.courses[2].selected=!this.courses[2].selected">
               <img src="assets/img/science.jpg" />
               <div style="margin-left:65px;">Science
-                <img src="assets/img/selected.svg" class="selected" *ngIf=this.courses[2].selected/>
+                <img src="assets/img/selected.svg" class="selected" *ngIf=this.courses[2].selected />
                 <span class="badge badge-success yearIcons">Y 7-13</span>
               </div>
             </a>
             <a *ngIf="selected1>11" class="col-12 col-md-5  col-lg-6 col-xl-5 TabHover s2bold" (click)="this.courses[3].selected=!this.courses[3].selected">
               <img src="assets/img/calculus.png" />
               <div style="margin-left:65px;">Calculus
-                <img src="assets/img/selected.svg" class="selected" *ngIf=this.courses[3].selected/>
+                <img src="assets/img/selected.svg" class="selected" *ngIf=this.courses[3].selected />
                 <span class="badge badge-success yearIcons">Y 12-13</span>
               </div>
             </a>
@@ -122,14 +127,14 @@
             <a *ngIf="selected1>9" class="col-12 col-md-5  col-lg-6 col-xl-5 TabHover s2bold" (click)="this.courses[4].selected=!this.courses[4].selected">
               <img src="assets/img/chemistry.jpg" />
               <div style="margin-left:65px;">Chemistry
-                <img src="assets/img/selected.svg" class="selected" *ngIf=this.courses[4].selected/>
+                <img src="assets/img/selected.svg" class="selected" *ngIf=this.courses[4].selected />
                 <span class="badge badge-success yearIcons">Y 10-13</span>
               </div>
             </a>
             <a *ngIf="selected1>9" class="col-12 col-md-5  col-lg-6 col-xl-5 TabHover s2bold" (click)="this.courses[5].selected=!this.courses[5].selected">
               <img src="assets/img/physics2.jpg" />
               <div style="margin-left:65px;">Physics
-                <img src="assets/img/selected.svg" class="selected" *ngIf=this.courses[5].selected/>
+                <img src="assets/img/selected.svg" class="selected" *ngIf=this.courses[5].selected />
                 <span class="badge badge-success yearIcons">Y 10-13</span>
               </div>
             </a>
@@ -138,28 +143,28 @@
             <a *ngIf="selected1>9" class="col-12 col-md-5  col-lg-6 col-xl-5 TabHover s2bold" (click)="this.courses[6].selected=!this.courses[6].selected">
               <img src="assets/img/biology.jpg" />
               <div style="margin-left:65px;">Biology
-                <img src="assets/img/selected.svg" class="selected" *ngIf=this.courses[6].selected/>
+                <img src="assets/img/selected.svg" class="selected" *ngIf=this.courses[6].selected />
                 <span class="badge badge-success yearIcons">Y 10-13</span>
               </div>
             </a>
             <a *ngIf="selected1>10" class="col-12 col-md-5  col-lg-6 col-xl-5 TabHover s2bold" (click)="this.courses[21].selected=!this.courses[21].selected">
               <img src="assets/img/computerStudies.jpg" />
               <div>ComputerStudies
-                <img src="assets/img/selected.svg" class="selected" *ngIf=this.courses[21].selected/>
+                <img src="assets/img/selected.svg" class="selected" *ngIf=this.courses[21].selected />
                 <span class="badge badge-success yearIcons">Y 11-13</span>
               </div>
             </a>
             <a *ngIf="selected1>8" class="col-12 col-md-5  col-lg-6 col-xl-5 TabHover s2bold" (click)="this.courses[20].selected=!this.courses[20].selected">
               <img src="assets/img/ICT.jpg" />
               <div style="margin-left:65px;">ICT
-                <img src="assets/img/selected.svg" class="selected" *ngIf=this.courses[20].selected/>
+                <img src="assets/img/selected.svg" class="selected" *ngIf=this.courses[20].selected />
                 <span class="badge badge-success yearIcons">Y 9-13</span>
               </div>
             </a>
             <a *ngIf="selected1>8" class="col-12 col-md-5  col-lg-6 col-xl-5 TabHover s2bold" (click)="this.courses[7].selected=!this.courses[7].selected">
               <img src="assets/img/economy.jpg" />
               <div style="margin-left:65px;">Economics
-                <img src="assets/img/selected.svg" class="selected" *ngIf=this.courses[7].selected/>
+                <img src="assets/img/selected.svg" class="selected" *ngIf=this.courses[7].selected />
                 <span class="badge badge-success yearIcons">Y 9-13</span>
               </div>
             </a>
@@ -168,67 +173,67 @@
             <a *ngIf="selected1>8" class="col-12 col-md-5  col-lg-6 col-xl-5 TabHover s2bold" (click)="this.courses[8].selected=!this.courses[8].selected">
               <img src="assets/img/accounting.jpg" />
               <div style="margin-left:65px;">Accounting
-                <img src="assets/img/selected.svg" class="selected" *ngIf=this.courses[8].selected/>
+                <img src="assets/img/selected.svg" class="selected" *ngIf=this.courses[8].selected />
                 <span class="badge badge-success yearIcons">Y 9-13</span>
               </div>
             </a>
             <a *ngIf="selected1>10" class="col-12 col-md-5  col-lg-6 col-xl-5 TabHover s2bold" (click)="this.courses[26].selected=!this.courses[26].selected">
               <img src="assets/img/design.jpg" />
               <div style="margin-left:65px;">Design
-                <img src="assets/img/selected.svg" class="selected" *ngIf=this.courses[26].selected/>
+                <img src="assets/img/selected.svg" class="selected" *ngIf=this.courses[26].selected />
                 <span class="badge badge-success yearIcons">Y 11-13</span>
               </div>
             </a>
             <a *ngIf="selected1>9" class="col-12 col-md-5  col-lg-6 col-xl-5 TabHover s2bold" (click)="this.courses[19].selected=!this.courses[19].selected">
               <img src="assets/img/history.jpg" />
               <div style="margin-left:65px;">History
-                <img src="assets/img/selected.svg" class="selected" *ngIf=this.courses[19].selected/>
+                <img src="assets/img/selected.svg" class="selected" *ngIf=this.courses[19].selected />
                 <span class="badge badge-success yearIcons">Y 10-13</span>
               </div>
             </a>
             <a *ngIf="selected1>8" class="col-12 col-md-5  col-lg-6 col-xl-5 TabHover s2bold" (click)="this.courses[18].selected=!this.courses[18].selected">
               <img src="assets/img/geography.jpg" />
               <div style="margin-left:65px;">Geography
-                <img src="assets/img/selected.svg" class="selected" *ngIf=this.courses[18].selected/>
+                <img src="assets/img/selected.svg" class="selected" *ngIf=this.courses[18].selected />
                 <span class="badge badge-success yearIcons">Y 9-13</span>
               </div>
             </a>
             <a class="col-12 col-md-5  col-lg-6 col-xl-5 TabHover s2bold" (click)="this.courses[17].selected=!this.courses[17].selected">
               <img src="assets/img/socialStudies.jpg" />
               <div style="margin-left:65px;">SocialStudies
-                <img src="assets/img/selected.svg" class="selected" *ngIf=this.courses[17].selected/>
+                <img src="assets/img/selected.svg" class="selected" *ngIf=this.courses[17].selected />
               </div>
             </a>
             <a class="col-12 col-md-5  col-lg-6 col-xl-5 TabHover s2bold" (click)="this.courses[15].selected=!this.courses[15].selected">
               <img src="assets/img/music.jpg" />
               <div>Music
-                <img src="assets/img/selected.svg" class="selected" *ngIf=this.courses[15].selected/>
+                <img src="assets/img/selected.svg" class="selected" *ngIf=this.courses[15].selected />
               </div>
             </a>
             <a class="col-12 col-md-5  col-lg-6 col-xl-5 TabHover s2bold" (click)="this.courses[14].selected=!this.courses[14].selected">
               <img src="assets/img/art.jpg" />
               <div>Arts
-                <img src="assets/img/selected.svg" class="selected" *ngIf=this.courses[14].selected/>
+                <img src="assets/img/selected.svg" class="selected" *ngIf=this.courses[14].selected />
               </div>
             </a>
             <a *ngIf="selected1>8" class="col-12 col-md-5  col-lg-6 col-xl-5 TabHover s2bold" (click)="this.courses[24].selected=!this.courses[24].selected">
               <img src="assets/img/graphics.jpg" />
               <div style="margin-left:65px;">Graphics
-                <img src="assets/img/selected.svg" class="selected" *ngIf=this.courses[24].selected/>
+                <img src="assets/img/selected.svg" class="selected" *ngIf=this.courses[24].selected />
                 <span class="badge badge-success yearIcons">Y 9-13</span>
               </div>
             </a>
             <a *ngIf="selected1>8" class="col-12 col-md-5  col-lg-6 col-xl-5 TabHover s2bold" (click)="this.courses[25].selected=!this.courses[25].selected">
               <img src="assets/img/drama.png" />
               <div style="margin-left:65px;">Drama
-                <img src="assets/img/selected.svg" class="selected" *ngIf=this.courses[25].selected/>
+                <img src="assets/img/selected.svg" class="selected" *ngIf=this.courses[25].selected />
                 <span class="badge badge-success yearIcons">Y 9-13</span>
               </div>
             </a>
             <a *ngIf="selected1>11" class="col-12 col-md-5  col-lg-6 col-xl-5 TabHover s2bold" (click)="this.courses[22].selected=!this.courses[22].selected">
               <img src="assets/img/mediaStudies.png" />
               <div style="margin-left:65px;">Media
-                <img src="assets/img/selected.svg" class="selected" *ngIf=this.courses[22].selected/>
+                <img src="assets/img/selected.svg" class="selected" *ngIf=this.courses[22].selected />
                 <span class="badge badge-success yearIcons">Y 12-13</span>
               </div>
             </a>
@@ -236,7 +241,7 @@
             <a class="col-12 col-md-5  col-lg-6 col-xl-5 TabHover s2bold" (click)="this.courses[9].selected=!this.courses[9].selected">
               <img src="assets/img/german.jpg" />
               <div style="margin-left:65px;padding-right:45px">German
-                <img src="assets/img/selected.svg" class="selected" *ngIf=this.courses[9].selected/>
+                <img src="assets/img/selected.svg" class="selected" *ngIf=this.courses[9].selected />
               </div>
             </a>
 
@@ -244,13 +249,13 @@
             <a class="col-12 col-md-5  col-lg-6 col-xl-5 TabHover s2bold" (click)="this.courses[10].selected=!this.courses[10].selected">
               <img src="assets/img/chinese.jpg" />
               <div style="margin-left:65px;padding-right:45px">Chinese
-                <img src="assets/img/selected.svg" class="selected" *ngIf=this.courses[10].selected/>
+                <img src="assets/img/selected.svg" class="selected" *ngIf=this.courses[10].selected />
               </div>
             </a>
             <a class="col-12 col-md-5  col-lg-6 col-xl-5 TabHover s2bold" (click)="this.courses[11].selected=!this.courses[11].selected">
               <img src="assets/img/maori.png" />
               <div style="margin-left:65px;padding-right:45px">Maori
-                <img src="assets/img/selected.svg" class="selected" *ngIf=this.courses[11].selected/>
+                <img src="assets/img/selected.svg" class="selected" *ngIf=this.courses[11].selected />
               </div>
             </a>
 
@@ -258,23 +263,23 @@
             <a class="col-12 col-md-5  col-lg-6 col-xl-5 TabHover s2bold" (click)="this.courses[12].selected=!this.courses[12].selected">
               <img src="assets/img/spanish.jpg" />
               <div style="margin-left:65px;padding-right:45px">Spanish
-                <img src="assets/img/selected.svg" class="selected" *ngIf=this.courses[12].selected/>
+                <img src="assets/img/selected.svg" class="selected" *ngIf=this.courses[12].selected />
               </div>
             </a>
             <a class="col-12 col-md-5  col-lg-6 col-xl-5 TabHover s2bold" (click)="this.courses[13].selected=!this.courses[13].selected">
               <img src="assets/img/french.jpg" />
               <div style="margin-left:65px;padding-right:45px">French
-                <img src="assets/img/selected.svg" class="selected" *ngIf=this.courses[13].selected/>
+                <img src="assets/img/selected.svg" class="selected" *ngIf=this.courses[13].selected />
               </div>
             </a>
             <a class="col-12 col-md-5  col-lg-6 col-xl-5 TabHover s2bold" (click)="this.courses[26].selected=!this.courses[26].selected">
               <img src="assets/img/japanese.png" />
               <div style="margin-left:65px;padding-right:45px">Japanese
-                <img src="assets/img/selected.svg" class="selected" *ngIf=this.courses[26].selected/>
+                <img src="assets/img/selected.svg" class="selected" *ngIf=this.courses[26].selected />
               </div>
             </a>
-            <br/>
-            <br/>
+            <br />
+            <br />
             <button class="s3Blue btn btn-outline-info" style="float:left" (click)="showYearLevel()">Previous</button>
             <button class="btn btn-outline-success" style="float: right;" (click)="addCourse()">Submit</button>
           </div>
@@ -356,24 +361,24 @@
     </div>
   </div>
 
-  <br/>
+  <br />
   <div class="row">
     <div class="col-2 mx-auto">
       <button class="btn btn-outline-secondary btn-sm" routerLink="/app/dashboard/learner/profile" style="color:white">Skip</button>
     </div>
   </div>
-  <br/>
-  <br/>
+  <br />
+  <br />
   <div class="row">
     <div class="col-2  mx-auto">
-      <button class="btn btn-outline-dark btn-sm" style="color:white">Apply to teach</button>
+      <!-- <button class="btn btn-outline-dark btn-sm" style="color:white">Apply to teach</button> -->
     </div>
   </div>
-  <br/>
-  <br/>
-  <br/>
-  <br/>
-  <br/>
-  <br/>
+  <br />
+  <br />
+  <br />
+  <br />
+  <br />
+  <br />
 
 </div>

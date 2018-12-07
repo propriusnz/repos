@@ -16,6 +16,8 @@ import { OrderConfirmComponentComponent } from './order/order-confirm-component/
 
 import { OrderDetailsComponent } from './order/order-details/order-details.component'
 import { LessonOrderComponent } from './order/lesson-order/lesson-order.component'
+import{ OrderCancelDialogComponent} from './order/order-cancel-dialog/order-cancel-dialog.component'
+
 
 import { MatDialogModule, MatCardModule, MatDatepickerModule, MatFormFieldModule, MatInputModule, MatCheckboxModule, MatAutocompleteModule, MatBadgeModule, MatBottomSheetModule, MatButtonModule, MatButtonToggleModule, MatChipsModule, MatDividerModule, MatExpansionModule, MatGridListModule, MatIconModule, MatListModule, MatMenuModule, MatProgressBarModule, MatProgressSpinnerModule, MatRadioModule, MatRippleModule, MatSelectModule, MatSidenavModule, MatSliderModule, MatSlideToggleModule, MatSnackBarModule, MatSortModule, MatTableModule, MatTabsModule, MatToolbarModule, MatTooltipModule, MatTreeModule, MatNativeDateModule, DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material';
 import { MatPaginatorModule, MatPaginatorIntl } from '@angular/material/paginator';
@@ -53,10 +55,12 @@ import {TagInputModule} from 'ngx-chips';
     OrderConfirmComponentComponent,
     LessonOrderComponent,
     OrderDetailsComponent,
+    OrderCancelDialogComponent,    
   ],
   entryComponents: [
     ViewAllSessionDialogComponent,
     OrderDetailsComponent,
+    OrderCancelDialogComponent,    
   ],   
 })
 export class DashboardLearnerModule { }

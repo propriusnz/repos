@@ -91,4 +91,14 @@ export class UserService {
   userOrders(){
     return this.http.get(this.baseUrl + '/sellers/' + this.userId + '/orders', { headers: this.headers1 })
   }
+  //notifications
+  showNotifications(){
+    return this.http.get(this.baseUrl + '/users/' + this.userId + '/notifications', {headers: this.headers1})
+  }
+
+  //refund
+  updateOrderCancel(order_id, price){
+    return this.http.post(this.baseUrl + '/buyers/' + this.userId + '/orders/' + order_id + '/cancel', price, {headers: this.headers1})
+  }
+
 }

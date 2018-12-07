@@ -122,11 +122,12 @@ export class OrderConfirmComponentComponent implements OnInit {
         price:this.wallet
       });
     }
+    let totalPrice=this.order[0].price+this.order[1].price -this.wallet;
      this.order.push({
       id:3,       
       sequence:'',
       item:'Total',
-      price:this.order[0].price+this.order[1].price -this.wallet
+      price:totalPrice>0?totalPrice:0;  
     });
   }
   //on radio change event, to change order data
