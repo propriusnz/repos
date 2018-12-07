@@ -20,7 +20,7 @@ export class RepositoryService {
   combinedTutor: Object;
   applyData: Object;
   uR: number;
-  applicantInfo: Observable<object>;
+  // applicantInfo: Observable<object>;
   userInfo: Observable<object>;
   tutorInfo: Observable<object>;
   learnerInfo: Observable<Object>;
@@ -39,13 +39,15 @@ export class RepositoryService {
         this.isBrowser = true;
       }
 
+
       this.uR = this.authService.getUserRole();
+
       if (this.isBrowser) {
         this.userSpData();
         this.sessionUserData();
       }
 
-      this.applicantInfo = this.applicantData.asObservable();
+      //this.applicantInfo = this.applicantData.asObservable();
       this.userInfo = this.userData.asObservable();
       this.tutorInfo = this.tutorData.asObservable();
       this.learnerInfo = this.learnerData.asObservable();
@@ -53,11 +55,8 @@ export class RepositoryService {
    }
    userSpData() {
     if (this.uR === 1) {
-      console.log('i am a learner');
-      this.sessionLearnerData();
-      }
-    if (this.uR === 2) {
-      this.sessionApplicantData();
+        console.log('i am a learner');
+        this.sessionLearnerData();
       }
     if (this.uR === 3) {
       this.sessionTutorData();
@@ -65,17 +64,17 @@ export class RepositoryService {
     }
     // ---------------------- Applicant role -------------------------
       // get data from session storage, if not, get from server
-   sessionApplicantData() {
-    if (this.isBrowser) {
-      let aInfo = JSON.parse(sessionStorage.getItem('lsaSpApplicantInfo'));
-      if (!aInfo) {
-        this.currentApplicantData();
-      } else {
-        this.applicantData.next(aInfo);
-      }
-    }
-    // this.currentApplicantData();
-  }
+  //  sessionApplicantData() {
+  //   if (this.isBrowser) {
+  //     let aInfo = JSON.parse(sessionStorage.getItem('lsaSpApplicantInfo'));
+  //     if (!aInfo) {
+  //       this.currentApplicantData();
+  //     } else {
+  //       this.applicantData.next(aInfo);
+  //     }
+  //   }
+  //   // this.currentApplicantData();
+  // }
 
   // Save as sessions
   saveApplicantSession(res) {

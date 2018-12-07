@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { RepositoryService } from './../repositories/repository.service';
+import { AuthService } from '../security/auth.service';
+import { UserService } from '../servercalls/user.service';
 import { GeneralRepositoryService  } from './../repositories/general-repository.service';
 
 @Injectable()
@@ -10,13 +12,16 @@ export class ProfileHelperService {
   gen=[{destination:'',main:'',icon:''}];
   ea:string;
   userR: number;
+  AppicantFlag='0';
   helper=new BehaviorSubject<any>('');
   userRole = new BehaviorSubject<any>('');
   userImage = new BehaviorSubject<any>('');
 
   constructor(
     private repositoryService: RepositoryService,
-    private generalRepositoryService:GeneralRepositoryService
+    private generalRepositoryService:GeneralRepositoryService,
+    private authService: AuthService,    
+    private userService: UserService,        
   ) {
     this.helper.asObservable();
    }
@@ -24,22 +29,37 @@ export class ProfileHelperService {
   getHelpers(uR) {
     this.userR = uR;
     if (this.userR === 1) {
-      this.repositoryService.learnerInfo.subscribe(res => {
-        console.log(res);
-        this.students(res);
-        this.generalRepositoryService.hasSession.subscribe(res => {
-          this.students2(res);  
-          }
-        )       
-        this.userRole.next(1);
-      });
+      this.AppicantFlag=this.authService.getAppicant();
+      if (this.AppicantFlag==='1'){
+        this.userService.getAppInfo().subscribe(
+          res=>{
+            console.log(res)
+            this.applicants(res);
+          },
+          err=>{
+            console.log(err);
+          },
+        )
+        // 
+      }
+      else{
+        this.repositoryService.learnerInfo.subscribe(res => {
+          console.log(res);
+          this.students(res);
+          this.generalRepositoryService.hasSession.subscribe(res => {
+            this.students2(res);  
+            }
+          )       
+          this.userRole.next(1);
+        });
+      }
     }
-    else if (this.userR === 2) {
-      this.repositoryService.applicantInfo.subscribe(res => {
-        //console.log('i am an applicant', res);
-        this.applicants(res);
-      });
-    }
+    // else if (this.userR === 2) {
+    //   this.repositoryService.applicantInfo.subscribe(res => {
+    //     //console.log('i am an applicant', res);
+    //     this.applicants(res);
+    //   });
+    // }
     else if (this.userR === 3) {
       this.repositoryService.tutorInfo.subscribe(res => {
         console.log('tutorInfo',res);
@@ -76,43 +96,66 @@ export class ProfileHelperService {
     }
     this.helper.next(this.gen)      
   }
-  applicants(data){
+  applicants(res){
+    let data=res['applied_jobs'][0];
+    let applicationStatus=data.application_status;
+    let applicantAction=data.applicant_action;
+    // application_status
+    // const APPLICATION_REVIEW = 0;
+    // const APPLICATION_SHORTLIST = 1;
+    // const APPLICATION_SUCCESS = 2;
+    // const APPLICATION_DECLINED = 3;
+    // const APPLICATION_COMPLETED = 4;
+    //applicant_action
+    // const APPLICANT_UPDATE = 0;
+    // const APPLICANT_WAITING = 1;
+    // const APPLICANT_SELECT_INTERVIEW = 2;
+    // const APPLICANT_SIGN_CONTRACT = 3;
+
+
     this.gen = [{ destination:"/app/dashboard/apply/manager", main:"Thank you for applying to teach.", icon:"<i class='fas fa-smile-beam'></i>"}]
     //data.condition='interview'
-    if(data.condition=='update'){//update
-      this.gen.push({destination:"/app/dashboard/apply/manager", main:"Your application needs an update:", icon:"<i class='fas fa-edit'></i>"})
+    if(applicantAction==='0'){//update
+      this.gen.push({destination:"/app/dashboard/apply/manager", main:"Your application needs an update.", icon:"<i class='fas fa-edit'></i>"});
     }
-    else {
+    else if (applicantAction==='1'){//APPLICANT_WAITING
+      this.gen.push({destination:"/app/dashboard/apply/manager", main:"You should wait your application to been processed", icon:"<i class='fas fa-edit'></i>"});
+    }
+    else if (applicantAction==='2'){//APPLICANT_SELECT_INTERVIEW
+      this.gen.push({destination:"/app/dashboard/apply/manager", main:"You should schedule your interview", icon:"<i class='fas fa-edit'></i>"}); 
+    }
+    else {//APPLICANT_SIGN_CONTRACT
+      this.gen.push({destination:"/app/dashboard/apply/manager", main:"You need prepare to sign the contract", icon:"<i class='fas fa-edit'></i>"});      
+    }
     //if(data.condition=='approved'){
-      let msg,icon;
-      
-      switch (data.condition)
-      {
-        case 'pending'://pending
-          msg = "Your application is pending";
-          icon = '<i class="fas fa-stop"></i>';
-          break;
-        case 'interview':        
-           msg = "Your application is in [interview] phase";        
-           icon = '<i class="fal fa-chalkboard-teacher"></i>';           
-           break;           
-        case 'pending_interview':           
-          msg = "Your application is pending in interview";     
-          icon = '<i class="fas fa-tachometer-alt"></i>';                    
-          break;          
-        case 'approved':   
-          msg = "Your application has been approved";  
-          icon = '<i class="far fa-arrow-alt-circle-right"></i>';                  
-          break;          
-        case 'contract_signed':
-          msg = "Your application is in [contract signed] phase";
-          icon = '<i class="fas fa-file-signature"></i>';              
-          break;                
-        case 'declined':                     
-          msg = "Sorry!Your application has been declined";
-          icon = '<i class="fas fa-ban"></i>';            
-          break;          
-      }
+    
+    let msg,icon;
+    switch (applicationStatus)
+    {
+      case '0'://APPLICATION_REVIEW
+        msg = "Your application is reviewing";
+        icon = '<i class="fas fa-stop"></i>';
+        break;
+      case '1':     //APPLICATION_SHORTLIST   
+          msg = "Your application is in shortlist";        
+          icon = '<i class="fal fa-chalkboard-teacher"></i>';           
+          break;           
+      case 'pending_interview':           
+        msg = "Your application is pending in interview";     
+        icon = '<i class="fas fa-tachometer-alt"></i>';                    
+        break;          
+      case '3':   //APPLICATION_COMPLETED
+        msg = "Your application has been completed";  
+        icon = '<i class="far fa-arrow-alt-circle-right"></i>';                  
+        break;          
+      case '2'://APPLICATION_SUCCESS
+        msg = "Your application is in [contract signed] phase";
+        icon = '<i class="fas fa-file-signature"></i>';              
+        break;                
+      case '3'://APPLICATION_DECLINED                     
+        msg = "Sorry!Your application has been declined";
+        icon = '<i class="fas fa-ban"></i>';            
+    
       this.gen.push({destination:"/app/apply/manager", main:msg,icon:icon})
     }
     this.helper.next(this.gen)

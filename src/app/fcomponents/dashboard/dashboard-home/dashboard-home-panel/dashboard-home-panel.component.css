@@ -7,7 +7,6 @@ label{
     cursor: pointer;
 }
 
-
 /* style about clicking to show dialog */
 #imgLink{
     color: #0099FF;
@@ -17,4 +16,57 @@ label{
 }
 #imgProfile:hover{
     transform: scale(1.08);
+}
+.card-header {
+    padding: 0.75rem 0rem;
+    text-align: center;
+}
+.viewCourses img{
+    height:20px;
+    width:20px;
+}
+.briefIntro{
+    display:inline-block;
+    margin-left:10px;
+}
+.badge{
+    font-size:55%
+}
+.badge-pill {
+    position: relative;
+    bottom: 10px;
+    left: 6px;
+    color:white;
+}
+.fas.fa-trash-alt:hover{
+    color:red
+}
+.far.fa-star:hover{
+    color:rgba(39, 105, 226, 0.877)
+}
+.fas.fa-pen:hover{
+    color:rgba(39, 105, 226, 0.877)
+}
+.cancelButton{
+    display:none;
+    position: absolute;
+    z-index:3;
+    top:10px;
+    left:90%;
+    cursor: pointer;
+}
+a:not([href]):not([tabindex]){
+    color:white;
+}
+.summaryBoard .col-6{
+    padding:0;
+    text-align: center;
+}
+.courseDetail{
+    position: relative;
+    left:0px;
+}
+.fas.fa-calendar-times{
+    font-size: 19px;
+    color: #ff6060;
 }

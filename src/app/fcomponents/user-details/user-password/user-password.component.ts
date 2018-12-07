@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChildren, ElementRef } from '@angular/core';
 import { FormBuilder, FormGroup, FormControl, Validators, FormControlName, AbstractControl } from '@angular/forms';
 import { UserService } from '../../../services/servercalls/user.service';
 import { SideHelperService } from '../../../services/helpers/side-helper.service';
+import { AlertNotificationService } from '../../../services/support/alert-notification.service';
 
 @Component({
   selector: 'app-user-password',
@@ -19,6 +20,7 @@ export class UserPasswordComponent implements OnInit {
     private formBuilder:FormBuilder,
     private elem: ElementRef,   
     private SideHelperService: SideHelperService,
+    private alertservice: AlertNotificationService    
   ) {
     }
 
@@ -44,8 +46,14 @@ export class UserPasswordComponent implements OnInit {
     if (this.userPasswordResetForm.dirty && this.userPasswordResetForm.valid) {
 
       this.userService.updateUserPassword(this.userPasswordResetForm.value).subscribe(
-        (res)=>{console.log(res)},
-        (err)=>{console.log(err)}
+        (res)=>{
+          console.log(res);
+          this.alertservice.sendSuccess('Your password has changed');
+        },
+        (err)=>{
+          console.log(err);
+          this.alertservice.serviceErrorAlert(err);
+        }
       )
     }
     else{

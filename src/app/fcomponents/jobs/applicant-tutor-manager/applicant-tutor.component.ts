@@ -5,6 +5,7 @@ import { ApplyTeachModel } from '../../../models/ApplyTeachModel';
 import { MatDialog, MatDialogRef } from '@angular/material';
 import { TutorAgreementComponent } from './../support/tutor-agreement/tutor-agreement.component';
 import { RepositoryService } from '../../../services/repositories/repository.service';
+import { UserService } from '../../../services/servercalls/user.service';
 import { FileValidationService } from '../../../services/support/file-validation.service';
 
 @Component({
@@ -38,15 +39,17 @@ export class ApplicantTutorComponent implements OnInit {
     private newTutorService: NewTutorService,
     private repositoryService: RepositoryService,
     private fileValidationService: FileValidationService,
+    private userService: UserService,    
   ) {
-    this.repositoryService.userInfo.subscribe(
+    this.userService.showUserInfo().subscribe(
       (res) => {
-        this.first_name = res['first_name'], this.last_name = res['last_name'];
+        this.first_name = res['userKey'].first_name;
+        this.last_name = res['userKey'].last_name;
       });
   }
 
   ngOnInit() {
-    this.newTutorService.showTutorApplication().subscribe(
+    this.userService.getAppInfo().subscribe(
       (res) => {
       console.log('-----------res------------');
       console.log(res);

@@ -52,7 +52,8 @@ export class AuthService {
       this.localStorage.setItem('lsaToken_expires', this.xtExpire);
       this.localStorage.setItem('lsaUserId', user.dataCon.xUi);
       this.localStorage.setItem('lsaUserName', user.dataCon.userBasic.first_name);
-      this.localStorage.setItem('lsaWho', user.dataCon.xUr);
+      this.localStorage.setItem('lsaWho', user.dataCon.xUr);//user.dataCon.userBasic.user_applicant
+      this.localStorage.setItem('lsaAppicant', user.dataCon.userBasic.user_applicant===1?1:0);//
 
       sessionStorage.setItem('lsaUserskeys', JSON.stringify(user.dataCon.userBasic));
       sessionStorage.setItem('lsaUsersInfo', JSON.stringify(user.dataCon.userInfo));
@@ -60,10 +61,9 @@ export class AuthService {
       if(user.dataCon.xUr==1){
 
       }
-      if(user.dataCon.xUr==2){
-        sessionStorage.setItem('lsaSpApplicantInfo', JSON.stringify(user.dataCon.applyInfo));
-
-      }
+      // if(user.dataCon.userBasic.user_applicant===1){
+      //   sessionStorage.setItem('lsaSpApplicantInfo', JSON.stringify(user.dataCon.applyInfo));
+      // }
       if(user.dataCon.xUr==3){
         sessionStorage.setItem('lsaSpTutorInfo', JSON.stringify(user.dataCon.tutorInfo));     
         sessionStorage.setItem('lsaSpTutorProfile', JSON.stringify(user.dataCon.tutorProfile));        
@@ -90,17 +90,13 @@ export class AuthService {
 
     getUserRole(){
       let role = this.localStorage.getItem('lsaWho');
-      if(role == '19046aacd'){
-        return 4
-      }
       if(role == '3'){
         return 3
       }
-      else if(role == '2'){
-        return 2
-      }else{
-        return 1
-      }
+      return 1
+    }
+    getAppicant(){
+      return this.localStorage.getItem('lsaAppicant');
     }
 
     loggingOut(){

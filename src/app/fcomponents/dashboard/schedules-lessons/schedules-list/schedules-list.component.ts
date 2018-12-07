@@ -16,7 +16,7 @@ import { isPlatformBrowser } from '@angular/common';
 import { CommonSupportService } from '../../../../services/support/common-support.service';
 import { MessengerHelperService } from '../../../../services/helpers/messenger-helper.service';
 import { AlertNotificationService } from '../../../../services/support/alert-notification.service';
-
+import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 @Component({
   selector: 'app-schedules-list',
   templateUrl: './schedules-list.component.html',
@@ -35,7 +35,7 @@ export class SchedulesListComponent implements OnInit {
   freeEvents = []; // learner role: store freeEvents object with tutor id
   baseUrl = 'http://learnspace.co.nz/api/public/';
   sucSubmit = false;
-
+  
   s_indicatorEvent = false;
   // user can choose the session times
   startDate: any;
@@ -599,6 +599,7 @@ export class SchedulesListComponent implements OnInit {
         else
           canceled_party=' by learner'
       }
+
       date.add(e.session_duration, 'hours')
       console.log(interval, withinTwelveHours);
       newObj = {
@@ -971,4 +972,6 @@ export class SchedulesListComponent implements OnInit {
     }
     return filterSessions.slice((this.pagination[filter].currentPage - 1) * this.perPage, this.pagination[filter].currentPage * this.perPage);
   }
+    
 }
+

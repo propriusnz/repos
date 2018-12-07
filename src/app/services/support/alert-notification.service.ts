@@ -29,7 +29,16 @@ export class AlertNotificationService {
       errorMessage = "Something went wrong, please try again or contact with our Administrator." 
     this.sendAlert(errorMessage, 'ERROR', 'toast-top-right', 3000);      
   }
-  
+  sendError(errorMessage){
+    this.sendAlert(errorMessage, 'ERROR', 'toast-top-right', 5000);      
+  }
+  sendSuccess(Message){
+    this.sendAlert(Message, 'SUCCESS', 'toast-top-right', 1500);      
+  }  
+  sendWarning(Message){
+    this.sendAlert(Message, 'WARNING', 'toast-top-right', 3000);      
+  }    
+
   getAlert() {
     return this.myObs$;
   }

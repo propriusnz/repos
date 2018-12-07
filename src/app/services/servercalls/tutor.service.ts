@@ -116,6 +116,10 @@ export class TutorService {
   showAllCourses() {
     return this.http.get(this.baseUrl + '/tutors/' + this.id+'/courses?type=1', { headers: this.headers1 })
   }
-
-
+  removeTutorCourses(c_id) {
+    return this.http.delete(this.baseUrl + '/tutors/' + this.id+'/courses/'+c_id, { headers: this.headers1 })
+  }
+  addTutorCourses(c_id,price) {
+    return this.http.put(this.baseUrl + '/tutors/' + this.id+'/courses/'+c_id+'?price='+price, { headers: this.headers1 })
+  }
 }

@@ -143,5 +143,7 @@ export class LearnerService {
   storeReportSession(sessionId,report){
     return this.http.post(this.baseUrl + '/learners/' + this.id + '/sessions/' + sessionId+'/report',report,{ headers: this.headers1});
   } 
-  
+  showLearnerPayment(){
+    return this.http.get(this.baseUrl + '/users/' + this.id + '/payments');
+  }
 }

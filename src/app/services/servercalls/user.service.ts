@@ -34,7 +34,7 @@ export class UserService {
 
   // User Change Password
   updateUserPassword(a){
-    return this.http.put(this.baseUrl+'/userpasswordchange/'+this.userId, a, {headers: this.headers1})
+    return this.http.post(this.baseUrl+'/users/'+this.userId+'/passwordchange', a, {headers: this.headers1})
   }
   // User Edit Photos
   updateUserPhoto(aa) {
@@ -84,5 +84,11 @@ export class UserService {
   }
   getAwards(){
     return this.http.get(this.baseUrl+'/allawards', {headers: this.headers1})
+  }
+  getAppInfo(){
+    return this.http.get(this.baseUrl+'/users/'+ this.userId + '/applications', {headers: this.headers1})
+  }  
+  userOrders(){
+    return this.http.get(this.baseUrl + '/sellers/' + this.userId + '/orders', { headers: this.headers1 })
   }
 }
