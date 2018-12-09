@@ -77,12 +77,13 @@ export class LessonOrderComponent implements OnInit {
     this.buyerOrders = { 'all': [], 'completed': [], 'processing': [], 'cancel': [] }
     this.learnerServive.userOrder().subscribe(
       (res) => {
+        this.loading = false;        
         console.log(res);
 
         if (res['allOrders'].length) {
           this.buyerOrders['all'] = this.getAllOrders(res['allOrders']);
           console.log(this.buyerOrders)
-          this.loading = false;
+
           this.getPage(1);
           //console.log(this.buyerOrders);
           //this.getFilterOrder();
