@@ -35,6 +35,7 @@ export class SchedulesListComponent implements OnInit {
   freeEvents = []; // learner role: store freeEvents object with tutor id
   baseUrl = 'http://learnspace.co.nz/api/public/';
   sucSubmit = false;
+  loading = false;
   
   s_indicatorEvent = false;
   // user can choose the session times
@@ -171,6 +172,7 @@ export class SchedulesListComponent implements OnInit {
   // --------------------- Support Methods ------------------------------------------------------
   // after get the user role, show all sessions
   showAllSessions() {
+    this.loading = true;
     console.log(this.range);
     if (this.role === 3) {
       console.log(this.role, 'I am a tutor.');
@@ -434,6 +436,7 @@ export class SchedulesListComponent implements OnInit {
     this.tutorService.showTutorSchedules().subscribe(
       (res) => {
         console.log(res);
+        this.loading=false;        
         // this.locations = res['data'].thisTutorProfile.teaching_locations;
         let eventContainer = this.calendarService.getEvent(res['tutorFreeTime'], res['tutorSessions']);
         console.log(eventContainer);
@@ -442,8 +445,10 @@ export class SchedulesListComponent implements OnInit {
         this.showEdit = true;
         // console.log(this.calendarEvents);
         // console.log('edit coming');
+
       }, (error) => {
         console.log(error);
+        this.loading=false;        
         this.alertservice.sendAlert('Sorry, can not get data now, please try again!', 'ERROR', 'toast-top-right', 5000);
       });
 
@@ -453,6 +458,7 @@ export class SchedulesListComponent implements OnInit {
     console.log('search this range:', this.range);
     this.learnerService.indexLearnerSessions(this.range).subscribe((res) => {
       console.log(res);
+      this.loading=false;   
       let allSessions = res['allSessions'];
       console.log(allSessions);
       this.sessionsInfo = this.changeFormat(allSessions);
@@ -464,6 +470,7 @@ export class SchedulesListComponent implements OnInit {
       }
     }, (error) => {
       console.log(error);
+      this.loading=false;      
       this.alertservice.sendAlert('Sorry, can not get data now, please try again!', 'ERROR', 'toast-top-right', 5000);
     });
   }

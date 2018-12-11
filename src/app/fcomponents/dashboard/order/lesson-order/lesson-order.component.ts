@@ -169,10 +169,10 @@ export class LessonOrderComponent implements OnInit {
       let newObj = {};
 
       let orderId = order.order_id;
-      let orderTime = order.created_at;
+      let orderTime = this.commonSupport.changeToMoment(order.created_at);
       let orderPrice = order.order_price;
       let orderQuantity = order.order_quantity;
-      let orderCancelTime = order.canceled_time;
+      let orderCancelTime = this.commonSupport.changeToMoment(order.canceled_time);
       let orderRemain = order.order_quantity_left;
       let coursePrice = tutor.price_1;
       let orderStatus: any;
@@ -214,9 +214,9 @@ export class LessonOrderComponent implements OnInit {
       data: { order }
     });
   }
-  goSchedule(idx) {
+  goSchedule(order) {
     //this.router.navigate(['/app/']);
-    this.router.navigate(['/app/dashboard/learner/schedule/' + this.buyerOrders[idx].order_id + '/' + this.buyerOrders[idx].tutor_id]);
+    this.router.navigate(['/app/dashboard/learner/schedule/' + order.order_id + '/' + order.tutor_id]);
   }
 
 }

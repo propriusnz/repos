@@ -17,6 +17,7 @@ export class CancelSessionDialogComponent implements OnInit {
   role: number; //learner or tutor
   comment = new FormControl('');
   suggestion = new FormControl('');
+  isCheckable = true;
 
   static TUTOR = 3;
   static LEARNER = 1;
@@ -38,6 +39,7 @@ export class CancelSessionDialogComponent implements OnInit {
     this.dialogRef.close();
   }
   save() {
+    this.isCheckable = false;
     console.log(this.comment.value);
     let user_ticked = '';
     $.each($('input[name=\'tick_comment\']:checked'), function () {
@@ -50,12 +52,14 @@ export class CancelSessionDialogComponent implements OnInit {
     if (this.role === 3 ){ //tutor
       if (user_suggestion.length <= 15) {
         this.warningMes = 'Please give suggestion before cancel the lesson and the suggestion must be at least 15 characters.';
+        this.isCheckable = true;
         return;
       }
     }
 
-    if (user_comment === ',') {
-      this.warningMes = '* Please check the reason options or give some comments before cancel the lesson';
+    if (user_comment.length <= 8) {
+      this.warningMes = '* Please check the reason options or give at least 8 characters comments before cancel the lesson';
+      this.isCheckable = true;      
     } else {
       this.dialogRef.close(['yes', user_comment, user_suggestion]);
     }

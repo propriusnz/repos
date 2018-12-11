@@ -184,7 +184,7 @@ export class UserTransactionsComponent implements OnInit {
         // add into new trans array
         this.trans.push(this.transactions[i]);
         // this.totalHour += this.transaction[i].quantity;
-        this.singlePrice.push(Number(this.transactions[i]['order'].order_price)*Number(this.transactions[i]['order'].order_quantity))
+        this.singlePrice.push(Number(this.transactions[i]['order'].order_price))
       }
     }
     if (this.trans.length == 0){

@@ -1,194 +1,194 @@
 <!-- <div *ngIf="errorMessage" class="error-feedback">{{errorMessage}}</div> -->
 <div class="row ">
-  <!-- left part contains PersonalCard, ProfileHelper, and studentProgress-->
-  <div class="col-md-4 col-lg-4">
-    <!--Personal Card-->
-    <div class="col-12 my-4">
-      <div *ngIf="userInfo" class="card">
-        <div class="card-header p-0 userImg">
-          <img *ngIf="user_profile_photo" type="button" id="imgProfile" class="float-left pointer" (click)="imgDialog()" src={{user_profile_photo}} alt="User Image" width="80" height="80">
-          <div style="padding-top:6px;" class="float-left ml-3 text-left">
-            <label class="s2bold">{{userInfo.first_name}} &nbsp; {{userInfo.last_name}} </label><br>
-            <label class="s3">{{userInfo.location}}</label><br>
-            <a (click)="imgDialog()" id="imgLink" class="pointer">Edit Image</a>
+    <!-- left part contains PersonalCard, ProfileHelper, and studentProgress-->
+    <div class="col-md-4 col-lg-4">
+      <!--Personal Card-->
+      <div class="col-12 my-4">
+        <div *ngIf="userInfo" class="card">
+          <div class="card-header p-0 userImg">
+            <img *ngIf="user_profile_photo" type="button" id="imgProfile" class="float-left pointer" (click)="imgDialog()" src={{user_profile_photo}} alt="User Image" width="80" height="80">
+            <div style="padding-top:6px;" class="float-left ml-3 text-left">
+              <label class="s2bold">{{userInfo.first_name}} &nbsp; {{userInfo.last_name}} </label><br>
+              <label class="s3">{{userInfo.location}}</label><br>
+              <a (click)="imgDialog()" id="imgLink" class="pointer">Edit Image</a>
+            </div>
           </div>
-        </div>
-        <div class="card-body">
-          <div *ngIf="uRole=='3'" class="s3bold">Teaches
-            <div class="s4">{{tutorInfo.discipline}}</div>
-            Curriculum
-            <div class="s4">{{tutorInfo.curriculum}}</div>
-          </div>
-          <div *ngIf="uRole=='2'" class="s3bold">Teaches
-            <div class="s4">{{applyInfo.discipline}}</div>
-            Curriculum
-            <div class="s4">{{applyInfo.curriculum}}</div>
-          </div>
-          <div *ngIf="uRole=='1'" class="s3bold">Learning
-            <div class="s4"></div>
-            Teaches
-            <div class="s4"></div>
-          </div>
-          <div *ngIf="!isTutor" class="s3bold"> Balance($): {{userCredit}}</div>
-
-          <!-- <div class="row summaryBoard">
-            <div class='col-4'><div class="m1">{{nextBoard}}</div><div class="s3bold">next</div></div>
-            <div class='col-4'><div class="m1">{{finisedBorad}}</div> <div class="s3bold">completed</div></div>
-            <div *ngIf="isTutor" class='col-4'><div class="m1">{{reportBoard}}</div><div class="s3bold">report</div></div>
-            <div *ngIf="!isTutor" class='col-4'><div class="m1">{{reportBoard}}</div><div class="s3bold">rating</div></div>
-          </div> -->
-          
-        </div>
-      </div>
-    </div>
-
-    <div class="col-12 my-4">
-      <div class='card'>
-          <div class='card-header s2bold'>Summary</div>
-          <div class='card-body summaryBoard'>
-              <div class="row ">
-                  <div class='col-6'><div class="m1">{{nextBoard}}</div><div class="s3bold">next courses</div></div>
-                  <div class='col-6'><div class="m1">{{finisedBorad}}</div> <div class="s3bold">Already completed</div></div>
-                </div>
-                <div class="row">
-                  <div *ngIf="isTutor" class='col-6'><div class="m1">{{reportBoard}}</div><div class="s3bold">To report</div></div>
-                  <div *ngIf="!isTutor" class='col-6'><div class="m1">{{reportBoard}}</div><div class="s3bold">To rate</div></div>
-                  <div class='col-6'><div class="m1">{{orderLeft}}</div><div class="s3bold">Unsheduled</div></div>
-                </div>
-          </div>
-      </div>
-      
-    </div>
-
-    <!--Profile Helper-->
-    <div class="col-12 my-4">
-      <div *ngIf="helpers&&helpers.length>0" class="card">
-        <div class="card-header s2bold">
-          <div *ngIf="uRole=='3'">Complete your teaching profile</div>
-          <div *ngIf="uRole=='1'||uRole=='2'">Complete your profile</div>
-        </div>
-        <div class="card-body">
-          <div *ngFor="let helper of helpers">
-            <span style="color:#0099FF" [innerHTML]="helper.icon"></span>&nbsp;
-            <a [routerLink]="helper.destination" href="#" class="s3Blue">{{helper.main}}</a>
+          <div class="card-body">
+            <div *ngIf="uRole=='3'" class="s3bold">Teaches
+              <div class="s4">{{tutorInfo.discipline}}</div>
+              Curriculum
+              <div class="s4">{{tutorInfo.curriculum}}</div>
+            </div>
+            <div *ngIf="uRole=='2'" class="s3bold">Teaches
+              <div class="s4">{{applyInfo.discipline}}</div>
+              Curriculum
+              <div class="s4">{{applyInfo.curriculum}}</div>
+            </div>
+            <div *ngIf="uRole=='1'" class="s3bold">Learning
+              <div class="s4"></div>
+              Teaches
+              <div class="s4"></div>
+            </div>
+            <div *ngIf="!isTutor" class="s3bold"> Credit($): {{userCredit}}</div>
+  
+            <!-- <div class="row summaryBoard">
+              <div class='col-4'><div class="m1">{{nextBoard}}</div><div class="s3bold">next</div></div>
+              <div class='col-4'><div class="m1">{{finisedBorad}}</div> <div class="s3bold">completed</div></div>
+              <div *ngIf="isTutor" class='col-4'><div class="m1">{{reportBoard}}</div><div class="s3bold">report</div></div>
+              <div *ngIf="!isTutor" class='col-4'><div class="m1">{{reportBoard}}</div><div class="s3bold">rating</div></div>
+            </div> -->
+            
           </div>
         </div>
       </div>
-    </div>
-
-    <!--Student progress-->
-    <!-- <div class="col-12 my-4">
-      <div *ngIf="uRole==3" class="card">
-        <div class="card-header s2bold">My student's progress</div>
-        <div class="card-body">
+  
+      <div class="col-12 my-4">
+        <div class='card'>
+            <div class='card-header s2bold'>Summary</div>
+            <div class='card-body summaryBoard'>
+                <div class="row ">
+                    <div class='col-6'><div class="m1">{{nextBoard}}</div><div class="s3bold">next courses</div></div>
+                    <div class='col-6'><div class="m1">{{finisedBorad}}</div> <div class="s3bold">Already completed</div></div>
+                  </div>
+                  <div class="row">
+                    <div *ngIf="isTutor" class='col-6'><div class="m1">{{reportBoard}}</div><div class="s3bold">To report</div></div>
+                    <div *ngIf="!isTutor" class='col-6'><div class="m1">{{reportBoard}}</div><div class="s3bold">To rate</div></div>
+                    <div class='col-6'><div class="m1">{{orderLeft}}</div><div class="s3bold">Unsheduled</div></div>
+                  </div>
+            </div>
+        </div>
+        
+      </div>
+  
+      <!--Profile Helper-->
+      <div class="col-12 my-4">
+        <div *ngIf="helpers&&helpers.length>0" class="card">
+          <div class="card-header s2bold">
+            <div *ngIf="uRole=='3'">Complete your teaching profile</div>
+            <div *ngIf="uRole=='1'||uRole=='2'">Complete your profile</div>
+          </div>
+          <div class="card-body">
+            <div *ngFor="let helper of helpers">
+              <span style="color:#0099FF" [innerHTML]="helper.icon"></span>&nbsp;
+              <a [routerLink]="helper.destination" href="#" class="s3Blue">{{helper.main}}</a>
+            </div>
+          </div>
         </div>
       </div>
-    </div> -->
-  </div>  <!-- left part column -->
-
-
-  <!-- right part contains Lessons and Posts -->
-  <div class="col-md-8 mol-lg-8">
-
-    <!--Lessons-->
-    <!-- <div class="col-12 my-4">
-      <div class="card">
-        <div class="card-header m2">My Lessons</div>
-        <div class="card-body">
-          <div *ngIf="!sessions" class="s3Blue">You have no sessions yet.</div> -->
-          <!--  //becasue of some error comment whole messager component 
-          <app-dashboard-home-sessions (s_indicatorEvent)='receiveMessage($event)' [locations]='tutorInfo.teaching_locations' *ngIf='uRole === 3'></app-dashboard-home-sessions>
-          <app-dashboard-home-sessions (s_indicatorEvent)='receiveMessage($event)' *ngIf='uRole === 1 || uRole === 2'></app-dashboard-home-sessions> -->
-        <!-- </div>
-      </div>
-    </div> -->
-    <div class="col-12 my-4 viewCourses">
-      <div class="card">
-        <div class="card-header m2">incoming courses<a class="badge badge-pill badge-primary">{{nextBoard}}</a></div>
-        <div class='card-body'>
-            <div *ngIf="nextCourses===null"><mat-spinner color="blue"></mat-spinner></div>
-              <div class='card courseDetail' *ngFor="let i of nextIndex">
-                        <div class='card-body' (mouseover)="buttonControls('button',i)" (mouseout)="buttonsHide('button',i)">
-                          <div class="row">
-                            <div class="col-7"><img src="../../assets/icons/icons/My Schedules/My Schedules.png/">
-                              <span class="briefIntro">{{nextCourses[i].session_date}}-{{endingTime1[i]}}</span>
-                            </div>
-                            <div class="col-5"><img src="../../assets/img/{{nextCourses[i].session_subject}}.jpg"> 
-                            <span class="briefIntro">{{nextCourses[i].session_subject}}</span>
-                            </div>
-                         </div>
-                          <div>
-                              <img *ngIf="isTutor" src="{{baseUserImgUrl}}{{nextCourses[i].user_id}}-cp.jpeg"> 
-                              <img *ngIf="!isTutor" src="{{baseUserImgUrl}}{{nextCourses[i].tutor_id}}-cp.jpeg"> 
-                              <span *ngIf="!isTutor" class="briefIntro">{{nextCourses[i].first_name}} {{nextCourses[i].last_name}}</span>
-                              <span *ngIf="isTutor" class="briefIntro">{{nextCourses[i].learner_first_name}} {{nextCourses[i].learner_last_name}}</span>
-
-                          </div>
-                          <img src="../../assets/icons/positionIcon.png"> 
-                            <span class="briefIntro"> {{nextCourses[i].session_location}}</span>
-                            <i class="fas fa-trash-alt cancelButton" id="button{{i}}" (click)="cancelSession(i)" title="Cancel this course"></i>
-                         </div>
-              </div>
+  
+      <!--Student progress-->
+      <!-- <div class="col-12 my-4">
+        <div *ngIf="uRole==3" class="card">
+          <div class="card-header s2bold">My student's progress</div>
+          <div class="card-body">
+          </div>
         </div>
-      </div>
-
-      <div class="card">
-          <div class="card-header m2">Canceled courses</div>
+      </div> -->
+    </div>  <!-- left part column -->
+  
+  
+    <!-- right part contains Lessons and Posts -->
+    <div class="col-md-8 mol-lg-8">
+  
+      <!--Lessons-->
+      <!-- <div class="col-12 my-4">
+        <div class="card">
+          <div class="card-header m2">My Lessons</div>
+          <div class="card-body">
+            <div *ngIf="!sessions" class="s3Blue">You have no sessions yet.</div> -->
+            <!--  //becasue of some error comment whole messager component 
+            <app-dashboard-home-sessions (s_indicatorEvent)='receiveMessage($event)' [locations]='tutorInfo.teaching_locations' *ngIf='uRole === 3'></app-dashboard-home-sessions>
+            <app-dashboard-home-sessions (s_indicatorEvent)='receiveMessage($event)' *ngIf='uRole === 1 || uRole === 2'></app-dashboard-home-sessions> -->
+          <!-- </div>
+        </div>
+      </div> -->
+      <div class="col-12 my-4 viewCourses">
+        <div class="card">
+          <div class="card-header m2">incoming courses<a class="badge badge-pill badge-primary">{{nextBoard}}</a></div>
           <div class='card-body'>
-            <div class='card courseDetail' *ngFor="let i of canceledCourses">
-                <div class='card-body'>
-                  <div class="row">
-                    <div class="col-6"><img src="../../assets/icons/icons/My Schedules/My Schedules.png/"> <span class="briefIntro">{{i.session_date}}</span>  </div>
-                    <div class="col-6"><i class="fas fa-calendar-times"></i> <span class="briefIntro"> {{i.canceled_at}}</span></div>
-                  </div>
-                  <div class="row">
-                      <div class="col-4"><img src="../../assets/img/{{i.session_subject}}.jpg"> 
-                      <span class="briefIntro">{{i.session_subject}}</span>
-                      </div>
-                      <div class="col-7">
-                        Canceled by   
-                        <span *ngIf="!isTutor"><span *ngIf="i.canceled_party==1">{{i.first_name}} {{i.last_name}}</span><span *ngIf="i.canceled_party==0">Me</span></span>
-                        <span *ngIf="isTutor"><span *ngIf="i.canceled_party==1">Me</span><span *ngIf="i.canceled_party==0">{{i.learner_first_name}} {{i.learner_last_name}}</span></span>
-                        </div>
+              <div *ngIf="nextCourses.length==0">Need to book courses!</div>
+                <div class='card courseDetail' *ngFor="let i of nextIndex">
+                          <div class='card-body' (mouseover)="buttonControls('button',i)" (mouseout)="buttonsHide('button',i)">
+                            <div class="row">
+                              <div class="col-7"><img src="../../assets/icons/icons/My Schedules/My Schedules.png/">
+                                <span class="briefIntro">{{nextCourses[i].session_date}}-{{endingTime1[i]}}</span>
+                              </div>
+                              <div class="col-5"><img src="../../assets/img/{{nextCourses[i].session_subject}}.jpg"> 
+                              <span class="briefIntro">{{nextCourses[i].session_subject}}</span>
+                              </div>
+                           </div>
+                            <div>
+                                <img *ngIf="isTutor" src="{{baseUserImgUrl}}{{nextCourses[i].user_id}}-cp.jpeg"> 
+                                <img *ngIf="!isTutor" src="{{baseUserImgUrl}}{{nextCourses[i].tutor_id}}-cp.jpeg"> 
+                                <span *ngIf="!isTutor" class="briefIntro">{{nextCourses[i].first_name}} {{nextCourses[i].last_name}}</span>
+                                <span *ngIf="isTutor" class="briefIntro">{{nextCourses[i].learner_first_name}} {{nextCourses[i].learner_last_name}}</span>
+  
+                            </div>
+                            <img src="../../assets/icons/positionIcon.png"> 
+                              <span class="briefIntro"> {{nextCourses[i].session_location}}</span>
+                              <i class="fas fa-trash-alt cancelButton" id="button{{i}}" (click)="cancelSession(i)" title="Cancel this course"></i>
+                           </div>
+                </div>
+          </div>
+        </div>
+  
+        <div class="card" *ngIf="canceledCourses.length!==0">
+            <div class="card-header m2">Canceled courses</div>
+            <div class='card-body'>
+              <div class='card courseDetail' *ngFor="let i of canceledCourses">
+                  <div class='card-body'>
+                    <div class="row">
+                      <div class="col-6"><img src="../../assets/icons/icons/My Schedules/My Schedules.png/"> <span class="briefIntro">{{i.session_date}}</span>  </div>
+                      <div class="col-6"><i class="fas fa-calendar-times"></i> <span class="briefIntro"> {{i.canceled_at}}</span></div>
                     </div>
-                    <div class='row'><span class="col-12" style="word-wrap: break-word"><i class="far fa-comment" style="font-size:19px; display: inline"></i><span style="margin-left: 10px;">{{i.cancel_comment}}</span></span></div>
-                  </div>
-              </div>
+                    <div class="row">
+                        <div class="col-4"><img src="../../assets/img/{{i.session_subject}}.jpg"> 
+                        <span class="briefIntro">{{i.session_subject}}</span>
+                        </div>
+                        <div class="col-7">
+                          Canceled by   
+                          <span *ngIf="!isTutor"><span *ngIf="i.canceled_party==1">{{i.first_name}} {{i.last_name}}</span><span *ngIf="i.canceled_party==0">Me</span></span>
+                          <span *ngIf="isTutor"><span *ngIf="i.canceled_party==1">Me</span><span *ngIf="i.canceled_party==0">{{i.learner_first_name}} {{i.learner_last_name}}</span></span>
+                          </div>
+                      </div>
+                      <div class='row'><span class="col-12" style="word-wrap: break-word"><i class="far fa-comment" style="font-size:19px; display: inline"></i><span style="margin-left: 10px;">{{i.cancel_comment}}</span></span></div>
+                    </div>
+                </div>
+            </div>
+          </div>
+  
+        <div class="card" *ngIf="finishedCourses.length!==0">
+          <div class="card-header m2">finished courses<a class="badge badge-pill badge-warning">{{reportBoard}}</a></div>
+          <div class = "card-body">
+            <div class='card' *ngFor="let i of finishedIndex">
+                <div class='card-body' (mouseover)="buttonControls('edit',i)" (mouseout)="buttonsHide('edit',i)">
+                    <div class="row"> 
+                        <div class="col-5"> 
+                            <img src="../../assets/icons/icons/My Schedules/My Schedules.png/">
+                            <span class="briefIntro">{{finishedCourses[i].session_date}}-{{endingTime2[i]}}</span>
+                          </div>
+                          <div class="col-3">
+                              <img src="../../assets/img/{{finishedCourses[i].session_subject}}.jpg"> 
+                              <span class="briefIntro">{{finishedCourses[i].session_subject}}</span>
+                          </div>
+                          <div class="col-4">
+                              <img *ngIf="isTutor" src="{{baseUserImgUrl}}{{finishedCourses[i].user_id}}-cp.jpeg"> 
+                              <img *ngIf="!isTutor" src="{{baseUserImgUrl}}{{finishedCourses[i].tutor_id}}-cp.jpeg"> 
+                              <span *ngIf="!isTutor" class="briefIntro">{{finishedCourses[i].first_name}} {{finishedCourses[i].last_name}}</span>
+                              <span *ngIf="isTutor" class="briefIntro">{{finishedCourses[i].learner_first_name}} {{finishedCourses[i].learner_last_name}}</span>
+  
+                          </div>
+                          <i *ngIf="isTutor" class="fas fa-pen cancelButton" id="edit{{i}}" title="Complete report"></i>
+                          <i *ngIf="!isTutor" class="far fa-star cancelButton" id="edit{{i}}" title="Rate this course"></i>
+                    </div>
+  
+                </div>
+            </div>
           </div>
         </div>
-
-      <div class="card">
-        <div class="card-header m2">finished courses<a class="badge badge-pill badge-warning">{{reportBoard}}</a></div>
-        <div class = "card-body">
-            <div *ngIf="finishedCourses===null"><mat-spinner color="blue"></mat-spinner></div>
-          <div class='card' *ngFor="let i of finishedIndex">
-              <div class='card-body' (mouseover)="buttonControls('edit',i)" (mouseout)="buttonsHide('edit',i)">
-                  <div class="row"> 
-                      <div class="col-5"> 
-                          <img src="../../assets/icons/icons/My Schedules/My Schedules.png/">
-                          <span class="briefIntro">{{finishedCourses[i].session_date}}-{{endingTime2[i]}}</span>
-                        </div>
-                        <div class="col-3">
-                            <img src="../../assets/img/{{finishedCourses[i].session_subject}}.jpg"> 
-                            <span class="briefIntro">{{finishedCourses[i].session_subject}}</span>
-                        </div>
-                        <div class="col-4">
-                            <img *ngIf="isTutor" src="{{baseUserImgUrl}}{{finishedCourses[i].user_id}}-cp.jpeg"> 
-                            <img *ngIf="!isTutor" src="{{baseUserImgUrl}}{{finishedCourses[i].tutor_id}}-cp.jpeg"> 
-                            <span *ngIf="!isTutor" class="briefIntro">{{finishedCourses[i].first_name}} {{finishedCourses[i].last_name}}</span>
-                            <span *ngIf="isTutor" class="briefIntro">{{finishedCourses[i].learner_first_name}} {{finishedCourses[i].learner_last_name}}</span>
-
-                        </div>
-                        <i *ngIf="isTutor" class="fas fa-pen cancelButton" id="edit{{i}}" title="Complete report"></i>
-                        <i *ngIf="!isTutor" class="far fa-star cancelButton" id="edit{{i}}" title="Rate this course"></i>
-                  </div>
-
-              </div>
-          </div>
-        </div>
-      </div>
-    <!-- </div> -->
-    <!--Posts-->
-
-  </div>   <!--right part column-->
-</div>   <!--row-->
+      <!-- </div> -->
+      <!--Posts-->
+  
+    </div>   <!--right part column-->
+  </div>   <!--row-->
+  

@@ -12,26 +12,20 @@
           <table class="table">
             <tbody>
               <tr>
-                <td><label>Course:</label><span> {{data.lesson_name}}</span><img src="././assets/discussionIcons/English.png"></td>
-                <td><label>Order Time:<span> {{data.order_time}}</span></label></td>
-                <td><label>Paid Time:
-                    <span *ngIf="data.paidTime != null">{{data.paidTime}}</span>
-                    <span *ngIf="data.paidTime == null || data.paidTime == ''">Unpaid</span>
-                  </label></td>
-
+                <td><label><b>Course:</b></label><span> {{data.lesson_name}}</span><img src="././assets/discussionIcons/English.png"></td>
+                <td><label><b>Order Time:</b><span> {{data.order_time}}</span></label></td>
+                <td><label><b>Order Id:</b><span> {{data.order_id}}</span></label></td>
               </tr>
               <tr>
-                <td><label>Total Courses:<span> {{data.order_price}}</span></label></td>
-                <td><label>Courses Finished:<span> {{data.finished}}</span></label></td>
-                <td><label>Courses Scheduled:<span> {{data.booking}}</span></label></td>
+                <td><label>Total Courses:<span> {{data.order_quantity}}</span></label></td>
+                <td><label>Courses Finished:<span> {{data.order_quantity - data.order_remain}}</span></label></td>
+                <td><label>Courses Remain:<span> {{data.order_remain}}</span></label></td>
               </tr>
               <tr>
-                <td><button mat-button> Book lessons </button></td>
-                <td><button mat-button> Order More </button></td>
-                <td><img src="././assets/icons/money.png"><label>Total Price:<span> $ {{data.price}}</span></label>
+                <!-- <td><button mat-button> Order More </button></td> -->
+                <td><img src="././assets/icons/money.jpg"><label>Total Price:<span> $ {{data.order_price}}</span></label>
                 </td>
               </tr>
-
             </tbody>
 
           </table>
@@ -42,7 +36,7 @@
               <span class='float-right'>
                 <i class="fas fa-hand-holding-usd"></i>
               </span>
-              <small>Refun</small>
+              Refund
             </button>
           </div>
         </div>

@@ -19,7 +19,7 @@
         <hr>
         <div class="clearfix">
           <button type="button" class="btn btn-outline-primary float-left" (click)="close()">Close</button>&nbsp;&nbsp;
-          <button type="submit" class="btn btn-primary float-right" (click)="save()">Report</button>
+          <button type="submit" class="btn btn-primary float-right" [disabled]="!Clickable" (click)="save()">Report</button>
         </div>
     </form>
     </div>

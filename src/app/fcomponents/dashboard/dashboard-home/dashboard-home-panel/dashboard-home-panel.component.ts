@@ -85,7 +85,8 @@ export class DashboardHomePanelComponent implements OnInit, OnDestroy {
     this.learnerService.userCredit().subscribe(res=>{
       this.userCredit = res['userCredit'].credit
     })
-
+    this.searchValueAfter = [moment().utc().format(),moment().utc().add(1, 'week').format()]
+    this.searchValueBefore = [moment().subtract(1,'week').format(),moment().utc().local().format()]
     this.dataInit();
     if (this.role === 1 || this.role === 2) {
       this.isTutor = false
@@ -159,12 +160,12 @@ export class DashboardHomePanelComponent implements OnInit, OnDestroy {
     //       console.log(res), this.applyInfo = res
     //     })
     // }
-    if (this.uRole == 3) {
-      this.repositoryService.tutorInfo.subscribe(
-        (res) => {
-          this.tutorInfo = res, console.log(this.tutorInfo)
-        })
-    }
+    // if (this.uRole == 3) {
+    //   this.repositoryService.tutorInfo.subscribe(
+    //     (res) => {
+    //       this.tutorInfo = res, console.log(this.tutorInfo)
+    //     })
+    // }
 
     this.helperService.helper.subscribe((e) => {
         console.log(e), this.helpers = e
@@ -223,15 +224,11 @@ export class DashboardHomePanelComponent implements OnInit, OnDestroy {
 
   learnerSessions(){
      //incoming courses
-     this.searchValueAfter = [moment().format(),moment().add(1, 'week').format()]
      this.learnerService.indexLearnerSessions(this.searchValueAfter).subscribe((res)=>{
       //  console.log("learner:",res)
        this.sessionDetail = res['allSessions']
        this.getIncomingCourses()
-       this.nextBoard = this.sessionDetail.length
-
      })
-     this.searchValueBefore = [moment().subtract(1,'week'),moment().format()]
      this.learnerService.indexLearnerSessions(this.searchValueBefore).subscribe((res)=>{
        this.sessionDetail = res['allSessions']
        this.getFinishedCourses()
@@ -240,14 +237,11 @@ export class DashboardHomePanelComponent implements OnInit, OnDestroy {
   }
   tutorSessions(){
          //incoming courses
-         this.searchValueAfter = [moment().format(),moment().add(1, 'week').format()]
          this.tutorService.indexTutorSessions(this.searchValueAfter).subscribe((res)=>{
            this.sessionDetail = res['tutorSessions']
-           this.nextBoard = this.sessionDetail.length
           //  console.log("sessionDetailAfter:",this.sessionDetail)
            this.getIncomingCourses()
          })
-         this.searchValueBefore = [moment().subtract(1,'week').format(),moment().format()]
          this.tutorService.indexTutorSessions(this.searchValueBefore).subscribe((res)=>{
            this.sessionDetail = res['tutorSessions']
           //  console.log("sessionDetailBefore:",this.sessionDetail)
@@ -280,7 +274,6 @@ export class DashboardHomePanelComponent implements OnInit, OnDestroy {
   getIncomingCourses(){
     for (let i=0;i<this.sessionDetail.length;i++){
       this.sessionDetail[i].session_subject = this.sessionDetail[i].session_subject.toLowerCase()
-      this.sessionDetail[i].session_date = this.commonSupportService.changeToMoment(this.sessionDetail[i].session_date)
       if(this.sessionDetail[i].canceled_at!=null){
         this.canceledCourses.push(this.sessionDetail[i])
       }else{
@@ -294,8 +287,8 @@ export class DashboardHomePanelComponent implements OnInit, OnDestroy {
       this.canceledCourses=this.canceledCourses.slice(0,5)
     }
     for (let b=0; b<this.nextCourses.length; b++){
-      this.endingTime1.push(moment(this.nextCourses[b].session_date).add(Number(this.nextCourses[b].session_duration),'h').format("ha"))
-      this.nextCourses[b].session_date = moment(this.nextCourses[b].session_date).format("ddd,DD,MMM,ha");
+      this.endingTime1.push(moment(this.commonSupportService.changeToMoment(this.nextCourses[b].session_date)).add(Number(this.nextCourses[b].session_duration),'h').format("ha"))
+      this.nextCourses[b].session_date = this.commonSupportService.changeToMoment(this.nextCourses[b].session_date).format("ddd,DD,MMM,ha")
       this.nextIndex.push(b)
     }
     for (let a=0; a<this.canceledCourses.length; a++){
@@ -303,6 +296,7 @@ export class DashboardHomePanelComponent implements OnInit, OnDestroy {
       this.canceledCourses[a].canceled_at = this.commonSupportService.changeToMoment(this.canceledCourses[a].canceled_at)
       this.canceledCourses[a].canceled_at = moment(this.canceledCourses[a].canceled_at).format("ddd,DD,MMM,ha");
     }
+    this.nextBoard = this.nextCourses.length
     // console.log('canceledCourses:',this.canceledCourses)
     // console.log('nextCourses',this.nextCourses)
   }

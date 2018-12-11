@@ -39,9 +39,8 @@
                         <th class="lgView">Student</th> -->
                         <th class="lgView">Tutor</th>
                         <th class="lgView">Subject</th>
-                        <th class="mdView">Price($)</th>
                         <th class="lgView">Quantity</th>
-                        <th>Amount($)</th>
+                        <th class="mdView">Price($)</th>                        
                         <!-- <th *ngIf="role === 1 || role === 2">Action</th> -->
                     </tr>  
                     </thead>
@@ -59,9 +58,8 @@
                         <!-- <td class="lgView">{{trans[i].student}}</td> -->
                         <td class="lgView">{{trans[i]['tutor_key'].first_name}}</td>
                         <td class="lgView">{{trans[i]['tutor_key'].discipline}} </td>
-                        <td class="mdView">{{trans[i]['order'].order_price}}</td>
                         <td class="lgView">{{trans[i]['order'].order_quantity}} </td>
-                        <td>{{singlePrice[i]}}</td>
+                        <td class="mdView">{{trans[i]['order'].order_price}}</td>
                         <!-- <td *ngIf="role === 1 || role === 2">
                             <div class="btn-group w-60 px-0 my-0 fontSize">
                                 <button type="button" class="btn btn-sm btn-link w-52 dropdown-toggle dropdown-toggle-split py-0" data-toggle="dropdown">Actions&nbsp;</button>
@@ -94,7 +92,7 @@
             <div class="col-12 clearfix">
             <div class="float-right fontSize">
                 <!-- <h6 class="fontSize">Total hours: {{totalHour}} hours</h6> -->
-                <h6 class="fontSize">Total amount: ${{totalAmount}}.00</h6>
+                <h6 class="fontSize">Total amount: ${{totalAmount.toFixed(2)}}</h6>
                 <br>
                 <button type="button" (click)="createPdf()" class="btn btn-primary btn-sm" *ngIf='showPdfButton'>Generate Invoice</button>
             </div>

@@ -27,6 +27,7 @@ export class OrderConfirmComponentComponent implements OnInit {
   tutorCourses:any;
   selectedCourseId:string;
   userOrder:any;//successed order, return by backend;
+  isClickable=true; //button clickable
 
 
   constructor(
@@ -118,7 +119,7 @@ export class OrderConfirmComponentComponent implements OnInit {
       this.order.push({
         id:2,        
         sequence:i,
-        item:'wallet Balance',
+        item:'Credit',
         price:this.wallet
       });
     }
@@ -172,8 +173,10 @@ export class OrderConfirmComponentComponent implements OnInit {
     return this.userPaymentInfo.hasPaymentInfo;
   }
   callPayment(){
+    this.isClickable = false;
     this.learnerService.bookPackageOrder(this.selectedCourseId,this.order[0].price).subscribe(
       (res) => { 
+        this.isClickable = true;        
         console.log(res);  
         this.userOrder = res['userOrder'];
         this.alertservice.sendAlert("Booking successed!", 'SUCCESS', 'toast-top-right', 3000);
@@ -181,18 +184,19 @@ export class OrderConfirmComponentComponent implements OnInit {
         $('#successModal').modal('show');
       },
       (err) => { 
+        this.isClickable = true;                
         console.log(err); 
         if (err.error.code&&(err.error.code > 400&&err.error.code < 500)){
           this.errorMessage = "Failed, "+ err.error.error;
         } 
         else      
           this.errorMessage = "Something went wrong, we can not book at this time." 
-        this.alertservice.sendAlert(this.errorMessage, 'ERROR', 'toast-top-right', 3000);      }
+          this.alertservice.sendAlert(this.errorMessage, 'ERROR', 'toast-top-right', 3000);      }
     )
   }
   goMyOrder(){
     $('#successModal').modal('hide');    
-    this.router.navigate(['/app/dashboard/myorders']);
+    this.router.navigate(['/app/dashboard/learner/myorders']);
   }
 
   goSchedule(){

@@ -186,6 +186,15 @@ export class TutorBookingsComponent implements OnInit {
     )
 
   }
+  //filter date before today
+  // filterSchedule(schedule){
+  //   for (let date in schedule) {
+  //     if (schedule[date]===null) continue;
+  //       schedule[date].forEach(freeTime => {
+
+  //     },
+  //   }
+  // }
   // set the tutor data and schedule data
   setTutorData(res,sessions,tutorSchedule) {
     console.log(res);
@@ -204,6 +213,7 @@ export class TutorBookingsComponent implements OnInit {
     this.userId = this.localStorage.getItem('lsaUserId');
     console.log(this.tutorId, this.userId);
     // set the schedule data for calendar ??
+    
     this.eventContainer = this.calendarService.getEvent(tutorSchedule,sessions);
     this.events = this.eventContainer.free;
     for (let i = 0; i < this.events.length; i++) { // delete the free time that before current time
@@ -529,6 +539,10 @@ export class TutorBookingsComponent implements OnInit {
   }
   // send the bookings to server
   sendBookings() {
+    if (this.sessions.length === 0) {
+      this.feedback = 'Please book lessons firstly.';
+      return
+    }
     this.sessions.map(e=>{
       e.learner_id=this.learnerId;
       e.s_curriculum=this.session.curriculum;
@@ -566,6 +580,10 @@ export class TutorBookingsComponent implements OnInit {
   sendSchedule(){
     //storeSchedulingSessions(orderId ,scheduling){
     //add learner id info into the array for temporary
+    if (this.sessions.length === 0) {
+      this.feedback = 'Please book lessons firstly.';
+      return
+    }
     this.sessions.map(e=>{
       e.learner_id=this.learnerId;
       e.s_curriculum=this.session.curriculum;

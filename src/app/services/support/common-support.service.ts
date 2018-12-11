@@ -41,6 +41,7 @@ export class CommonSupportService {
   }
 
   changeToMoment(time: any): any {
+    if (!time) return null;
     let sessionDate = time.slice(0, 10);
     let sessionTime = time.slice(11);
     let date = sessionDate + 'T' + sessionTime;

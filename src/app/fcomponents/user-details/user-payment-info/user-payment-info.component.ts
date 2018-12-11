@@ -15,6 +15,7 @@ export class UserPaymentInfoComponent implements OnInit {
   userpaymentMethods = [];
   // has payment info
   hasPaymentInfo: boolean = false;
+  isLoading = false;
 
   // dialog width and height
   dialogWidth: number = 500;
@@ -32,8 +33,10 @@ export class UserPaymentInfoComponent implements OnInit {
     this.getData();    
   }
   getData(){
+    this.isLoading =  true;
     this.paymentService.Userpaymethod().subscribe(
       result => {
+        this.isLoading =  false;
         console.log(result);        
         if (!(result['userPaymentInfo'])||(result['userPaymentInfo'].length===0)) return ;
         //only display the default card
@@ -42,6 +45,7 @@ export class UserPaymentInfoComponent implements OnInit {
           this.hasPaymentInfo = true;
       },
       error => {
+        this.isLoading =  false;
         console.log(error);        
         this.errorObj = {hasError:true, errMsg:'Server or Network error occurred ,please try again or contact the administrator'};
         console.log(this.errorObj );                

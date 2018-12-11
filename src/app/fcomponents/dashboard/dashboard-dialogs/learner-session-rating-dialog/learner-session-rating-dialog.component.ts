@@ -22,6 +22,7 @@ export class LearnerSessionRatingDialogComponent implements OnInit {
   rate = 0;
   submit=false;
   errorMessage: string;
+  isCheckable = true;
 
   onClickResult: ClickEvent;
   onHoverRatingChangeResult: HoverRatingChangeEvent;
@@ -87,13 +88,15 @@ export class LearnerSessionRatingDialogComponent implements OnInit {
       ratings:0,
       award:[]
     };
+    this.isCheckable = false;
     this.submit = true;
     comment.comment = this.reportForm.value.comment;
 
     console.log(this.reportForm.value);
-    if (comment.comment.length<40)
+    if (comment.comment.length<40){
+      this.isCheckable = true;
       return;
-
+    }
     ratingData.ratings = this.rate;
     
     this.reportForm.value.awards.map((e,index)=>{

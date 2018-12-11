@@ -13,6 +13,7 @@ export class TutorReportDialogComponent implements OnInit {
   agIndex=['Student behaved well','Student showed a positive attitude','Student was very horriable','Student was unfocused','Student needs to show more appropriate behavior','Other'];
   filter = true;
   reason = new FormControl('');
+  isCheckable=true;
   constructor(
     private builder: FormBuilder,
     private dialogRef: MatDialogRef<TutorReportDialogComponent>,
@@ -29,6 +30,7 @@ export class TutorReportDialogComponent implements OnInit {
     this.dialogRef.close();
   }
   save() {
+    this.isCheckable=false;
     console.log(this.reportForm.value);
     let reportData = {  tutor_report:'' };
     let checkboxes = this.elem.nativeElement.querySelectorAll('input[type="checkbox"]');
@@ -51,9 +53,9 @@ export class TutorReportDialogComponent implements OnInit {
       this.dialogRef.close(reportData);
     }else{
       console.log('no');
+      this.isCheckable=true;
     }
   }
-
   onFilterChange(eve: any) {
     this.filter = !this.filter;
   }
