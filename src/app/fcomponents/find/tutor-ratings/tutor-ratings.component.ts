@@ -21,7 +21,7 @@ export class TutorRatingsComponent implements OnInit {
   pages = [];
   currentPage = 0;
   pageNumber = 0;
-  perPage = 3;
+  perPage = 5;
   prevBtnDisable = false;
   nextBtnDisable = false;
   pageActive: boolean[] = [];

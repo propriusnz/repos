@@ -82,7 +82,7 @@ display: none;
     z-index:99;
   }
   .absolute{
-    position: absolute;
+    /* position: absolute; */
     top: 168.7%;
   }
 }

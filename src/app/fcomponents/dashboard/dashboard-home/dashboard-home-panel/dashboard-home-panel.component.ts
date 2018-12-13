@@ -160,12 +160,12 @@ export class DashboardHomePanelComponent implements OnInit, OnDestroy {
     //       console.log(res), this.applyInfo = res
     //     })
     // }
-    // if (this.uRole == 3) {
-    //   this.repositoryService.tutorInfo.subscribe(
-    //     (res) => {
-    //       this.tutorInfo = res, console.log(this.tutorInfo)
-    //     })
-    // }
+    if (this.uRole == 3) {
+      this.repositoryService.tutorInfo.subscribe(
+        (res) => {
+          this.tutorInfo = res, console.log(this.tutorInfo)
+        })
+    }
 
     this.helperService.helper.subscribe((e) => {
         console.log(e), this.helpers = e

@@ -15,6 +15,7 @@ export class ReportSessionIssueDialogComponent implements OnInit {
   agIndex = [];
   userRole = '';
   userComment = '';
+  Clickable = true;
   constructor(
     private builder: FormBuilder,
     private dialogRef: MatDialogRef<ReportSessionIssueDialogComponent>,
@@ -40,6 +41,7 @@ export class ReportSessionIssueDialogComponent implements OnInit {
     this.dialogRef.close();
   }
   save() {
+    this.Clickable = false;
     console.log(this.reportForm.value);
     let reportData = {
       problem:'',

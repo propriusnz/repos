@@ -202,6 +202,7 @@ export class ApplyTeachComponent implements OnInit {
     this.NewTutorService.storeTutorApplication(formDataV).subscribe(
       (res) => {console.log(res)
         // this.localStorage.setItem('lsaWho', res['dataCon'].xUr);
+        this.localStorage.setItem('lsaAppicant', 1);//
         this.router.navigate(['/app/apply/manager']);
         // window.location.reload();
       },

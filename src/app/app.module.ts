@@ -69,7 +69,6 @@ import { fcomponentsComponent } from './fcomponents/fcomponents-control';
 import { HomeComponent } from './landing/home/home.component';
 import { WorkComponent } from './landing/work/work.component';
 import { ContactDialogComponent } from './fcomponents/basic/contact-dialog/contact-dialog.component';
-// import { UserEditDetailsComponent } from './fcomponents/user-details/user-edit-details/user-edit-details.component';
 import { UserDetailsEditComponent } from './fcomponents/user-details/user-details-edit/user-details-edit.component';
 import { PasswordResetComponent } from './fcomponents/basic/password-reset/password-reset.component';
 import { UserPasswordComponent } from './fcomponents/user-details/user-password/user-password.component';

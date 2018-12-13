@@ -1,5 +1,5 @@
 import { WINDOW } from '@ng-toolkit/universal';
-import { Component, OnInit , Inject, PLATFORM_ID } from '@angular/core';
+import { Component, OnInit, Inject, PLATFORM_ID } from '@angular/core';
 import { GeneralService } from '../../../services/servercalls/general.service';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { SearchTutorModel } from '../../../models/SearchTutorModel';
@@ -29,22 +29,22 @@ export class TutorprofileComponent implements OnInit {
   tutor: SearchTutorModel;
   tutorprofile: TutorProfileModel;
   tutorfeedback: any;
-  tutorratings:any;
-  tutorCourses:any;
-  tutorSchedule:any;
-  tutorSessions:any;  
-  tutorAwards:any;
-  allAwards:any;  
+  tutorratings: any;
+  tutorCourses: any;
+  tutorSchedule: any;
+  tutorSessions: any;
+  tutorAwards: any;
+  allAwards: any;
   firstname: string;
   cleanVideo: any;
   errorMessage: string;
   tutor_photo: string;
-  productFlag=false; //for some element do not display when product run,because of no data.
+  productFlag = false; //for some element do not display when product run,because of no data.
   eventContainer = {
     session: [],
     free: [],
   };
-  loadingFlag=false;
+  loadingFlag = false;
   // baseImgUrl = environment.baseImgUrl + '/tutorimg/';
 
   events: any = []; // session object
@@ -58,9 +58,9 @@ export class TutorprofileComponent implements OnInit {
       "reviewCount": "5438"
     },
     "priceRange": "25$/hr to 40$/hr",
-    'description' : "good tutor.",
-    'productId' : '1004'
-  };  
+    'description': "good tutor.",
+    'productId': '1004'
+  };
   constructor(
     @Inject(PLATFORM_ID)
     private platformId,
@@ -77,12 +77,12 @@ export class TutorprofileComponent implements OnInit {
     private commonSupport: CommonSupportService
   ) {
     // Meta Area
-    
-      this.meta.updateTag({ name: 'keywords', content: 'tutors, Learnspace, tutoring, tutors, wellington tutors, auckland tutors'});
-      this.meta.updateTag({ name: 'description', content: 'Find the best high school tutors in Wellington and Auckland' });
 
-      this.id = this.route.snapshot.params['id'];
-      this.getTutorData(this.id);      
+    this.meta.updateTag({ name: 'keywords', content: 'tutors, Learnspace, tutoring, tutors, wellington tutors, auckland tutors' });
+    this.meta.updateTag({ name: 'description', content: 'Find the best high school tutors in Wellington and Auckland' });
+
+    this.id = this.route.snapshot.params['id'];
+    this.getTutorData(this.id);
   }
 
   ngOnInit() {
@@ -113,27 +113,52 @@ export class TutorprofileComponent implements OnInit {
       err=>{
         console.error(err);
         this.loadingFlag = false;        
-        this.errorMessage = "Something went wrong, we cannot get any data at this time." 
+        //this.errorMessage = "Something went wrong, we cannot get any data at this time." 
       }      
     )
-
-
-    // this.searchService.showTutor(id).toPromise().then(
-    //   (res) => { 
-    //     this.loadingFlag = false;
-    //      this.setPageData(res) 
-    //     },
-    //   (err) => { 
-    //     this.loadingFlag = false;        
-    //     this.errorMessage = "Something went wrong, we cannot get any data at this time." 
-    //   }
-    // );
   }
+    // this.searchService.showTutor(id).subscribe(res => {
+    //   console.log(res);
+    //   this.setPageData(res);
+    //   this.searchService.findTutorSchedule(id).subscribe(res => {
+    //   },
+    //     err=>{
+    //       console.error(err);
+    //     this.loadingFlag = false;        
+    //     this.errorMessage = "Something went wrong, we cannot get any data at this time." }
+    //     ,
+    //   },
+    //   err=>{
+    //     console.error(err);
+    //   this.loadingFlag = false;        
+    //   this.errorMessage = "Something went wrong, we cannot get any data at this time." }
+    //   )
+
+  //   this.searchService.showTutor(id).toPromise().then(
+  //     (res) => {
+  //       this.loadingFlag = false;
+  //       this.setPageData(res)
+  //       this.searchService.findTutorSchedule(id).subscribe(res => {
+  //         this.tutorSchedule = res['tutorSchedule'];
+  //         this.tutorSessions = res['tutorSessions'];
+  //         this.setCalendarData();
+  //       }, (err) => {
+  //         this.loadingFlag = false;
+  //         // this.errorMessage = "Something went wrong, we cannot get any data at this time."
+  //         }
+  //       );
+  //     },
+  //     (err) => {
+  //       this.loadingFlag = false;
+  //       this.errorMessage = "Something went wrong, we cannot get any data at this time."
+  //     }
+  //   );
+  // }
 
   setCalendarData() {
     this.eventContainer = this.calendar.getEvent(this.tutorSchedule, this.tutorSessions);
-    if (this.eventContainer.free.length > 0) 
-       this.tutorScheduleInit(this.eventContainer);
+    if (this.eventContainer.free.length > 0)
+      this.tutorScheduleInit(this.eventContainer);
   }
   setPageData(res) {
     console.log(res)
@@ -147,29 +172,31 @@ export class TutorprofileComponent implements OnInit {
     this.tutorratings = res['tutorratings'];
     this.tutorCourses = res['tutorCourses'];
 
-    this.tutorAwards =  res['tutorAwards'];
-    this.allAwards =  res['allAwards']; 
-    this.mapAwards();   
+    this.tutorAwards = res['tutorAwards'];
+    this.allAwards = res['allAwards'];
+    this.mapAwards();
     // this.tutor['profile_photo'] = this.baseImgUrl + this.tutor['profile_photo']
     this.tutor['profile_photo'] = this.commonSupport.findUserImg(this.tutor['tutor_id']) + "?ver=" + this.commonSupport.getTime();
 
     this.cleanVideo = this.sanitizer.bypassSecurityTrustResourceUrl(this.tutor.profile_video)
   }
-  mapAwards(){
+  mapAwards() {
     let tutorAwards = this.tutorAwards;
     let allAwards = this.allAwards;
-    if (tutorAwards===null||tutorAwards.length===0) return;
-    
-    tutorAwards.map((eleTutor)=>{
-      eleTutor.title = allAwards.find(eleAll=> {
-        return eleAll.award_id===eleTutor.award_id;
+    if (tutorAwards === null || tutorAwards.length === 0) return;
+
+    tutorAwards.map((eleTutor) => {
+      eleTutor.title = allAwards.find(eleAll => {
+        return eleAll.award_id === eleTutor.award_id;
       }).title;
     })
   }
-  setTagTitle(){
-    this.titleService.setTitle(this.tutor.discipline+' '+this.tutor.curriculum+' tutor in '+this.tutor['location']);
-    this.meta.updateTag({name: 'keywords', content: this.tutor.discipline+' tutor, '+this.tutor.curriculum+' tutor,'
-      +this.tutor['location']+' tutor ,'+this.tutor.discipline+' tutoring ,'+this.tutor.discipline+' tuition'});    
+  setTagTitle() {
+    this.titleService.setTitle(this.tutor.discipline + ' ' + this.tutor.curriculum + ' tutor in ' + this.tutor['location']);
+    this.meta.updateTag({
+      name: 'keywords', content: this.tutor.discipline + ' tutor, ' + this.tutor.curriculum + ' tutor,'
+        + this.tutor['location'] + ' tutor ,' + this.tutor.discipline + ' tutoring ,' + this.tutor.discipline + ' tuition'
+    });
   }
   tutorScheduleInit(eventContainer) {
     // Client Only Codes
@@ -197,18 +224,18 @@ export class TutorprofileComponent implements OnInit {
       this.router.navigate(['./app/dashboard/learner/order/' + this.tutor.tutor_id]);
     } else {// if tutor didn't edit hir free time
       //this.router.navigate(['./app/dashboard/learner/order/' + this.tutor.tutor_id]);
-       let dialogRef = this.dialog.open(ContactDialogComponent, {
+      let dialogRef = this.dialog.open(ContactDialogComponent, {
         width: '700px',
         data: this.tutor.first_name
-      }); 
+      });
     }
   }
   // book button
   bookFree($event) {
-      let dialogRef = this.dialog.open(ContactDialogComponent, {
-        width: '700px',
-        data: this.tutor.first_name
-      });      
+    let dialogRef = this.dialog.open(ContactDialogComponent, {
+      width: '700px',
+      data: this.tutor.first_name
+    });
     // if (this.eventContainer.free.length > 0) {//if tutor has free time
     //   this.router.navigate(['./app/find-tutor/profile/' + this.tutor.tutor_id + '/book']);
     // } 
@@ -218,7 +245,7 @@ export class TutorprofileComponent implements OnInit {
     //     data: this.tutor.first_name
     //   });       
     // }
-  }  
+  }
   // routerlink to book sessions via popover
   popoverBook() {
     if (isPlatformBrowser(this.platformId)) {
@@ -240,18 +267,18 @@ export class TutorprofileComponent implements OnInit {
     });
     // Client only code.
     if (isPlatformBrowser(this.platformId)) {
-        $(this.window).scroll(function () {
-          let scrollTop = $(this.window).scrollTop();
-          let footer_top = $("app-footer").offset().top;
-          let div_height = $("#sideBar").height();
-            if (84 > footer_top - scrollTop - div_height && footer_top - scrollTop - div_height < 24) {
-              $('#sideBar').addClass('absolute');
-              $('#sideBar').removeClass('fixed');
-            } else {
-              $('#sideBar').addClass('fixed');
-              $('#sideBar').removeClass('absolute');
-            }
-        });
+      $(this.window).scroll(function () {
+        let scrollTop = $(this.window).scrollTop();
+        let footer_top = $("app-footer").offset().top;
+        let div_height = $("#sideBar").height();
+        if (84 > footer_top - scrollTop - div_height && footer_top - scrollTop - div_height < 24) {
+          $('#sideBar').addClass('absolute');
+          $('#sideBar').removeClass('fixed');
+        } else {
+          $('#sideBar').addClass('fixed');
+          $('#sideBar').removeClass('absolute');
+        }
+      });
     }
   }
 
@@ -268,7 +295,7 @@ export class TutorprofileComponent implements OnInit {
       themeSystem: 'bootstrap3',
       defaultView: 'agendaWeek',
       firstDay: today,
-      contentHeight:"auto",
+      contentHeight: "auto",
       aspectRatio: 1.2,
       navLinks: true,
       displayEventTime: false,
@@ -277,7 +304,7 @@ export class TutorprofileComponent implements OnInit {
       height: 'parent',
       minTime: moment.duration('08:00:00'),
       maxTime: moment.duration('21:00:00'),
-      viewRender: function(view, element) {//set the button in header
+      viewRender: function (view, element) {//set the button in header
         $('.fc-today-button').css({ 'position': 'relative', 'bottom': '65px', 'font-size': '15px', 'background-color': '#0099FF', 'color': 'white', 'font-weight': 'bold' });
         $('.fc-prev-button').css({ 'position': 'absolute', 'top': '13%', 'left': '5%', 'height': '30px', 'width': '30px', 'border-radius': '100%', 'font-size': '15px', 'color': '#0099FF', 'font-weight': 'bold', 'border': '2px solid #0099FF', 'background-color': 'white' });//
         $('.fc-prev-button').text('<');
@@ -292,10 +319,10 @@ export class TutorprofileComponent implements OnInit {
           $(".fc-prev-button").prop('disabled', false);
         }
       },
-      eventAfterRender: function(event, element, view) {
+      eventAfterRender: function (event, element, view) {
         $(element).css({ 'font-size': '13px', 'border-radius': '0px', 'border': '0.1px solid white', 'margin': '0px' });// 'margin-top':'0.5px'
       },
-      eventRender: function(event, element, view) {   //render how event look like
+      eventRender: function (event, element, view) {   //render how event look like
         let x = event.start as moment.Moment;
         let y = event.end as moment.Moment;
         let startTime = x.format().substr(11, 5);
@@ -311,15 +338,15 @@ export class TutorprofileComponent implements OnInit {
             content: '<p id="popoverDate"><strong>Date: </strong>' + date + '</p>' + '<p id="popoverTime"><strong>Time: </strong>' + startTime + ' - ' + endTime + '</p>' + '<button id="button" class="btn btn-primary btn-block">Book Session</button>',
             trigger: 'manual',
             placement: 'left'
-          }).on('mouseenter', function() {
+          }).on('mouseenter', function () {
             let this1 = this;
             ($(this) as any).popover('show');
-            $('.popover').on('mouseleave', function() {
+            $('.popover').on('mouseleave', function () {
               ($(this1) as any).popover('hide');
             });
-          }).on('mouseleave', function() {
+          }).on('mouseleave', function () {
             let this2 = this;
-            setTimeout(function() {
+            setTimeout(function () {
               if (!$('.popover:hover').length) {
                 ($(this2) as any).popover('hide');
               }

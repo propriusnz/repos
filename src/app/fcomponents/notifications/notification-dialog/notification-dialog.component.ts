@@ -181,7 +181,7 @@ export class NotificationDialogComponent implements OnInit {
         return null;
       }
     })
-    return notification
+    return notification.slice(0,5);
   }
 
   

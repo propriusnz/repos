@@ -574,7 +574,7 @@ countInComingMsg(msg){
   for(var j=0;j<this.contactList.length;j++){
     if(msg.sender_id==this.contactList[j].user_id){
       this.contactList[j].unreadCount++;
-      this.total_unread_count++;
+      this.total_unread_count++;  
     }
 }
 this.total_unread_messages.emit(this.total_unread_count);
@@ -675,15 +675,16 @@ changeStatus(status){
 getContactList(){
   this.userService.getContacts().subscribe(users => {
     console.log(users);
-
-      for(var key in users['dataCon']){
-        var user = users['dataCon'][key];
-        console.log(user);
-        var assign = Object.assign({online:false,newestMsg:'',unreadCount:0, userImg: this.commonSupportService.findUserImg(user.user_id) },user);
-        this.contactList.push(assign);
-      }
-      this.searchUsers = this.contactList;
-      console.log(this.searchUsers);
+    
+    for(var key in users['contacts']){
+      var user = users['contacts'][key];
+      console.log(user);
+      var assign = Object.assign({online:false,newestMsg:'',unreadCount:0, userImg: this.commonSupportService.findUserImg(user.user_id) },user);
+      this.contactList.push(assign);
+      console.log(assign);
+    }
+    this.searchUsers = this.contactList;
+    console.log(this.searchUsers);
 
   });
 }

@@ -51,7 +51,7 @@ export class LoginComponent implements OnInit {
     console.log(valid)
     if(!valid) {
       console.log("Dosn't Work");
-      this.fillAll = 'All fields must be filled.';
+      this.fillAll = 'Email or password is incorrect.';
     }
     else{
       console.log('works')

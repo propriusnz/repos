@@ -20,7 +20,6 @@ export class LearnerService {
     this.id = localStorage.getItem('lsaUserId');
     this.headers1 = new HttpHeaders({ 'Authorization': "Bearer " + localStorage.getItem('lsaToken_access') });
   }
-
   // Learner Profile
   indexLearnerProfile(){
     return this.http.get(this.baseUrl + '/users/' + this.id +'/learners', {headers: this.headers1});
@@ -99,8 +98,8 @@ export class LearnerService {
     return this.http.get(this.baseUrl + '/findtutorprofile/' + id);
   }
   // Learner See Tutor
-  indexLearnersTutor(queryParams: string) {
-    return this.http.get(this.baseUrl + '/learners/' + this.id + '/tutors?' + 'tut=' + queryParams, { headers: this.headers1 });
+  indexLearnersTutor() {
+    return this.http.get(this.baseUrl + '/learners/' + this.id + '/tutors', { headers: this.headers1 });
   }
 
   showLearnersTutor(tutorId: string) {

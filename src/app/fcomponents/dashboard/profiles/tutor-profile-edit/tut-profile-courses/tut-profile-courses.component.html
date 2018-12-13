@@ -112,7 +112,7 @@ aria-hidden="true">
                 </div>
             </div>
             <div class="modal-footer">
-                    <button type="button" class="btn btn-outline-primary" data-dismiss="modal" [disabled]="!updForm.form.valid && !newPrice.touched" (click)="updateCourse();">Confirm Edit</button>
+                    <button type="button" class="btn btn-outline-primary" data-dismiss="modal" [disabled]="!updForm.form.valid" (click)="updateCourse();">Confirm Edit</button>
                 <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>
             </div>
         </form>
@@ -210,7 +210,7 @@ aria-hidden="true">
                     <span >&times;</span></button>
             </div>
             <div class="modal-body">
-            <form #addForm="ngForm"  (ngSubmit)="onSubmit()">
+            <form #addForm="ngForm">
                 <div class="input-group mb-3">
                     <div class="input-group-prepend">
                         <label class="input-group-text" >Course Options</label>
