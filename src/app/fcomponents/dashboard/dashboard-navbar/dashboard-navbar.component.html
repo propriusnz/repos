@@ -17,15 +17,15 @@
             <a class="dropdown-item s3 editIcon" style="padding-left:30px;" routerLink="/app/dashboard/tutor/schedules/edit" href="#">Edit schedule</a>
           </div>
         </li>
-        <li *ngIf="rolePosition == 3" (click)="onClick2({name:'My Resources'})" class="dropdown">
+        <!-- <li *ngIf="rolePosition == 3" (click)="onClick2({name:'My Resources'})" class="dropdown">
           <a class="nav-link dropdown-toggle s2bold resourceIcon" style="padding-left:30px;" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">My Posts<span class="sr-only">(current)</span></a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-            <a class="dropdown-item dpitem resourceIcon s3" style="padding-left:30px;" routerLink="/app/dashboard/tutor/resources/view" [queryParams]="{ page: 1}" href="#">My Posts</a>
+            <a class="dropdown-item dpitem resourceIcon s3" style="padding-left:30px;" routerLink="/app/dashboard/tutor/resources/view" [queryParams]="{ page: 1}" href="#">My Posts</a> -->
             <!-- <a class="dropdown-item editIcon s3" style="padding-left:30px;" routerLink="/app/dashboard/tutor/resources/add/resource" href="#">Upload Resources</a> -->
-            <a class="dropdown-item editIcon s3" style="padding-left:30px;" routerLink="/app/dashboard/tutor/resources/add/article" href="#" (click)="testNormalSignalSending('add', 'article')">Write Article</a>
+            <!-- <a class="dropdown-item editIcon s3" style="padding-left:30px;" routerLink="/app/dashboard/tutor/resources/add/article" href="#" (click)="testNormalSignalSending('add', 'article')">Write Article</a>
             <a class="dropdown-item editIcon s3" style="padding-left:30px;" routerLink="/app/dashboard/tutor/resources/add/question" href="#" (click)="testNormalSignalSending('add', 'question')">Design Questions</a>
           </div>
-        </li>
+        </li> -->
         <li *ngIf="rolePosition == 3" (click)="onClick2({name:'Teaching Profile'})" class="dropdown">
           <a class="nav-link dropdown-toggle s2bold profileIcon" style="padding-left:30px;" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Teaching profile<span class="sr-only">(current)</span></a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -40,11 +40,11 @@
         <a *ngIf="rolePosition == 2" (click)="onClick2({name:'Tutor Application'})" class="nav-link s2bold teachingIcon" id="tutorApplication" style="padding-left:30px;" href="#" routerLink="/app/dashboard/apply/manager">Tutor Application <span class="sr-only">(current)</span></a>
 
         <!-- rolePosition == 1&2 -->
-        <a  *ngIf="rolePosition == 2||rolePosition == 1" (click)="onClick2({name:'My Teachers'})" id="myTeachers" class="nav-link s2bold personIcon" style="padding-left:30px;" href="#" routerLink="/app/dashboard/learner/mytutors">My Tutors<span class="sr-only">(current)</span></a>
+        <!-- <a  *ngIf="rolePosition == 2||rolePosition == 1" (click)="onClick2({name:'My Teachers'})" id="myTeachers" class="nav-link s2bold personIcon" style="padding-left:30px;" href="#" routerLink="/app/dashboard/learner/mytutors">My Tutors<span class="sr-only">(current)</span></a>
         <a  *ngIf="rolePosition == 2||rolePosition == 1" (click)="onClick2({name:'My Orders'})" id="myOrders" class="nav-link s2bold personIcon" style="padding-left:30px;" href="#" routerLink="/app/dashboard/learner/myorders">My Orders<span class="sr-only">(current)</span></a>
 
         <a  *ngIf="rolePosition == 2||rolePosition == 1" (click)="onClick2({name:'My Lessons'})" id="myLessons" class="nav-link s2bold scheduleIcon" style="padding-left:30px;" href="#" routerLink="/app/dashboard/learner/lessons">My Lessons <span class="sr-only">(current)</span></a>
-        <a  *ngIf="rolePosition == 2||rolePosition == 1" (click)="onClick2({name:'My Homework'})" id="myHomework" class="nav-link s2bold resourceIcon" style="padding-left:30px;" [queryParams]="{ page: 1}" href="#" routerLink="/app/dashboard/learner/homework/view">My Homework <span class="sr-only">(current)</span></a>
+        <a  *ngIf="rolePosition == 2||rolePosition == 1" (click)="onClick2({name:'My Homework'})" id="myHomework" class="nav-link s2bold resourceIcon" style="padding-left:30px;" [queryParams]="{ page: 1}" href="#" routerLink="/app/dashboard/learner/homework/view">My Homework <span class="sr-only">(current)</span></a> -->
 
         <li *ngIf="rolePosition == 2||rolePosition == 1" (click)="onClick2({name:'Learner Profile'})" class="dropdown">
           <a class="nav-link dropdown-toggle s2bold profileIcon learnerProfile" style="padding-left:30px;" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Learner profile<span class="sr-only">(current)</span></a>
