@@ -12,6 +12,22 @@
   <div class="row">
     <form *ngIf="userInfo" [formGroup]="appForm" class="col-12 col-md-9 col-lg-8">
 
+        <div class="card" style="margin-top: 25px;">
+            <div class="card-header">
+              <h5>Contact Details</h5>
+            </div>
+            <div class="card-body">
+              <div class="form-group">
+                <label for="sp_question_1">What is your phone number?</label>
+                <input type="text" id="phone_num_pri" value="{{phone_num_pri}}" class="form-control" formControlName="phone_num_pri">
+                <div class="invalid_feedback" *ngIf="appForm.controls.phone_num_pri.errors?.required && appForm.controls.phone_num_pri.touched || appForm.controls.phone_num_pri.errors?.required &&  errorMessage ">Phone number is required</div>
+                <div class="invalid_feedback" *ngIf="appForm.controls.phone_num_pri.errors?.pattern && appForm.controls.phone_num_pri.touched || appForm.controls.phone_num_pri.errors?.pattern && errorMessage">Please enter a valid phone number</div>
+              </div>
+            </div>
+            <!-- card-body -->
+          </div>
+          <!-- card -->
+
        <div class="card" style="margin-top: 25px;" (mouseenter)="mouseEnter('Subjects and Curriculum')">
         <div class="card-header">
           <h5>Subjects and Curriculum</h5> What subject and curriculum would you like to teach

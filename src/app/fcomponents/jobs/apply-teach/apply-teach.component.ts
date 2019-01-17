@@ -77,7 +77,7 @@ export class ApplyTeachComponent implements OnInit {
     this.appForm = this.formBuilder.group({
       // first_name: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(30), Validators.pattern('^[a-zA-Z\s]*$')]],
       // last_name: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(30), Validators.pattern('^[a-zA-Z\s]*$')]],
-      // phone_num_pri: ['', [Validators.required, Validators.minLength(7), Validators.maxLength(12), Validators.pattern('^[0-9]*$')]],
+      phone_num_pri: ['', [Validators.required, Validators.minLength(7), Validators.maxLength(12), Validators.pattern('^[0-9]*$')]],
       // location: ['', Validators.required],
       // DOB: ['', [Validators.required, this.dateRange]],
       discipline_1: ['', Validators.required],
@@ -149,7 +149,7 @@ export class ApplyTeachComponent implements OnInit {
   onSubmitCheckValid() {
     if (this.appForm.invalid) {
       console.warn(this.appForm.invalid)
-      this.errorMessage = 'Not all required fields are filled';
+      this.errorMessage = 'Not all required fields are filled correctly';
     } else {
       if (!this.fileValidator.status) {
         this.errorMessage = 'File is not valid'
@@ -187,6 +187,7 @@ export class ApplyTeachComponent implements OnInit {
     this.transferDataToBack(this.formData);
   }
   processingAppForm(appFormValue) {
+    this.formData.append('phone_num_pri',appFormValue.phone_num_pri);
     this.formData.append('answer_1',appFormValue.curriculum_1+','+appFormValue.curriculum_2);
     this.formData.append('answer_2',appFormValue.discipline_1+','+appFormValue.discipline_2);
     this.formData.append('answer_3',appFormValue.work_1+','+appFormValue.work_1_detail+','+
