@@ -61,13 +61,13 @@ export class ApplyTeachComponent implements OnInit {
     this.userService.showUserInfo().subscribe(
       (res) => {
         console.log(res);
-        if (res['userInfo'].verified === '1') {
+        if (res['userInfo'].verified === 1) {
           this.emailVerifyStatus = true;
         } else {
           this.emailVerifyStatus = false;
         }
-        this.userInfo = Object.assign(res['userInfo'], res['userKey'])
-        //this.setFormValuesTo(this.userInfo)
+        this.userInfo = Object.assign(res['userInfo'], res['userKey']);
+        this.setFormValuesTo(this.userInfo);
       },
       (error) => { this.errorMessage = "Sorry, we can't get to your information at this time." }
     )
@@ -97,14 +97,14 @@ export class ApplyTeachComponent implements OnInit {
       })
   }
 
-  // setFormValuesTo(userInfoData) {
+   setFormValuesTo(userInfoData) {
   //   this.appForm.controls['first_name'].setValue(userInfoData.first_name);
   //   this.appForm.controls['last_name'].setValue(userInfoData.last_name);
-  //   this.appForm.controls['phone_num_pri'].setValue(userInfoData.phone_num_pri);
+     this.appForm.controls['phone_num_pri'].setValue(userInfoData.phone_num_pri);
   //   this.appForm.controls['location'].setValue(userInfoData.location);
   //   this.appForm.controls['DOB'].setValue(userInfoData.DOB);
-  //   this.appForm.updateValueAndValidity();
-  // }
+     this.appForm.updateValueAndValidity();
+   }
 
   dateRange(AC: FormControl) {
     if (AC.value) {

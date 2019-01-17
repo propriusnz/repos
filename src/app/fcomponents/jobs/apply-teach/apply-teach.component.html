@@ -19,7 +19,7 @@
             <div class="card-body">
               <div class="form-group">
                 <label for="sp_question_1">What is your phone number?</label>
-                <input type="text" id="phone_num_pri" value="{{phone_num_pri}}" class="form-control" formControlName="phone_num_pri">
+                <input type="text" id="phone_num_pri" value="{{userInfo.phone_num_pri}}" class="form-control" formControlName="phone_num_pri">
                 <div class="invalid_feedback" *ngIf="appForm.controls.phone_num_pri.errors?.required && appForm.controls.phone_num_pri.touched || appForm.controls.phone_num_pri.errors?.required &&  errorMessage ">Phone number is required</div>
                 <div class="invalid_feedback" *ngIf="appForm.controls.phone_num_pri.errors?.pattern && appForm.controls.phone_num_pri.touched || appForm.controls.phone_num_pri.errors?.pattern && errorMessage
                 || appForm.controls.phone_num_pri.errors?.minlength && appForm.controls.phone_num_pri.touched || appForm.controls.phone_num_pri.errors?.minlength && errorMessage
