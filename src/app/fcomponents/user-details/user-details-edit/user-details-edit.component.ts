@@ -24,6 +24,7 @@ export class UserDetailsEditComponent implements OnInit {
   formData = new FormData();
   userInfo: any;
   errorMessage: string;
+  successMessage: string;
   locations: string[] = ['Auckland Central', 'Auckland North', 'Auckland West', 'Auckland South', 'Auckland East', 'Christchurch', 'Dunedin', 'Hamilton', 'Tauranga', 'Wellington Central', 'Hutt Valley', 'Porirua', 'Kapiti Coast'];
   disciplines: string[] = ['Math', 'Physics', 'Chemistry', 'Biology', 'Science', 'Geography', 'Social Studies', 'Information System', 'Accounting', 'Economics', 'Finance', 'English', 'Maori', 'French', 'German', 'Spanish', 'Chinese', 'Japanese'];
   curriculums: string[] = ['(NCEA) National Certificates of Educational Achievement', '(CIE) Cambridge', '(IB) International Baccalaureate'];
@@ -133,11 +134,12 @@ export class UserDetailsEditComponent implements OnInit {
         // this.router.navigate(['/app/apply/manager']);
          //window.location.reload();
          this.getUserInfo();
+         this.successMessage = 'Details saved.'
       },
       (err) => {
         console.log(err),
         // this.errorMessage = 'Sorry, Something went wrong. '+ err['error'].error;
-        this.errorMessage = 'Sorry, Something went wrong. ';
+        this.errorMessage = 'Sorry, something went wrong.';
       }
     )
   }
