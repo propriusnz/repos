@@ -209,8 +209,8 @@ export class ApplyTeachComponent implements OnInit {
       },
       (err) => {
         console.log(err),
-        // this.errorMessage = 'Sorry, Something went wrong. '+ err['error'].error;
-        this.errorMessage = 'Sorry, Something went wrong. ';
+        this.errorMessage = 'Sorry, something went wrong: '+ err['error'].error;
+        // this.errorMessage = 'Sorry, something went wrong. ';
       }
     )
   }
