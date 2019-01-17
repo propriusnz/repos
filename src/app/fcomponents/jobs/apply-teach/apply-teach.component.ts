@@ -161,31 +161,31 @@ export class ApplyTeachComponent implements OnInit {
     }
   }
 
-  processingForm(appFormValue) {
-    let curriculumValueOne = "";
-    let curriculumValueTwo = "";
-    let disciplineValueOne = "";
-    let disciplineValueTwo = "";
-    for (let key of Object.keys(appFormValue)){
-      if(key == "discipline_1") {
-        disciplineValueOne = appFormValue[key];
-      } else if(key == "discipline_2") {
-        disciplineValueTwo = appFormValue[key];
-      } else if(key == "curriculum_1") {
-        curriculumValueOne = appFormValue[key];
-      } else if(key == "curriculum_2") {
-        curriculumValueTwo = appFormValue[key];
-      } else {
-        this.formData.append(key, appFormValue[key]);
-      }
-    }
+  // processingForm(appFormValue) {
+  //   let curriculumValueOne = "";
+  //   let curriculumValueTwo = "";
+  //   let disciplineValueOne = "";
+  //   let disciplineValueTwo = "";
+  //   for (let key of Object.keys(appFormValue)){
+  //     if(key == "discipline_1") {
+  //       disciplineValueOne = appFormValue[key];
+  //     } else if(key == "discipline_2") {
+  //       disciplineValueTwo = appFormValue[key];
+  //     } else if(key == "curriculum_1") {
+  //       curriculumValueOne = appFormValue[key];
+  //     } else if(key == "curriculum_2") {
+  //       curriculumValueTwo = appFormValue[key];
+  //     } else {
+  //       this.formData.append(key, appFormValue[key]);
+  //     }
+  //   }
 
-    this.formData.append('curriculum', curriculumValueOne + ", " + curriculumValueTwo);
-    this.formData.append('discipline', disciplineValueOne + ", " + disciplineValueTwo);
-    this.formData.append('cv', this.file, this.file.name)
-    this.formData.append('work_date', this.elem.nativeElement.querySelector('#workDate').value)
-    this.transferDataToBack(this.formData);
-  }
+  //   this.formData.append('curriculum', curriculumValueOne + ", " + curriculumValueTwo);
+  //   this.formData.append('discipline', disciplineValueOne + ", " + disciplineValueTwo);
+  //   this.formData.append('cv', this.file, this.file.name)
+  //   this.formData.append('work_date', this.elem.nativeElement.querySelector('#workDate').value)
+  //   this.transferDataToBack(this.formData);
+  // }
   processingAppForm(appFormValue) {
     this.formData.append('phone_num_pri',appFormValue.phone_num_pri);
     this.formData.append('answer_1',appFormValue.curriculum_1+','+appFormValue.curriculum_2);
