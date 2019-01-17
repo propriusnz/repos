@@ -149,7 +149,7 @@ export class ApplyTeachComponent implements OnInit {
   onSubmitCheckValid() {
     if (this.appForm.invalid) {
       console.warn(this.appForm.invalid)
-      this.errorMessage = 'Not all required fields are filled correctly';
+      this.errorMessage = 'Not all required fields are filled, or some fields are filled incorrectly';
     } else {
       if (!this.fileValidator.status) {
         this.errorMessage = 'File is not valid'
